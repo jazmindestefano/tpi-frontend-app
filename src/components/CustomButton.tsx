@@ -1,4 +1,3 @@
-import React from 'react';
 import { cva, type VariantProps } from 'class-variance-authority'
 
 const buttonVariants = cva(
@@ -28,14 +27,12 @@ const buttonVariants = cva(
 
 interface CustomButtonProps extends VariantProps<typeof buttonVariants> {
     className?: string
-    onClick: () => void;
-    children: React.ReactNode;
+    onClick?: () => void;
+    children?: React.ReactNode;
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({ variant, onClick, children, className = '' }) => {
     const buttonClass = buttonVariants({ variant })
-
-    console.log(buttonClass)
 
     return (
         <button className={buttonClass + className} onClick={onClick}>
