@@ -2,25 +2,24 @@ import { cva, type VariantProps } from 'class-variance-authority'
 
 const buttonVariants = cva(
     [
-      'bg-primary-400 text-black cursor-pointer',
+      'cursor-pointer text-center flex items-center justify-center'
     ],
     {
       variants: {
         size: {
-          large: 'h-[56px]',
-          medium: 'h-[42px]'
+          circle: 'w-[80px] h-[80px]',
         },
         variant: {
-          blue: ['text-white bg-blue'],
-          outline: [
-            'bg-transparent border border-primary-400 text-white'
-          ],
-          error: ['bg-error-500 hover:bg-error-500/60 text-white']
+          blue: ['text-black bg-[#6D8FE8]']
+        },
+        shape: {
+          circle: 'rounded-full'
         }
       },
       defaultVariants: {
-        size: 'medium',
-        variant: 'blue'
+        size: 'circle',
+        variant: 'blue',
+        shape: 'circle',
       }
     }
 )
@@ -31,7 +30,7 @@ interface CustomButtonProps extends VariantProps<typeof buttonVariants> {
     children?: React.ReactNode;
 }
 
-const CustomButton: React.FC<CustomButtonProps> = ({ variant, onClick, children, className = '' }) => {
+const CircleButton: React.FC<CustomButtonProps> = ({ variant, onClick, children, className = '' }) => {
     const buttonClass = buttonVariants({ variant })
 
     return (
@@ -41,4 +40,4 @@ const CustomButton: React.FC<CustomButtonProps> = ({ variant, onClick, children,
     );
 };
 
-export default CustomButton;
+export default CircleButton;
