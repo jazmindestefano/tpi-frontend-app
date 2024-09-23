@@ -14,9 +14,9 @@ const buttonVariants = cva(
           circleSize: 'w-[5rem] h-[5rem]'
         },
         variant: {
-          primary: ['text-black bg-blue'],
-          secondary: ['text-black bg-grey'],
-          terciary: ['text-black bg-orange'],
+          primary: ['text-black bg-primary'],
+          secondary: ['text-black bg-secondary'],
+          tertiary: ['text-black bg-tertiary'],
           outline: [
             'bg-transparent border border-primary-400 text-black'
           ],
