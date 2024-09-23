@@ -7,7 +7,7 @@ const buttonVariants = cva(
     {
       variants: {
         size: {
-          circle: 'w-[80px] h-[80px]',
+          standard: 'w-[5rem] h-[5rem]',
         },
         variant: {
           blue: ['text-black bg-[#6D8FE8]']
@@ -17,7 +17,7 @@ const buttonVariants = cva(
         }
       },
       defaultVariants: {
-        size: 'circle',
+        size: 'standard',
         variant: 'blue',
         shape: 'circle',
       }

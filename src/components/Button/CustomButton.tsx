@@ -7,10 +7,10 @@ const buttonVariants = cva(
     {
       variants: {
         size: {
-          extralarge: 'w-[749px] h-[57px]',
-          large: 'w-[180px] h-[70px]',
-          medium: 'w-[160px] h-[60px]',
-          small: 'w-[151px] h-[39px]',
+          extralarge: 'w-[46.8125rem] h-[3.5625rem]',
+          large: 'w-[11.25rem] h-[4.375rem]', 
+          medium: 'w-[10rem] h-[3.75rem]',
+          small: 'w-[9.4375rem] h-[2.4375rem]',
         },
         variant: {
           blue: ['text-black bg-[#6D8FE8]'],
