@@ -11,19 +11,25 @@ const buttonVariants = cva(
           large: 'w-[11.25rem] h-[4.375rem]', 
           medium: 'w-[10rem] h-[3.75rem]',
           small: 'w-[9.4375rem] h-[2.4375rem]',
+          circleSize: 'w-[5rem] h-[5rem]'
         },
         variant: {
-          blue: ['text-black bg-[#6D8FE8]'],
-          grey: ['text-black bg-[#D9D9D9]'],
-          orange: ['text-black bg-[#F55600]'],
+          primary: ['text-black bg-blue'],
+          secondary: ['text-black bg-grey'],
+          terciary: ['text-black bg-orange'],
           outline: [
             'bg-transparent border border-primary-400 text-black'
           ],
           error: ['bg-error-500 hover:bg-error-500/60 text-white']
-        }
+        },
+        shape: {
+          default: 'rounded-lg', 
+          circle: 'rounded-full', 
+        },
       },
       defaultVariants: {
-        variant: 'blue'
+        variant: 'primary',
+        shape: 'default'
       }
     }
 )
@@ -34,8 +40,8 @@ interface CustomButtonProps extends VariantProps<typeof buttonVariants> {
     children?: React.ReactNode;
 }
 
-const CustomButton: React.FC<CustomButtonProps> = ({ size, variant, onClick, children, className = '' }) => {
-    const buttonClass = buttonVariants({ size, variant })
+const CustomButton: React.FC<CustomButtonProps> = ({ size, variant, shape, onClick, children, className = '' }) => {
+    const buttonClass = buttonVariants({ size, variant, shape})
 
     return (
         <button className={buttonClass + className} onClick={onClick}>
