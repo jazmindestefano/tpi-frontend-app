@@ -4,8 +4,10 @@ export default {
   theme: {
     extend: {
       colors: {
-        'blue': '#6D8FE8',
+        'primary': '#6D8FE8',
         'black': '#000000',
+        'secondary': '#D9D9D9',
+        'tertiary': '#F55600',
       },
       backgroundColor: {
         'blue': '#6D8FE8',
