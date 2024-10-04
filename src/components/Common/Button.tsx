@@ -11,6 +11,7 @@ const buttonVariants = cva(
           large: 'w-[11.25rem] h-[4.375rem]', 
           medium: 'w-[10rem] h-[3.75rem]',
           small: 'w-[9.4375rem] h-[2.4375rem]',
+          extrasmall: 'w-[5.625rem] h-[2.1875rem]',
           circleSize: 'w-[5rem] h-[5rem]'
         },
         variant: {

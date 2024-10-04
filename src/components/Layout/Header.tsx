@@ -8,7 +8,7 @@ const Header: React.FC = () => {
                 <img src="/path/to/logo.png" alt="Logo" className="h-10" />
             </div>
             <div>
-                <CustomButton size={"small"} variant={"primary"}> 
+                <CustomButton size={"extrasmall"} variant={"primary"}> 
                     Salir
                 </CustomButton>
             </div>

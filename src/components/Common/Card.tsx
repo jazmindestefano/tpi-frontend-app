@@ -2,8 +2,19 @@ import React from 'react';
 
 const Card: React.FC = () => {
     return (
-        <div className="bg-pink-950 p-10 rounded-lg shadow-lg transform scale-125 h-64 m-4 flex items-center justify-center">
-            <h1>Column 3</h1>
+        <div className="max-w-xs bg-white rounded-lg shadow-lg">
+            <div className="p-4 h-96">
+                <h2 className="text-xl font-bold text-gray-800">Título de la Carta</h2>
+                <p className="mt-2 text-gray-600">
+                Esta es una descripción corta sobre la carta. Aquí puedes añadir más detalles.
+                </p>
+                
+                <div className="mt-4">
+                <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">
+                    Acción
+                </button>
+                </div>
+            </div>
         </div>
     );
 };
