@@ -1,23 +1,23 @@
-import React from 'react';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import Home from '../pages/Home';
 import Profile from '../pages/Profile';
+import PageLayout from '../components/Layout/PageLayout';
 
-const router = createBrowserRouter([
+export const router = createBrowserRouter([
     {
         path: "/",
-        element: <Home />,
+        element: (
+            <PageLayout>
+                <Home />
+            </PageLayout>
+        ),
     },
     {
         path: "/perfil",
-        element: <Profile />,
+        element: (
+            <PageLayout>
+                <Profile />
+            </PageLayout>
+        ),
     },
 ]);
-
-const AppRouter: React.FC = () => {
-    return (
-        <RouterProvider router={router} />
-    );
-};
-
-export default AppRouter;
