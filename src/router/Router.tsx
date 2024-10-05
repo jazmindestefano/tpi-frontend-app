@@ -5,19 +5,16 @@ import PageLayout from '../components/Layout/PageLayout';
 
 export const router = createBrowserRouter([
     {
-        path: "/",
-        element: (
-            <PageLayout>
-                <Home />
-            </PageLayout>
-        ),
-    },
-    {
-        path: "/perfil",
-        element: (
-            <PageLayout>
-                <Profile />
-            </PageLayout>
-        ),
+        element: <PageLayout />,
+        children: [            
+            {
+                path: "/",
+                element: <Home />,
+            },
+            {
+                path: "/perfil",
+                element: <Profile />,
+            },
+        ],
     },
 ]);

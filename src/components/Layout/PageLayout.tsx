@@ -1,18 +1,14 @@
 import React from 'react';
-import 'tailwindcss/tailwind.css';
 import Header from './Header';
 import Footer from './Footer';
+import { Outlet } from 'react-router-dom';
 
-interface PageLayoutProps {
-    children: React.ReactNode;
-}
-
-const PageLayout: React.FC<PageLayoutProps> = ({ children }) => {
+const PageLayout: React.FC = () => {
     return (
-        <div className="flex flex-col min-h-screen">
+        <div className="flex flex-col min-h-screen bg-orange-50">
             <Header />
-            <main className="flex-grow mx-auto p-4 flex justify-center items-center">
-                {children}
+            <main className="flex-grow mx-auto p-4 flex justify-center items-center relative">
+                <Outlet />
             </main>
             <Footer />
         </div>

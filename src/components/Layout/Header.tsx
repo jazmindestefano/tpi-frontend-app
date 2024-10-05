@@ -1,11 +1,13 @@
 import React from 'react';
 import CustomButton from '../Common/Button';
+import { useNavigate } from 'react-router-dom';
 
 const Header: React.FC = () => {
+    const navigate = useNavigate();
     return (
-        <header className="flex justify-between items-center p-4 bg-gray-100 border-b border-gray-300">
-            <div className="logo">
-                <img src="/path/to/logo.png" alt="Logo" className="h-10" />
+        <header className="flex justify-between items-center p-4">
+            <div className="logo" onClick={() => navigate('/')}>
+                <img src="/public/clara-logo.svg" alt="Logo" className="h-10 cursor-pointer" />
             </div>
             <div>
                 <CustomButton size={"extrasmall"} variant={"primary"}> 

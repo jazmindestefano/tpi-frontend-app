@@ -9,7 +9,7 @@ const Footer: React.FC = () => {
     };
 
     return (
-        <footer className="flex justify-start p-4 bg-gray-200">
+        <footer className="flex justify-start p-4">
             <button 
                 className="bg-blue-500 text-black font-bold py-2 px-4 rounded" 
                 onClick={goToProfile}
