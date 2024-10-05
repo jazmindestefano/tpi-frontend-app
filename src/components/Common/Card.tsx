@@ -1,4 +1,5 @@
 import React from 'react';
+import CustomButton from './Button';
 
 const Card: React.FC = () => {
     return (
@@ -10,9 +11,9 @@ const Card: React.FC = () => {
                 </p>
                 
                 <div className="mt-4">
-                <button className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-700">
-                    Acción
-                </button>
+                <CustomButton size={"small"} variant={"primary"}>
+                    Ver más
+                </CustomButton>
                 </div>
             </div>
         </div>
