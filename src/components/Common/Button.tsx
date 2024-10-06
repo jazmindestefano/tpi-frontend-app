@@ -41,7 +41,7 @@ interface CustomButtonProps extends VariantProps<typeof buttonVariants> {
     children?: React.ReactNode;
 }
 
-const CustomButton: React.FC<CustomButtonProps> = ({ size, variant, shape, onClick, children, className = '' }) => {
+const Button: React.FC<CustomButtonProps> = ({ size, variant, shape, onClick, children, className = '' }) => {
     const buttonClass = buttonVariants({ size, variant, shape})
 
     return (
@@ -51,4 +51,4 @@ const CustomButton: React.FC<CustomButtonProps> = ({ size, variant, shape, onCli
     );
 };
 
-export default CustomButton;
+export default Button;
