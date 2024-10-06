@@ -1,5 +1,5 @@
 import React from 'react';
-import CustomButton from '../components/Common/Button';
+import Button from '../components/Common/Button';
 import { Pencil, Save } from 'lucide-react';
 
 const Profile: React.FC = () => {
@@ -30,9 +30,9 @@ const Profile: React.FC = () => {
                         </div>
 
                         <div className='flex items-end justify-end'>
-                            <CustomButton size={"extrasmall"} variant={"primary"} onClick={() => setIsEditing(false)}> 
+                            <Button size={"extrasmall"} variant={"primary"} onClick={() => setIsEditing(false)}> 
                                 <Save />
-                            </CustomButton>
+                            </Button>
                         </div>
                     </form>
                 ) : (
@@ -59,9 +59,9 @@ const Profile: React.FC = () => {
                         </div>
 
                         <div className='flex items-end justify-end'>
-                            <CustomButton size={"extrasmall"} variant={"primary"} onClick={() => setIsEditing(true)}> 
+                            <Button size={"extrasmall"} variant={"primary"} onClick={() => setIsEditing(true)}> 
                                 <Pencil />
-                            </CustomButton>
+                            </Button>
                         </div>
                     </div>
                 )}

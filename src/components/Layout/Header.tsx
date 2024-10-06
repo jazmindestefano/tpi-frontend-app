@@ -1,5 +1,5 @@
 import React from 'react';
-import CustomButton from '../Common/Button';
+import Button from '../Common/Button';
 import { useNavigate } from 'react-router-dom';
 import { LogOut } from 'lucide-react';
 
@@ -11,9 +11,9 @@ const Header: React.FC = () => {
                 <img src="/clara-logo.svg" alt="Logo" className="h-10 cursor-pointer" />
             </div>
             <div>
-                <CustomButton size={"extrasmall"} variant={"primary"}> 
+                <Button size={"extrasmall"} variant={"primary"}> 
                     <LogOut />
-                </CustomButton>
+                </Button>
             </div>
         </header>
     );

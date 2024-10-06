@@ -1,5 +1,5 @@
 import React from 'react';
-import CustomButton from './Button';
+import Button from './Button';
 
 const Card: React.FC = () => {
     return (
@@ -11,9 +11,9 @@ const Card: React.FC = () => {
                 </p>
                 
                 <div className="mt-4">
-                <CustomButton size={"small"} variant={"primary"}>
+                <Button size={"small"} variant={"primary"}>
                     Ver más
-                </CustomButton>
+                </Button>
                 </div>
             </div>
         </div>

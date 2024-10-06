@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import CustomButton from '../Common/Button';
+import Button from '../Common/Button';
 import { CircleUserRound, House } from 'lucide-react';
 
 const Footer: React.FC = () => {
@@ -8,23 +8,15 @@ const Footer: React.FC = () => {
     const location = useLocation();
 
     return (
-        <>
-        {
-            location.pathname !== '/perfil' ? (
-                <footer className="flex justify-start p-4">
-                    <CustomButton size={"extrasmall"} variant={"primary"} onClick={() => navigate('/perfil')}>
-                        <CircleUserRound />
-                    </CustomButton>
-                </footer>
-            ) : (
-                <footer className="flex justify-start p-4">
-                    <CustomButton size={"extrasmall"} variant={"primary"} onClick={() => navigate('/')}>
-                        <House />
-                    </CustomButton>
-                </footer>
-            )
-        }
-        </>
+      <footer className="flex justify-start p-4">
+          <Button size={"extrasmall"} variant={"primary"}
+                  onClick={() => navigate(
+                    location.pathname !== '/perfil' ? '/perfil' : "/"
+                  )}
+          >
+              {location.pathname !== '/perfil' ? <CircleUserRound/> : <House />}
+          </Button>
+      </footer>
     );
 };
 
