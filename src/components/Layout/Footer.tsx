@@ -13,13 +13,13 @@ const Footer: React.FC = () => {
             location.pathname !== '/perfil' ? (
                 <footer className="flex justify-start p-4">
                     <CustomButton size={"extrasmall"} variant={"primary"} onClick={() => navigate('/perfil')}>
-                        <CircleUserRound /> Perfil
+                        <CircleUserRound />
                     </CustomButton>
                 </footer>
             ) : (
                 <footer className="flex justify-start p-4">
                     <CustomButton size={"extrasmall"} variant={"primary"} onClick={() => navigate('/')}>
-                        <House /> Inicio
+                        <House />
                     </CustomButton>
                 </footer>
             )

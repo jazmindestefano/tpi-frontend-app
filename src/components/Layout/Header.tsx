@@ -1,6 +1,7 @@
 import React from 'react';
 import CustomButton from '../Common/Button';
 import { useNavigate } from 'react-router-dom';
+import { LogOut } from 'lucide-react';
 
 const Header: React.FC = () => {
     const navigate = useNavigate();
@@ -11,7 +12,7 @@ const Header: React.FC = () => {
             </div>
             <div>
                 <CustomButton size={"extrasmall"} variant={"primary"}> 
-                    Salir
+                    <LogOut />
                 </CustomButton>
             </div>
         </header>

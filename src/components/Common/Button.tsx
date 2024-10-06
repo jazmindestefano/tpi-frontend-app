@@ -2,7 +2,7 @@ import { cva, type VariantProps } from 'class-variance-authority'
 
 const buttonVariants = cva(
     [
-      'cursor-pointer text-center', 'px-4 py-2', 'rounded-full', 
+      'cursor-pointer flex items-center justify-center', 'px-4 py-2', 'rounded-full',
     ],
     {
       variants: {
