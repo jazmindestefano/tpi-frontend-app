@@ -11,7 +11,7 @@ const Card: React.FC = () => {
                 </p>
                 
                 <div className="mt-4">
-                <CustomButton size={"small"} variant={"primary"}>
+                <CustomButton size={"small"} variant={"primary"}> 
                     Ver más
                 </CustomButton>
                 </div>
