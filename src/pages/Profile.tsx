@@ -2,11 +2,7 @@ import React from 'react';
 import CustomButton from '../components/Common/Button';
 import { Pencil, Save } from 'lucide-react';
 
-interface ProfileProps {
-    userType?: 'paciente' | 'profesional';
-}
-
-const Profile: React.FC<ProfileProps> = ({ userType }) => {
+const Profile: React.FC = () => {
     const [isEditing, setIsEditing] = React.useState(false);
 
     const handleEditClick = () => {
