@@ -7,7 +7,7 @@ const Header: React.FC = () => {
     return (
         <header className="flex justify-between items-center p-4">
             <div className="logo" onClick={() => navigate('/')}>
-                <img src="/public/clara-logo.svg" alt="Logo" className="h-10 cursor-pointer" />
+                <img src="/clara-logo.svg" alt="Logo" className="h-10 cursor-pointer" />
             </div>
             <div>
                 <CustomButton size={"extrasmall"} variant={"primary"}> 
