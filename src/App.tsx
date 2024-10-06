@@ -1,9 +1,7 @@
-import { Layout } from "./components/Layout/Layout"
+import { Layout } from "./components/Layout/Layout";
 
 function App(): JSX.Element {
-  return (
-    <Layout />
-  )
+  return <Layout />;
 }
 
-export default App
+export default App;
