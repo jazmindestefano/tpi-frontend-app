@@ -1,6 +1,6 @@
 import React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import Button from '../Common/Button';
+import Button from '../common/Button';
 import { CircleUserRound, House } from 'lucide-react';
 
 const Footer: React.FC = () => {

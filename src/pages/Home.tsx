@@ -1,6 +1,6 @@
 import React from 'react';
-import Card from '../components/Common/Card';
-import Button from "../components/Common/Button.tsx";
+import Card from '../components/common/Card';
+import Button from "../components/common/Button.tsx";
 
 const Home: React.FC = () => {
     return (
