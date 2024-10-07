@@ -1,15 +1,18 @@
-import {Meta, StoryObj} from "@storybook/react";
-import Header from './Header.tsx'
-import {reactRouterParameters, withRouter} from "storybook-addon-remix-react-router";
+import { Meta, StoryObj } from "@storybook/react";
+import Header from "./Header.tsx";
+import {
+  reactRouterParameters,
+  withRouter,
+} from "storybook-addon-remix-react-router";
 
 const meta = {
-  title: 'Layout/Header',
+  title: "Layout/Header",
   component: Header,
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
   },
   decorators: [withRouter],
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 } satisfies Meta<typeof Header>;
 
 export default meta;
@@ -20,9 +23,8 @@ export const Default: Story = {
   parameters: {
     reactRouter: reactRouterParameters({
       routing: {
-        path: '/perfil'
-      }
-    })
-  }
+        path: "/perfil",
+      },
+    }),
+  },
 };
-

@@ -1,15 +1,18 @@
-import {Meta, StoryObj} from "@storybook/react";
+import { Meta, StoryObj } from "@storybook/react";
 import Footer from "./Footer";
-import {reactRouterParameters, withRouter} from "storybook-addon-remix-react-router";
+import {
+  reactRouterParameters,
+  withRouter,
+} from "storybook-addon-remix-react-router";
 
 const meta = {
-  title: 'Layout/Footer',
+  title: "Layout/Footer",
   component: Footer,
   parameters: {
-    layout: 'fullscreen',
+    layout: "fullscreen",
   },
   decorators: [withRouter],
-  tags: ['autodocs'],
+  tags: ["autodocs"],
 } satisfies Meta<typeof Footer>;
 
 export default meta;
@@ -20,19 +23,18 @@ export const Default: Story = {
   parameters: {
     reactRouter: reactRouterParameters({
       routing: {
-        path: '/'
-      }
-    })
-  }
+        path: "/",
+      },
+    }),
+  },
 };
 
 export const Profile: Story = {
   parameters: {
     reactRouter: reactRouterParameters({
       routing: {
-        path: '/perfil'
-      }
-    })
-  }
+        path: "/perfil",
+      },
+    }),
+  },
 };
-
