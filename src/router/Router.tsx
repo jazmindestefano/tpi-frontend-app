@@ -3,6 +3,7 @@ import Home from '../pages/Home';
 import Profile from '../pages/Profile';
 import SnakeGame from '../pages/SnakeGame';
 import PageLayout from '../components/Layout/PageLayout';
+import {ThemeSelect} from "../pages/ThemeSelect.tsx";
 
 export const router = createBrowserRouter([
     {
@@ -19,6 +20,10 @@ export const router = createBrowserRouter([
             {
                 path: "/viborita",
                 element: <SnakeGame />
+            },
+            {
+                path: "/tematicas",
+                element: <ThemeSelect />
             }
         ],
     },
