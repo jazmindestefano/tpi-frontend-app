@@ -1,7 +1,7 @@
-import React from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import Button from '../common/Button';
-import { CircleUserRound, House } from 'lucide-react';
+import React from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { CircleUserRound, House } from "lucide-react";
+import Button from "../common/Button";
 
 const Footer: React.FC = () => {
     const navigate = useNavigate();

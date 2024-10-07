@@ -1,7 +1,7 @@
-import React from 'react';
-import Button from '../common/Button';
-import { useNavigate } from 'react-router-dom';
-import { LogOut } from 'lucide-react';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import { LogOut } from "lucide-react";
+import Button from "../common/Button.tsx";
 
 const Header: React.FC = () => {
     const navigate = useNavigate();
