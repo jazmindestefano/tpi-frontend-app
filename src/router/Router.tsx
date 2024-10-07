@@ -2,6 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import Home from '../pages/Home';
 import Profile from '../pages/Profile';
 import PageLayout from '../components/Layout/PageLayout';
+import {ThemeSelect} from "../pages/ThemeSelect.tsx";
 
 export const router = createBrowserRouter([
     {
@@ -15,6 +16,10 @@ export const router = createBrowserRouter([
                 path: "/perfil",
                 element: <Profile />,
             },
+            {
+                path: "/tematicas",
+                element: <ThemeSelect />
+            }
         ],
     },
 ]);
