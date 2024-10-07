@@ -32,7 +32,7 @@ const buttonVariants = cva(
       variant: "primary",
       shape: "default",
     },
-  },
+  }
 );
 
 interface CustomButtonProps extends VariantProps<typeof buttonVariants> {
@@ -41,7 +41,7 @@ interface CustomButtonProps extends VariantProps<typeof buttonVariants> {
   children?: React.ReactNode;
 }
 
-const Button: React.FC<CustomButtonProps> = ({
+const CustomButton: React.FC<CustomButtonProps> = ({
   size,
   variant,
   shape,
@@ -58,4 +58,4 @@ const Button: React.FC<CustomButtonProps> = ({
   );
 };
 
-export default Button;
+export default CustomButton;

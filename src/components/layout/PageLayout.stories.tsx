@@ -1,19 +1,15 @@
-import { Meta, StoryObj } from "@storybook/react";
+import {Meta, StoryObj} from "@storybook/react";
 import PageLayout from "./PageLayout.tsx";
-import {
-  reactRouterOutlet,
-  reactRouterParameters,
-  withRouter,
-} from "storybook-addon-remix-react-router";
+import {reactRouterOutlet, reactRouterParameters, withRouter} from "storybook-addon-remix-react-router";
 
 const meta = {
-  title: "Layout/PageLayout",
+  title: 'Layout/PageLayout',
   component: PageLayout,
   parameters: {
-    layout: "fullscreen",
+    layout: 'fullscreen',
   },
   decorators: [withRouter],
-  tags: ["autodocs"],
+  tags: ['autodocs'],
 } satisfies Meta<typeof PageLayout>;
 
 export default meta;
@@ -22,7 +18,7 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   parameters: {
     reactRouter: reactRouterParameters({
-      routing: reactRouterOutlet(<div></div>),
-    }),
-  },
+      routing: reactRouterOutlet(<div></div>)
+    })
+  }
 };
