@@ -1,6 +1,6 @@
 import Card from "../common/Card.tsx";
 import Button from "../common/Button.tsx";
-import {Theme} from "../../models/models.ts";
+import {Theme} from "../../interfaces/interfaces.ts";
 
 
 interface ThemeCardProps {

@@ -1,7 +1,7 @@
 import * as ApiService from '../http/queries.ts'
 import {useQuery} from "@tanstack/react-query";
 
-import {Theme} from "../models/models.ts";
+import {Theme} from "../interfaces/interfaces.ts";
 
 export const useGetThemesByActivityId = (activityId: number): {
   themes: Theme[] | null | undefined

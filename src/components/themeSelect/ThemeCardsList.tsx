@@ -1,5 +1,5 @@
 import {ThemeCard} from "./ThemeCard.tsx";
-import {Theme} from "../../models/models.ts";
+import {Theme} from "../../interfaces/interfaces.ts";
 
 interface ThemeCardsListProps {
   themes: Theme[]

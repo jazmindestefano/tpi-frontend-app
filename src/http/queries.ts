@@ -1,4 +1,4 @@
-import {Theme} from "../models/models.ts";
+import {Theme} from "../interfaces/interfaces.ts";
 import {unauthenticatedClient} from "./clients.ts";
 
 
