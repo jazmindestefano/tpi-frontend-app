@@ -1,58 +1,48 @@
 import React from "react";
-import { Volume2 } from "lucide-react";
-import { Link } from "react-router-dom";
+import {Volume2} from "lucide-react";
+import {Link, useNavigate} from "react-router-dom";
 import Card from "../components/common/Card";
 import Button from "../components/common/Button.tsx";
 
 const Home: React.FC = () => {
+  
+  const navigate = useNavigate()
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-full">
+    <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 h-full">
       <div className="flex justify-center flex-col items-center">
-        <Link to="/letras">
-          <Card variant={"primary"} className="flex">
-            <div className="flex flex-col items-center justify-center w-full h-full">
-              <div className="w-2/3 flex items-center justify-center">
+        <div className="flex flex-col flex-nowrap items-center">
+            <Card variant={"primary"} onClick={() => navigate("/letras")} className={"flex flex-col"}>
+              <div className="basis-3/5 flex items-end justify-center">
                 <img
                   src="/letras.svg"
                   className="object-contain"
                   alt="Letras"
                 />
               </div>
-
-              <div className="w-1/3 p-4 flex flex-col justify-center items-center">
-                <h2 className="text-lg font-poppins text-gray-800">Letras</h2>
-                <p className="mt-2 text-gray-600 font-comfortaa text-center">
-                  Esta es una descripción corta sobre la carta. Aquí puedes
-                  añadir más detalles.
-                </p>
+              <div className="basis-2/5 flex items-end">
+                <h2 className="text-4xl font-medium font-comfortaa text-gray-800 text-left">LETRAS</h2>
               </div>
-            </div>
-          </Card>
-        </Link>
-        <Button
-          size={"circleSize"}
-          variant={"fifth"}
-          shape={"circle"}
-          className="mt-3"
-        >
-          <Volume2 className="text-white w-auto h-38" />
-        </Button>
+            </Card>
+          <Button
+              size={"circleSize"}
+              variant={"fifth"}
+              shape={"circle"}
+              className="mt-3"
+            >
+              <Volume2 className="text-white w-auto h-38"/>
+            </Button>
+        </div>
       </div>
-
       <div className="flex justify-center flex-col items-center">
         <Link to="/palabras">
           <Card variant={"secondary"} className="flex">
             <div className="flex flex-row">
               <div className="w-1/3 p-4 flex flex-col justify-center">
-                <h2 className="text-xl font-poppins text-gray-800">Palabras</h2>
-                <p className="mt-2 text-gray-600 font-comfortaa">
-                  Esta es una descripción corta sobre la carta. Aquí puedes
-                  añadir más detalles.
-                </p>
+                <h2 className="text-4xl font-medium font-comfortaa text-gray-800 pb-36">PALABRAS</h2>
               </div>
-
               <div className="w-2/3">
-                <img src="/palabras.svg" className="" alt="Palabras" />
+                <img src="/palabras.svg" className="scale-110" alt="Palabras"/>
               </div>
             </div>
           </Card>
@@ -63,24 +53,18 @@ const Home: React.FC = () => {
           shape={"circle"}
           className="mt-3"
         >
-          <Volume2 className="text-white w-auto h-38" />
+          <Volume2 className="text-white w-auto h-38"/>
         </Button>
       </div>
-
       <div className="flex justify-center flex-col items-center">
         <Link to="/viborita">
           <Card variant={"tertiary"} className="flex">
             <div className="flex flex-row">
-              <div className="w-2/3">
-                <img src="/viborita.svg" className="" alt="Snake Game" />
+              <div className="w-2/4">
+                <img src="/viborita.svg" className="h-full scale-95" alt="la viborita"/>
               </div>
-
-              <div className="w-1/3 p-4 flex flex-col justify-center">
-                <h2 className="text-xl font-poppins text-gray-800">Viborita</h2>
-                <p className="mt-2 text-gray-600 font-comfortaa">
-                  Esta es una descripción corta sobre la carta. Aquí puedes
-                  añadir más detalles.
-                </p>
+              <div className="w-2/4 py-2 flex flex-col justify-center">
+                <h2 className="text-4xl font-medium font-comfortaa text-gray-800">LA VIBORITA</h2>
               </div>
             </div>
           </Card>
@@ -91,7 +75,7 @@ const Home: React.FC = () => {
           shape={"circle"}
           className="mt-3"
         >
-          <Volume2 className="text-white w-auto h-38" />
+          <Volume2 className="text-white w-auto h-38"/>
         </Button>
       </div>
     </div>

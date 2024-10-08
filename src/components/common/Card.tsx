@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
-const cardVariants = cva(["rounded-lg shadow-lg", "p-4 w-auto h-96"], {
+const cardVariants = cva(["rounded-3xl shadow-lg", "p-4 w-auto h-96", "max-w-96 min-w-96"], {
   variants: {
     variant: {
       primary: ["bg-[#F2C160]"],
@@ -26,7 +26,7 @@ const Card: React.FC<CardProps> = ({
   const cardClass = cardVariants({ variant });
   return (
     <div className={`${cardClass} ${className}`} onClick={onClick}>
-      <div className="">{children}</div>
+      {children}
     </div>
   );
 };
