@@ -75,7 +75,7 @@ const Profile: React.FC = () => {
                 variant={"primary"}
                 onClick={() => setIsEditing(false)}
               >
-                <Save />
+                <Save className="text-white" />
               </Button>
             </div>
           </form>
@@ -120,7 +120,7 @@ const Profile: React.FC = () => {
                 variant={"primary"}
                 onClick={() => setIsEditing(true)}
               >
-                <Pencil />
+                <Pencil className="text-white" />
               </Button>
             </div>
           </div>

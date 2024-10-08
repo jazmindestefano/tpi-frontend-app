@@ -13,7 +13,7 @@ const Header: React.FC = () => {
         <Breadcrumb />
       </div>
       <div>
-        <Button size={"square"} variant={"fifth"}>
+        <Button size={"square"} variant={"primary"}>
           <LogOut className="text-white" />
         </Button>
       </div>

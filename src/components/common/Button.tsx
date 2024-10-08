@@ -19,14 +19,14 @@ const buttonVariants = cva(
         square: "w-[3.75rem] h-[3.75rem]",
       },
       variant: {
-        primary: ["text-black bg-primary"],
+        primary: ["text-black bg-[#EDB193]", "hover:bg-[#D08A5F]"],
         secondary: ["text-black bg-secondary"],
         tertiary: ["text-black bg-tertiary"],
         fourth: [
           "bg-[rgba(217,217,217,0.49)] rounded-full",
           "hover:bg-[rgba(150,150,150,0.49)]",
         ],
-        fifth: ["bg-[#6D8FE8] rounded-full", "hover:bg-[#617EC9]"],
+        fifth: ["bg-[#6D8FE8]", "hover:bg-[#617EC9]"],
         outline: ["bg-transparent border border-primary-400 text-black"],
         error: ["bg-error-500 hover:bg-error-500/60 text-white"],
       },
