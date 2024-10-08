@@ -1,8 +1,13 @@
 import React from 'react';
 import Card from '../components/common/Card';
 import Button from "../components/common/Button.tsx";
+import { useGetGames } from '../hooks/queries.ts';
 
 const Home: React.FC = () => {
+    const { games } = useGetGames();
+
+    console.log({games});
+
     return (
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 h-full">
                 <div className='flex justify-center items-center'>
