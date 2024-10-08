@@ -1,17 +1,17 @@
-// import { useState } from "react";
 import {useParams} from "react-router-dom";
 import {ThemeCardsList} from "../../components/themeSelect/ThemeCardsList.tsx";
 import {useGetThemesByActivityId} from "../../hooks/queries.ts";
+import {useDispatch} from "react-redux";
+import {selectTheme} from "../../redux/store/themeSlice.ts";
+import {Theme} from "../../interfaces/interfaces.ts";
 
 export const ThemeSelect = () => {
   const { activityId } = useParams();
-  const {themes, isLoading, error} = useGetThemesByActivityId(Number(activityId));
+  const { themes, isLoading, error } = useGetThemesByActivityId(Number(activityId));
+  const dispatch = useDispatch();
   
-  // const [choseThemeId, setChoseThemeId] = useState<number | undefined>();
-  
-  const onCardClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    console.log("Card clicked", e)
-    // cuando se guarde probablemente se guarde el id o el name de la card seleccionada en redux
+  const onCardClick = (theme: Theme) => {
+    dispatch(selectTheme(theme))
   }
 
   return (

@@ -5,7 +5,7 @@ import {Theme} from "../../interfaces/interfaces.ts";
 
 interface ThemeCardProps {
   theme: Theme,
-  onCardClick: (e: React.MouseEvent<HTMLDivElement>) => void
+  onCardClick: () => void
 }
 
 export const ThemeCard: React.FC<ThemeCardProps> = ({theme, onCardClick}) => {
