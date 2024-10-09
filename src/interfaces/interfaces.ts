@@ -19,6 +19,7 @@ export interface GameLevel {
 export interface LevelOption {
   id: number,
   name: string,
+  description: string,
   image: string,
   correct: boolean
 }
