@@ -15,7 +15,7 @@ const useBreadcrumbs = () => {
         };
     });
 
-    return [{ name: 'Home', path: '/' }, ...breadcrumbs];
+    return [{ name: 'Inicio', path: '/' }, ...breadcrumbs];
 };
 
 export default useBreadcrumbs;

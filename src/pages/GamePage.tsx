@@ -32,15 +32,15 @@ export const Game: React.FC<GameProps> = ({ selectedThemeId }) => {
     }
   }, [levels, isLoading, error, currentLevel]);
 
-  useEffect(() => {
-    if (levels && currentLevel === levels.length - 1) {
-      navigate("/felicitaciones");
-    }
-  }, [currentLevel, levels, navigate]);
-
   const isCorrectOption = (option: LevelOption) => {
-    if (levels && option.correct && currentLevel < levels.length - 1) {
-      setCurrentLevel((prevState) => prevState + 1);
+    if (levels && option.correct) {
+      if (currentLevel < levels.length - 1) {
+        setCurrentLevel((prevState) => prevState + 1);
+      } else {
+        navigate("/felicitaciones");
+      }
+    } else {
+      console.log("Respuesta incorrecta");
     }
   };
 
@@ -53,7 +53,7 @@ export const Game: React.FC<GameProps> = ({ selectedThemeId }) => {
     <div className="w-full h-full">
       <div className="w-full flex flex-col justify-center items-center gap-4">
         <p className="font-bold font-comfortaa text-2xl">
-          Selecciona las imágenes que contengan la letra
+       { selectedThemeId == 2 ? "Como decis la palabra" : "Selecciona las imágenes que contengan la letra"}
         </p>
         <div className="flex flex-row justify-center items-center gap-4">
           <p className="font-bold font-comfortaa text-8xl">
@@ -66,7 +66,7 @@ export const Game: React.FC<GameProps> = ({ selectedThemeId }) => {
             onClick={() =>
               levels &&
               speakText(
-                `Selecciona las imágenes que contengan la letra ${levels[currentLevel].description}`
+                `${selectedThemeId == 2 ?  "Como decis la palabra" : "Selecciona las imágenes que contengan la letra"} ${levels[currentLevel].description}`
               )
             }
           >
@@ -74,19 +74,19 @@ export const Game: React.FC<GameProps> = ({ selectedThemeId }) => {
           </CustomButton>
         </div>
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 my-16 w-full px-20">
+      <div className={`${levelOptions.length === 1 ? 'flex justify-center' : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'} gap-10 my-16 w-full px-20`}>
         {levelOptions.map((option) => (
-          <div
+            <div
             key={option.id}
-            className="flex flex-col items-center justify-center cursor-pointer rounded-3xl shadow-lg p-4 w-full h-auto gap-6 bg-[#F7F7F7]"
-          >
-            <div className="p-4 w-full rounded-3xl h-80 flex flex-col items-center justify-between" onClick={() => {
+            className={`flex flex-col items-center justify-center cursor-pointer rounded-3xl shadow-lg p-4 h-auto gap-6 bg-[#F7F7F7] ${levelOptions.length === 1 ? 'w-96' : 'w-full'}`}
+            >
+            <div className="p-4 w-full rounded-3xl h-80 flex flex-col items-center justify-center" onClick={() => {
               isCorrectOption(option);
             }}>
               <img
-                src={`/gameOptions/${option.name}.png`}
-                alt={option.name}
-                className="w-auto h-80"
+              src={`/gameOptions/${option.name}.png`}
+              alt={option.name}
+              className="w-auto h-80"
               />
             </div>
             <CustomButton
@@ -97,7 +97,7 @@ export const Game: React.FC<GameProps> = ({ selectedThemeId }) => {
             >
               <Volume2 />
             </CustomButton>
-          </div>
+            </div>
         ))}
       </div>
     </div>

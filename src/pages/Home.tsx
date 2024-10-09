@@ -84,7 +84,7 @@ const Home: React.FC = () => {
                   <img src="/viborita.svg" className="h-full scale-95" alt="la viborita"/>
                 </div>
                 <div className="w-2/4 py-2 flex flex-col justify-center">
-                  <h2 className="text-4xl font-medium font-comfortaa text-gray-800">{games![2].name.substring(0, 5).toUpperCase()} {games![2].name.substring(5).toUpperCase()}</h2>
+                  <h2 className="text-4xl font-medium font-comfortaa text-gray-800">LA VIBORITA</h2>
                 </div>
               </div>
             </Card>

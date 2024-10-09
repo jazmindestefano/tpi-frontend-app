@@ -10,6 +10,7 @@ interface ThemeCardProps {
 }
 
 export const ThemeCard: React.FC<ThemeCardProps> = ({theme, onCardClick}) => {
+  console.log({theme})
   const speakText = (text: string) => {
     const utterance = new SpeechSynthesisUtterance(text);
     window.speechSynthesis.speak(utterance);
