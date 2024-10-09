@@ -16,7 +16,7 @@ export const ThemeCard: React.FC<ThemeCardProps> = ({theme, onCardClick}) => {
     window.speechSynthesis.speak(utterance);
   };
   return (
-    <Card key={theme.id} className="bg-orange-200 flex flex-col justify-between">
+    <Card key={theme.id} className="bg-orange-200 flex flex-col justify-between max-w-96">
       <div className="w-full h-[280px] bg-[#F7F7F7] rounded-lg flex justify-center items-center cursor-pointer" onClick={onCardClick}>
         <img src={`/themes/letras/${theme.name}.png`} alt={theme.name} className="h-[250px]" />
       </div>

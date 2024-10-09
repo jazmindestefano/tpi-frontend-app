@@ -17,10 +17,10 @@ const Home: React.FC = () => {
   return (
     isLoading ? <h1>Cargando...</h1> : 
       games && games.length !== 0 && !error ?
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 h-full px-10 my-16">
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-16 h-full px-10 my-16">
         <div className="flex justify-center flex-col items-center cursor-pointer w-full">
             <div className="flex justify-center flex-col items-center w-full">
-            <Card variant={"primary"} onClick={() => navigate(`/actividad/${games![0].id}/tematicas`)} className={"flex flex-col"}>
+            <Card variant={"primary"} onClick={() => navigate(`/actividad/${games![0].id}/tematicas`)} className={"flex flex-col max-w-96"}>
                   <div className="basis-3/5 flex items-end justify-center">
                   <img
                     src="/letras.svg"
@@ -50,7 +50,7 @@ const Home: React.FC = () => {
         </div>
         <div className="flex justify-center flex-col items-center cursor-pointer w-full">
             <div className="flex justify-center flex-col items-center cursor-pointer w-full">
-              <Card variant={"secondary"} className="flex" onClick={() => navigate(`/actividad/${games![1].id}/tematicas`)}>
+              <Card variant={"secondary"} className="flex max-w-96" onClick={() => navigate(`/actividad/${games![1].id}/tematicas`)}>
                   <div className="flex flex-row">
                     <div className="w-1/3 p-4 flex flex-col justify-center">
                       <h2 className="text-4xl font-medium font-comfortaa text-gray-800 pb-36">{games![1].name.toUpperCase()}</h2>
@@ -78,7 +78,7 @@ const Home: React.FC = () => {
         </div>
         <div className="flex justify-center flex-col items-center cursor-pointer w-full">
           <div className="flex justify-center flex-col items-center cursor-pointer w-full">
-            <Card variant={"tertiary"} className="flex" onClick={() => navigate(`/actividad/${games![2].id}/tematicas`)}>
+            <Card variant={"tertiary"} className="flex max-w-96" onClick={() => navigate(`/actividad/${games![2].id}/tematicas`)}>
               <div className="flex flex-row">
                 <div className="w-2/4">
                   <img src="/viborita.svg" className="h-full scale-95" alt="la viborita"/>
