@@ -1,4 +1,4 @@
-import {Game, Theme} from "../interfaces/interfaces.ts";
+import {ContentActivity, Game, Theme} from "../interfaces/interfaces.ts";
 import {unauthenticatedClient} from "./clients.ts";
 
 
@@ -13,6 +13,14 @@ export const getThemesByGameId = async (gameId: number): Promise<Theme[] | null>
 
 export const getGames = async (): Promise<Game[] | null> => {
   const res = await unauthenticatedClient.get(`/getGames/getGames`)
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
+
+export const getContentActivity = async (themeId: number): Promise<ContentActivity[] | null> => {
+  const res = await unauthenticatedClient.get(`/activities/getActivities${themeId}`)
   if (res.status === 200) {
     return res.data
   }
