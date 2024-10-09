@@ -11,7 +11,10 @@ describe('themeSlice', () => {
   });
 
   it('should handle selectTheme', () => {
-    const theme: Theme = { id: 1, name: 'example' };
+    const theme: Theme = {
+      id: 1, name: 'example',
+      image: ''
+    };
     const actual = themeReducer(initialState, selectTheme(theme));
     expect(actual.selectedTheme).toEqual(theme);
   });
