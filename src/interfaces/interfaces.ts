@@ -10,13 +10,13 @@ export interface Game {
   image: string;
 }
 
-export interface ContentActivity {
+export interface GameLevel {
   id: number;
   description: string;
-  options: ActivityOptions[];
+  options: LevelOption[];
 }
 
-interface ActivityOptions {
+export interface LevelOption {
   id: number,
   name: string,
   image: string,

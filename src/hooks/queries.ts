@@ -1,7 +1,7 @@
 import * as ApiService from '../http/queries.ts'
 import {useQuery} from "@tanstack/react-query";
 
-import { Theme, Game, ContentActivity } from "../interfaces/interfaces.ts";
+import { Theme, Game, GameLevel } from "../interfaces/interfaces.ts";
 
 export const useGetThemesByGameId = (gameId: number): {
   themes: Theme[] | null | undefined
@@ -27,14 +27,14 @@ export const useGetGames = (): {
   return { games: data, error, isLoading }
 }
 
-export const useGetContentActivity = (themeId: number): {
-  contentActivity: ContentActivity[] | null | undefined
+export const useGetGameLevels = (themeId: number): {
+  levels: GameLevel[] | null | undefined
   error: Error | null
   isLoading: boolean
 } => {
   const { data, error, isLoading } = useQuery({
-    queryKey: ['getContentActivity'],
-    queryFn: async () => await ApiService.getContentActivity(themeId)
+    queryKey: ['getGameLevels'],
+    queryFn: async () => await ApiService.getGameLevels(themeId)
   })
-  return { contentActivity: data, error, isLoading }
+  return { levels: data, error, isLoading }
 }
