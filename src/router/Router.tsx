@@ -2,7 +2,7 @@ import { createBrowserRouter } from 'react-router-dom';
 import Home from '../pages/Home';
 import Profile from '../pages/Profile';
 import SnakeGame from '../pages/SnakeGame';
-import PageLayout from '../components/layout/PageLayout';
+import PageLayout from '../components/layout/pageLayout/PageLayout.tsx';
 import {ThemeSelect} from "../pages/themeSelect/ThemeSelect.tsx";
 
 export const router = createBrowserRouter([
