@@ -7,12 +7,14 @@ import { useGetGames } from '../hooks/queries.ts';
 
 const Home: React.FC = () => {
   const navigate = useNavigate()
-  const { games } = useGetGames();
+  const { games, isLoading, error } = useGetGames();
 
   console.log({games});
 
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 h-full">
+    isLoading ? <h1>Cargando...</h1> : 
+      games && games.length !== 0 && !error ?
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 h-full">
       <div className="flex justify-center flex-col items-center">
         <div className="flex flex-col flex-nowrap items-center">
             <Card variant={"primary"} onClick={() => navigate("/letras")} className={"flex flex-col"}>
@@ -24,7 +26,7 @@ const Home: React.FC = () => {
                 />
               </div>
               <div className="basis-2/5 flex items-end">
-                <h2 className="text-4xl font-medium font-comfortaa text-gray-800 text-left">LETRAS</h2>
+                <h2 className="text-4xl font-medium font-comfortaa text-gray-800 text-left">{games![0].name.toUpperCase()}</h2>
               </div>
             </Card>
           <Button
@@ -42,7 +44,7 @@ const Home: React.FC = () => {
           <Card variant={"secondary"} className="flex">
             <div className="flex flex-row">
               <div className="w-1/3 p-4 flex flex-col justify-center">
-                <h2 className="text-4xl font-medium font-comfortaa text-gray-800 pb-36">PALABRAS</h2>
+                <h2 className="text-4xl font-medium font-comfortaa text-gray-800 pb-36">{games![1].name.toUpperCase()}</h2>
               </div>
               <div className="w-2/3">
                 <img src="/palabras.svg" className="scale-110" alt="Palabras"/>
@@ -67,7 +69,7 @@ const Home: React.FC = () => {
                 <img src="/viborita.svg" className="h-full scale-95" alt="la viborita"/>
               </div>
               <div className="w-2/4 py-2 flex flex-col justify-center">
-                <h2 className="text-4xl font-medium font-comfortaa text-gray-800">LA VIBORITA</h2>
+                <h2 className="text-4xl font-medium font-comfortaa text-gray-800">{games![2].name.substring(0, 5).toUpperCase()} {games![2].name.substring(5).toUpperCase()}</h2>
               </div>
             </div>
           </Card>
@@ -81,7 +83,7 @@ const Home: React.FC = () => {
           <Volume2 className="text-white w-auto h-38"/>
         </Button>
       </div>
-    </div>
+    </div> : <p>error</p>
   );
 };
 

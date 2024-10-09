@@ -6,7 +6,7 @@ const Breadcrumb: React.FC = () => {
   const breadcrumbs = useBreadcrumbs();
 
   return (
-    <nav aria-label="breadcrumb" className="ml-4">
+    <nav aria-label="breadcrumb" className="ml-4 px-2">
       <ol className="flex space-x-2">
         {breadcrumbs.map((breadcrumb, index) => (
           <li key={breadcrumb.path}>

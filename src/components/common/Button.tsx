@@ -17,6 +17,7 @@ const buttonVariants = cva(
         extrasmall: "w-[5.625rem] h-[2.1875rem]",
         circleSize: "w-[3.75rem] h-[3.75rem]",
         square: "w-[3.75rem] h-[3.75rem]",
+        squareSmall: "w-[3rem] h-[3rem]",
       },
       variant: {
         primary: ["text-black bg-[#EDB193]", "hover:bg-[#D08A5F]"],
