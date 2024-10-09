@@ -12,7 +12,7 @@ interface ThemeCardProps {
 export const ThemeCard: React.FC<ThemeCardProps> = ({theme, onCardClick}) => {
   return (
     <Card key={theme.id} onClick={onCardClick} className="bg-orange-200 flex flex-col justify-between">
-      <div className="w-full h-[280px] bg-slate-50 rounded-lg">
+      <div className="w-full h-[280px] bg-slate-50 rounded-lg flex justify-center items-center">
         <img src="/princesas.png" alt={theme.name} />
       </div>
       <div className="flex justify-center w-full">

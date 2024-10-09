@@ -16,7 +16,7 @@ const Home: React.FC = () => {
       games && games.length !== 0 && !error ?
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 h-full">
       <div className="flex justify-center flex-col items-center">
-        <div className="flex flex-col flex-nowrap items-center">
+        <div className="flex flex-col flex-nowrap items-center cursor-pointer">
             <Card variant={"primary"} onClick={() => navigate(`/actividad/${games![0].id}/tematicas`)} className={"flex flex-col"}>
               <div className="basis-3/5 flex items-end justify-center">
               <img
