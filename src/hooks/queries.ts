@@ -3,14 +3,14 @@ import {useQuery} from "@tanstack/react-query";
 
 import { Theme, Game } from "../interfaces/interfaces.ts";
 
-export const useGetThemesByActivityId = (activityId: number): {
+export const useGetThemesByGameId = (gameId: number): {
   themes: Theme[] | null | undefined
   error: Error | null
   isLoading: boolean
 } => {
   const { data, error, isLoading } = useQuery({
-    queryKey: ['getThemeByActivity'],
-    queryFn: async () => await ApiService.getThemesByActivityId(activityId)
+    queryKey: ['getThemeByGame'],
+    queryFn: async () => await ApiService.getThemesByGameId(gameId)
   })
   return { themes: data, error, isLoading }
 }

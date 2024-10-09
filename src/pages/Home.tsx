@@ -17,16 +17,16 @@ const Home: React.FC = () => {
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 h-full">
       <div className="flex justify-center flex-col items-center">
         <div className="flex flex-col flex-nowrap items-center">
-            <Card variant={"primary"} onClick={() => navigate("/letras")} className={"flex flex-col"}>
+            <Card variant={"primary"} onClick={() => navigate(`/actividad/${games![0].id}/tematicas`)} className={"flex flex-col"}>
               <div className="basis-3/5 flex items-end justify-center">
-                <img
-                  src="/letras.svg"
-                  className="object-contain"
-                  alt="Letras"
-                />
+              <img
+                src="/letras.svg"
+                className="object-contain"
+                alt="Letras"
+              />
               </div>
               <div className="basis-2/5 flex items-end">
-                <h2 className="text-4xl font-medium font-comfortaa text-gray-800 text-left">{games![0].name.toUpperCase()}</h2>
+              <h2 className="text-4xl font-medium font-comfortaa text-gray-800 text-left">{games![0].name.toUpperCase()}</h2>
               </div>
             </Card>
           <Button

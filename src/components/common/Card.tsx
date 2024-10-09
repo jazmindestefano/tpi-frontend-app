@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
-const cardVariants = cva(["rounded-3xl shadow-lg", "p-4 w-auto h-96", "max-w-96 min-w-96"], {
+const cardVariants = cva(["rounded-3xl shadow-lg", "p-4 w-full h-96"], {
   variants: {
     variant: {
       primary: ["bg-[#F2C160]"],

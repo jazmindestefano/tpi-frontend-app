@@ -1,18 +1,20 @@
 import {useParams} from "react-router-dom";
 import {ThemeCardsList} from "../../components/themeSelect/ThemeCardsList.tsx";
-import {useGetThemesByActivityId} from "../../hooks/queries.ts";
+import {useGetThemesByGameId} from "../../hooks/queries.ts";
 import {useDispatch} from "react-redux";
 import {selectTheme} from "../../redux/store/themeSlice.ts";
 import {Theme} from "../../interfaces/interfaces.ts";
 
 export const ThemeSelect = () => {
-  const { activityId } = useParams();
-  const { themes, isLoading, error } = useGetThemesByActivityId(Number(activityId));
+  const { gameId } = useParams();
+  const { themes, isLoading, error } = useGetThemesByGameId(Number(gameId));
   const dispatch = useDispatch();
   
   const onCardClick = (theme: Theme) => {
     dispatch(selectTheme(theme))
   }
+
+  console.log(themes)
 
   return (
     isLoading ? <h1>Cargando...</h1> : 

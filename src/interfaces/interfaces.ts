@@ -1,6 +1,7 @@
 export interface Theme {
   id: number;
   name: string;
+  image: string;
 }
 
 export interface Game {

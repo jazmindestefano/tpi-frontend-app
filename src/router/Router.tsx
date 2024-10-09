@@ -22,7 +22,7 @@ export const router = createBrowserRouter([
                 element: <SnakeGame />
             },
             {
-                path: "/actividad/:activityId/tematicas",
+                path: "/actividad/:gameId/tematicas",
                 element: <ThemeSelect />
             }
         ],
