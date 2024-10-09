@@ -10,11 +10,19 @@ const snakeThemes = [
   { id: 2, name: "Vocales", image: "Vocales" },
 ];
 
+const palabrasThemes = [
+  { id: 2, name: "Banio", image: "Banio" },
+  { id: 2, name: "Patio", image: "Patio" },
+  { id: 2, name: "Cocina", image: "Cocina" },
+];
+
 export const ThemeSelectorPage = () => {
   const { gameId } = useParams();
   const { themes, isLoading, error } = useGetThemesByGameId(Number(gameId));
   const dispatch = useDispatch();
   const navigate = useNavigate()
+
+  console.log({gameId})
   
   const onCardClick = (theme: Theme) => {
     console.log(`card clickeada: ${theme.id}`)
@@ -24,7 +32,7 @@ export const ThemeSelectorPage = () => {
         navigate(`/actividad/${gameId}`)
         break
       case "2":
-        navigate(`/actividad/1`)
+        navigate(`/actividad/${gameId}`)
         break
       case "3":
         navigate(`/viborita`)
@@ -38,11 +46,13 @@ export const ThemeSelectorPage = () => {
   return (
     <>
       {gameId == "3" ? (
-      <ThemeCardsList themes={snakeThemes} onCardClick={onCardClick} />
+        <ThemeCardsList themes={snakeThemes} onCardClick={onCardClick} />
+      ) : gameId == "2" ? (
+        <ThemeCardsList themes={palabrasThemes} onCardClick={onCardClick} />
       ) : isLoading ? (
-      <h1>Cargando...</h1>
+        <h1>Cargando...</h1>
       ) : themes && themes.length !== 0 && !error ? (
-      <ThemeCardsList themes={themes} onCardClick={onCardClick} />
+        <ThemeCardsList themes={themes} onCardClick={onCardClick} />
       ) : null}
     </>
   );
