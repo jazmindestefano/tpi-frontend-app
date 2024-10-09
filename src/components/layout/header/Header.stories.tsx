@@ -1,5 +1,5 @@
 import {Meta, StoryObj} from "@storybook/react";
-import Header from './Header.tsx'
+import Header from './Header'
 import {reactRouterParameters, withRouter} from "storybook-addon-remix-react-router";
 
 const meta = {

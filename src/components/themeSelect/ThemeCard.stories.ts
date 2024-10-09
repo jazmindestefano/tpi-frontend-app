@@ -18,7 +18,8 @@ export const Default: Story = {
   args: {
     theme: {
       id: 1,
-      name: 'example'
+      name: 'example',
+      image: ''
     },
     onCardClick: () => {}
   }
