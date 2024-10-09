@@ -96,7 +96,7 @@ export default function VowelSnakeGame() {
   }, [snake, direction, vowel, isPaused]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-purple-300 via-purple-200 to-pink-200">
+    <div className="flex flex-col items-center justify-center h-full bg-gradient-to-br from-purple-300 via-purple-200 to-pink-200">
       <h1 className="text-4xl font-bold mb-4 text-purple-800">
         Vowel Snake Game
       </h1>
@@ -176,10 +176,10 @@ export default function VowelSnakeGame() {
         </button>
       </div>
       <div className="mt-4 text-2xl font-bold text-purple-800">
-        Eaten Vowels: {eatenVowels.join(", ")}
+        Vocales comidas: {eatenVowels.join(", ")}
       </div>
       <div className="mt-2 text-sm text-purple-600">
-        Press Space to pause/resume
+        Presiona espacio para pausar/reanudar
       </div>
       <AnimatePresence>
         {showBigVowel && (
