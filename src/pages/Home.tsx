@@ -1,110 +1,104 @@
 import React from "react";
 import {Volume2} from "lucide-react";
 import {useNavigate} from "react-router-dom";
-import Card from "../components/common/Card";
 import Button from "../components/common/Button.tsx";
 import { useGetGames } from '../hooks/queries.ts';
+import { speakText } from "../helpers/speakText.ts";
+import { CardBase } from "../components/common/CardBase.tsx";
 
 const Home: React.FC = () => {
   const navigate = useNavigate()
   const { games, isLoading, error } = useGetGames();
 
-  const speakText = (text: string) => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    window.speechSynthesis.speak(utterance);
-  };
+
+  if (error) {
+    return <p>Error</p>
+  }
+
+  if (isLoading) {
+    return <h1>Cargando...</h1>
+  }
 
   return (
-    isLoading ? <h1>Cargando...</h1> : 
-      games && games.length !== 0 && !error ?
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-16 h-full px-10 my-16">
-        <div className="flex justify-center flex-col items-center cursor-pointer w-full">
-            <div className="flex justify-center flex-col items-center w-full">
-            <Card variant={"primary"} onClick={() => navigate(`/actividad/${games![0].id}/tematicas`)} className={"flex flex-col max-w-96"}>
-                  <div className="basis-3/5 flex items-end justify-center">
-                  <img
-                    src="/letras.svg"
-                    className="object-contain"
-                    alt="Letras"
-                  />
-                  </div>
-                  <div className="basis-2/5 flex items-end">
-                  <h2 className="text-4xl font-medium font-comfortaa text-gray-800 text-left">{games![0].name.toUpperCase()}</h2>
-                  </div>
-                </Card>
-            </div>
-            <Button
-                size={"circleSize"}
-                variant={"fifth"}
+    games && games.length !== 0 && !error ? (
+      <div className="grid grid-cols-1 xl:grid-cols-3 w-full px-16 items-center">
+        <div className="w-full flex justify-center items-center">
+          <CardBase
+            outer={
+              <Button
+                size={"circle"}
+                variant={"secondary"}
                 shape={"circle"}
-                className="mt-3"
-                onClick={() =>
-                  games &&
-                  speakText(
-                    games[0].name
-                  )
-                }
+                onClick={() => speakText("Letras")}
               >
-                <Volume2 className="text-white w-auto h-38"/>
+                <Volume2 className="text-white w-auto h-38" />
               </Button>
-        </div>
-        <div className="flex justify-center flex-col items-center cursor-pointer w-full">
-            <div className="flex justify-center flex-col items-center cursor-pointer w-full">
-              <Card variant={"secondary"} className="flex max-w-96" onClick={() => navigate(`/actividad/${games![1].id}/tematicas`)}>
-                  <div className="flex flex-row">
-                    <div className="w-1/3 p-4 flex flex-col justify-center">
-                      <h2 className="text-4xl font-medium font-comfortaa text-gray-800 pb-36">{games![1].name.toUpperCase()}</h2>
-                    </div>
-                    <div className="w-2/3">
-                      <img src="/palabras.svg" className="scale-100" alt="Palabras"/>
-                    </div>
-                  </div>
-                </Card>
-            </div>
-            <Button
-              size={"circleSize"}
-              variant={"fifth"}
-              shape={"circle"}
-              className="mt-3"
-              onClick={() =>
-                games &&
-                speakText(
-                  games[1].name
-                )
-              }
-            >
-              <Volume2 className="text-white w-auto h-38"/>
-            </Button>
-        </div>
-        <div className="flex justify-center flex-col items-center cursor-pointer w-full">
-          <div className="flex justify-center flex-col items-center cursor-pointer w-full">
-            <Card variant={"tertiary"} className="flex max-w-96" onClick={() => navigate(`/actividad/${games![2].id}/tematicas`)}>
-              <div className="flex flex-row">
-                <div className="w-2/4">
-                  <img src="/viborita.svg" className="h-full scale-95" alt="la viborita"/>
-                </div>
-                <div className="w-2/4 py-2 flex flex-col justify-center">
-                  <h2 className="text-4xl font-medium font-comfortaa text-gray-800">LA VIBORITA</h2>
-                </div>
+            }
+            inner={
+              <div>
+                <h2 className="text-4xl font-medium font-comfortaa text-gray-800 text-left">{games![0].name}</h2>
               </div>
-            </Card>
-          </div>
-          <Button
-            size={"circleSize"}
-            variant={"fifth"}
-            shape={"circle"}
-            className="mt-3"
-            onClick={() =>
-              games &&
-              speakText(
-                games[2].name
-              )
             }
           >
-            <Volume2 className="text-white w-auto h-38"/>
-          </Button>
+            <div onClick={() => navigate(`/actividad/${games![0].id}/tematicas`)}>
+              <img
+                src="/letras.svg"
+                className="object-contain"
+                alt="Letras"
+              />
+            </div>
+          </CardBase>
         </div>
-    </div> : <p>error</p>
+        <div className="w-full flex flex-col gap-4 justify-center items-center">
+          <CardBase
+          >
+            <div className="flex">
+                <img
+                  src="/palabras.svg"
+                  className="object-contain size-60"
+                  alt="Palabras"
+                />
+                <h2 className="text-3xl font-medium font-comfortaa text-gray-800 text-left">PALABRAS</h2>
+            </div>
+          </CardBase>
+          <Button
+                size={"circle"}
+                variant={"secondary"}
+                shape={"circle"}
+                onClick={() => speakText("Palabras")}
+              >
+                <Volume2 color="white" />
+              </Button>
+        </div>
+        <div className="w-full flex justify-center items-center">
+          <CardBase
+            outer={
+              <Button
+                size={"circle"}
+                variant={"secondary"}
+                shape={"circle"}
+                onClick={() => speakText("Viborita")}
+              >
+                <Volume2 color="white" />
+              </Button>
+            }
+            inner={
+              <div>
+                <h2 className="text-4xl font-medium font-comfortaa text-gray-800 text-left">VIBORITA</h2>
+              </div>
+            }
+          >
+            <img
+              src="/viborita.svg"
+              className="object-contain"
+              alt="Viborita"
+            />
+          </CardBase>
+        </div>
+      </div>
+    ) : (
+      <p>No games available</p>
+    )
   );
 };
 

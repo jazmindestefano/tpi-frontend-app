@@ -22,7 +22,7 @@ export const ThemeCard: React.FC<ThemeCardProps> = ({theme, onCardClick}) => {
       </div>
       <div className="flex justify-center w-full">
         <Button
-                size={"circleSize"}
+                size={"circle"}
                 shape={"circle"}
                 variant={"fifth"}
                 onClick={() =>

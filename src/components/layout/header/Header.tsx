@@ -13,7 +13,7 @@ const Header: React.FC = () => {
       <div className="flex flex-row gap-4">
         <Button
           size={"square"}
-          variant={"fourth"}
+          variant={"tertiary"}
           onClick={() =>
             navigate(location.pathname !== "/perfil" ? "/perfil" : "/")
           }
@@ -22,7 +22,7 @@ const Header: React.FC = () => {
             <img
               src="/avatar/lion-avatar.png"
               alt="Avatar"
-              className="w-full h-8 object-cover"
+              className="object-cover h-10"
             />
           ) : (
             <House />
