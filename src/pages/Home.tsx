@@ -6,7 +6,7 @@ import { useGetGames } from "../hooks/queries.ts";
 import { speakText } from "../helpers/speakText.ts";
 import { CardBase } from "../components/common/CardBase.tsx";
 
-const classNameInner = "bg-orange-300 p-6 h-[441px]";
+const classNameInner = "p-6 h-[441px]";
 const classNameOuter = "p-6 gap-4";
 
 const Home: React.FC = () => {
@@ -28,7 +28,7 @@ const Home: React.FC = () => {
   return games && games.length !== 0 && !error ? (
     <div className="w-full flex flex-col md:flex-row justify-around items-center px-24">
       <CardBase
-        classNameInner={classNameInner}
+        classNameInner={classNameInner + " bg-orange-300 "}
         classNameOuter={classNameOuter}
         outer={
           <Button
@@ -56,7 +56,7 @@ const Home: React.FC = () => {
         </div>
       </CardBase>
       <CardBase
-        classNameInner={classNameInner}
+        classNameInner={classNameInner + " bg-orange-150"}
         classNameOuter={classNameOuter}
         outer={
           <Button
@@ -81,7 +81,7 @@ const Home: React.FC = () => {
         </div>
       </CardBase>
       <CardBase
-        classNameInner={classNameInner}
+        classNameInner={classNameInner + " bg-blue-500"}
         classNameOuter={classNameOuter}
         outer={
           <Button

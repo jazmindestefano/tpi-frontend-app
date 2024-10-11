@@ -20,6 +20,7 @@ export default {
         'orange': {
           '50': '#fef8ec',
           '100': '#fbecca',
+          '150': "#FFBB6D",
           '200': '#f6d891',
           '300': '#f2c160',
           '400': '#eea631',
