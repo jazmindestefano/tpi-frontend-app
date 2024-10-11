@@ -16,9 +16,9 @@ export const CardBase: React.FC<CardBaseProps> = ({
   classNameInner
 }) => {
   return (
-    <div className={`w-full rounded-3xl flex flex-col justify-center items-center max-w-96 max-h-96 gap-4 shadow-lg cursor-pointer ${classNameOuter}`}>
-      <div className={`w-full rounded-3xl bg-orange-300 p-6 flex flex-col justify-center items-center gap-4 ${classNameInner}`}>
-        <div className="w-full flex flex-col justify-center items-center">
+    <div className={`max-w-[450px] w-full rounded-3xl flex flex-col justify-center items-center cursor-pointer ${classNameOuter}`}>
+      <div className={`w-full rounded-3xl flex flex-col justify-center items-center ${classNameInner}`}>
+      <div className="w-full flex flex-col justify-center items-center overflow-hidden">
           {children}
         </div>
         {inner}

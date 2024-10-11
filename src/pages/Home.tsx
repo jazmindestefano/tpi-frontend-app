@@ -1,104 +1,113 @@
 import React from "react";
-import {Volume2} from "lucide-react";
-import {useNavigate} from "react-router-dom";
+import { Volume2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import Button from "../components/common/Button.tsx";
-import { useGetGames } from '../hooks/queries.ts';
+import { useGetGames } from "../hooks/queries.ts";
 import { speakText } from "../helpers/speakText.ts";
 import { CardBase } from "../components/common/CardBase.tsx";
 
+const classNameInner = "bg-orange-300 p-6 h-[441px]";
+const classNameOuter = "p-6 gap-4";
+
 const Home: React.FC = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { games, isLoading, error } = useGetGames();
 
-
   if (error) {
-    return <p>Error</p>
+    return <p>Error</p>;
   }
 
   if (isLoading) {
-    return <h1>Cargando...</h1>
+    return <h1>Cargando...</h1>;
   }
 
-  return (
-    games && games.length !== 0 && !error ? (
-      <div className="grid grid-cols-1 xl:grid-cols-3 w-full px-16 items-center">
-        <div className="w-full flex justify-center items-center">
-          <CardBase
-            outer={
-              <Button
-                size={"circle"}
-                variant={"secondary"}
-                shape={"circle"}
-                onClick={() => speakText("Letras")}
-              >
-                <Volume2 className="text-white w-auto h-38" />
-              </Button>
-            }
-            inner={
-              <div>
-                <h2 className="text-4xl font-medium font-comfortaa text-gray-800 text-left">{games![0].name}</h2>
-              </div>
-            }
-          >
-            <div onClick={() => navigate(`/actividad/${games![0].id}/tematicas`)}>
-              <img
-                src="/letras.svg"
-                className="object-contain"
-                alt="Letras"
-              />
-            </div>
-          </CardBase>
-        </div>
-        <div className="w-full flex flex-col gap-4 justify-center items-center">
-          <CardBase
-          >
-            <div className="flex">
-                <img
-                  src="/palabras.svg"
-                  className="object-contain size-60"
-                  alt="Palabras"
-                />
-                <h2 className="text-3xl font-medium font-comfortaa text-gray-800 text-left">PALABRAS</h2>
-            </div>
-          </CardBase>
+  if (!games || games.length === 0) {
+    return <p>No games available</p>;
+  }
+
+  return games && games.length !== 0 && !error ? (
+    <div className="w-full flex flex-col md:flex-row justify-around items-center px-24">
+      <CardBase
+        classNameInner={classNameInner}
+        classNameOuter={classNameOuter}
+        outer={
           <Button
-                size={"circle"}
-                variant={"secondary"}
-                shape={"circle"}
-                onClick={() => speakText("Palabras")}
-              >
-                <Volume2 color="white" />
-              </Button>
-        </div>
-        <div className="w-full flex justify-center items-center">
-          <CardBase
-            outer={
-              <Button
-                size={"circle"}
-                variant={"secondary"}
-                shape={"circle"}
-                onClick={() => speakText("Viborita")}
-              >
-                <Volume2 color="white" />
-              </Button>
-            }
-            inner={
-              <div>
-                <h2 className="text-4xl font-medium font-comfortaa text-gray-800 text-left">VIBORITA</h2>
-              </div>
-            }
+            size={"circle"}
+            variant={"secondary"}
+            shape={"circle"}
+            onClick={() => speakText("Letras")}
           >
-            <img
-              src="/viborita.svg"
-              className="object-contain"
-              alt="Viborita"
-            />
-          </CardBase>
+            <Volume2 className="text-white w-auto h-38" />
+          </Button>
+        }
+      >
+        <div
+          onClick={() => navigate(`/actividad/${games![0].id}/tematicas`)}
+          className="flex flex-col justify-center items-start"
+        >
+          <img
+            src="/letras.svg"
+            className="object-contain size-64 p-4"
+            alt="Letras"
+          />
+          <h2 className="text-4xl font-medium font-comfortaa text-gray-800 text-left">
+            {games![0].name.toUpperCase()}
+          </h2>
         </div>
-      </div>
-    ) : (
-      <p>No games available</p>
-    )
+      </CardBase>
+      <CardBase
+        classNameInner={classNameInner}
+        classNameOuter={classNameOuter}
+        outer={
+          <Button
+            size={"circle"}
+            variant={"secondary"}
+            shape={"circle"}
+            onClick={() => speakText("Palabras")}
+          >
+            <Volume2 color="white" />
+          </Button>
+        }
+      >
+        <div className="flex justify-center items-center">
+              <h2 className="text-4xl font-medium font-comfortaa text-gray-800 text-left">
+                {games![1].name.toUpperCase()}
+              </h2>
+            <img
+              src="/palabras.svg"
+              className="object-contain size-96"
+              alt="Palabras"
+            />
+        </div>
+      </CardBase>
+      <CardBase
+        classNameInner={classNameInner}
+        classNameOuter={classNameOuter}
+        outer={
+          <Button
+            size={"circle"}
+            variant={"secondary"}
+            shape={"circle"}
+            onClick={() => speakText("Viborita")}
+          >
+            <Volume2 color="white" />
+          </Button>
+        }
+      >
+        <div className="flex justify-center items-center">
+          <img
+            src="/viborita.svg"
+            className="object-contain size-96"
+            alt="Viborita"
+          />
+          <h2 className="text-4xl font-medium font-comfortaa text-gray-800 text-left">
+            VIBORITA
+          </h2>
+        </div>
+      </CardBase>
+    </div>
+  ) : (
+    <p>No games available</p>
   );
 };
 
