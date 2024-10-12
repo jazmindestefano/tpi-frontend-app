@@ -1,9 +1,9 @@
 import {useNavigate, useParams} from "react-router-dom";
-import {ThemeCardsList} from "../../components/themeSelect/ThemeCardsList.tsx";
-import {useGetThemesByGameId} from "../../hooks/queries.ts";
 import {useDispatch} from "react-redux";
-import {selectTheme} from "../../redux/store/gameSlice.ts";
-import {Theme} from "../../interfaces/interfaces.ts";
+import { useGetThemesByGameId } from "../hooks/queries";
+import { Theme } from "../interfaces/interfaces";
+import { selectTheme } from "../redux/store/gameSlice";
+import { ThemeCardsList } from "../components/themeSelect/ThemeCardsList";
 
 const snakeThemes = [
   { id: 1, name: "Silabas", image: "Silabas" },
