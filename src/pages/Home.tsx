@@ -3,10 +3,11 @@ import { Volume2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import Button from "../components/common/Button.tsx";
+import SpinnerLoader from "../components/common/SpinnerLoader.tsx";
 import { useGetGames } from "../hooks/queries.ts";
 import { speakText } from "../helpers/speakText.ts";
 import { CardBase } from "../components/common/CardBase.tsx";
-import { selectGame } from '../redux/store/gameSlice.ts';
+import { selectGame } from "../redux/store/gameSlice.ts";
 
 const classNameInner = "p-6 h-[441px]";
 const classNameOuter = "p-6 gap-4";
@@ -21,7 +22,7 @@ const Home: React.FC = () => {
   }
 
   if (isLoading) {
-    return <h1>Cargando...</h1>;
+    return <SpinnerLoader />;
   }
 
   return games && games.length !== 0 && !error ? (
@@ -29,7 +30,13 @@ const Home: React.FC = () => {
       {games.map((game, index) => (
         <CardBase
           key={game.id}
-          classNameInner={`${classNameInner} ${index === 0 ? "bg-orange-300" : index === 1 ? "bg-orange-150" : "bg-blue-500"}`}
+          classNameInner={`${classNameInner} ${
+            index === 0
+              ? "bg-orange-300"
+              : index === 1
+              ? "bg-orange-150"
+              : "bg-blue-500"
+          }`}
           classNameOuter={classNameOuter}
           outer={
             <Button

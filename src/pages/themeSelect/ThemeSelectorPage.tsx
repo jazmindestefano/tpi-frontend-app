@@ -1,9 +1,10 @@
-import {useNavigate, useParams} from "react-router-dom";
-import {ThemeCardsList} from "../../components/themeSelect/ThemeCardsList.tsx";
-import {useGetThemesByGameId} from "../../hooks/queries.ts";
-import {useDispatch} from "react-redux";
-import {selectTheme} from "../../redux/store/gameSlice.ts";
-import {Theme} from "../../interfaces/interfaces.ts";
+import { useNavigate, useParams } from "react-router-dom";
+import { ThemeCardsList } from "../../components/themeSelect/ThemeCardsList.tsx";
+import { useGetThemesByGameId } from "../../hooks/queries.ts";
+import { useDispatch } from "react-redux";
+import { selectTheme } from "../../redux/store/gameSlice.ts";
+import { Theme } from "../../interfaces/interfaces.ts";
+import SpinnerLoader from "../../components/common/SpinnerLoader.tsx";
 
 const snakeThemes = [
   { id: 1, name: "Silabas", image: "Silabas" },
@@ -20,28 +21,27 @@ export const ThemeSelectorPage = () => {
   const { gameId } = useParams();
   const { themes, isLoading, error } = useGetThemesByGameId(Number(gameId));
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  console.log({gameId})
-  
+  console.log({ gameId });
+
   const onCardClick = (theme: Theme) => {
-    console.log(`card clickeada: ${theme.id}`)
-    dispatch(selectTheme(theme))
+    console.log(`card clickeada: ${theme.id}`);
+    dispatch(selectTheme(theme));
     switch (gameId) {
       case "1":
-        navigate(`/actividad/${gameId}`)
-        break
+        navigate(`/actividad/${gameId}`);
+        break;
       case "2":
-        navigate(`/actividad/${gameId}`)
-        break
+        navigate(`/actividad/${gameId}`);
+        break;
       case "3":
-        navigate(`/viborita`)
-        break
+        navigate(`/viborita`);
+        break;
       default:
-        navigate(`/`)
+        navigate(`/`);
     }
- 
-  }
+  };
 
   return (
     <>
@@ -50,7 +50,7 @@ export const ThemeSelectorPage = () => {
       ) : gameId == "2" ? (
         <ThemeCardsList themes={palabrasThemes} onCardClick={onCardClick} />
       ) : isLoading ? (
-        <h1>Cargando...</h1>
+        <SpinnerLoader />
       ) : themes && themes.length !== 0 && !error ? (
         <ThemeCardsList themes={themes} onCardClick={onCardClick} />
       ) : null}
