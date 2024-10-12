@@ -16,7 +16,7 @@ const palabrasThemes = [
   { id: 2, name: "Cocina", image: "Cocina" },
 ];
 
-export const ThemeSelectorPage = () => {
+const ThemeSelector = () => {
   const { gameId } = useParams();
   const { themes, isLoading, error } = useGetThemesByGameId(Number(gameId));
   const dispatch = useDispatch();
@@ -57,3 +57,5 @@ export const ThemeSelectorPage = () => {
     </>
   );
 };
+
+export default ThemeSelector;

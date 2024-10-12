@@ -14,7 +14,7 @@ interface HomeCardProps {
 
 const HomeCard: React.FC<HomeCardProps> = ({ buttonVariant, onClick, game }) => {
     return (
-    <BaseCard className={"flex flex-col justify-between items-center w-full gap-2 shadow-none"}>
+    <BaseCard className={"flex flex-col justify-between items-center w-full gap-4 shadow-none"}>
         <BaseContainer className={"gap-6 bg-orange-200 rounded-3xl"}>
             <div onClick={onClick}>
                 <img className="rounded-3xl object-cover h-64" src={`/viborita.svg`} alt={game.name}/>

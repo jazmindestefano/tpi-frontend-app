@@ -1,13 +1,13 @@
 import {createBrowserRouter} from 'react-router-dom';
 import Home from '../pages/Home';
 import Profile from '../pages/Profile';
-import SnakeGame from '../pages/SnakeGame';
+import SnakeGame from '../pages/games/SnakeGame.tsx';
 import PageLayout from '../components/layout/pageLayout/PageLayout.tsx';
-import {ThemeSelectorPage} from "../pages/ThemeSelectorPage.tsx";
-import {ErrorPage} from "../pages/ErrorPage.tsx";
-import { GamePage } from '../pages/GamePage.tsx';
-import {NotFoundPage} from "../pages/NotFoundPage.tsx";
-import {CongratulationsPage} from "../pages/CongratulationsPage.tsx";
+import ThemeSelectorPage from "../pages/ThemeSelector.tsx";
+import ErrorPage from "../pages/Error.tsx";
+import GameSelectoPage from '../pages/GameSelector.tsx';
+import NotFoundPage from "../pages/NotFound.tsx";
+import CongratulationsPage from "../pages/Congratulations.tsx";
 import {AudioRecorder} from "../components/audio/AudioRecorder.tsx";
 
 export const router = createBrowserRouter([
@@ -32,7 +32,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/actividad/:gameId",
-        element: <GamePage />
+        element: <GameSelectoPage />
       },
       {
         path: "/audio",

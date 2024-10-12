@@ -16,7 +16,7 @@ const Home: React.FC = () => {
   }
 
   return games && games.length !== 0 && !error ? (
-    <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 mt-16 px-8">
+    <div className="w-full grid grid-cols-1 md:grid-cols-3 mt-16">
       {games.map((game) => (
       <div key={game.id} className="flex justify-center items-center w-full">
       <HomeCard

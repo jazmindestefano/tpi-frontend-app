@@ -30,3 +30,7 @@ export interface PostUserRecordingData {
   text: string
   userAudio: Blob
 }
+
+export interface GameProps {
+  selectedThemeId: number;
+}
