@@ -6,7 +6,7 @@ const PageLayout: React.FC = () => {
     return (
         <div className="flex flex-col min-h-screen bg-orange-50" style={{ backgroundImage: 'url(/fondo.png)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
             <Header />
-            <main className="mt-10 flex flex-grow justify-center items-center bg-cover bg-center relative">
+            <main className="flex flex-grow justify-center items-center xl:px-48 md:px-20 py-16">
                 <Outlet />
             </main>
         </div>

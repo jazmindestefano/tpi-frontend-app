@@ -4,7 +4,7 @@ import {useGetGameLevels} from "../hooks/queries.ts";
 import {useNavigate} from "react-router-dom";
 import {LevelOption} from "../interfaces/interfaces.ts";
 import {ArrowBigRight, Mic, Volume2} from "lucide-react";
-import Button from "../components/common/Button.tsx";
+import Button from "../components/common/buttons/Button.tsx";
 import {shuffleArray} from "../helpers/arrays.ts";
 import {speakText} from "../helpers/speakText.ts";
 

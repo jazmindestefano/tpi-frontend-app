@@ -1,6 +1,6 @@
 import React  from "react";
 import { House, LogOut } from "lucide-react";
-import Button from "../../common/Button";
+import Button from "../../common/buttons/Button";
 import { useNavigate } from "react-router-dom";
 
 const Header: React.FC = () => {

@@ -1,6 +1,6 @@
 import React from "react";
 import classNames from "classnames";
-import {Label} from "./Label.tsx";
+import { Label } from "../labels/Label";
 
 interface InputProps {
   name: string
