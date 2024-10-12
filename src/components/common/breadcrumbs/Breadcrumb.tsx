@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import useBreadcrumbs from "../../hooks/useBreadcrumbs";
+import useBreadcrumbs from "../../../hooks/useBreadcrumbs";
 
 const Breadcrumb: React.FC = () => {
   const breadcrumbs = useBreadcrumbs();
