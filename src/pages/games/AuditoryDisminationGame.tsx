@@ -1,4 +1,3 @@
-import { Volume2, Mic } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/buttons/Button";
@@ -6,6 +5,7 @@ import { shuffleArray } from "../../helpers/arrays";
 import { speakText } from "../../helpers/speakText";
 import { useGetGameLevels } from "../../hooks/queries";
 import { GameProps, LevelOption } from "../../interfaces/interfaces";
+import { MicIcon, VolumeIcon } from "../../components/common/icons/icons";
 
 const AuditoryDiscriminationGame: React.FC<GameProps> = ({ selectedThemeId }) => {
     const { levels, isLoading, error } = useGetGameLevels(selectedThemeId);
@@ -54,7 +54,7 @@ const AuditoryDiscriminationGame: React.FC<GameProps> = ({ selectedThemeId }) =>
                 )
               }
             >
-              <Volume2 />
+              <VolumeIcon />
             </Button>
           </div>
         </div>
@@ -79,7 +79,7 @@ const AuditoryDiscriminationGame: React.FC<GameProps> = ({ selectedThemeId }) =>
                 variant={"fourth"}
                 onClick={() => speakText(option.name)}
               >
-                <Mic color="#ffffff" size={36} />
+                <MicIcon />
               </Button>
             </div>
           ))}

@@ -8,7 +8,7 @@ import ErrorPage from "../pages/Error.tsx";
 import GameSelectoPage from '../pages/GameSelector.tsx';
 import NotFoundPage from "../pages/NotFound.tsx";
 import CongratulationsPage from "../pages/Congratulations.tsx";
-import {AudioRecorder} from "../components/audio/AudioRecorder.tsx";
+import AudioRecorder from "../components/audio/AudioRecorder.tsx";
 
 export const router = createBrowserRouter([
   {

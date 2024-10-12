@@ -1,4 +1,3 @@
-import { Volume2, Mic, ArrowBigRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/buttons/Button";
@@ -6,11 +5,16 @@ import { shuffleArray } from "../../helpers/arrays";
 import { speakText } from "../../helpers/speakText";
 import { useGetGameLevels } from "../../hooks/queries";
 import { GameProps, LevelOption } from "../../interfaces/interfaces";
+import { useAudioRecording } from "../../hooks/useAudioRecording";
+import { ArrowRightIcon, AudioLinesIcon, MicIcon, VolumeIcon } from "../../components/common/icons/icons";
 
 const RecordGame: React.FC<GameProps> = ({ selectedThemeId }) => {
     const { levels, isLoading, error } = useGetGameLevels(selectedThemeId);
+    const { isRecording, audio, startRecording, stopRecording } = useAudioRecording()
     const [currentLevel, setCurrentLevel] = useState<number>(0);
     const [levelOptions, setLevelOptions] = useState<LevelOption[]>([]);
+
+    console.log({audio})
   
     const navigate = useNavigate();
   
@@ -34,7 +38,7 @@ const RecordGame: React.FC<GameProps> = ({ selectedThemeId }) => {
     };
   
     return !isLoading ? (
-      <div className="w-full h-full">
+      <div className="w-full h-full relative flex justify-center items-center flex-col">
         <div className="w-full flex flex-col justify-center items-center gap-4">
           <p className="font-bold text-2xl">
             Como decis la palabra
@@ -54,7 +58,7 @@ const RecordGame: React.FC<GameProps> = ({ selectedThemeId }) => {
                 )
               }
             >
-              <Volume2 />
+              <VolumeIcon />
             </Button>
           </div>
         </div>
@@ -62,7 +66,7 @@ const RecordGame: React.FC<GameProps> = ({ selectedThemeId }) => {
           {levelOptions.map((option) => (
             <div
               key={option.id}
-              className={`flex flex-col items-center justify-center cursor-pointer rounded-3xl shadow-lg p-4 h-auto gap-6 bg-[#F7F7F7] ${levelOptions.length === 1 ? 'w-96' : 'w-full'}`}
+              className={`flex flex-col items-center justify-center cursor-pointer rounded-3xl shadow-lg p-4 h-auto gap-6 bg-orange-50 ${levelOptions.length === 1 ? 'w-96' : 'w-full'}`}
             >
               <div className="p-4 w-full rounded-3xl h-80 flex flex-col items-center justify-center" onClick={() => {
                 isCorrectOption(option);
@@ -73,24 +77,25 @@ const RecordGame: React.FC<GameProps> = ({ selectedThemeId }) => {
                   className="w-auto h-80"
                 />
               </div>
-              <Button
+                <Button
                 size={"circle"}
                 shape={"circle"}
                 variant={"fourth"}
-                onClick={() => speakText(option.name)}
-              >
-                <Mic />
-              </Button>
+                // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+                onClick={() => { isRecording ? stopRecording() : startRecording(); }}
+                >
+                {isRecording ? <AudioLinesIcon /> : <MicIcon />}
+                </Button>
             </div>
           ))}
-          <div className="self-center">
+            <div className="absolute right-0 left-0 flex justify-end self-center pr-10">
             <Button
               size={"circle"}
               shape={"circle"}
               variant={"primary"}
-              onClick={() => navigate('/next')}
+              onClick={() => navigate('/felicitaciones')}
             >
-              <ArrowBigRight />
+              <ArrowRightIcon />
             </Button>
           </div>
         </div>

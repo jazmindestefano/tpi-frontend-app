@@ -2,7 +2,7 @@ import * as React from 'react';
 import {useAudioRecording} from "../../hooks/useAudioRecording.ts";
 
 
-export const AudioRecorder: React.FC = () => {
+const AudioRecorder: React.FC = () => {
   const { isRecording, error, audio, startRecording, stopRecording } = useAudioRecording()
   
   return (
@@ -13,3 +13,5 @@ export const AudioRecorder: React.FC = () => {
     </div> : null
   );
 };
+
+export default AudioRecorder;
