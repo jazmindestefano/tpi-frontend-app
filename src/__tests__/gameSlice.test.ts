@@ -1,13 +1,14 @@
-import themeReducer, {selectTheme} from '../redux/store/themeSlice'
+import gameReducer, {selectTheme} from '../redux/store/gameSlice'
 import {Theme} from "../interfaces/interfaces";
 
-describe('themeSlice', () => {
+describe('gameSlice', () => {
   const initialState = {
     selectedTheme: null,
+    selectedGame: null
   };
 
   it('should handle initial state', () => {
-    expect(themeReducer(undefined, { type: 'unknown' })).toEqual(initialState);
+    expect(gameReducer(undefined, { type: 'unknown' })).toEqual(initialState);
   });
 
   it('should handle selectTheme', () => {
@@ -15,7 +16,7 @@ describe('themeSlice', () => {
       id: 1, name: 'example',
       image: ''
     };
-    const actual = themeReducer(initialState, selectTheme(theme));
+    const actual = gameReducer(initialState, selectTheme(theme));
     expect(actual.selectedTheme).toEqual(theme);
   });
 });

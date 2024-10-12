@@ -6,7 +6,7 @@ import Button from "../components/common/Button.tsx";
 import { useGetGames } from "../hooks/queries.ts";
 import { speakText } from "../helpers/speakText.ts";
 import { CardBase } from "../components/common/CardBase.tsx";
-import { selectGame } from '../redux/store/gameSelector.ts';
+import { selectGame } from '../redux/store/gameSlice.ts';
 
 const classNameInner = "p-6 h-[441px]";
 const classNameOuter = "p-6 gap-4";
@@ -45,7 +45,7 @@ const Home: React.FC = () => {
           <div
             className="flex justify-center items-center"
             onClick={() => {
-              dispatch(selectGame(game.id.toString()));
+              dispatch(selectGame(game));
               navigate(`/actividad/${game.id}/tematicas`);
             }}
           >
