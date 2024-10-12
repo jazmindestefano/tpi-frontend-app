@@ -8,6 +8,7 @@ import {ErrorPage} from "../pages/ErrorPage.tsx";
 import { GamePage } from '../pages/GamePage.tsx';
 import {NotFoundPage} from "../pages/NotFoundPage.tsx";
 import {CongratulationsPage} from "../pages/CongratulationsPage.tsx";
+import {AudioRecorder} from "../components/audio/AudioRecorder.tsx";
 
 export const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ export const router = createBrowserRouter([
       {
         path: "/actividad/:gameId",
         element: <GamePage />
+      },
+      {
+        path: "/audio",
+        element: <AudioRecorder />
       },
       {
         path: "/felicitaciones",
