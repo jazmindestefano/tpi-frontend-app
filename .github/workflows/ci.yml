@@ -52,7 +52,17 @@ jobs:
         run: vercel pull --yes --environment=${{ github.ref == 'refs/heads/develop' && 'preview' || 'production' }} --token=${{ secrets.VERCEL_TOKEN }}
 
       - name: Build Project Artifacts
-        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
+            vercel build --prod --token=${{ secrets.VERCEL_TOKEN }} # Construye para producción para prebuilt en develop
+          else
+            vercel build --prod --token=${{ secrets.VERCEL_TOKEN }} # Construye para producción en master
+          fi
 
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/develop" ]]; then
+            vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }} # Despliega preconstruido en develop
+          else
+            vercel deploy --prod --token=${{ secrets.VERCEL_TOKEN }} # Despliega producción en master
+          fi
