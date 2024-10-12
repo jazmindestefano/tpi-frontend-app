@@ -1,5 +1,5 @@
-import {ThemeCard} from "./ThemeCard.tsx";
 import {Meta, StoryObj} from "@storybook/react";
+import { ThemeCard } from "../common/cards/ThemeCard";
 
 const meta = {
   title: "ThemeSelect/ThemeCard",
