@@ -9,7 +9,7 @@ on:
     branches:
       - master
       - develop
-    types: [opened, synchronize, reopened, closed]
+    types: [opened, synchronize, reopened]
 
 jobs:
   build_and_test:
@@ -37,28 +37,28 @@ jobs:
     runs-on: ubuntu-latest
     needs: build_and_test
     if: github.ref == 'refs/heads/develop'
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
-      - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Build Project Artifacts
-        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
 
+    steps:
+      - name: Set environment to preview
+        run: echo "ENVIRONMENT=preview" >> $GITHUB_ENV
+
+      - name: Deploy to Vercel
+        run: |
+          vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+          vercel build --token=${{ secrets.VERCEL_TOKEN }}
+          vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+          
   deploy_prod:
     runs-on: ubuntu-latest
     needs: build_and_test
     if: github.ref == 'refs/heads/master'
+
     steps:
-      - uses: actions/checkout@v3
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
-      - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Build Project Artifacts
-        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Set environment to production
+        run: echo "ENVIRONMENT=production" >> $GITHUB_ENV
+
+      - name: Deploy to Vercel
+        run: |
+          vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+          vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+          vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
