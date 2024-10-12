@@ -44,12 +44,13 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Deploy to Preview
-        uses: ./.github/workflows/deploy.yml
-        with:
-          environment: preview
-          buildFlag: 'prod'
-          deployFlag: ''
+        
+    deploy_to_preview:
+      uses: ./.github/workflows/deploy.yml
+      with:
+        environment: preview
+        buildFlag: 'prod'
+        deployFlag: ''
 
   deploy_prod:
     needs: build_and_test
@@ -58,9 +59,10 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
-      - name: Deploy to Production
-        uses: ./.github/workflows/deploy.yml
-        with:
-          environment: production
-          buildFlag: 'prod'
-          deployFlag: 'prod'
+        
+    deploy_to_production:
+      uses: ./.github/workflows/deploy.yml
+      with:
+        environment: production
+        buildFlag: 'prod'
+        deployFlag: 'prod'
