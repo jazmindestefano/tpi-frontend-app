@@ -38,28 +38,28 @@ jobs:
         run: npm run build
 
   deploy_preview:
-    needs: build_and_test
-    runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/develop'
-    steps:
-      - name: List directory
-        run: ls -la .github/workflows
-      - name: Deploy to Preview
-        uses: .github/workflows/deploy.yml
-        with:
-          environment: preview
-          buildFlag: 'prod'
-          deployFlag: ''
+  needs: build_and_test
+  runs-on: ubuntu-latest
+  if: github.ref == 'refs/heads/develop'
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    - name: Deploy to Preview
+      uses: ./.github/workflows/deploy.yml
+      with:
+        environment: preview
+        buildFlag: 'prod'
+        deployFlag: ''
 
   deploy_prod:
     needs: build_and_test
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/master'
     steps:
-      - name: List directory
-        run: ls -la .github/workflows
+      - name: Checkout code
+        uses: actions/checkout@v3
       - name: Deploy to Production
-        uses: .github/workflows/deploy.yml
+        uses: ./.github/workflows/deploy.yml
         with:
           environment: production
           buildFlag: 'prod'
