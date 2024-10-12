@@ -1,9 +1,5 @@
 name: CI Pipeline
 
-defaults:
-  run:
-    shell: bash
-
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
@@ -40,32 +36,37 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build_and_test
+    strategy:
+      matrix:
+        environment: [develop, master]
+    if: github.ref == 'refs/heads/${{ matrix.environment }}'
+
     steps:
       - uses: actions/checkout@v3
+
       - name: Install Vercel CLI
         run: npm install --global vercel@latest
+
       - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=${{ env.ENVIRONMENT }} --token=${{ secrets.VERCEL_TOKEN }}
+        run: |
+          if [ "${{ matrix.environment }}" == "develop" ]; then
+            vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+          elif [ "${{ matrix.environment }}" == "master" ]; then
+            vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+          fi
+
       - name: Build Project Artifacts
-        run: vercel build --${{ env.BUILD_FLAG }} --token=${{ secrets.VERCEL_TOKEN }}
+        run: |
+          if [ "${{ matrix.environment }}" == "develop" ]; then
+            vercel build --token=${{ secrets.VERCEL_TOKEN }}
+          elif [ "${{ matrix.environment }}" == "master" ]; then
+            vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+          fi
+
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --${{ env.BUILD_FLAG }} --token=${{ secrets.VERCEL_TOKEN }}
-
-  deploy_preview:
-    runs-on: ubuntu-latest
-    needs: build_and_test
-    if: github.ref == 'refs/heads/develop'
-    environment:
-      ENVIRONMENT: preview
-      BUILD_FLAG: ''
-
-  deploy_prod:
-    runs-on: ubuntu-latest
-    needs: build_and_test
-    if: github.ref == 'refs/heads/master'
-    environment:
-      ENVIRONMENT: production
-      BUILD_FLAG: prod
-env:
-  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+        run: |
+          if [ "${{ matrix.environment }}" == "develop" ]; then
+            vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
+          elif [ "${{ matrix.environment }}" == "master" ]; then
+            vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+          fi
