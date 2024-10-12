@@ -5,7 +5,7 @@ import { shuffleArray } from "../../helpers/arrays";
 import { speakText } from "../../helpers/speakText";
 import { useGetGameLevels } from "../../hooks/queries";
 import { GameProps, LevelOption } from "../../interfaces/interfaces";
-import { MicIcon, VolumeIcon } from "../../components/common/icons/icons";
+import { MicIcon, VolumeIcon } from "../../components/common/icons/Icons";
 
 const AuditoryDiscriminationGame: React.FC<GameProps> = ({ selectedThemeId }) => {
     const { levels, isLoading, error } = useGetGameLevels(selectedThemeId);

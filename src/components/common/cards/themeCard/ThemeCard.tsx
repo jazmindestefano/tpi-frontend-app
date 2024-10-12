@@ -4,7 +4,7 @@ import {BaseCard} from "../BaseCard.tsx";
 import Button from "../../buttons/Button.tsx";
 import {BaseContainer} from "../BaseContainer.tsx";
 import { speakText } from "../../../../helpers/speakText.ts";
-import { VolumeIcon } from "../../icons/icons.tsx";
+import { VolumeIcon } from "../../icons/Icons.tsx";
 
 interface ThemeCardProps  {
   theme: Theme,

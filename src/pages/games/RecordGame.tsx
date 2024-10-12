@@ -6,7 +6,7 @@ import { speakText } from "../../helpers/speakText";
 import { useGetGameLevels } from "../../hooks/queries";
 import { GameProps, LevelOption } from "../../interfaces/interfaces";
 import { useAudioRecording } from "../../hooks/useAudioRecording";
-import { ArrowRightIcon, AudioLinesIcon, MicIcon, VolumeIcon } from "../../components/common/icons/icons";
+import { ArrowRightIcon, AudioLinesIcon, MicIcon, VolumeIcon } from "../../components/common/icons/Icons";
 
 const RecordGame: React.FC<GameProps> = ({ selectedThemeId }) => {
     const { levels, isLoading, error } = useGetGameLevels(selectedThemeId);
