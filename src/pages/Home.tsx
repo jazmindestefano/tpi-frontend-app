@@ -1,19 +1,10 @@
 import React from "react";
-import { Volume2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import Button from "../components/common/Button.tsx";
 import { useGetGames } from "../hooks/queries.ts";
-import { speakText } from "../helpers/speakText.ts";
-import { CardBase } from "../components/common/CardBase.tsx";
-import { selectGame } from '../redux/store/gameSlice.ts';
-
-const classNameInner = "p-6 h-[441px]";
-const classNameOuter = "p-6 gap-4";
+import HomeCard from "../components/common/cards/HomeCard.tsx";
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const { games, isLoading, error } = useGetGames();
 
   if (error) {
@@ -25,35 +16,15 @@ const Home: React.FC = () => {
   }
 
   return games && games.length !== 0 && !error ? (
-    <div className="w-full flex flex-col md:flex-row justify-around items-center px-24">
-      {games.map((game, index) => (
-        <CardBase
-          key={game.id}
-          classNameInner={`${classNameInner} ${index === 0 ? "bg-orange-300" : index === 1 ? "bg-orange-150" : "bg-blue-500"}`}
-          classNameOuter={classNameOuter}
-          outer={
-            <Button
-              size={"circle"}
-              variant={"secondary"}
-              shape={"circle"}
-              onClick={() => speakText(game.name)}
-            >
-              <Volume2 color="white" />
-            </Button>
-          }
-        >
-          <div
-            className="flex justify-center items-center"
-            onClick={() => {
-              dispatch(selectGame(game));
-              navigate(`/actividad/${game.id}/tematicas`);
-            }}
-          >
-            <h2 className="text-4xl font-medium font-comfortaa text-gray-800 text-left">
-              {game.name.toUpperCase()}
-            </h2>
-          </div>
-        </CardBase>
+    <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4 mt-16 px-8">
+      {games.map((game) => (
+      <div key={game.id} className="flex justify-center items-center w-full">
+      <HomeCard
+        buttonVariant="secondary"
+        onClick={() => navigate(`/actividad/${game.id}/tematicas`)}
+        game={game}
+      />
+      </div>
       ))}
     </div>
   ) : (

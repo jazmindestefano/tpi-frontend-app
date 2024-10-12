@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "../components/common/Button";
+import Button from "../components/common/buttons/Button";
 import { Pencil, Save } from "lucide-react";
 
 const Profile: React.FC = () => {

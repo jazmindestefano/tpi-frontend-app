@@ -11,7 +11,7 @@ export const BaseCard: React.FC<BaseCardProps> = ({
   className = ''
 }) => {
   return (
-    <div className={classNames("max-w-80 h-96 rounded-3xl shadow-lg cursor-pointer", className)}>
+    <div className={classNames("max-w-96 rounded-3xl shadow-lg cursor-pointer", className)}>
       {children}
     </div>
   )
