@@ -11,26 +11,30 @@ const Header: React.FC = () => {
         <img src="/clara-logo.svg" alt="Logo" className="h-16 cursor-pointer" />
       </div>
       <div className="flex flex-row gap-4">
-        <Button
-          size={"square"}
-          variant={"tertiary"}
-          onClick={() =>
-            navigate(location.pathname !== "/perfil" ? "/perfil" : "/")
-          }
-        >
-          {location.pathname !== "/perfil" ? (
+        {location.pathname !== "/perfil" && (
+          <Button
+            size={"square"}
+            variant={"tertiary"}
+            onClick={() =>
+              navigate(location.pathname !== "/perfil" ? "/perfil" : "/")
+            }
+          >
             <img
               src="/avatar/lion-avatar.png"
               alt="Avatar"
               className="object-cover h-10"
             />
-          ) : (
+          </Button>
+        )}
+        {location.pathname === "/" ? (
+          <Button size={"square"} variant={"primary"}>
+            <LogOut className="text-white" />
+          </Button>
+        ) : (
+          <Button size={"square"} variant={"tertiary"} onClick={() => navigate("/")}>
             <House />
-          )}
-        </Button>
-        <Button size={"square"} variant={"primary"}>
-          <LogOut className="text-white" />
-        </Button>
+          </Button>
+        )}
       </div>
     </header>
   );

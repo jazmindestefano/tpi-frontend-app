@@ -3,7 +3,7 @@ import {useSelectedTheme} from "../hooks/selectors.ts";
 import { useGetGameLevels } from "../hooks/queries.ts";
 import { useNavigate } from "react-router-dom";
 import { LevelOption } from "../interfaces/interfaces.ts";
-import { Volume2 } from "lucide-react";
+import { ArrowBigRight, Mic, Volume2 } from "lucide-react";
 import CustomButton from "../components/common/Button.tsx";
 
 export interface GameProps {
@@ -60,9 +60,9 @@ export const Game: React.FC<GameProps> = ({ selectedThemeId }) => {
             {levels && levels[currentLevel].description}
           </p>
           <CustomButton
-            size={"circleSize"}
+            size={"circle"}
             shape={"circle"}
-            variant={"fifth"}
+            variant={"secondary"}
             onClick={() =>
               levels &&
               speakText(
@@ -76,29 +76,41 @@ export const Game: React.FC<GameProps> = ({ selectedThemeId }) => {
       </div>
       <div className={`${levelOptions.length === 1 ? 'flex justify-center' : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'} gap-10 my-16 w-full px-20`}>
         {levelOptions.map((option) => (
-            <div
+          <div
             key={option.id}
             className={`flex flex-col items-center justify-center cursor-pointer rounded-3xl shadow-lg p-4 h-auto gap-6 bg-[#F7F7F7] ${levelOptions.length === 1 ? 'w-96' : 'w-full'}`}
-            >
+          >
             <div className="p-4 w-full rounded-3xl h-80 flex flex-col items-center justify-center" onClick={() => {
               isCorrectOption(option);
             }}>
               <img
-              src={`/gameOptions/${option.name}.png`}
-              alt={option.name}
-              className="w-auto h-80"
+          src={`/gameOptions/${option.name}.png`}
+          alt={option.name}
+          className="w-auto h-80"
               />
             </div>
             <CustomButton
-              size={"circleSize"}
+              size={"circle"}
               shape={"circle"}
-              variant={"fifth"}
+              variant={"fourth"}
               onClick={() => speakText(option.name)}
             >
-              <Volume2 />
+              <Mic />
             </CustomButton>
-            </div>
+          </div>
         ))}
+        {selectedThemeId === 2 && (
+          <div className="self-center">
+            <CustomButton
+            size={"circle"}
+            shape={"circle"}
+            variant={"primary"}
+            onClick={() => navigate('/next')}
+          >
+            <ArrowBigRight />
+          </CustomButton>
+          </div>
+        )}
       </div>
     </div>
   ) : (
