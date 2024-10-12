@@ -62,15 +62,15 @@ const AuditoryDiscriminationGame: React.FC<GameProps> = ({ selectedThemeId }) =>
           {levelOptions.map((option) => (
             <div
               key={option.id}
-              className={`flex flex-col items-center justify-center cursor-pointer rounded-3xl shadow-lg p-4 h-auto gap-6 bg-[#F7F7F7] ${levelOptions.length === 1 ? 'w-96' : 'w-full'}`}
+              className={`flex flex-col items-center justify-center cursor-pointer rounded-3xl shadow-lg p-4 h-auto gap-6 bg-orange-100 ${levelOptions.length === 1 ? 'w-96' : 'w-full'}`}
             >
-              <div className="p-4 w-full rounded-3xl h-80 flex flex-col items-center justify-center" onClick={() => {
+              <div className="p-4 w-full rounded-3xl h-80 flex flex-col items-center justify-center bg-white" onClick={() => {
                 isCorrectOption(option);
               }}>
                 <img
                   src={`/gameOptions/${option.name}.png`}
                   alt={option.name}
-                  className="w-auto h-80"
+                  className="w-auto h-80 rounded-3xl"
                 />
               </div>
               <Button
@@ -79,7 +79,7 @@ const AuditoryDiscriminationGame: React.FC<GameProps> = ({ selectedThemeId }) =>
                 variant={"fourth"}
                 onClick={() => speakText(option.name)}
               >
-                <Mic />
+                <Mic color="#ffffff" size={36} />
               </Button>
             </div>
           ))}
