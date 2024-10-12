@@ -1,8 +1,9 @@
 import {Theme} from "../../interfaces/interfaces.ts";
 import React from "react";
-import {CardBase} from "./CardBase.tsx";
+import {BaseCard} from "./BaseCard.tsx";
 import Button from "./Button.tsx";
 import {Volume2} from "lucide-react";
+import {BaseContainer} from "./BaseContainer.tsx";
 
 interface ThemeCardProps  {
   theme: Theme
@@ -10,14 +11,15 @@ interface ThemeCardProps  {
 
 export const ThemeCard: React.FC<ThemeCardProps> = ({theme}) => {
   return (
-    <CardBase
-      inner={
-      <Button size={"circleSize"} shape={"circle"} variant={"fifth"}>
-        <Volume2 color="#ffffff" size={36}/>
-      </Button>
-    }
-    >
-      <img className="rounded-3xl" src={theme.image} alt={theme.name}/>
-    </CardBase>
-  )
-}
+    <BaseCard className={"bg-orange-100 p-4"}>
+      <BaseContainer className={"gap-6"}>
+        <div>
+          <img className="rounded-3xl object-cover" src={theme.image} alt={theme.name}/>
+        </div>
+        <Button size={"circle"} shape={"circle"} variant={"secondary"}>
+          <Volume2 color="#ffffff" size={36}/>
+        </Button>
+      </BaseContainer>
+    </BaseCard>
+  );
+};
