@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import Button from '../components/common/buttons/Button.tsx';
 
-export const CongratulationsPage = () => {
+const Congratulations = () => {
   const navigate = useNavigate();
 
   const goToHome = () => {
@@ -9,7 +9,7 @@ export const CongratulationsPage = () => {
   };
 
   return (
-    <div className="flex flex-col w-full items-center justify-center h-full font-comfortaa">
+    <div className="flex flex-col w-full items-center justify-center h-full">
       <h1 className="text-6xl font-extrabold text-black animate-bounce mb-8">
         ¡Felicitaciones!
       </h1>
@@ -27,3 +27,5 @@ export const CongratulationsPage = () => {
     </div>
   );
 };
+
+export default Congratulations;
