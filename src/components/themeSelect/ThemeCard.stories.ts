@@ -21,6 +21,6 @@ export const Default: Story = {
       name: 'example',
       image: ''
     },
-    onCardClick: () => {}
+    onClick: () => {}
   }
 };
