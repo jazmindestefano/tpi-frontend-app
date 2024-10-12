@@ -3,7 +3,7 @@ import Home from '../pages/Home';
 import Profile from '../pages/Profile';
 import SnakeGame from '../pages/SnakeGame';
 import PageLayout from '../components/layout/pageLayout/PageLayout.tsx';
-import {ThemeSelectorPage} from "../pages/themeSelect/ThemeSelectorPage.tsx";
+import {ThemeSelectorPage} from "../pages/ThemeSelectorPage.tsx";
 import {ErrorPage} from "../pages/ErrorPage.tsx";
 import { GamePage } from '../pages/GamePage.tsx';
 import {NotFoundPage} from "../pages/NotFoundPage.tsx";
