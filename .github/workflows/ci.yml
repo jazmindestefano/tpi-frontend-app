@@ -38,18 +38,18 @@ jobs:
         run: npm run build
 
   deploy_preview:
-  needs: build_and_test
-  runs-on: ubuntu-latest
-  if: github.ref == 'refs/heads/develop'
-  steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-    - name: Deploy to Preview
-      uses: ./.github/workflows/deploy.yml
-      with:
-        environment: preview
-        buildFlag: 'prod'
-        deployFlag: ''
+    needs: build_and_test
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: Deploy to Preview
+        uses: ./.github/workflows/deploy.yml
+        with:
+          environment: preview
+          buildFlag: 'prod'
+          deployFlag: ''
 
   deploy_prod:
     needs: build_and_test
