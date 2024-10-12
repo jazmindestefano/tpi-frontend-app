@@ -23,7 +23,7 @@ const HomeCard: React.FC<HomeCardProps> = ({ buttonVariant, backgroundColor, onC
             </div>
         </BaseContainer>
         <Button size="circle" shape="circle" variant={buttonVariant} onClick={() => speakText(game.name)}>
-             <Volume2 />
+        <Volume2 color="#ffffff" size={36}/>
         </Button>
     </BaseCard>
     );
