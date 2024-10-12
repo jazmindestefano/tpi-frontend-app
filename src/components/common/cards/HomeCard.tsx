@@ -1,10 +1,10 @@
 import React from 'react';
 import Button from '../buttons/Button';
-import { Volume2 } from 'lucide-react';
 import { Game } from '../../../interfaces/interfaces';
 import { BaseCard } from './BaseCard';
 import { BaseContainer } from './BaseContainer';
 import { speakText } from '../../../helpers/speakText';
+import { VolumeIcon } from '../icons/Icons';
 
 interface HomeCardProps {
     buttonVariant: 'primary' | 'secondary' | 'tertiary' | 'fourth';
@@ -23,7 +23,7 @@ const HomeCard: React.FC<HomeCardProps> = ({ buttonVariant, backgroundColor, onC
             </div>
         </BaseContainer>
         <Button size="circle" shape="circle" variant={buttonVariant} onClick={() => speakText(game.name)}>
-        <Volume2 color="#ffffff" size={36}/>
+            <VolumeIcon />
         </Button>
     </BaseCard>
     );
