@@ -11,6 +11,11 @@ on:
       - develop
     types: [opened, synchronize, reopened]
 
+  push:
+    branches:
+      - master
+      - develop
+
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
