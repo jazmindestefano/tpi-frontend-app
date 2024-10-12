@@ -1,5 +1,5 @@
 import {Meta, StoryObj} from "@storybook/react";
-import {ThemeCard} from "./cards/ThemeCard.tsx";
+import { ThemeCard } from "./ThemeCard";
 
 const meta = {
   title: 'Common/ThemeCard',
@@ -20,6 +20,7 @@ export const Default: Story = {
       id: 1,
       name: "Princesas",
       image: "themes/letras/Princesas.png",
-    }
+    },
+    onClick: () => alert('Theme clicked!'),
   },
 };

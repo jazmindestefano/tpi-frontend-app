@@ -1,4 +1,4 @@
-import {ThemeCard} from "../common/cards/ThemeCard.tsx";
+import {ThemeCard} from "../common/cards/themeCard/ThemeCard.tsx";
 import {Theme} from "../../interfaces/interfaces.ts";
 
 interface ThemeCardsListProps {

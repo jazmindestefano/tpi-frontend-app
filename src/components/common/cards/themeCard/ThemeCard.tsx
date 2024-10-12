@@ -1,10 +1,10 @@
-import {Theme} from "../../../interfaces/interfaces.ts";
+import {Theme} from "../../../../interfaces/interfaces.ts";
 import React from "react";
-import {BaseCard} from "./BaseCard.tsx";
-import Button from "../buttons/Button.tsx";
+import {BaseCard} from "../BaseCard.tsx";
+import Button from "../../buttons/Button.tsx";
 import {Volume2} from "lucide-react";
-import {BaseContainer} from "./BaseContainer.tsx";
-import { speakText } from "../../../helpers/speakText.ts";
+import {BaseContainer} from "../BaseContainer.tsx";
+import { speakText } from "../../../../helpers/speakText.ts";
 
 interface ThemeCardProps  {
   theme: Theme,
