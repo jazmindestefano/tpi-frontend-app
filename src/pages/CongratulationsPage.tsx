@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import CustomButton from '../components/common/Button.tsx';
+import Button from '../components/common/Button.tsx';
 
 export const CongratulationsPage = () => {
   const navigate = useNavigate();
@@ -17,13 +17,13 @@ export const CongratulationsPage = () => {
       <p className="text-2xl text-black mb-8 text-center">
         ¡Has completado el desafío!
       </p>
-      <CustomButton
+      <Button
         onClick={goToHome}
-        variant={"fifth"}
+        variant={"primary"}
         className="px-6 py-3 text-white font-bold rounded-full shadow-lg hover:bg-gray-100 hover:text-black transition duration-300"
       >
         Volver al Inicio
-      </CustomButton>
+      </Button>
     </div>
   );
 };

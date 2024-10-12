@@ -2,7 +2,7 @@ import {useNavigate, useParams} from "react-router-dom";
 import {ThemeCardsList} from "../../components/themeSelect/ThemeCardsList.tsx";
 import {useGetThemesByGameId} from "../../hooks/queries.ts";
 import {useDispatch} from "react-redux";
-import {selectTheme} from "../../redux/store/themeSlice.ts";
+import {selectTheme} from "../../redux/store/gameSlice.ts";
 import {Theme} from "../../interfaces/interfaces.ts";
 
 const snakeThemes = [

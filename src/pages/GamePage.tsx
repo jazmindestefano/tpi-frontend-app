@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {useSelectedTheme} from "../hooks/selectors.ts";
-import { useGetGameLevels } from "../hooks/queries.ts";
-import { useNavigate } from "react-router-dom";
-import { LevelOption } from "../interfaces/interfaces.ts";
-import { Volume2 } from "lucide-react";
-import CustomButton from "../components/common/Button.tsx";
+import {useGetGameLevels} from "../hooks/queries.ts";
+import {useNavigate} from "react-router-dom";
+import {LevelOption} from "../interfaces/interfaces.ts";
+import {ArrowBigRight, Mic, Volume2} from "lucide-react";
+import Button from "../components/common/Button.tsx";
+import {shuffleArray} from "../helpers/arrays.ts";
+import {speakText} from "../helpers/speakText.ts";
 
 export interface GameProps {
   selectedThemeId: number;
@@ -16,14 +18,6 @@ export const Game: React.FC<GameProps> = ({ selectedThemeId }) => {
   const [levelOptions, setLevelOptions] = useState<LevelOption[]>([]);
 
   const navigate = useNavigate();
-
-  const shuffleArray = (array: LevelOption[]) => {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  };
 
   useEffect(() => {
     if (levels && !isLoading && !error) {
@@ -44,11 +38,6 @@ export const Game: React.FC<GameProps> = ({ selectedThemeId }) => {
     }
   };
 
-  const speakText = (text: string) => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    window.speechSynthesis.speak(utterance);
-  };
-
   return !isLoading ? (
     <div className="w-full h-full">
       <div className="w-full flex flex-col justify-center items-center gap-4">
@@ -59,10 +48,10 @@ export const Game: React.FC<GameProps> = ({ selectedThemeId }) => {
           <p className="font-bold font-comfortaa text-8xl">
             {levels && levels[currentLevel].description}
           </p>
-          <CustomButton
-            size={"circleSize"}
+          <Button
+            size={"circle"}
             shape={"circle"}
-            variant={"fifth"}
+            variant={"secondary"}
             onClick={() =>
               levels &&
               speakText(
@@ -71,34 +60,46 @@ export const Game: React.FC<GameProps> = ({ selectedThemeId }) => {
             }
           >
             <Volume2 />
-          </CustomButton>
+          </Button>
         </div>
       </div>
       <div className={`${levelOptions.length === 1 ? 'flex justify-center' : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'} gap-10 my-16 w-full px-20`}>
         {levelOptions.map((option) => (
-            <div
+          <div
             key={option.id}
             className={`flex flex-col items-center justify-center cursor-pointer rounded-3xl shadow-lg p-4 h-auto gap-6 bg-[#F7F7F7] ${levelOptions.length === 1 ? 'w-96' : 'w-full'}`}
-            >
+          >
             <div className="p-4 w-full rounded-3xl h-80 flex flex-col items-center justify-center" onClick={() => {
               isCorrectOption(option);
             }}>
               <img
-              src={`/gameOptions/${option.name}.png`}
-              alt={option.name}
-              className="w-auto h-80"
+          src={`/gameOptions/${option.name}.png`}
+          alt={option.name}
+          className="w-auto h-80"
               />
             </div>
-            <CustomButton
-              size={"circleSize"}
+            <Button
+              size={"circle"}
               shape={"circle"}
-              variant={"fifth"}
+              variant={"fourth"}
               onClick={() => speakText(option.name)}
             >
-              <Volume2 />
-            </CustomButton>
-            </div>
+              <Mic />
+            </Button>
+          </div>
         ))}
+        {selectedThemeId === 2 && (
+          <div className="self-center">
+            <Button
+            size={"circle"}
+            shape={"circle"}
+            variant={"primary"}
+            onClick={() => navigate('/next')}
+          >
+            <ArrowBigRight />
+          </Button>
+          </div>
+        )}
       </div>
     </div>
   ) : (

@@ -1,110 +1,63 @@
 import React from "react";
-import {Volume2} from "lucide-react";
-import {useNavigate} from "react-router-dom";
-import Card from "../components/common/Card";
+import { Volume2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import Button from "../components/common/Button.tsx";
-import { useGetGames } from '../hooks/queries.ts';
+import { useGetGames } from "../hooks/queries.ts";
+import { speakText } from "../helpers/speakText.ts";
+import { CardBase } from "../components/common/CardBase.tsx";
+import { selectGame } from '../redux/store/gameSlice.ts';
+
+const classNameInner = "p-6 h-[441px]";
+const classNameOuter = "p-6 gap-4";
 
 const Home: React.FC = () => {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const { games, isLoading, error } = useGetGames();
 
-  const speakText = (text: string) => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    window.speechSynthesis.speak(utterance);
-  };
+  if (error) {
+    return <p>Error</p>;
+  }
 
-  return (
-    isLoading ? <h1>Cargando...</h1> : 
-      games && games.length !== 0 && !error ?
-      <div className="grid grid-cols-1 xl:grid-cols-3 gap-4 h-full px-10 my-16">
-        <div className="flex justify-center flex-col items-center cursor-pointer w-full">
-            <div className="flex justify-center flex-col items-center w-full">
-            <Card variant={"primary"} onClick={() => navigate(`/actividad/${games![0].id}/tematicas`)} className={"flex flex-col"}>
-                  <div className="basis-3/5 flex items-end justify-center">
-                  <img
-                    src="/letras.svg"
-                    className="object-contain"
-                    alt="Letras"
-                  />
-                  </div>
-                  <div className="basis-2/5 flex items-end">
-                  <h2 className="text-4xl font-medium font-comfortaa text-gray-800 text-left">{games![0].name.toUpperCase()}</h2>
-                  </div>
-                </Card>
-            </div>
+  if (isLoading) {
+    return <h1>Cargando...</h1>;
+  }
+
+  return games && games.length !== 0 && !error ? (
+    <div className="w-full flex flex-col md:flex-row justify-around items-center px-24">
+      {games.map((game, index) => (
+        <CardBase
+          key={game.id}
+          classNameInner={`${classNameInner} ${index === 0 ? "bg-orange-300" : index === 1 ? "bg-orange-150" : "bg-blue-500"}`}
+          classNameOuter={classNameOuter}
+          outer={
             <Button
-                size={"circleSize"}
-                variant={"fifth"}
-                shape={"circle"}
-                className="mt-3"
-                onClick={() =>
-                  games &&
-                  speakText(
-                    games[0].name
-                  )
-                }
-              >
-                <Volume2 className="text-white w-auto h-38"/>
-              </Button>
-        </div>
-        <div className="flex justify-center flex-col items-center cursor-pointer w-full">
-            <div className="flex justify-center flex-col items-center cursor-pointer w-full">
-              <Card variant={"secondary"} className="flex" onClick={() => navigate(`/actividad/${games![1].id}/tematicas`)}>
-                  <div className="flex flex-row">
-                    <div className="w-1/3 p-4 flex flex-col justify-center">
-                      <h2 className="text-4xl font-medium font-comfortaa text-gray-800 pb-36">{games![1].name.toUpperCase()}</h2>
-                    </div>
-                    <div className="w-2/3">
-                      <img src="/palabras.svg" className="scale-100" alt="Palabras"/>
-                    </div>
-                  </div>
-                </Card>
-            </div>
-            <Button
-              size={"circleSize"}
-              variant={"fifth"}
+              size={"circle"}
+              variant={"secondary"}
               shape={"circle"}
-              className="mt-3"
-              onClick={() =>
-                games &&
-                speakText(
-                  games[1].name
-                )
-              }
+              onClick={() => speakText(game.name)}
             >
-              <Volume2 className="text-white w-auto h-38"/>
+              <Volume2 color="white" />
             </Button>
-        </div>
-        <div className="flex justify-center flex-col items-center cursor-pointer w-full">
-          <div className="flex justify-center flex-col items-center cursor-pointer w-full">
-            <Card variant={"tertiary"} className="flex" onClick={() => navigate(`/actividad/${games![2].id}/tematicas`)}>
-              <div className="flex flex-row">
-                <div className="w-2/4">
-                  <img src="/viborita.svg" className="h-full scale-95" alt="la viborita"/>
-                </div>
-                <div className="w-2/4 py-2 flex flex-col justify-center">
-                  <h2 className="text-4xl font-medium font-comfortaa text-gray-800">LA VIBORITA</h2>
-                </div>
-              </div>
-            </Card>
-          </div>
-          <Button
-            size={"circleSize"}
-            variant={"fifth"}
-            shape={"circle"}
-            className="mt-3"
-            onClick={() =>
-              games &&
-              speakText(
-                games[2].name
-              )
-            }
+          }
+        >
+          <div
+            className="flex justify-center items-center"
+            onClick={() => {
+              dispatch(selectGame(game));
+              navigate(`/actividad/${game.id}/tematicas`);
+            }}
           >
-            <Volume2 className="text-white w-auto h-38"/>
-          </Button>
-        </div>
-    </div> : <p>error</p>
+            <h2 className="text-4xl font-medium font-comfortaa text-gray-800 text-left">
+              {game.name.toUpperCase()}
+            </h2>
+          </div>
+        </CardBase>
+      ))}
+    </div>
+  ) : (
+    <p>No games available</p>
   );
 };
 

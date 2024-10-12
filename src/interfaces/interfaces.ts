@@ -23,3 +23,10 @@ export interface LevelOption {
   image: string,
   correct: boolean
 }
+
+export interface PostUserRecordingData {
+  userId: number
+  gameId: number
+  text: string
+  userAudio: Blob
+}
