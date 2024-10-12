@@ -5,6 +5,10 @@ env:
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
 
 on:
+  push:
+    branches:
+      - master
+      - develop
   pull_request:
     branches:
       - master
