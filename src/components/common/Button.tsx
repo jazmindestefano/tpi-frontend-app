@@ -17,6 +17,7 @@ const buttonVariants = cva(
           "bg-[rgba(217,217,217,0.49)] rounded-full",
           "hover:bg-[rgba(150,150,150,0.49)]",
         ],
+        fourth: ["bg-[#9747FF]"],
       },
       shape: {
         default: "rounded-lg",
