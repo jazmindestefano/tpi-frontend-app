@@ -1,4 +1,5 @@
 import { cva, type VariantProps } from "class-variance-authority";
+import classNames from "classnames";
 
 const buttonVariants = cva(
   [
@@ -34,6 +35,7 @@ const buttonVariants = cva(
 interface ButtonProps extends VariantProps<typeof buttonVariants> {
   onClick?: () => void;
   children?: React.ReactNode;
+  className?: string
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -42,10 +44,11 @@ const Button: React.FC<ButtonProps> = ({
   shape,
   onClick,
   children,
+  className=''
 }) => {
   const basicClass = buttonVariants({ size, variant, shape });
   return (
-    <button className={basicClass} onClick={onClick}>
+    <button className={classNames(basicClass, className)} onClick={onClick}>
       {children}
     </button>
   );

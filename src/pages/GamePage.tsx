@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from "react";
 import {useSelectedTheme} from "../hooks/selectors.ts";
-import { useGetGameLevels } from "../hooks/queries.ts";
-import { useNavigate } from "react-router-dom";
-import { LevelOption } from "../interfaces/interfaces.ts";
-import { ArrowBigRight, Mic, Volume2 } from "lucide-react";
-import CustomButton from "../components/common/Button.tsx";
+import {useGetGameLevels} from "../hooks/queries.ts";
+import {useNavigate} from "react-router-dom";
+import {LevelOption} from "../interfaces/interfaces.ts";
+import {ArrowBigRight, Mic, Volume2} from "lucide-react";
+import Button from "../components/common/Button.tsx";
+import {shuffleArray} from "../helpers/arrays.ts";
+import {speakText} from "../helpers/speakText.ts";
 
 export interface GameProps {
   selectedThemeId: number;
@@ -16,14 +18,6 @@ export const Game: React.FC<GameProps> = ({ selectedThemeId }) => {
   const [levelOptions, setLevelOptions] = useState<LevelOption[]>([]);
 
   const navigate = useNavigate();
-
-  const shuffleArray = (array: LevelOption[]) => {
-    for (let i = array.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-  };
 
   useEffect(() => {
     if (levels && !isLoading && !error) {
@@ -44,11 +38,6 @@ export const Game: React.FC<GameProps> = ({ selectedThemeId }) => {
     }
   };
 
-  const speakText = (text: string) => {
-    const utterance = new SpeechSynthesisUtterance(text);
-    window.speechSynthesis.speak(utterance);
-  };
-
   return !isLoading ? (
     <div className="w-full h-full">
       <div className="w-full flex flex-col justify-center items-center gap-4">
@@ -59,7 +48,7 @@ export const Game: React.FC<GameProps> = ({ selectedThemeId }) => {
           <p className="font-bold font-comfortaa text-8xl">
             {levels && levels[currentLevel].description}
           </p>
-          <CustomButton
+          <Button
             size={"circle"}
             shape={"circle"}
             variant={"secondary"}
@@ -71,7 +60,7 @@ export const Game: React.FC<GameProps> = ({ selectedThemeId }) => {
             }
           >
             <Volume2 />
-          </CustomButton>
+          </Button>
         </div>
       </div>
       <div className={`${levelOptions.length === 1 ? 'flex justify-center' : 'grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'} gap-10 my-16 w-full px-20`}>
@@ -89,26 +78,26 @@ export const Game: React.FC<GameProps> = ({ selectedThemeId }) => {
           className="w-auto h-80"
               />
             </div>
-            <CustomButton
+            <Button
               size={"circle"}
               shape={"circle"}
               variant={"fourth"}
               onClick={() => speakText(option.name)}
             >
               <Mic />
-            </CustomButton>
+            </Button>
           </div>
         ))}
         {selectedThemeId === 2 && (
           <div className="self-center">
-            <CustomButton
+            <Button
             size={"circle"}
             shape={"circle"}
             variant={"primary"}
             onClick={() => navigate('/next')}
           >
             <ArrowBigRight />
-          </CustomButton>
+          </Button>
           </div>
         )}
       </div>
