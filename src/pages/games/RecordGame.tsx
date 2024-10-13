@@ -8,11 +8,11 @@ import {
 } from "../../components/common/icons/Icons";
 import { GameProps } from "../../interfaces/interfaces";
 import { useNavigate } from "react-router-dom";
-import RecordGamePresenter from "../../presenters/RecordGame.presenter";
+import useRecordGame from "../../hooks/useRecordGame.hook";
 
 const RecordGame: React.FC<GameProps> = ({ selectedThemeId }) => {
 const navigate = useNavigate();
-const { isLoading, levels, currentLevel, speakText, levelOptions, isCorrectOption, isRecording, stopRecording, startRecording } = RecordGamePresenter(selectedThemeId);
+const { isLoading, levels, currentLevel, speakText, levelOptions, isCorrectOption, isRecording, stopRecording, startRecording } = useRecordGame(selectedThemeId);
 
   return !isLoading ? (
     <div className="w-full h-full relative flex justify-center items-center flex-col">

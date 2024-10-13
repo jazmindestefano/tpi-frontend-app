@@ -1,46 +1,20 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/buttons/Button";
 import SpinnerLoader from "../../components/common/SpinnerLoader";
-import { shuffleArray } from "../../helpers/arrays";
 import { speakText } from "../../helpers/speakText";
-import { useGetGameLevels } from "../../hooks/queries";
-import { GameProps, LevelOption } from "../../interfaces/interfaces";
+import { GameProps } from "../../interfaces/interfaces";
 import { MicIcon, VolumeIcon } from "../../components/common/icons/Icons";
+import { useAuditoryDiscrimination } from "../../hooks/useAuditoryDiscrimination.hook";
 
 const AuditoryDiscriminationGame: React.FC<GameProps> = ({
   selectedThemeId,
 }) => {
-  const { levels, isLoading, error } = useGetGameLevels(selectedThemeId);
-  const [currentLevel, setCurrentLevel] = useState<number>(0);
-  const [levelOptions, setLevelOptions] = useState<LevelOption[]>([]);
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (levels && !isLoading && !error) {
-      const shuffledOptions = shuffleArray([...levels[currentLevel].options]);
-      setLevelOptions(shuffledOptions);
-    }
-  }, [levels, isLoading, error, currentLevel]);
-
-  const isCorrectOption = (option: LevelOption) => {
-    if (levels && option.correct) {
-      if (currentLevel < levels.length - 1) {
-        setCurrentLevel((prevState) => prevState + 1);
-      } else {
-        navigate("/felicitaciones");
-      }
-    } else {
-      console.log("Respuesta incorrecta");
-    }
-  };
+  const { isLoading, isCorrectOption, levels, currentLevel, levelOptions } = useAuditoryDiscrimination(selectedThemeId);
 
   return !isLoading ? (
     <div className="w-full h-full">
       <div className="w-full flex flex-col justify-center items-center gap-4">
         <p className="font-bold text-2xl">
-          Selecciona las imágenes que contengan la letra
+        Selecciona la imágen que empiece con la letra
         </p>
         <div className="flex flex-row justify-center items-center gap-4">
           <p className="font-bold text-8xl">
@@ -53,7 +27,7 @@ const AuditoryDiscriminationGame: React.FC<GameProps> = ({
             onClick={() =>
               levels &&
               speakText(
-                `Selecciona las imágenes que contengan la letra ${levels[currentLevel].description}`
+                `Selecciona la imágen que empiece con la letra ${levels[currentLevel].description}`
               )
             }
           >
