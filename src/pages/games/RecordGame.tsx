@@ -13,6 +13,9 @@ import {
   MicIcon,
   VolumeIcon,
 } from "../../components/common/icons/Icons";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { addResponse } from "../../redux/store/recordGameSlice";
 
 const RecordGame: React.FC<GameProps> = ({ selectedThemeId }) => {
   const { levels, isLoading, error } = useGetGameLevels(selectedThemeId);
@@ -20,10 +23,14 @@ const RecordGame: React.FC<GameProps> = ({ selectedThemeId }) => {
     useAudioRecording();
   const [currentLevel, setCurrentLevel] = useState<number>(0);
   const [levelOptions, setLevelOptions] = useState<LevelOption[]>([]);
+  const responses = useSelector(
+    (state: RootState) => state.recordGame.response
+  );
 
   console.log({ audio });
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (levels && !isLoading && !error) {
@@ -31,6 +38,34 @@ const RecordGame: React.FC<GameProps> = ({ selectedThemeId }) => {
       setLevelOptions(shuffledOptions);
     }
   }, [levels, isLoading, error, currentLevel]);
+
+  function convertBlobToBase64(blob: Blob): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(blob);
+    });
+  }
+
+  // Necistamos convertir el blob a base64 para poder guardarlo en el store de Redux.
+  useEffect(() => {
+    if (audio) {
+      convertBlobToBase64(audio).then((audioBase64) => {
+        dispatch(
+          addResponse({
+            id: String(levels?.[currentLevel].id),
+            name: String(levels?.[currentLevel].description),
+            audio: audioBase64,
+          })
+        );
+      });
+    }
+  }, [audio, currentLevel, levels, dispatch]);
+
+  useEffect(() => {
+    console.log("Responses from Redux store:", responses);
+  }, [responses]);
 
   const isCorrectOption = (option: LevelOption) => {
     if (levels && option.correct) {
