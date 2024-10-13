@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/buttons/Button";
+import SpinnerLoader from "../../components/common/SpinnerLoader";
 import { shuffleArray } from "../../helpers/arrays";
 import { speakText } from "../../helpers/speakText";
 import { useGetGameLevels } from "../../hooks/queries";
@@ -71,7 +72,7 @@ const RecordGame: React.FC<GameProps> = ({ selectedThemeId }) => {
           levelOptions.length === 1
             ? "flex justify-center"
             : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-        } gap-10 my-16 w-full px-20`}
+        } gap-10 my-8 w-full px-20`}
       >
         {levelOptions.map((option) => (
           <div
@@ -97,7 +98,7 @@ const RecordGame: React.FC<GameProps> = ({ selectedThemeId }) => {
               shape={"circle"}
               variant={"fourth"}
               onClick={() => (isRecording ? stopRecording() : startRecording())}
-              >
+            >
               {isRecording ? <AudioLinesIcon /> : <MicIcon />}
             </Button>
           </div>
@@ -115,7 +116,7 @@ const RecordGame: React.FC<GameProps> = ({ selectedThemeId }) => {
       </div>
     </div>
   ) : (
-    <p>Cargando</p>
+    <SpinnerLoader />
   );
 };
 

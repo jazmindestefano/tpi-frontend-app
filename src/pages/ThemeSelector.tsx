@@ -53,7 +53,9 @@ const ThemeSelector = () => {
         <SpinnerLoader />
       ) : themes && themes.length !== 0 && !error ? (
         <ThemeCardsList themes={themes} onCardClick={onCardClick} />
-      ) : null}
+      ) : (
+        <h1>No hay tematicas disponibles</h1>
+      )}
     </>
   );
 };

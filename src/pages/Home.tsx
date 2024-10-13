@@ -14,7 +14,7 @@ const Home: React.FC = () => {
   const { games, isLoading, error } = useGetGames();
 
   if (error) {
-    return <p>Error</p>;
+    return <h1>¡Ups! Parece que estamos teniendo un problema.</h1>;
   }
 
   if (isLoading) {
@@ -24,10 +24,7 @@ const Home: React.FC = () => {
   return games && games.length !== 0 && !error ? (
     <div className="w-full grid grid-cols-1 md:grid-cols-3 mt-16 gap-10">
       {games.map((game) => (
-        <div
-          key={game.id}
-          className="flex justify-center items-center w-full"
-        >
+        <div key={game.id} className="flex justify-center items-center w-full">
           <HomeCard
             buttonVariant="secondary"
             onClick={() => navigate(`/actividad/${game.id}/tematicas`)}
@@ -38,7 +35,7 @@ const Home: React.FC = () => {
       ))}
     </div>
   ) : (
-    <p>No hay juegos disponibles</p>
+    <h1>No hay juegos disponibles</h1>
   );
 };
 
