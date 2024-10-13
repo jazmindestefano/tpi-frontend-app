@@ -9,7 +9,7 @@ import { useAudioRecording } from "../hooks/useAudioRecording";
 import { postUserRecording } from "../http/queries";
 import { LevelOption } from "../interfaces/interfaces";
 
-const RecordGamePresenter = (selectedThemeId: number) => {
+const useRecordGame = (selectedThemeId: number) => {
     const navigate = useNavigate();
     const { levels, isLoading, error } = useGetGameLevels(selectedThemeId);
     const { isRecording, audio, startRecording, stopRecording } = useAudioRecording();
@@ -64,4 +64,4 @@ const RecordGamePresenter = (selectedThemeId: number) => {
     };
 };
 
-export default RecordGamePresenter;
+export default useRecordGame;

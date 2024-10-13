@@ -1,4 +1,4 @@
-import { GameLevel, Game, Theme, PostUserRecordingData } from "../interfaces/interfaces.ts";
+import { GameLevel, Game, Theme, PostUserRecordingData, PostAuditoryDiscriminationRequest } from "../interfaces/interfaces.ts";
 import { unauthenticatedClient } from "./clients.ts";
 
 
@@ -51,3 +51,19 @@ export const postUserRecording = async ({ userId, gameId, text, userAudio, gameN
   }
   return null;
 };
+
+export const postAuditoryDiscriminationRequest = async ({ patiendId, activities }: PostAuditoryDiscriminationRequest) => {
+  const payload = {
+    patientId: String(patiendId),
+    activities: activities
+  };
+
+  console.log(JSON.stringify(payload, null, 2)); // Para verificar el contenido
+
+  const res = await unauthenticatedClient.post(`answers/sendAnswersWithText`, payload)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}

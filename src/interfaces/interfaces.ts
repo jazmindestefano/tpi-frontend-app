@@ -35,3 +35,21 @@ export interface PostUserRecordingData {
 export interface GameProps {
   selectedThemeId: number;
 }
+
+export interface LevelOptionRequest {
+  id: number;
+  name: string;
+  image: string;
+  correct: boolean;
+}
+
+export interface AuditoryDiscriminationActivitiesRequest {
+  id: number;
+  description: string;
+  options: LevelOptionRequest[];
+}
+
+export interface PostAuditoryDiscriminationRequest {
+  patiendId: number;
+  activities: AuditoryDiscriminationActivitiesRequest[];
+}
