@@ -1,66 +1,18 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/buttons/Button";
 import SpinnerLoader from "../../components/common/SpinnerLoader";
-import { shuffleArray } from "../../helpers/arrays";
-import { speakText } from "../../helpers/speakText";
-import { useGetGameLevels } from "../../hooks/queries";
-import { GameProps, LevelOption } from "../../interfaces/interfaces";
-import { useAudioRecording } from "../../hooks/useAudioRecording";
 import {
   ArrowRightIcon,
   AudioLinesIcon,
   MicIcon,
   VolumeIcon,
 } from "../../components/common/icons/Icons";
-import { postUserRecording } from "../../http/queries";
+import { GameProps } from "../../interfaces/interfaces";
+import { useNavigate } from "react-router-dom";
+import RecordGamePresenter from "../../presenters/RecordGame.presenter";
 
 const RecordGame: React.FC<GameProps> = ({ selectedThemeId }) => {
-  const { levels, isLoading, error } = useGetGameLevels(selectedThemeId);
-  const { isRecording, audio, startRecording, stopRecording } =
-    useAudioRecording();
-  const [currentLevel, setCurrentLevel] = useState<number>(0);
-  const [levelOptions, setLevelOptions] = useState<LevelOption[]>([]);
-
-  console.log({ audio });
-
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    if (levels && !isLoading && !error) {
-      const shuffledOptions = shuffleArray([...levels[currentLevel].options]);
-      setLevelOptions(shuffledOptions);
-    }
-  }, [levels, isLoading, error, currentLevel]);
-
-  const isCorrectOption = (option: LevelOption) => {
-    if (levels && option.correct) {
-      if (currentLevel < levels.length - 1) {
-        setCurrentLevel((prevState) => prevState + 1);
-      } else {
-        navigate("/felicitaciones");
-      }
-    } else {
-      console.log("Respuesta incorrecta");
-    }
-  };
-
-  function convertBlobToFile(blob: Blob, fileName: string): File {
-    return new File([blob], fileName, { type: "audio/wav" });
-  }
-
-  useEffect(() => {
-    if (audio) {
-      const audioFile = convertBlobToFile(audio, "user_audio.wav");
-      postUserRecording({
-        userId: 1,
-        gameId: 2,
-        gameName: "RecordGame",
-        text: levels![currentLevel].description!,
-        userAudio: audioFile,
-      });
-    }
-  }, [audio, currentLevel, levels]);
+const navigate = useNavigate();
+const { isLoading, levels, currentLevel, speakText, levelOptions, isCorrectOption, isRecording, stopRecording, startRecording } = RecordGamePresenter(selectedThemeId);
 
   return !isLoading ? (
     <div className="w-full h-full relative flex justify-center items-center flex-col">

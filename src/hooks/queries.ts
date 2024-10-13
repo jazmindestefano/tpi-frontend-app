@@ -66,9 +66,10 @@ export const usePostUserRecording = (): {
       userId,
       gameId,
       text,
+      gameName,
       userAudio,
     }: PostUserRecordingData) => {
-      return await ApiService.postUserRecording({userId, gameId, text, userAudio})
+      return await ApiService.postUserRecording({userId, gameId, gameName, text, userAudio})
     }
   })
   return { mutate, reset, error, isPending, isSuccess }
