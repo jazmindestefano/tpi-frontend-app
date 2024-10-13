@@ -13,6 +13,7 @@ import {
   MicIcon,
   VolumeIcon,
 } from "../../components/common/icons/Icons";
+import { postUserRecording } from "../../http/queries";
 
 const RecordGame: React.FC<GameProps> = ({ selectedThemeId }) => {
   const { levels, isLoading, error } = useGetGameLevels(selectedThemeId);
@@ -43,6 +44,17 @@ const RecordGame: React.FC<GameProps> = ({ selectedThemeId }) => {
       console.log("Respuesta incorrecta");
     }
   };
+
+  useEffect(() => {
+    if (audio) {
+      postUserRecording({
+        userId: 1,
+        gameId: 2,
+        text: levels![currentLevel].description!,
+        userAudio: audio,
+      });
+    }
+  }, [audio, currentLevel, levels]);
 
   return !isLoading ? (
     <div className="w-full h-full relative flex justify-center items-center flex-col">
