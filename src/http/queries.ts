@@ -1,5 +1,5 @@
-import {GameLevel, Game, Theme, PostUserRecordingData} from "../interfaces/interfaces.ts";
-import {unauthenticatedClient} from "./clients.ts";
+import { GameLevel, Game, Theme, PostUserRecordingData } from "../interfaces/interfaces.ts";
+import { unauthenticatedClient } from "./clients.ts";
 
 
 export const getThemesByGameId = async (gameId: number): Promise<Theme[] | null> => {
@@ -27,27 +27,27 @@ export const getGameLevels = async (themeId: number): Promise<GameLevel[] | null
   return null
 }
 
-export const postUserRecording = async ({ userId, gameId, text, userAudio }: PostUserRecordingData) => {
-  console.log("Enviando grabación: ", { userAudio, userId, gameId, text });
+export const postUserRecording = async ({ userId, gameId, text, userAudio, gameName }: PostUserRecordingData) => {
 
   const formData = new FormData();
+  formData.append("user_id", String(userId));
+  formData.append("activity_id", String(gameId));
+  formData.append("text", text);
   formData.append("user_audio_file", userAudio);
+  formData.append("game_name", gameName);
 
-  const res = await unauthenticatedClient.post(`/sendAnswersWithAudio`, formData, {
-    params: {
-      user_id: userId,
-      game_id: gameId,
-      text: text,
-    },
-    headers: {
-      "Content-Type": "multipart/form-data",
+  const res = await unauthenticatedClient.post(
+    `answers/sendAnswersWithAudio`,
+    formData,
+    {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
     }
-  });
+  );
 
   if (res.status === 200) {
     return res.data;
   }
-
   return null;
 };
-

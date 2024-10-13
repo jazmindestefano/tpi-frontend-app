@@ -33,15 +33,6 @@ const RecordGame: React.FC<GameProps> = ({ selectedThemeId }) => {
     }
   }, [levels, isLoading, error, currentLevel]);
 
-  function convertBlobToBase64(blob: Blob): Promise<string> {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onloadend = () => resolve(reader.result as string);
-      reader.onerror = reject;
-      reader.readAsDataURL(blob);
-    });
-  }
-
   const isCorrectOption = (option: LevelOption) => {
     if (levels && option.correct) {
       if (currentLevel < levels.length - 1) {
@@ -54,15 +45,19 @@ const RecordGame: React.FC<GameProps> = ({ selectedThemeId }) => {
     }
   };
 
+  function convertBlobToFile(blob: Blob, fileName: string): File {
+    return new File([blob], fileName, { type: "audio/wav" });
+  }
+
   useEffect(() => {
     if (audio) {
-      convertBlobToBase64(audio).then((base64Audio) => {
-        postUserRecording({
-          userId: 1,
-          gameId: 2,
-          text: levels![currentLevel].description!,
-          userAudio: base64Audio,
-        });
+      const audioFile = convertBlobToFile(audio, "user_audio.wav");
+      postUserRecording({
+        userId: 1,
+        gameId: 2,
+        gameName: "RecordGame",
+        text: levels![currentLevel].description!,
+        userAudio: audioFile,
       });
     }
   }, [audio, currentLevel, levels]);
