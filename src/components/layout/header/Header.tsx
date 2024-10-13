@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 const Header: React.FC = () => {
   const navigate = useNavigate();
   return (
-    <header className="flex justify-between items-start p-4 bg-gradient-to-b from-orange-50 to-transparent fixed top-0 left-0 w-full z-50 transition-opacity duration-300">
+    <header className="flex justify-between items-start p-4 bg-gradient-to-b from-orange-100 to-transparent fixed w-full">
       <div className="flex flex-col justify-center items-start gap-4" onClick={() => navigate("/")}>
         <img src="/clara-logo.svg" alt="Logo" className="h-16 cursor-pointer" />
       </div>
