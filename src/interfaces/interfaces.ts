@@ -28,7 +28,7 @@ export interface PostUserRecordingData {
   userId: number
   gameId: number
   text: string
-  userAudio: Blob
+  userAudio: string
 }
 
 export interface GameProps {

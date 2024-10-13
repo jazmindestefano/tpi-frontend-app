@@ -21,14 +21,10 @@ const RecordGame: React.FC<GameProps> = ({ selectedThemeId }) => {
     useAudioRecording();
   const [currentLevel, setCurrentLevel] = useState<number>(0);
   const [levelOptions, setLevelOptions] = useState<LevelOption[]>([]);
-  const responses = useSelector(
-    (state: RootState) => state.recordGame.response
-  );
 
   console.log({ audio });
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     if (levels && !isLoading && !error) {
@@ -46,25 +42,6 @@ const RecordGame: React.FC<GameProps> = ({ selectedThemeId }) => {
     });
   }
 
-  // Necistamos convertir el blob a base64 para poder guardarlo en el store de Redux.
-  useEffect(() => {
-    if (audio) {
-      convertBlobToBase64(audio).then((audioBase64) => {
-        dispatch(
-          addResponse({
-            id: String(levels?.[currentLevel].id),
-            name: String(levels?.[currentLevel].description),
-            audio: audioBase64,
-          })
-        );
-      });
-    }
-  }, [audio, currentLevel, levels, dispatch]);
-
-  useEffect(() => {
-    console.log("Responses from Redux store:", responses);
-  }, [responses]);
-
   const isCorrectOption = (option: LevelOption) => {
     if (levels && option.correct) {
       if (currentLevel < levels.length - 1) {
@@ -79,11 +56,13 @@ const RecordGame: React.FC<GameProps> = ({ selectedThemeId }) => {
 
   useEffect(() => {
     if (audio) {
-      postUserRecording({
-        userId: 1,
-        gameId: 2,
-        text: levels![currentLevel].description!,
-        userAudio: audio,
+      convertBlobToBase64(audio).then((base64Audio) => {
+        postUserRecording({
+          userId: 1,
+          gameId: 2,
+          text: levels![currentLevel].description!,
+          userAudio: base64Audio,
+        });
       });
     }
   }, [audio, currentLevel, levels]);
