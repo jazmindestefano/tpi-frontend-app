@@ -1,4 +1,4 @@
-import {ThemeCard} from "./ThemeCard.tsx";
+import {ThemeCard} from "../common/cards/themeCard/ThemeCard.tsx";
 import {Theme} from "../../interfaces/interfaces.ts";
 
 interface ThemeCardsListProps {
@@ -10,7 +10,7 @@ export const ThemeCardsList: React.FC<ThemeCardsListProps> = ({themes, onCardCli
   return (
     <div className={`grid gap-10 my-16 px-10 ${themes.length === 2 ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1 sm:grid-cols-3'}`}>
       {themes.map((theme) => (
-        <ThemeCard theme={theme} key={theme.id} onCardClick={() => onCardClick(theme)} />
+        <ThemeCard theme={theme} key={theme.id} onClick={() => onCardClick(theme)} />
       ))}
     </div>
   );

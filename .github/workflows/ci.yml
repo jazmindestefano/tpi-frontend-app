@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: CI/CD Pipeline
 
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
@@ -9,7 +9,11 @@ on:
     branches:
       - master
       - develop
-    types: [opened, synchronize, reopened, closed]
+    types: [opened, synchronize, reopened]
+  push:
+    branches:
+      - master
+      - develop
 
 jobs:
   build_and_test:
