@@ -1,9 +1,10 @@
-import {useNavigate, useParams} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { useGetThemesByGameId } from "../hooks/queries";
 import { Theme } from "../interfaces/interfaces";
 import { selectTheme } from "../redux/store/gameSlice";
 import { ThemeCardsList } from "../components/themeSelect/ThemeCardsList";
+import SpinnerLoader from "../components/common/SpinnerLoader.tsx";
 
 const snakeThemes = [
   { id: 1, name: "Silabas", image: "Silabas" },
@@ -20,28 +21,27 @@ const ThemeSelector = () => {
   const { gameId } = useParams();
   const { themes, isLoading, error } = useGetThemesByGameId(Number(gameId));
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  console.log({gameId})
-  
+  console.log({ gameId });
+
   const onCardClick = (theme: Theme) => {
-    console.log(`card clickeada: ${theme.id}`)
-    dispatch(selectTheme(theme))
+    console.log(`card clickeada: ${theme.id}`);
+    dispatch(selectTheme(theme));
     switch (gameId) {
       case "1":
-        navigate(`/actividad/${gameId}`)
-        break
+        navigate(`/actividad/${gameId}`);
+        break;
       case "2":
-        navigate(`/actividad/${gameId}`)
-        break
+        navigate(`/actividad/${gameId}`);
+        break;
       case "3":
-        navigate(`/viborita`)
-        break
+        navigate(`/viborita`);
+        break;
       default:
-        navigate(`/`)
+        navigate(`/`);
     }
- 
-  }
+  };
 
   return (
     <>
@@ -50,10 +50,12 @@ const ThemeSelector = () => {
       ) : gameId == "2" ? (
         <ThemeCardsList themes={palabrasThemes} onCardClick={onCardClick} />
       ) : isLoading ? (
-        <h1>Cargando...</h1>
+        <SpinnerLoader />
       ) : themes && themes.length !== 0 && !error ? (
         <ThemeCardsList themes={themes} onCardClick={onCardClick} />
-      ) : null}
+      ) : (
+        <h1>No hay tematicas disponibles</h1>
+      )}
     </>
   );
 };

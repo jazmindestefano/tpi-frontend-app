@@ -6,7 +6,7 @@ const Profile: React.FC = () => {
   const [isEditing, setIsEditing] = React.useState(false);
 
   return (
-    <div className="flex flex-col justify-center w-full rounded-xl border shadow-lg mx-8 md:mx-40 py-16 bg-orange-50">
+    <div className="flex flex-col justify-center w-full rounded-xl border shadow-lg mx-8 md:mx-40 py-8 bg-orange-50">
       <div className="flex flex-row justify-end items-end sm:mx-auto sm:w-full sm:max-w-lg">
         <img
           className="mx-auto h-40 w-auto"
