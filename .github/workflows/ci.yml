@@ -40,8 +40,8 @@ jobs:
 
   deploy_preview:
     needs: build_and_test
-    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
-    uses: ./.github/workflows/vercel-deploy.yml@develop
+    if: github.ref == 'refs/heads/develop'
+    uses: ./.github/workflows/vercel-deploy.yml
     with:
       environment: preview
     secrets:
@@ -49,8 +49,8 @@ jobs:
 
   deploy_prod:
     needs: build_and_test
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-    uses: ./.github/workflows/vercel-deploy.yml@master
+    if: github.ref == 'refs/heads/master'
+    uses: ./.github/workflows/vercel-deploy.yml
     with:
       environment: production
     secrets:
