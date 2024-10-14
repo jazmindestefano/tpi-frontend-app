@@ -6,14 +6,9 @@ env:
 
 on:
   pull_request:
-    branches:
-      - master
-      - develop
-    types: [opened, synchronize, reopened]
+    branches: [master, develop]
   push:
-    branches:
-      - master
-      - develop
+    branches: [master, develop]
 
 jobs:
   build_and_test:
@@ -44,7 +39,7 @@ jobs:
       environment: preview
     secrets:
       vercel_token: ${{ secrets.VERCEL_TOKEN }}
-    if: github.ref == 'refs/heads/develop'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
 
   deploy_prod:
     needs: build_and_test
@@ -53,4 +48,4 @@ jobs:
       environment: production
     secrets:
       vercel_token: ${{ secrets.VERCEL_TOKEN }}
-    if: github.ref == 'refs/heads/master'
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
