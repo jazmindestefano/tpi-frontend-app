@@ -39,28 +39,18 @@ jobs:
 
   deploy_preview:
     needs: build_and_test
-    permissions:
-      contents: read
-      pull-requests: write
-    runs-on: ubuntu-latest
+    uses: ./.github/workflows/vercel-deploy.yml@develop
+    with:
+      environment: preview
+    secrets:
+      vercel_token: ${{ secrets.VERCEL_TOKEN }}
     if: github.ref == 'refs/heads/develop'
-    steps:
-      - name: Deploy to Vercel Preview
-        uses: ./.github/workflows/vercel-deploy.yml
-        with:
-          environment: preview
-          vercel_token: ${{ secrets.VERCEL_TOKEN }}
 
   deploy_prod:
     needs: build_and_test
-    permissions:
-      contents: read
-      pull-requests: write
-    runs-on: ubuntu-latest
+    uses: ./.github/workflows/vercel-deploy.yml@master
+    with:
+      environment: production
+    secrets:
+      vercel_token: ${{ secrets.VERCEL_TOKEN }}
     if: github.ref == 'refs/heads/master'
-    steps:
-      - name: Deploy to Vercel Production
-        uses: ./.github/workflows/vercel-deploy.yml
-        with:
-          environment: production
-          vercel_token: ${{ secrets.VERCEL_TOKEN }}
