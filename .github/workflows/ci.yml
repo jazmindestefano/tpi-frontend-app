@@ -46,7 +46,7 @@ jobs:
     if: github.ref == 'refs/heads/develop'
     steps:
       - name: Deploy to Vercel Preview
-        uses: jazmindestefano/tpi-frontend-app/.github/workflows/{vercel-deploy.yml@develop
+        uses: ./.github/workflows/{vercel-deploy.yml
         with:
           environment: preview
           vercel_token: ${{ secrets.VERCEL_TOKEN }}
@@ -60,7 +60,7 @@ jobs:
     if: github.ref == 'refs/heads/master'
     steps:
       - name: Deploy to Vercel Production
-        uses: jazmindestefano/tpi-frontend-app/.github/workflows/{vercel-deploy.yml@master
+        uses: ./.github/workflows/{vercel-deploy.yml
         with:
           environment: production
           vercel_token: ${{ secrets.VERCEL_TOKEN }}
