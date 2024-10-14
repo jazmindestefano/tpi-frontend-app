@@ -38,31 +38,25 @@ jobs:
         run: npm run build
 
   deploy_preview:
-    runs-on: ubuntu-latest
     needs: build_and_test
+    permissions:
+      contents: read
+      pull-requests: write
+    uses: ./.github/workflows/vercel-deploy.yml@develop
+    with:
+      environment: preview
+      vercel_token: ${{ secrets.VERCEL_TOKEN }}
     if: github.ref == 'refs/heads/develop'
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
-      - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Build Project Artifacts
-        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
 
   deploy_prod:
-    runs-on: ubuntu-latest
     needs: build_and_test
+    permissions:
+      contents: read
+      pull-requests: write
+    uses: ./.github/workflows/vercel-deploy.yml@master
+    with:
+      environment: production
+      vercel_token: ${{ secrets.VERCEL_TOKEN }}
     if: github.ref == 'refs/heads/master'
-    steps:
-      - uses: actions/checkout@v3
-      - name: Install Vercel CLI
-        run: npm install --global vercel@latest
-      - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Build Project Artifacts
-        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
-      - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+
+https://github.com/jazmindestefano/tpi-frontend-app/blob/develop/.github/workflows/ci.yml
