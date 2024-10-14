@@ -15,14 +15,19 @@ jobs:
   build_and_test:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x, 22.x]
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '>=20.0.0'
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
 
       - name: Install dependencies
         run: npm install
@@ -36,7 +41,7 @@ jobs:
   deploy_preview:
     needs: build_and_test
     if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
-    uses: /jazmindestefano/tpi-frontend-app/.github/workflows/vercel-deploy.yml@develop
+    uses: ./.github/workflows/vercel-deploy.yml@develop
     with:
       environment: preview
     secrets:
@@ -45,7 +50,7 @@ jobs:
   deploy_prod:
     needs: build_and_test
     if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-    uses: /jazmindestefano/tpi-frontend-app/.github/workflows/vercel-deploy.yml@master
+    uses: ./.github/workflows/vercel-deploy.yml@master
     with:
       environment: production
     secrets:
