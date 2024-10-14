@@ -39,16 +39,6 @@ jobs:
   deploy:
     needs: build_and_test
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        environment: [preview, production]
-        include:
-          - environment: preview
-            branch: develop
-          - environment: production
-            branch: master
-    if: github.ref == 'refs/heads/${{ matrix.branch }}'
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -57,18 +47,25 @@ jobs:
         run: npm install --global vercel@latest
 
       - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=${{ matrix.environment }} --token=${{ secrets.VERCEL_TOKEN }}
+        run: |
+          if [ $GITHUB_REF == 'refs/heads/develop' ]; then
+            vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+          else
+            vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+          fi
 
       - name: Build Project Artifacts
         run: |
-          if [ ${{ matrix.environment }} == "preview" ]; then
+          if [ $GITHUB_REF == 'refs/heads/develop' ]; then
             vercel build --token=${{ secrets.VERCEL_TOKEN }}
           else
             vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+          fi
 
       - name: Deploy Project Artifacts to Vercel
         run: |
-          if [ ${{ matrix.environment }} == "preview" ]; then
+          if [ $GITHUB_REF == 'refs/heads/develop' ]; then
             vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
           else
             vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+          fi
