@@ -39,6 +39,7 @@ jobs:
   deploy:
     needs: build_and_test
     runs-on: ubuntu-latest
+    if: github.event_name == 'push'
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
