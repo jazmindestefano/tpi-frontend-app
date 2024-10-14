@@ -42,7 +42,7 @@ jobs:
     if: github.ref == 'refs/heads/develop'
     steps:
       - name: Call reusable workflow for Vercel Preview
-        uses: ./.github/actions/deploy-vercel.yml@develop
+        uses: ./.github/actions/action.yml
         with:
           environment: preview
           vercel_token: ${{ secrets.VERCEL_TOKEN }}
@@ -53,7 +53,7 @@ jobs:
     if: github.ref == 'refs/heads/master'
     steps:
       - name: Call reusable workflow for Vercel Production
-        uses: ./.github/actions/deploy-vercel.yml@master
+        uses: ./.github/actions/action.yml
         with:
           environment: production
           vercel_token: ${{ secrets.VERCEL_TOKEN }}
