@@ -34,7 +34,7 @@ jobs:
 
   deploy_preview:
     needs: build_and_test
-    uses: ./.github/workflows/vercel-deploy.yml@develop
+    uses: /jazmindestefano/tpi-frontend-app/.github/workflows/vercel-deploy.yml@develop
     with:
       environment: preview
     secrets:
@@ -43,7 +43,7 @@ jobs:
 
   deploy_prod:
     needs: build_and_test
-    uses: ./.github/workflows/vercel-deploy.yml@master
+    uses: /jazmindestefano/tpi-frontend-app/.github/workflows/vercel-deploy.yml@master
     with:
       environment: production
     secrets:
