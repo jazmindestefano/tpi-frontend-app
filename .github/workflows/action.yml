@@ -1,4 +1,3 @@
-# .github/actions/deploy-vercel.yml
 name: Vercel Deployment
 
 description: "Deploy project to Vercel"
