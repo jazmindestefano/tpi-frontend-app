@@ -35,18 +35,18 @@ jobs:
 
   deploy_preview:
     needs: build_and_test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
     uses: /jazmindestefano/tpi-frontend-app/.github/workflows/vercel-deploy.yml@develop
     with:
       environment: preview
     secrets:
       vercel_token: ${{ secrets.VERCEL_TOKEN }}
-    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
 
   deploy_prod:
     needs: build_and_test
+    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
     uses: /jazmindestefano/tpi-frontend-app/.github/workflows/vercel-deploy.yml@master
     with:
       environment: production
     secrets:
       vercel_token: ${{ secrets.VERCEL_TOKEN }}
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
