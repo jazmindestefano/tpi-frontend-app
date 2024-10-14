@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: Build and Deploy
 
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
@@ -9,7 +9,6 @@ on:
     branches:
       - master
       - develop
-    types: [opened, synchronize, reopened]
   push:
     branches:
       - master
