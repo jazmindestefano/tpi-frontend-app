@@ -1,4 +1,4 @@
-name: CI/CD Pipeline
+name: Build and Deploy
 
 env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
@@ -6,28 +6,26 @@ env:
 
 on:
   pull_request:
-    branches: [master, develop]
-    types: [opened, synchronize, reopened]
+    branches:
+      - master
+      - develop
   push:
-    branches: [master, develop]
+    branches:
+      - master
+      - develop
 
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [18.x, 20.x, 22.x]
-
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
+          node-version: '>=20.0.0'
 
       - name: Install dependencies
         run: npm install
@@ -40,18 +38,22 @@ jobs:
 
   deploy_preview:
     needs: build_and_test
-    if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
-    uses: ./.github/workflows/vercel-deploy.yml@develop
-    with:
-      environment: preview
-    secrets:
-      vercel_token: ${{ secrets.VERCEL_TOKEN }}
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/develop'
+    steps:
+      - name: Call reusable workflow for Vercel Preview
+        uses: ./.github/workflows/vercel-deploy.yml
+        with:
+          environment: preview
+          vercel_token: ${{ secrets.VERCEL_TOKEN }}
 
   deploy_prod:
     needs: build_and_test
-    if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-    uses: ./.github/workflows/vercel-deploy.yml@master
-    with:
-      environment: production
-    secrets:
-      vercel_token: ${{ secrets.VERCEL_TOKEN }}
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    steps:
+      - name: Call reusable workflow for Vercel Production
+        uses: ./.github/workflows/vercel-deploy.yml
+        with:
+          environment: production
+          vercel_token: ${{ secrets.VERCEL_TOKEN }}
