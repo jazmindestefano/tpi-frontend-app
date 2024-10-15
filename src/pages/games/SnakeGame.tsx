@@ -97,7 +97,7 @@ export default function VowelSnakeGame() {
 
   return (
     <div className="flex flex-col items-center justify-center h-full bg-gradient-to-br from-purple-300 via-purple-200 to-pink-200">
-      <h1 className="text-4xl font-bold mb-4 text-purple-800">
+      <h1 className="text-4xl font-bold mb-4 text-purple-800 text-center">
         Vowel Snake Game
       </h1>
       <div
