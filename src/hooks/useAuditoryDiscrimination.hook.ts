@@ -3,25 +3,24 @@ import { useNavigate } from "react-router-dom";
 import { shuffleArray } from "../helpers/arrays";
 import { speakText } from "../helpers/speakText";
 import { useGetGameLevels } from "../hooks/queries";
-import { GameLevel, LevelOption, LevelOptionRequest } from "../interfaces/interfaces";
+import { LevelOption, LevelOptionRequest } from "../interfaces/interfaces";
 import { postAuditoryDiscriminationRequest } from "../http/queries";
 
-function PostRequest (currentLevelData: GameLevel) {
-    const correctOption = currentLevelData.options.find(levelOption => levelOption.correct);
-    const optionFound: LevelOptionRequest = {
-        id: correctOption!.id,
-        name: correctOption!.name,
-        image: correctOption!.image,
-        correct: correctOption!.correct,
+function PostRequest (optionSelected: LevelOption) {
+    const optSelectedReq: LevelOptionRequest = {
+        id: optionSelected!.id,
+        name: optionSelected.name ?? "Default name",
+        image: optionSelected.image ?? "Default image",
+        correct: optionSelected!.correct,
     };
 
     const requestData = {
         patiendId: 1,
         activities: [
             {
-                id: currentLevelData.id,
-                description: currentLevelData.description,
-                options: [optionFound],
+                id: optionSelected.id,
+                description: optionSelected.description ?? "Default Description",
+                options: [optSelectedReq],
             },
         ],
     };
@@ -42,11 +41,9 @@ export const useAuditoryDiscrimination = (selectedThemeId: number) => {
         }
     }, [levels, isLoading, error, currentLevel]);
 
-    const isCorrectOption = (option: LevelOption) => {
-        if (levels && option.correct) {
-            const currentLevelData = levels[currentLevel];
-            PostRequest(currentLevelData);
-            
+    const handleSelectedOption = (option: LevelOption) => {
+        if (levels) {
+            PostRequest(option);
             if (currentLevel < levels.length - 1) {
                 setCurrentLevel((prevState) => prevState + 1);
             } else {
@@ -69,7 +66,7 @@ export const useAuditoryDiscrimination = (selectedThemeId: number) => {
         error,
         currentLevel,
         levelOptions,
-        isCorrectOption,
+        handleSelectedOption,
         speakLevelDescription,
     };
 };
