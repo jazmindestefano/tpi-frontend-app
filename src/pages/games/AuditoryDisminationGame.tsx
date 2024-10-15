@@ -52,7 +52,7 @@ const AuditoryDiscriminationGame: React.FC<GameProps> = ({
             <div
               className="p-4 w-full rounded-3xl h-80 flex flex-col items-center justify-center bg-white"
               onClick={() => {
-                handleSelectedOption(option);
+                handleSelectedOption(option, levels![currentLevel].description);
               }}
             >
               <img

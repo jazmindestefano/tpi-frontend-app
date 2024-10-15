@@ -6,7 +6,7 @@ import { useGetGameLevels } from "../hooks/queries";
 import { LevelOption, LevelOptionRequest } from "../interfaces/interfaces";
 import { postAuditoryDiscriminationRequest } from "../http/queries";
 
-function PostRequest (optionSelected: LevelOption) {
+function PostRequest (optionSelected: LevelOption, description: string) {
     const optSelectedReq: LevelOptionRequest = {
         id: optionSelected!.id,
         name: optionSelected.name ?? "Default name",
@@ -19,7 +19,7 @@ function PostRequest (optionSelected: LevelOption) {
         activities: [
             {
                 id: optionSelected.id,
-                description: optionSelected.description ?? "Default Description",
+                description: description ?? "Default Description",
                 options: [optSelectedReq],
             },
         ],
@@ -41,9 +41,9 @@ export const useAuditoryDiscrimination = (selectedThemeId: number) => {
         }
     }, [levels, isLoading, error, currentLevel]);
 
-    const handleSelectedOption = (option: LevelOption) => {
+    const handleSelectedOption = (option: LevelOption, description: string) => {
         if (levels) {
-            PostRequest(option);
+            PostRequest(option, description);
             if (currentLevel < levels.length - 1) {
                 setCurrentLevel((prevState) => prevState + 1);
             } else {
