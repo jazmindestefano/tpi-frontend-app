@@ -2,13 +2,13 @@ import Button from "../../components/common/buttons/Button";
 import SpinnerLoader from "../../components/common/SpinnerLoader";
 import { speakText } from "../../helpers/speakText";
 import { GameProps } from "../../interfaces/interfaces";
-import { MicIcon, VolumeIcon } from "../../components/common/icons/Icons";
+import { VolumeIcon } from "../../components/common/icons/Icons";
 import { useAuditoryDiscrimination } from "../../hooks/useAuditoryDiscrimination.hook";
 
 const AuditoryDiscriminationGame: React.FC<GameProps> = ({
   selectedThemeId,
 }) => {
-  const { isLoading, isCorrectOption, levels, currentLevel, levelOptions } = useAuditoryDiscrimination(selectedThemeId);
+  const { isLoading, handleSelectedOption, levels, currentLevel, levelOptions } = useAuditoryDiscrimination(selectedThemeId);
 
   return !isLoading ? (
     <div className="w-full h-full">
@@ -52,7 +52,7 @@ const AuditoryDiscriminationGame: React.FC<GameProps> = ({
             <div
               className="p-4 w-full rounded-3xl h-80 flex flex-col items-center justify-center bg-white"
               onClick={() => {
-                isCorrectOption(option);
+                handleSelectedOption(option, levels![currentLevel].id, levels![currentLevel].description);
               }}
             >
               <img
@@ -67,7 +67,7 @@ const AuditoryDiscriminationGame: React.FC<GameProps> = ({
               variant={"fourth"}
               onClick={() => speakText(option.name)}
             >
-              <MicIcon />
+              <VolumeIcon />
             </Button>
           </div>
         ))}
