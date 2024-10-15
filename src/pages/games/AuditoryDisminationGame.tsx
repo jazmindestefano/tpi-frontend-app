@@ -11,9 +11,9 @@ const AuditoryDiscriminationGame: React.FC<GameProps> = ({
   const { isLoading, handleSelectedOption, levels, currentLevel, levelOptions } = useAuditoryDiscrimination(selectedThemeId);
 
   return !isLoading ? (
-    <div className="w-full h-full">
+    <div className="w-full h-full pt-20">
       <div className="w-full flex flex-col justify-center items-center gap-4">
-        <p className="font-bold text-2xl">
+        <p className="font-bold text-2xl text-center">
         Selecciona la imágen que empiece con la letra
         </p>
         <div className="flex flex-row justify-center items-center gap-4">

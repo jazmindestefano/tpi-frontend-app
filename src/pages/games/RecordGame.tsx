@@ -17,9 +17,9 @@ const { isLoading, levels, currentLevel, speakText, levelOptions, isCorrectOptio
   return !isLoading ? (
     <div className="w-full h-full relative flex justify-center items-center flex-col">
       <div className="w-full flex flex-col justify-center items-center gap-4">
-        <p className="font-bold text-2xl">¿Cómo decís la palabra?</p>
+        <p className="font-bold text-2xl text-center">¿Cómo decís la palabra?</p>
         <div className="flex flex-row justify-center items-center gap-4">
-          <p className="font-bold text-8xl">
+          <p className="font-bold text-8xl text-center">
             {levels && levels[currentLevel].description}
           </p>
           <Button
