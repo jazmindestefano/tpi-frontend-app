@@ -10,6 +10,7 @@ import {
   Pause,
   Play,
 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const vowels = ["A", "E", "I", "O", "U"];
 const cellSize = 50;
@@ -22,6 +23,8 @@ export default function VowelSnakeGame() {
   const [showBigVowel, setShowBigVowel] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [gridSize, setGridSize] = useState({ width: 30, height: 9 });
+  const [gameFinished, setGameFinished] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const togglePause = useCallback(() => {
     setIsPaused((prev) => !prev);
@@ -70,28 +73,44 @@ export default function VowelSnakeGame() {
           x: (prevSnake[0].x + direction.x + gridSize.width) % gridSize.width,
           y: (prevSnake[0].y + direction.y + gridSize.height) % gridSize.height,
         };
-
+      
         let newSnake = [newHead, ...prevSnake];
-
+      
         if (snake[0].x === vowel.x && snake[0].y === vowel.y) {
-          setEatenVowels((prev) => [...prev, vowel?.char]);
+          const updatedEatenVowels = [...eatenVowels, vowel.char];
+          setEatenVowels(updatedEatenVowels);
+      
           setShowBigVowel(true);
           setTimeout(() => setShowBigVowel(false), 1000);
-          setVowel({
-            char: vowels[Math.floor(Math.random() * vowels.length)],
-            x: Math.floor(Math.random() * gridSize.width),
-            y: Math.floor(Math.random() * gridSize.height),
-          });
+      
+          const remainingVowels = vowels.filter(
+            (v) => !updatedEatenVowels.includes(v)
+          );
+      
+          if (remainingVowels.length > 0) {
+            setVowel({
+              char: remainingVowels[Math.floor(Math.random() * remainingVowels.length)],
+              x: Math.floor(Math.random() * gridSize.width),
+              y: Math.floor(Math.random() * gridSize.height),
+            });
+          } else {
+              setGameFinished(true);
+          }
         } else {
           newSnake = newSnake.slice(0, -1);
         }
-
         return newSnake;
-      });
+      });      
     }, 500);
 
     return () => clearInterval(gameLoop);
-  }, [snake, direction, vowel, isPaused, gridSize]);
+  }, [snake, direction, vowel, isPaused, gridSize, eatenVowels, navigate, setGameFinished]);
+
+  useEffect(() => {
+    if (gameFinished) {
+      navigate("/felicitaciones");
+    }
+  }, [gameFinished, navigate]);
 
   useEffect(() => {
     const updateGridSize = () => {
