@@ -12,9 +12,6 @@ import {
 } from "lucide-react";
 
 const vowels = ["A", "E", "I", "O", "U"];
-
-const gridWidth = 15;
-const gridHeight = 10;
 const cellSize = 50;
 
 export default function VowelSnakeGame() {
@@ -24,6 +21,7 @@ export default function VowelSnakeGame() {
   const [eatenVowels, setEatenVowels] = useState<string[]>([]);
   const [showBigVowel, setShowBigVowel] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
+  const [gridSize, setGridSize] = useState({ width: 30, height: 9 });
 
   const togglePause = useCallback(() => {
     setIsPaused((prev) => !prev);
@@ -69,8 +67,8 @@ export default function VowelSnakeGame() {
     const gameLoop = setInterval(() => {
       setSnake((prevSnake) => {
         const newHead = {
-          x: (prevSnake[0].x + direction.x + gridWidth) % gridWidth,
-          y: (prevSnake[0].y + direction.y + gridHeight) % gridHeight,
+          x: (prevSnake[0].x + direction.x + gridSize.width) % gridSize.width,
+          y: (prevSnake[0].y + direction.y + gridSize.height) % gridSize.height,
         };
 
         let newSnake = [newHead, ...prevSnake];
@@ -81,8 +79,8 @@ export default function VowelSnakeGame() {
           setTimeout(() => setShowBigVowel(false), 1000);
           setVowel({
             char: vowels[Math.floor(Math.random() * vowels.length)],
-            x: Math.floor(Math.random() * gridWidth),
-            y: Math.floor(Math.random() * gridHeight),
+            x: Math.floor(Math.random() * gridSize.width),
+            y: Math.floor(Math.random() * gridSize.height),
           });
         } else {
           newSnake = newSnake.slice(0, -1);
@@ -93,18 +91,34 @@ export default function VowelSnakeGame() {
     }, 500);
 
     return () => clearInterval(gameLoop);
-  }, [snake, direction, vowel, isPaused]);
+  }, [snake, direction, vowel, isPaused, gridSize]);
+
+  useEffect(() => {
+    const updateGridSize = () => {
+      const width = window.innerWidth;
+
+      if (width > 1024) {
+        setGridSize({ width: 30, height: 9 });
+      } else if (width > 768) {
+        setGridSize({ width: 20, height: 7 });
+      } else {
+        setGridSize({ width: 10, height: 5 });
+      }
+    };
+
+    window.addEventListener("resize", updateGridSize);
+    updateGridSize();
+
+    return () => window.removeEventListener("resize", updateGridSize);
+  }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center h-full bg-gradient-to-br from-purple-300 via-purple-200 to-pink-200">
-      <h1 className="text-4xl font-bold mb-4 text-purple-800 text-center">
-        Vowel Snake Game
-      </h1>
+    <div className="flex flex-col items-center justify-center h-full mt-6">
       <div
         className="relative rounded-lg shadow-lg overflow-hidden"
         style={{
-          width: `${gridWidth * cellSize}px`,
-          height: `${gridHeight * cellSize}px`,
+          width: `${gridSize.width * cellSize}px`,
+          height: `${gridSize.height * cellSize}px`,
           background: "linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)",
         }}
       >
