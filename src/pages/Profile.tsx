@@ -1,12 +1,17 @@
 import React from "react";
-import Button from "../components/common/buttons/Button";
-import { Pencil, Save } from "lucide-react";
+import { speakText } from "../helpers/speakText";
+import { SecondaryPencilButton, SecondarySaveButton, SecondaryVolumeButton } from "../components/common/buttons/Buttons";
 
 const Profile: React.FC = () => {
   const [isEditing, setIsEditing] = React.useState(false);
 
   return (
-    <div className="flex flex-col justify-center w-full rounded-xl border shadow-lg mx-8 md:mx-40 py-8 bg-orange-50">
+    <div className="flex-col-center gap-4 mx-8 md:mx-52">
+      <div className="flex-center gap-4">
+         <h1 className="text-h1">Perfil</h1>
+         <SecondaryVolumeButton onClick={() => speakText("Perfil")} />
+      </div>
+      <div className="flex-col-center rounded-xl border shadow-lg py-8 bg-orange-50">
       <div className="flex flex-row justify-end items-end sm:mx-auto sm:w-full sm:max-w-lg">
         <img
           className="mx-auto h-40 w-auto"
@@ -70,14 +75,7 @@ const Profile: React.FC = () => {
             </div>
 
             <div className="flex items-end justify-end">
-              <Button
-                size={"circle"}
-                shape={"circle"}
-                variant={"secondary"}
-                onClick={() => setIsEditing(false)}
-              >
-                <Save className="text-white" />
-              </Button>
+              <SecondarySaveButton onClick={() => setIsEditing(false)} />
             </div>
           </form>
         ) : (
@@ -116,17 +114,11 @@ const Profile: React.FC = () => {
             </div>
 
             <div className="flex items-end justify-end">
-              <Button
-                size={"circle"}
-                shape={"circle"}
-                variant={"secondary"}
-                onClick={() => setIsEditing(true)}
-              >
-                <Pencil className="text-white" />
-              </Button>
+              <SecondaryPencilButton onClick={() => setIsEditing(true)} />
             </div>
           </div>
         )}
+      </div>
       </div>
     </div>
   );

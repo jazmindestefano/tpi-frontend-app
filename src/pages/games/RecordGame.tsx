@@ -1,14 +1,8 @@
-import Button from "../../components/common/buttons/Button";
 import SpinnerLoader from "../../components/common/SpinnerLoader";
-import {
-  ArrowRightIcon,
-  AudioLinesIcon,
-  MicIcon,
-  VolumeIcon,
-} from "../../components/common/icons/Icons";
 import { GameProps } from "../../interfaces/interfaces";
 import { useNavigate } from "react-router-dom";
 import useRecordGame from "../../hooks/useRecordGame.hook";
+import { MicOrAudioLinesButton, PrimaryArrowRightButton, SecondaryVolumeButton } from "../../components/common/buttons/Buttons";
 
 const RecordGame: React.FC<GameProps> = ({ selectedThemeId }) => {
 const navigate = useNavigate();
@@ -22,19 +16,12 @@ const { isLoading, levels, currentLevel, speakText, levelOptions, isCorrectOptio
           <p className="font-bold text-8xl text-center">
             {levels && levels[currentLevel].description}
           </p>
-          <Button
-            size={"circle"}
-            shape={"circle"}
-            variant={"secondary"}
-            onClick={() =>
+          <SecondaryVolumeButton onClick={() =>
               levels &&
               speakText(
                 `¿Cómo decís la palabra ${levels[currentLevel].description}?`
               )
-            }
-          >
-            <VolumeIcon />
-          </Button>
+            } />
         </div>
       </div>
       <div
@@ -63,25 +50,11 @@ const { isLoading, levels, currentLevel, speakText, levelOptions, isCorrectOptio
                 className="w-auto h-80"
               />
             </div>
-            <Button
-              size={"circle"}
-              shape={"circle"}
-              variant={"fourth"}
-              onClick={() => (isRecording ? stopRecording() : startRecording())}
-            >
-              {isRecording ? <AudioLinesIcon /> : <MicIcon />}
-            </Button>
+            <MicOrAudioLinesButton isRecording={isRecording} stopRecording={stopRecording} startRecording={startRecording} />
           </div>
         ))}
         <div className="absolute right-0 left-0 flex justify-end self-center pr-10">
-          <Button
-            size={"circle"}
-            shape={"circle"}
-            variant={"primary"}
-            onClick={() => navigate("/felicitaciones")}
-          >
-            <ArrowRightIcon />
-          </Button>
+          <PrimaryArrowRightButton onClick={() => navigate('/nextPage')} />
         </div>
       </div>
     </div>

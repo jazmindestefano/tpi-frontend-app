@@ -5,6 +5,8 @@ import { Theme } from "../interfaces/interfaces";
 import { selectTheme } from "../redux/store/gameSlice";
 import { ThemeCardsList } from "../components/themeSelect/ThemeCardsList";
 import SpinnerLoader from "../components/common/SpinnerLoader.tsx";
+import { speakText } from "../helpers/speakText.ts";
+import { SecondaryVolumeButton } from "../components/common/buttons/Buttons.tsx";
 
 const snakeThemes = [
   { id: 1, name: "Silabas", image: "Silabas" },
@@ -44,19 +46,25 @@ const ThemeSelector = () => {
   };
 
   return (
-    <>
+    <div className="flex-col-center layout">
+      <div className="flex-center self-center gap-4">
+        <h1 className="text-h1">
+          Tematicas
+        </h1>
+        <SecondaryVolumeButton onClick={() => speakText("Tematicas")} />
+      </div>
       {gameId == "3" ? (
-        <ThemeCardsList themes={snakeThemes} onCardClick={onCardClick} />
+      <ThemeCardsList themes={snakeThemes} onCardClick={onCardClick} />
       ) : gameId == "2" ? (
-        <ThemeCardsList themes={palabrasThemes} onCardClick={onCardClick} />
+      <ThemeCardsList themes={palabrasThemes} onCardClick={onCardClick} />
       ) : isLoading ? (
-        <SpinnerLoader />
+      <SpinnerLoader />
       ) : themes && themes.length !== 0 && !error ? (
-        <ThemeCardsList themes={themes} onCardClick={onCardClick} />
+      <ThemeCardsList themes={themes} onCardClick={onCardClick} />
       ) : (
-        <h1>No hay tematicas disponibles</h1>
+      <h1 className="text-h1">No hay tematicas disponibles</h1>
       )}
-    </>
+    </div>
   );
 };
 

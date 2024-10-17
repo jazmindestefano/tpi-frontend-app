@@ -11,7 +11,7 @@ export const BaseContainer: React.FC<BaseContainer> = ({
   className = ''
 }) => {
   return (
-    <div className={classNames("w-full flex flex-col justify-center items-center gap-4", className)}>
+    <div className={classNames("flex-col-center gap-4", className)}>
       {children}
     </div>
   )
