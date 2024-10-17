@@ -1,7 +1,7 @@
 import React  from "react";
-import { House, LogOut } from "lucide-react";
-import Button from "../../common/buttons/Button";
 import { useNavigate } from "react-router-dom";
+import Button from "../../common/buttons/Button.tsx";
+import {House, LogOut} from "lucide-react";
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -15,9 +15,7 @@ const Header: React.FC = () => {
           <Button
             size={"square"}
             variant={"tertiary"}
-            onClick={() =>
-              navigate(location.pathname !== "/perfil" ? "/perfil" : "/")
-            }
+            onClick={() => navigate(location.pathname !== "/perfil" ? "/perfil" : "/")}
           >
             <img
               src="/avatar/lion-avatar.png"

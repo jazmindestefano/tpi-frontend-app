@@ -87,6 +87,12 @@ export default {
       fontFamily: {
         comfortaa: ['Comfortaa'],
         poppins: ['Poppins']
+      },
+      fontSize: {
+        h1: ['2.5rem', { fontWeight: 'bold' }, { lineHeight: '3rem' }],
+        h2: ['2rem', { fontWeight: 'bold' }, { lineHeight: '2.5rem' }],
+        h3: ['1.75rem', { fontWeight: 'bold' }, { lineHeight: '2.25rem' }],
+        p: ['1rem', { fontWeight: 'bold' }, { lineHeight: '1.5rem' }],
       }
     },
   },

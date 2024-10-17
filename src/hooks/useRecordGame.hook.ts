@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { shuffleArray } from "../helpers/arrays";
-import { convertBlobToFile } from "../helpers/blobs";
+import { convertBlobToAudioFile } from "../helpers/blobs";
 import { useGetGameLevels } from "./queries.ts";
 import { useSelectedGame } from "./selectors.ts";
 import { useAudioRecording } from "./useAudioRecording.ts";
@@ -15,6 +15,8 @@ const useRecordGame = (selectedThemeId: number) => {
     const selecteGame = useSelectedGame();
     const [currentLevel, setCurrentLevel] = useState<number>(0);
     const [levelOptions, setLevelOptions] = useState<LevelOption[]>([]);
+
+    console.log({audio})
 
     useEffect(() => {
         if (levels && !isLoading && !error) {
@@ -37,7 +39,7 @@ const useRecordGame = (selectedThemeId: number) => {
 
     useEffect(() => {
         if (audio) {
-            const audioFile = convertBlobToFile(audio, "user_audio.wav");
+            const audioFile = convertBlobToAudioFile(audio, "user_audio.wav");
             postUserRecording({
                 userId: 1, // hardcoded, fix when users exists
                 gameId: selecteGame!.id,

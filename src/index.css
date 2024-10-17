@@ -3,3 +3,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+    .flex-center {
+        @apply flex justify-center items-center w-full;
+      }
+
+    .flex-col-center {
+      @apply flex flex-col justify-center items-center w-full;
+    }
+
+    .layout {
+        @apply pt-16 md:pt-0 px-5;
+    }
+  }

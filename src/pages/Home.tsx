@@ -5,6 +5,9 @@ import HomeCard from "../components/common/cards/HomeCard.tsx";
 import SpinnerLoader from "../components/common/SpinnerLoader.tsx";
 import { useDispatch } from "react-redux";
 import { selectGame } from "../redux/store/gameSlice.ts";
+import { speakText } from "../helpers/speakText.ts";
+
+import {VolumeButton} from "../components/common/buttons/VolumeButton.tsx";
 
 const getCardBgColor = (index: number) => {
   const colors = ["bg-blue-300", "bg-orange-300", "bg-orange-150"];
@@ -25,9 +28,16 @@ const Home: React.FC = () => {
   }
 
   return games && games.length !== 0 && !error ? (
-    <div className="w-full grid grid-cols-1 md:grid-cols-3 mt-16 gap-10">
+    <div className="flex-col-center gap-6 layout">
+      <div className="flex-center gap-4">
+        <h1 className="text-h1">
+          Juegos
+        </h1>
+        <VolumeButton variant={"secondary"} onClick={() => speakText("Juegos")} />
+      </div>
+      <div className="w-full grid grid-cols-1 md:grid-cols-3 xl:px-20 gap-10 pb-10">
       {games.map((game) => (
-        <div key={game.id} className="flex justify-center items-center w-full" onClick={() => dispatch(selectGame(game))}>
+        <div key={game.id} className="flex-center" onClick={() => dispatch(selectGame(game))}>
           <HomeCard
             buttonVariant="secondary"
             onClick={() => navigate(`/actividad/${game.id}/tematicas`)}
@@ -37,8 +47,9 @@ const Home: React.FC = () => {
         </div>
       ))}
     </div>
+    </div>
   ) : (
-    <h1>No hay juegos disponibles</h1>
+    <h1 className="text-h1">No hay juegos disponibles</h1>
   );
 };
 

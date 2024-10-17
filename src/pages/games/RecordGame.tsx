@@ -1,15 +1,13 @@
-import Button from "../../components/common/buttons/Button";
 import SpinnerLoader from "../../components/common/SpinnerLoader";
-import {
-  ArrowRightIcon,
-  AudioLinesIcon,
-  MicIcon,
-  VolumeIcon,
-} from "../../components/common/icons/Icons";
 import { GameProps } from "../../interfaces/interfaces";
 import { useNavigate } from "react-router-dom";
 import useRecordGame from "../../hooks/useRecordGame.hook";
 import {speakText} from "../../helpers/speakText.ts";
+import {VolumeButton} from "../../components/common/buttons/VolumeButton.tsx";
+import {RecordButton} from "../../components/common/buttons/RecordButton.tsx";
+import Button from "../../components/common/buttons/Button.tsx";
+import {ArrowRightIcon} from "../../components/common/icons/Icons.tsx";
+import React from "react";
 
 const RecordGame: React.FC<GameProps> = ({ selectedThemeId }) => {
 const navigate = useNavigate();
@@ -18,24 +16,17 @@ const { isLoading, levels, currentLevel, levelOptions, isCorrectOption, isRecord
   return !isLoading ? (
     <div className="w-full h-full relative flex justify-center items-center flex-col">
       <div className="w-full flex flex-col justify-center items-center gap-4">
-        <p className="font-bold text-2xl">¿Cómo decís la palabra?</p>
+        <p className="font-bold text-2xl text-center">¿Cómo decís la palabra?</p>
         <div className="flex flex-row justify-center items-center gap-4">
-          <p className="font-bold text-8xl">
+          <p className="font-bold text-8xl text-center">
             {levels && levels[currentLevel].description}
           </p>
-          <Button
-            size={"circle"}
-            shape={"circle"}
-            variant={"secondary"}
-            onClick={() =>
-              levels &&
-              speakText(
-                `¿Cómo decís la palabra ${levels[currentLevel].description}?`
-              )
-            }
-          >
-            <VolumeIcon />
-          </Button>
+          <VolumeButton variant={"secondary"} onClick={() =>
+            levels &&
+            speakText(
+              `¿Cómo decís la palabra ${levels[currentLevel].description}?`
+            )
+          } />
         </div>
       </div>
       <div
@@ -64,14 +55,7 @@ const { isLoading, levels, currentLevel, levelOptions, isCorrectOption, isRecord
                 className="w-auto h-80"
               />
             </div>
-            <Button
-              size={"circle"}
-              shape={"circle"}
-              variant={"fourth"}
-              onClick={() => (isRecording ? stopRecording() : startRecording())}
-            >
-              {isRecording ? <AudioLinesIcon /> : <MicIcon />}
-            </Button>
+            <RecordButton isRecording={isRecording} stopRecording={stopRecording} startRecording={startRecording} />
           </div>
         ))}
         <div className="absolute right-0 left-0 flex justify-end self-center pr-10">
@@ -79,7 +63,7 @@ const { isLoading, levels, currentLevel, levelOptions, isCorrectOption, isRecord
             size={"circle"}
             shape={"circle"}
             variant={"primary"}
-            onClick={() => navigate("/felicitaciones")}
+            onClick={() => navigate('/nextPage')}
           >
             <ArrowRightIcon />
           </Button>

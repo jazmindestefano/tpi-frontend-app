@@ -16,6 +16,8 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
+    onClose: () => {},
+    title: 'title',
     children: <div>This is inside a modal</div>
   }
 };

@@ -1,10 +1,10 @@
 import {Theme} from "../../../../interfaces/interfaces.ts";
 import React from "react";
 import {BaseCard} from "../BaseCard.tsx";
-import Button from "../../buttons/Button.tsx";
 import {BaseContainer} from "../BaseContainer.tsx";
 import { speakText } from "../../../../helpers/speakText.ts";
-import { VolumeIcon } from "../../icons/Icons.tsx";
+
+import {VolumeButton} from "../../buttons/VolumeButton.tsx";
 
 interface ThemeCardProps  {
   theme: Theme,
@@ -13,14 +13,15 @@ interface ThemeCardProps  {
 
 export const ThemeCard: React.FC<ThemeCardProps> = ({theme, onClick}) => {
   return (
-    <BaseCard className={"bg-orange-200 p-4 flex flex-col justify-between items-center"}>
+    <BaseCard className={"bg-orange-200 p-4 flex-col-center"}>
       <BaseContainer className={"gap-6"}>
         <div onClick={onClick} className="w-full">
-          <img className="rounded-3xl bg-white h-80 w-full object-cover" src={`/themes/letras/${theme.name}.png`} alt={theme.name}/>
+          <img className="rounded-3xl bg-[#F7F7F7] size-80 w-full p-4" src={`/themes/letras/${theme.name}.png`} alt={theme.name}/>
         </div>
-        <Button size={"circle"} shape={"circle"} variant={"secondary"} onClick={() => speakText(theme.name)}>
-          <VolumeIcon />
-        </Button>
+        <div className="flex flex-col justify-center items-center w-full gap-2">
+          <h3 className="text-h3">{theme.name}</h3>
+          <VolumeButton variant={"secondary"} onClick={() => speakText(theme.name)} />
+        </div>
       </BaseContainer>
     </BaseCard>
   );

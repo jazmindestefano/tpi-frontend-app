@@ -16,6 +16,11 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    onClose: () => {}
+    onModalClose: () => {},
+    onRatingClick: (n: number) => n,
+    isPending: false,
+    isSuccess: true,
+    error: null,
+    onTimerTimeout: () => {},
   }
 };
