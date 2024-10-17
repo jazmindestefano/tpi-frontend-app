@@ -22,19 +22,19 @@ const HomeCard: React.FC<HomeCardProps> = ({
   return (
     <BaseCard
       className={
-        "flex flex-col justify-between items-center w-full gap-4 shadow-none"
+        "flex-col-center gap-4 shadow-none"
       }
     >
       <BaseContainer
         className={`gap-6 ${backgroundColor} rounded-3xl p-6 transition-transform duration-300 transform hover:scale-105`}
       >
-        <div onClick={onClick}>
+        <div onClick={onClick} className="flex-col-center">
           <img
             className="rounded-3xl object-cover size-96"
             src={`/${game.name.toUpperCase()}.png`}
             alt={game.name}
           />
-          <h1 className="text-3xl font-bold text-center">
+          <h1 className="text-h1">
             {game.name.toUpperCase()}
           </h1>
         </div>

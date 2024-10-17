@@ -1,7 +1,6 @@
 import React  from "react";
-import { House, LogOut } from "lucide-react";
-import Button from "../../common/buttons/Button";
 import { useNavigate } from "react-router-dom";
+import { PrimaryLogOutButton, TertiaryHomeButton, TertiaryProfileButton } from "../../common/buttons/Buttons";
 
 const Header: React.FC = () => {
   const navigate = useNavigate();
@@ -12,28 +11,18 @@ const Header: React.FC = () => {
       </div>
       <div className="flex flex-row gap-4">
         {location.pathname !== "/perfil" && (
-          <Button
-            size={"square"}
-            variant={"tertiary"}
-            onClick={() =>
-              navigate(location.pathname !== "/perfil" ? "/perfil" : "/")
-            }
-          >
+          <TertiaryProfileButton onClick={() => navigate(location.pathname !== "/perfil" ? "/perfil" : "/")}>
             <img
               src="/avatar/lion-avatar.png"
               alt="Avatar"
               className="object-cover h-10"
             />
-          </Button>
+          </TertiaryProfileButton>
         )}
         {location.pathname === "/" ? (
-          <Button size={"square"} variant={"primary"}>
-            <LogOut className="text-white" />
-          </Button>
+          <PrimaryLogOutButton />
         ) : (
-          <Button size={"square"} variant={"tertiary"} onClick={() => navigate("/")}>
-            <House />
-          </Button>
+          <TertiaryHomeButton onClick={() => navigate("/")} />
         )}
       </div>
     </header>

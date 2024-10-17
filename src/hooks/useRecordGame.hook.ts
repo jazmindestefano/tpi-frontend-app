@@ -17,6 +17,8 @@ const useRecordGame = (selectedThemeId: number) => {
     const [currentLevel, setCurrentLevel] = useState<number>(0);
     const [levelOptions, setLevelOptions] = useState<LevelOption[]>([]);
 
+    console.log({audio})
+
     useEffect(() => {
         if (levels && !isLoading && !error) {
             const shuffledOptions = shuffleArray([...levels[currentLevel].options]);
