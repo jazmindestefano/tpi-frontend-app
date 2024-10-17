@@ -1,6 +1,8 @@
 import React from "react";
 import { speakText } from "../helpers/speakText";
-import { SecondaryPencilButton, SecondarySaveButton, SecondaryVolumeButton } from "../components/common/buttons/Buttons";
+import {VolumeButton} from "../components/common/buttons/VolumeButton.tsx";
+import Button from "../components/common/buttons/Button.tsx";
+import {Pencil, Save} from "lucide-react";
 
 const Profile: React.FC = () => {
   const [isEditing, setIsEditing] = React.useState(false);
@@ -8,8 +10,8 @@ const Profile: React.FC = () => {
   return (
     <div className="flex-col-center gap-4 mx-8 md:mx-52">
       <div className="flex-center gap-4">
-         <h1 className="text-h1">Perfil</h1>
-         <SecondaryVolumeButton onClick={() => speakText("Perfil")} />
+        <h1 className="text-h1">Perfil</h1>
+        <VolumeButton variant={"secondary"} onClick={() => speakText("Perfil")} />
       </div>
       <div className="flex-col-center rounded-xl border shadow-lg py-8 bg-orange-50">
       <div className="flex flex-row justify-end items-end sm:mx-auto sm:w-full sm:max-w-lg">
@@ -75,7 +77,14 @@ const Profile: React.FC = () => {
             </div>
 
             <div className="flex items-end justify-end">
-              <SecondarySaveButton onClick={() => setIsEditing(false)} />
+              <Button
+                size={"circle"}
+                shape={"circle"}
+                variant={"secondary"}
+                onClick={() => setIsEditing(false)}
+              >
+                <Save className="text-white" />
+              </Button>
             </div>
           </form>
         ) : (
@@ -114,7 +123,14 @@ const Profile: React.FC = () => {
             </div>
 
             <div className="flex items-end justify-end">
-              <SecondaryPencilButton onClick={() => setIsEditing(true)} />
+              <Button
+                size={"circle"}
+                shape={"circle"}
+                variant={"secondary"}
+                onClick={() => setIsEditing(true)}
+              >
+                <Pencil className="text-white" />
+              </Button>
             </div>
           </div>
         )}

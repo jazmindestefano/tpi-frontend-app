@@ -3,7 +3,8 @@ import React from "react";
 import {BaseCard} from "../BaseCard.tsx";
 import {BaseContainer} from "../BaseContainer.tsx";
 import { speakText } from "../../../../helpers/speakText.ts";
-import { SecondaryVolumeButton } from "../../buttons/Buttons.tsx";
+
+import {VolumeButton} from "../../buttons/VolumeButton.tsx";
 
 interface ThemeCardProps  {
   theme: Theme,
@@ -19,7 +20,7 @@ export const ThemeCard: React.FC<ThemeCardProps> = ({theme, onClick}) => {
         </div>
         <div className="flex flex-col justify-center items-center w-full gap-2">
           <h3 className="text-h3">{theme.name}</h3>
-          <SecondaryVolumeButton onClick={() => speakText(theme.name)} />
+          <VolumeButton variant={"secondary"} onClick={() => speakText(theme.name)} />
         </div>
       </BaseContainer>
     </BaseCard>

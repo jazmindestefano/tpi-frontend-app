@@ -2,8 +2,9 @@ import SpinnerLoader from "../../components/common/SpinnerLoader";
 import { speakText } from "../../helpers/speakText";
 import { GameProps } from "../../interfaces/interfaces";
 import { useAuditoryDiscrimination } from "../../hooks/useAuditoryDiscrimination.hook";
-import { FourthVolumeButton, SecondaryVolumeButton } from "../../components/common/buttons/Buttons";
 import { getJustifyClass } from "../../helpers/justifyClass";
+import React from "react";
+import {VolumeButton} from "../../components/common/buttons/VolumeButton.tsx";
 
 const AuditoryDiscriminationGame: React.FC<GameProps> = ({
   selectedThemeId,
@@ -20,12 +21,12 @@ const AuditoryDiscriminationGame: React.FC<GameProps> = ({
           <p className="font-bold text-8xl">
             {levels && levels[currentLevel].description}
           </p>
-          <SecondaryVolumeButton onClick={() =>
+          <VolumeButton variant={"secondary"} onClick={() =>
               levels &&
               speakText(
                 `Selecciona la imágen que empiece con la letra ${levels[currentLevel].description}`
               )
-            } 
+            }
           />
         </div>
       </div>
@@ -47,7 +48,7 @@ const AuditoryDiscriminationGame: React.FC<GameProps> = ({
                 className="w-auto h-80 rounded-3xl"
               />
             </div>
-            <FourthVolumeButton onClick={() => speakText(option.name)} />
+            <VolumeButton variant={"fourth"} onClick={() => speakText(option.name)} />
           </div>
         ))}
       </div>

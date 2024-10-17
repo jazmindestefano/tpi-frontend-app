@@ -6,7 +6,8 @@ import SpinnerLoader from "../components/common/SpinnerLoader.tsx";
 import { useDispatch } from "react-redux";
 import { selectGame } from "../redux/store/gameSlice.ts";
 import { speakText } from "../helpers/speakText.ts";
-import { SecondaryVolumeButton } from "../components/common/buttons/Buttons.tsx";
+
+import {VolumeButton} from "../components/common/buttons/VolumeButton.tsx";
 
 const getCardBgColor = (index: number) => {
   const colors = ["bg-blue-300", "bg-orange-300", "bg-orange-150"];
@@ -32,7 +33,7 @@ const Home: React.FC = () => {
         <h1 className="text-h1">
           Juegos
         </h1>
-        <SecondaryVolumeButton onClick={() => speakText("Juegos")} />
+        <VolumeButton variant={"secondary"} onClick={() => speakText("Juegos")} />
       </div>
       <div className="w-full grid grid-cols-1 md:grid-cols-3 xl:px-20 gap-10 pb-10">
       {games.map((game) => (

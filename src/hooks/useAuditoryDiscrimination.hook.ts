@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { shuffleArray } from "../helpers/arrays";
 import { speakText } from "../helpers/speakText";
-import { useGetGameLevels } from "../hooks/queries";
+import { useGetGameLevels } from "./queries.ts";
 import { LevelOption, LevelOptionRequest } from "../interfaces/interfaces";
 import { postAuditoryDiscriminationRequest } from "../http/queries";
 
@@ -15,7 +15,7 @@ function PostRequest (optionSelected: LevelOption, levelId: number, levelDescrip
     };
 
     const requestData = {
-        patiendId: 1,
+        patientId: 1,
         activities: [
             {
                 id: levelId,

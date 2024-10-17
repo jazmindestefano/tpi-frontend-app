@@ -2,11 +2,16 @@ import SpinnerLoader from "../../components/common/SpinnerLoader";
 import { GameProps } from "../../interfaces/interfaces";
 import { useNavigate } from "react-router-dom";
 import useRecordGame from "../../hooks/useRecordGame.hook";
-import { MicOrAudioLinesButton, PrimaryArrowRightButton, SecondaryVolumeButton } from "../../components/common/buttons/Buttons";
+import {speakText} from "../../helpers/speakText.ts";
+import {VolumeButton} from "../../components/common/buttons/VolumeButton.tsx";
+import {RecordButton} from "../../components/common/buttons/RecordButton.tsx";
+import Button from "../../components/common/buttons/Button.tsx";
+import {ArrowRightIcon} from "../../components/common/icons/Icons.tsx";
+import React from "react";
 
 const RecordGame: React.FC<GameProps> = ({ selectedThemeId }) => {
 const navigate = useNavigate();
-const { isLoading, levels, currentLevel, speakText, levelOptions, isCorrectOption, isRecording, stopRecording, startRecording } = useRecordGame(selectedThemeId);
+const { isLoading, levels, currentLevel, levelOptions, isCorrectOption, isRecording, stopRecording, startRecording } = useRecordGame(selectedThemeId);
 
   return !isLoading ? (
     <div className="w-full h-full relative flex justify-center items-center flex-col">
@@ -16,12 +21,12 @@ const { isLoading, levels, currentLevel, speakText, levelOptions, isCorrectOptio
           <p className="font-bold text-8xl text-center">
             {levels && levels[currentLevel].description}
           </p>
-          <SecondaryVolumeButton onClick={() =>
-              levels &&
-              speakText(
-                `¿Cómo decís la palabra ${levels[currentLevel].description}?`
-              )
-            } />
+          <VolumeButton variant={"secondary"} onClick={() =>
+            levels &&
+            speakText(
+              `¿Cómo decís la palabra ${levels[currentLevel].description}?`
+            )
+          } />
         </div>
       </div>
       <div
@@ -50,11 +55,18 @@ const { isLoading, levels, currentLevel, speakText, levelOptions, isCorrectOptio
                 className="w-auto h-80"
               />
             </div>
-            <MicOrAudioLinesButton isRecording={isRecording} stopRecording={stopRecording} startRecording={startRecording} />
+            <RecordButton isRecording={isRecording} stopRecording={stopRecording} startRecording={startRecording} />
           </div>
         ))}
         <div className="absolute right-0 left-0 flex justify-end self-center pr-10">
-          <PrimaryArrowRightButton onClick={() => navigate('/nextPage')} />
+          <Button
+            size={"circle"}
+            shape={"circle"}
+            variant={"primary"}
+            onClick={() => navigate('/nextPage')}
+          >
+            <ArrowRightIcon />
+          </Button>
         </div>
       </div>
     </div>

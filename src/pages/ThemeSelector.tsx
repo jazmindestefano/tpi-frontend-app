@@ -6,7 +6,8 @@ import { selectTheme } from "../redux/store/gameSlice";
 import { ThemeCardsList } from "../components/themeSelect/ThemeCardsList";
 import SpinnerLoader from "../components/common/SpinnerLoader.tsx";
 import { speakText } from "../helpers/speakText.ts";
-import { SecondaryVolumeButton } from "../components/common/buttons/Buttons.tsx";
+
+import {VolumeButton} from "../components/common/buttons/VolumeButton.tsx";
 
 const snakeThemes = [
   { id: 1, name: "Silabas", image: "Silabas" },
@@ -51,7 +52,7 @@ const ThemeSelector = () => {
         <h1 className="text-h1">
           Tematicas
         </h1>
-        <SecondaryVolumeButton onClick={() => speakText("Tematicas")} />
+        <VolumeButton variant={"secondary"} onClick={() => speakText("Tematicas")} />
       </div>
       {gameId == "3" ? (
       <ThemeCardsList themes={snakeThemes} onCardClick={onCardClick} />
