@@ -2,15 +2,14 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { shuffleArray } from "../helpers/arrays";
 import { convertBlobToFile } from "../helpers/blobs";
-import { speakText } from "../helpers/speakText";
-import { useGetGameLevels } from "../hooks/queries";
-import { useSelectedGame } from "../hooks/selectors";
-import { useAudioRecording } from "../hooks/useAudioRecording";
+import { useGetGameLevels } from "./queries.ts";
+import { useSelectedGame } from "./selectors.ts";
+import { useAudioRecording } from "./useAudioRecording.ts";
 import { postUserRecording } from "../http/queries";
 import { LevelOption } from "../interfaces/interfaces";
 
 const useRecordGame = (selectedThemeId: number) => {
-    const navigate = useNavigate();
+    const navigate = useNavigate(); 
     const { levels, isLoading, error } = useGetGameLevels(selectedThemeId);
     const { isRecording, audio, startRecording, stopRecording } = useAudioRecording();
     const selecteGame = useSelectedGame();
@@ -60,7 +59,6 @@ const useRecordGame = (selectedThemeId: number) => {
         currentLevel,
         levelOptions,
         isCorrectOption,
-        speakText,
     };
 };
 

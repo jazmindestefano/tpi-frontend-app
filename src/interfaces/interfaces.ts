@@ -10,6 +10,10 @@ export interface Game {
   image: string;
 }
 
+export interface User {
+  id: number
+}
+
 export interface GameLevel {
   id: number;
   description: string;
@@ -32,6 +36,12 @@ export interface PostUserRecordingData {
   userAudio: Blob
 }
 
+export interface PostFeedbackData {
+  ranking: number
+  gameId: number
+  patientId: number
+}
+
 export interface GameProps {
   selectedThemeId: number;
 }
@@ -50,6 +60,6 @@ export interface AuditoryDiscriminationActivitiesRequest {
 }
 
 export interface PostAuditoryDiscriminationRequest {
-  patiendId: number;
+  patientId: number;
   activities: AuditoryDiscriminationActivitiesRequest[];
 }

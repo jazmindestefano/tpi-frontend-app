@@ -19,6 +19,7 @@ const buttonVariants = cva(
           "hover:bg-[rgba(150,150,150,0.49)]",
         ],
         fourth: ["bg-[#9747FF]"],
+        transparent: ["bg-transparent"]
       },
       shape: {
         default: "rounded-lg",

@@ -1,7 +1,7 @@
 import * as ApiService from '../http/queries.ts'
 import {useMutation, useQuery} from "@tanstack/react-query";
 
-import {Game, GameLevel, PostUserRecordingData, Theme} from "../interfaces/interfaces.ts";
+import {Game, GameLevel, PostFeedbackData, PostUserRecordingData, Theme} from "../interfaces/interfaces.ts";
 
 const mockedPalabras = [
   {
@@ -70,6 +70,21 @@ export const usePostUserRecording = (): {
       userAudio,
     }: PostUserRecordingData) => {
       return await ApiService.postUserRecording({userId, gameId, gameName, text, userAudio})
+    }
+  })
+  return { mutate, reset, error, isPending, isSuccess }
+}
+
+export const usePostFeedback = (): {
+  mutate: (args: PostFeedbackData) => void
+  reset: () => void
+  error: Error | null
+  isPending: boolean
+  isSuccess: boolean
+} => {
+  const { mutate, reset, error, isPending, isSuccess } = useMutation({
+    mutationFn: async ({ranking, gameId, patientId}: PostFeedbackData) => {
+      return await ApiService.postFeedback({ranking, gameId, patientId})
     }
   })
   return { mutate, reset, error, isPending, isSuccess }
