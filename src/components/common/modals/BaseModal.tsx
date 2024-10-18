@@ -1,8 +1,8 @@
 import React, {ReactNode} from "react";
 import classNames from "classnames";
 import Button from "../buttons/Button.tsx";
-import {speakText} from "../../../helpers/speakText.ts";
 import {VolumeIcon} from "../icons/Icons.tsx";
+import {useSpeakText} from "../../../hooks/useSpeakText.ts";
 
 interface BaseModalProps {
   children: ReactNode
@@ -12,6 +12,7 @@ interface BaseModalProps {
 }
 
 export const BaseModal: React.FC<BaseModalProps> = ({className, children, onClose, title}) => {
+  const speakText = useSpeakText()
   return (
     <div className={classNames('bg-orange-50 border-orange-100 p-4 w-fit', className)}>
       <div className={"flex flex-nowrap justify-between items-center gap-8 mb-4"}>

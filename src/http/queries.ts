@@ -59,7 +59,7 @@ export const postUserRecording = async ({ userId, gameId, text, userAudio, gameN
   return null;
 };
 
-export const postAuditoryDiscriminationRequest = async ({ patientId, activities }: PostAuditoryDiscriminationRequest) => {
+export const postAuditoryDiscriminationAnswer = async ({ patientId, activities }: PostAuditoryDiscriminationRequest) => {
 
   const res = await unauthenticatedClient.post(`answers/sendAnswersWithText`, {
     patientId,

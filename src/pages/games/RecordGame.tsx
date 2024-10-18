@@ -2,16 +2,17 @@ import SpinnerLoader from "../../components/common/SpinnerLoader";
 import { GameProps } from "../../interfaces/interfaces";
 import { useNavigate } from "react-router-dom";
 import useRecordGame from "../../hooks/useRecordGame.hook";
-import {speakText} from "../../helpers/speakText.ts";
 import {VolumeButton} from "../../components/common/buttons/VolumeButton.tsx";
 import {RecordButton} from "../../components/common/buttons/RecordButton.tsx";
 import Button from "../../components/common/buttons/Button.tsx";
 import {ArrowRightIcon} from "../../components/common/icons/Icons.tsx";
 import React from "react";
+import {useSpeakText} from "../../hooks/useSpeakText.ts";
 
 const RecordGame: React.FC<GameProps> = ({ selectedThemeId }) => {
-const navigate = useNavigate();
-const { isLoading, levels, currentLevel, levelOptions, isCorrectOption, isRecording, stopRecording, startRecording } = useRecordGame(selectedThemeId);
+  const navigate = useNavigate();
+  const { isLoading, levels, currentLevel, levelOptions, isCorrectOption, isRecording, stopRecording, startRecording } = useRecordGame(selectedThemeId);
+  const speakText = useSpeakText()
 
   return !isLoading ? (
     <div className="w-full h-full relative flex justify-center items-center flex-col">

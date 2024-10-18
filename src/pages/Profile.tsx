@@ -1,11 +1,12 @@
 import React from "react";
-import { speakText } from "../helpers/speakText";
 import {VolumeButton} from "../components/common/buttons/VolumeButton.tsx";
 import Button from "../components/common/buttons/Button.tsx";
 import {Pencil, Save} from "lucide-react";
+import {useSpeakText} from "../hooks/useSpeakText.ts";
 
 const Profile: React.FC = () => {
   const [isEditing, setIsEditing] = React.useState(false);
+  const speakText = useSpeakText()
 
   return (
     <div className="flex-col-center gap-4 mx-8 md:mx-52">

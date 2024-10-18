@@ -20,8 +20,9 @@ const useRecordGame = (selectedThemeId: number) => {
 
     useEffect(() => {
         if (levels && !isLoading && !error) {
-            const shuffledOptions = shuffleArray([...levels[currentLevel].options]);
-            setLevelOptions(shuffledOptions);
+            const levelOptions = [...levels[currentLevel].options]
+            shuffleArray(levelOptions);
+            setLevelOptions(levelOptions);
         }
     }, [levels, isLoading, error, currentLevel]);
 

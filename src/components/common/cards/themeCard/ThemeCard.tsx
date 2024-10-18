@@ -2,9 +2,8 @@ import {Theme} from "../../../../interfaces/interfaces.ts";
 import React from "react";
 import {BaseCard} from "../BaseCard.tsx";
 import {BaseContainer} from "../BaseContainer.tsx";
-import { speakText } from "../../../../helpers/speakText.ts";
-
 import {VolumeButton} from "../../buttons/VolumeButton.tsx";
+import {useSpeakText} from "../../../../hooks/useSpeakText.ts";
 
 interface ThemeCardProps  {
   theme: Theme,
@@ -12,6 +11,8 @@ interface ThemeCardProps  {
 }
 
 export const ThemeCard: React.FC<ThemeCardProps> = ({theme, onClick}) => {
+  const speakText = useSpeakText()
+  
   return (
     <BaseCard className={"bg-orange-200 p-4 flex-col-center"}>
       <BaseContainer className={"gap-6"}>

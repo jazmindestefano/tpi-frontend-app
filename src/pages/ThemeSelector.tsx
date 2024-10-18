@@ -5,9 +5,9 @@ import { Theme } from "../interfaces/interfaces";
 import { selectTheme } from "../redux/store/gameSlice";
 import { ThemeCardsList } from "../components/themeSelect/ThemeCardsList";
 import SpinnerLoader from "../components/common/SpinnerLoader.tsx";
-import { speakText } from "../helpers/speakText.ts";
 
 import {VolumeButton} from "../components/common/buttons/VolumeButton.tsx";
+import {useSpeakText} from "../hooks/useSpeakText.ts";
 
 const snakeThemes = [
   { id: 1, name: "Silabas", image: "Silabas" },
@@ -25,11 +25,11 @@ const ThemeSelector = () => {
   const { themes, isLoading, error } = useGetThemesByGameId(Number(gameId));
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const speakText = useSpeakText()
 
   console.log({ gameId });
 
   const onCardClick = (theme: Theme) => {
-    console.log(`card clickeada: ${theme.id}`);
     dispatch(selectTheme(theme));
     switch (gameId) {
       case "1":
@@ -50,9 +50,9 @@ const ThemeSelector = () => {
     <div className="flex-col-center layout">
       <div className="flex-center self-center gap-4">
         <h1 className="text-h1">
-          Tematicas
+          Temáticas
         </h1>
-        <VolumeButton variant={"secondary"} onClick={() => speakText("Tematicas")} />
+        <VolumeButton variant={"secondary"} onClick={() => speakText("Temáticas")} />
       </div>
       {gameId == "3" ? (
       <ThemeCardsList themes={snakeThemes} onCardClick={onCardClick} />
@@ -63,7 +63,7 @@ const ThemeSelector = () => {
       ) : themes && themes.length !== 0 && !error ? (
       <ThemeCardsList themes={themes} onCardClick={onCardClick} />
       ) : (
-      <h1 className="text-h1">No hay tematicas disponibles</h1>
+      <h1 className="text-h1">No hay temáticas disponibles</h1>
       )}
     </div>
   );
