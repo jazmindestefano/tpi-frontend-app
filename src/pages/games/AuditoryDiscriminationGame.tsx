@@ -8,6 +8,7 @@ import {shuffleArray} from "../../helpers/arrays.ts";
 import {GameOptionsList} from "./GameOptionsList.tsx";
 import {GameHeader} from "./GameHeader.tsx";
 import {useSpeakText} from "../../hooks/useSpeakText.ts";
+import ProgressBar from "../../components/progressBar/ProgressBar.tsx";
 
 const prepareData = ({
                        patiendId,
@@ -95,7 +96,8 @@ const AuditoryDiscriminationGame: React.FC = () => {
   }
   
   return !isLoading && !getLevelsError && levels && levels.length != 0 ? (
-    <div className="w-full layout">
+    <div className="w-full layout flex-col-center gap-10 px-10 md:px-40">
+      <ProgressBar currentActivity={currentLevel + 1} totalActivities={levels?.length} />
       <GameHeader level={levels[currentLevel]}></GameHeader>
       <GameOptionsList options={options} onOptionSelection={onOptionSelection} />
     </div>
