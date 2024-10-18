@@ -1,4 +1,4 @@
-import {getJustifyClass} from "../../helpers/justifyClass.ts";
+import {getJustifyClass} from "../../helpers/styles.ts";
 import {VolumeButton} from "../../components/common/buttons/VolumeButton.tsx";
 import {LevelOption} from "../../interfaces/interfaces.ts";
 import {useSpeakText} from "../../hooks/useSpeakText.ts";
