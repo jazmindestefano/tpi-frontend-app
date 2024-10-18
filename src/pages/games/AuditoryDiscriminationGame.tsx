@@ -48,7 +48,6 @@ const AuditoryDiscriminationGame: React.FC = () => {
   const [options, setOptions] = useState<LevelOption[]>([]);
   // todo: all props need to be used
   const { mutate, reset, error: postAnswerError, isPending, isSuccess } = usePostAuditoryDiscriminationAnswer()
-  // THIS IS ONLY FOR ESLINT TO STOP WINING LIKE A LITTLE BITCH AND LET ME COMMIT MY FUCKING CODE
   console.log(reset, postAnswerError, isPending, isSuccess)
   const speakText = useSpeakText()
 
