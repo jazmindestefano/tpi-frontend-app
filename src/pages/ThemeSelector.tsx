@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { useGetThemesByGameId } from "../hooks/queries";
 import { Theme } from "../interfaces/interfaces";
@@ -8,42 +8,29 @@ import SpinnerLoader from "../components/common/SpinnerLoader.tsx";
 
 import {VolumeButton} from "../components/common/buttons/VolumeButton.tsx";
 import {useSpeakText} from "../hooks/useSpeakText.ts";
-
-const snakeThemes = [
-  { id: 1, name: "Silabas", image: "Silabas" },
-  { id: 2, name: "Vocales", image: "Vocales" },
-];
-
-const palabrasThemes = [
-  { id: 2, name: "Banio", image: "Banio" },
-  { id: 2, name: "Patio", image: "Patio" },
-  { id: 2, name: "Cocina", image: "Cocina" },
-];
+import {useSelectedGame} from "../hooks/selectors.ts";
 
 const ThemeSelector = () => {
-  const { gameId } = useParams();
-  const { themes, isLoading, error } = useGetThemesByGameId(Number(gameId));
+  const selectedGame = useSelectedGame();
+  const { themes, isLoading, error } = useGetThemesByGameId(selectedGame.id);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const speakText = useSpeakText()
-
-  console.log({ gameId });
+  const speakText = useSpeakText();
+  
+  if (selectedGame.id === -1) {
+    navigate('/error', {
+      state:{
+        error: {
+          message: 'No se seleccionó ningún juego!'
+        }
+      }
+    })
+    return
+  }
 
   const onCardClick = (theme: Theme) => {
     dispatch(selectTheme(theme));
-    switch (gameId) {
-      case "1":
-        navigate(`/actividad/${gameId}`);
-        break;
-      case "2":
-        navigate(`/actividad/${gameId}`);
-        break;
-      case "3":
-        navigate(`/viborita`);
-        break;
-      default:
-        navigate(`/`);
-    }
+    navigate(`/actividad/${selectedGame.id}`)
   };
 
   return (
@@ -54,11 +41,7 @@ const ThemeSelector = () => {
         </h1>
         <VolumeButton variant={"secondary"} onClick={() => speakText("Temáticas")} />
       </div>
-      {gameId == "3" ? (
-      <ThemeCardsList themes={snakeThemes} onCardClick={onCardClick} />
-      ) : gameId == "2" ? (
-      <ThemeCardsList themes={palabrasThemes} onCardClick={onCardClick} />
-      ) : isLoading ? (
+      {isLoading ? (
       <SpinnerLoader />
       ) : themes && themes.length !== 0 && !error ? (
       <ThemeCardsList themes={themes} onCardClick={onCardClick} />

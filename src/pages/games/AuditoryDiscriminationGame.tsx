@@ -1,9 +1,9 @@
 import SpinnerLoader from "../../components/common/SpinnerLoader";
-import {GameProps, LevelOption} from "../../interfaces/interfaces";
+import {LevelOption} from "../../interfaces/interfaces";
 import React, {useEffect, useState} from "react";
 import {useGetGameLevels, usePostAuditoryDiscriminationAnswer} from "../../hooks/queries.ts";
 import {useNavigate} from "react-router-dom";
-import {useUser} from "../../hooks/selectors.ts";
+import {useSelectedTheme, useUser} from "../../hooks/selectors.ts";
 import {shuffleArray} from "../../helpers/arrays.ts";
 import {GameOptionsList} from "./GameOptionsList.tsx";
 import {GameHeader} from "./GameHeader.tsx";
@@ -38,13 +38,12 @@ const prepareData = ({
 
 }
 
-const AuditoryDiscriminationGame: React.FC<GameProps> = ({
-  selectedThemeId,
-}) => {
+const AuditoryDiscriminationGame: React.FC = () => {
   // todo: possible to lift up state to parent
+  const selectedTheme = useSelectedTheme()
   const navigate = useNavigate();
   const user = useUser()
-  const { levels, isLoading, error: getLevelsError } = useGetGameLevels(selectedThemeId);
+  const { levels, isLoading, error: getLevelsError } = useGetGameLevels(selectedTheme!.id);
   const [currentLevel, setCurrentLevel] = useState<number>(0);
   const [options, setOptions] = useState<LevelOption[]>([]);
   // todo: all props need to be used

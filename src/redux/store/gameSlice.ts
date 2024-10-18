@@ -2,13 +2,21 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {Game, Theme} from "../../interfaces/interfaces.ts";
 
 interface GameState {
-    selectedGame: Game | null;
-    selectedTheme: Theme | null;
+    selectedGame: Game;
+    selectedTheme: Theme;
 }
 
 const initialState: GameState = {
-    selectedGame: null,
-    selectedTheme: null
+    selectedGame: {
+        id: -1,
+        name: '',
+        image: ''
+    },
+    selectedTheme: {
+        id: -1,
+        name: '',
+        image: ''
+    }
 };
 
 const gameSlice = createSlice({
@@ -22,8 +30,8 @@ const gameSlice = createSlice({
             state.selectedTheme = action.payload
         },
         resetGame(state) {
-            state.selectedGame = null;
-            state.selectedTheme = null;
+            state.selectedGame = initialState.selectedGame;
+            state.selectedTheme = initialState.selectedTheme;
         }
     },
 });

@@ -1,5 +1,4 @@
 import SpinnerLoader from "../../components/common/SpinnerLoader";
-import { GameProps } from "../../interfaces/interfaces";
 import { useNavigate } from "react-router-dom";
 import useRecordGame from "../../hooks/useRecordGame.hook";
 import {VolumeButton} from "../../components/common/buttons/VolumeButton.tsx";
@@ -8,11 +7,17 @@ import Button from "../../components/common/buttons/Button.tsx";
 import {ArrowRightIcon} from "../../components/common/icons/Icons.tsx";
 import React from "react";
 import {useSpeakText} from "../../hooks/useSpeakText.ts";
+import {useSelectedTheme} from "../../hooks/selectors.ts";
 
-const RecordGame: React.FC<GameProps> = ({ selectedThemeId }) => {
+const RecordGame: React.FC = () => {
+  const selectedTheme = useSelectedTheme()
   const navigate = useNavigate();
-  const { isLoading, levels, currentLevel, levelOptions, isCorrectOption, isRecording, stopRecording, startRecording } = useRecordGame(selectedThemeId);
+  const { isLoading, levels, currentLevel, levelOptions, isCorrectOption, isRecording, stopRecording, startRecording } = useRecordGame(selectedTheme.id);
   const speakText = useSpeakText()
+  
+  if (selectedTheme.id === -1) {
+    navigate('/error')
+  }
 
   return !isLoading ? (
     <div className="w-full h-full relative flex justify-center items-center flex-col">

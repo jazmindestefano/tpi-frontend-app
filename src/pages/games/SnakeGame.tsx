@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ChevronUp,
@@ -10,18 +10,18 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
-const vowels = ["A", "E", "I", "O", "U"];
+const items = ["A", "E", "I", "O", "U"];
 const cellSize = 50;
 
-export default function VowelSnakeGame() {
+const VowelSnakeGame: React.FC = () => {
   const [snake, setSnake] = useState([{ x: 7, y: 5 }]);
   const [direction, setDirection] = useState({ x: 1, y: 0 });
-  const [vowel, setVowel] = useState({ char: "A", x: 10, y: 4 });
-  const [eatenVowels, setEatenVowels] = useState<string[]>([]);
-  const [showBigVowel, setShowBigVowel] = useState(false);
+  const [item, setItem] = useState({ char: items[0], x: 10, y: 4 });
+  const [eatenItems, setEatenItems] = useState<string[]>([]);
+  const [showBigItem, setShowBigItem] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [gridSize, setGridSize] = useState({ width: 30, height: 9 });
-  const [gameFinished, setGameFinished] = useState<boolean>(false);
+  const [isGameFinished, setIsGameFinished] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const togglePause = useCallback(() => {
@@ -74,25 +74,25 @@ export default function VowelSnakeGame() {
       
         let newSnake = [newHead, ...prevSnake];
       
-        if (snake[0].x === vowel.x && snake[0].y === vowel.y) {
-          const updatedEatenVowels = [...eatenVowels, vowel.char];
-          setEatenVowels(updatedEatenVowels);
+        if (snake[0].x === item.x && snake[0].y === item.y) {
+          const updatedEatenItems = [...eatenItems, item.char];
+          setEatenItems(updatedEatenItems);
       
-          setShowBigVowel(true);
-          setTimeout(() => setShowBigVowel(false), 1000);
+          setShowBigItem(true);
+          setTimeout(() => setShowBigItem(false), 1000);
       
-          const remainingVowels = vowels.filter(
-            (v) => !updatedEatenVowels.includes(v)
+          const remainingItems = items.filter(
+            (v) => !updatedEatenItems.includes(v)
           );
       
-          if (remainingVowels.length > 0) {
-            setVowel({
-              char: remainingVowels[Math.floor(Math.random() * remainingVowels.length)],
+          if (remainingItems.length > 0) {
+            setItem({
+              char: remainingItems[Math.floor(Math.random() * remainingItems.length)],
               x: Math.floor(Math.random() * gridSize.width),
               y: Math.floor(Math.random() * gridSize.height),
             });
           } else {
-              setGameFinished(true);
+              setIsGameFinished(true);
           }
         } else {
           newSnake = newSnake.slice(0, -1);
@@ -102,13 +102,13 @@ export default function VowelSnakeGame() {
     }, 500);
 
     return () => clearInterval(gameLoop);
-  }, [snake, direction, vowel, isPaused, gridSize, eatenVowels, navigate, setGameFinished]);
+  }, [snake, direction, item, isPaused, gridSize, eatenItems, navigate, setIsGameFinished]);
 
   useEffect(() => {
-    if (gameFinished) {
+    if (isGameFinished) {
       navigate("/felicitaciones");
     }
-  }, [gameFinished, navigate]);
+  }, [isGameFinished, navigate]);
 
   useEffect(() => {
     const updateGridSize = () => {
@@ -162,8 +162,8 @@ export default function VowelSnakeGame() {
           style={{
             width: `${cellSize}px`,
             height: `${cellSize}px`,
-            left: `${vowel.x * cellSize}px`,
-            top: `${vowel.y * cellSize}px`,
+            left: `${item.x * cellSize}px`,
+            top: `${item.y * cellSize}px`,
             background: "linear-gradient(45deg, #4facfe 0%, #00f2fe 100%)",
             boxShadow: "0 4px 8px rgba(0,0,0,0.3)",
           }}
@@ -171,7 +171,7 @@ export default function VowelSnakeGame() {
           animate={{ scale: 1 }}
           transition={{ type: "spring", stiffness: 300, damping: 20 }}
         >
-          {vowel.char}
+          {item.char}
         </motion.div>
         {isPaused && (
           <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
@@ -207,13 +207,13 @@ export default function VowelSnakeGame() {
         </button>
       </div>
       <div className="mt-4 text-2xl font-bold text-purple-800">
-        Vocales comidas: {eatenVowels.join(", ")}
+        Vocales comidas: {eatenItems.join(", ")}
       </div>
       <div className="mt-2 text-sm text-purple-600">
         Presiona espacio para pausar/reanudar
       </div>
       <AnimatePresence>
-        {showBigVowel && (
+        {showBigItem && (
           <motion.div
             className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
             initial={{ opacity: 0 }}
@@ -226,7 +226,7 @@ export default function VowelSnakeGame() {
               animate={{ scale: 1 }}
               exit={{ scale: 0 }}
             >
-              {eatenVowels[eatenVowels.length - 1]}
+              {eatenItems[eatenItems.length - 1]}
             </motion.div>
           </motion.div>
         )}
@@ -234,3 +234,5 @@ export default function VowelSnakeGame() {
     </div>
   );
 }
+
+export default VowelSnakeGame
