@@ -1,6 +1,6 @@
 import {ThemeCard} from "../common/cards/themeCard/ThemeCard.tsx";
 import {Theme} from "../../interfaces/interfaces.ts";
-import { getJustifyClass } from "../../helpers/justifyClass.ts";
+import { getJustifyClass } from "../../helpers/styles.ts";
 
 interface ThemeCardsListProps {
   themes: Theme[]

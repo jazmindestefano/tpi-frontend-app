@@ -3,8 +3,16 @@ import {Theme} from "../interfaces/interfaces";
 
 describe('gameSlice', () => {
   const initialState = {
-    selectedTheme: null,
-    selectedGame: null
+    selectedGame: {
+      id: -1,
+      name: '',
+      image: ''
+    },
+    selectedTheme: {
+      id: -1,
+      name: '',
+      image: ''
+    }
   };
 
   it('should handle initial state', () => {

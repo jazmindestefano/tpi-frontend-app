@@ -3,8 +3,8 @@ import Button from "../buttons/Button";
 import { Game } from "../../../interfaces/interfaces";
 import { BaseCard } from "./BaseCard";
 import { BaseContainer } from "./BaseContainer";
-import { speakText } from "../../../helpers/speakText";
 import { VolumeIcon } from "../icons/Icons";
+import {useSpeakText} from "../../../hooks/useSpeakText.ts";
 
 interface HomeCardProps {
   buttonVariant: "primary" | "secondary" | "tertiary" | "fourth";
@@ -19,6 +19,8 @@ const HomeCard: React.FC<HomeCardProps> = ({
   onClick,
   game,
 }) => {
+  const speakText = useSpeakText()
+  
   return (
     <BaseCard
       className={

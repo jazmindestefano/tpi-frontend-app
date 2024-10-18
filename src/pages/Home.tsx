@@ -5,8 +5,8 @@ import HomeCard from "../components/common/cards/HomeCard.tsx";
 import SpinnerLoader from "../components/common/SpinnerLoader.tsx";
 import { useDispatch } from "react-redux";
 import { selectGame } from "../redux/store/gameSlice.ts";
-import { speakText } from "../helpers/speakText.ts";
 import {VolumeButton} from "../components/common/buttons/VolumeButton.tsx";
+import {useSpeakText} from "../hooks/useSpeakText.ts";
 
 const getCardBgColor = (index: number) => {
   const colors = ["bg-blue-300", "bg-orange-300", "bg-orange-150"];
@@ -17,6 +17,7 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { games, isLoading, error } = useGetGames();
+  const speakText = useSpeakText()
 
   if (error) {
     return <h1>¡Ups! Parece que estamos teniendo un problema.</h1>;

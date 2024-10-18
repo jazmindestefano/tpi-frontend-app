@@ -5,12 +5,13 @@ import { useDispatch } from 'react-redux';
 import { resetGame } from '../redux/store/gameSlice.ts';
 import { FeedbackModal } from '../components/common/modals/FeedbackModal.tsx';
 import { VolumeButton } from '../components/common/buttons/VolumeButton.tsx';
-import { speakText } from '../helpers/speakText.ts';
+import { useSpeakText } from '../hooks/useSpeakText.ts';
 
 const Congratulations = () => {
   const [showModal, setShowModal] = useState(false)
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const speakText = useSpeakText();
 
   useEffect(() => {
     dispatch(resetGame());
