@@ -20,9 +20,13 @@ const gameSlice = createSlice({
         },
         selectTheme(state, action: PayloadAction<Theme>){
             state.selectedTheme = action.payload
+        },
+        resetGame(state) {
+            state.selectedGame = null;
+            state.selectedTheme = null;
         }
     },
 });
 
-export const { selectGame, selectTheme } = gameSlice.actions;
+export const { selectGame, selectTheme, resetGame } = gameSlice.actions;
 export default gameSlice.reducer;

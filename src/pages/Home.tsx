@@ -5,7 +5,6 @@ import HomeCard from "../components/common/cards/HomeCard.tsx";
 import SpinnerLoader from "../components/common/SpinnerLoader.tsx";
 import { useDispatch } from "react-redux";
 import { selectGame } from "../redux/store/gameSlice.ts";
-
 import {VolumeButton} from "../components/common/buttons/VolumeButton.tsx";
 import {useSpeakText} from "../hooks/useSpeakText.ts";
 
