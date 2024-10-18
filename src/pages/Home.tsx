@@ -6,7 +6,6 @@ import SpinnerLoader from "../components/common/SpinnerLoader.tsx";
 import { useDispatch } from "react-redux";
 import { selectGame } from "../redux/store/gameSlice.ts";
 import { speakText } from "../helpers/speakText.ts";
-
 import {VolumeButton} from "../components/common/buttons/VolumeButton.tsx";
 
 const getCardBgColor = (index: number) => {

@@ -1,12 +1,18 @@
 import {useNavigate} from 'react-router-dom';
 import Button from '../components/common/buttons/Button.tsx';
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {FeedbackModal} from "../components/common/modals/FeedbackModal.tsx";
+import { useDispatch } from 'react-redux';
+import { resetGame } from '../redux/store/gameSlice.ts';
 
 const Congratulations = () => {
   const [showModal, setShowModal] = useState(true)
-
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    dispatch(resetGame());
+  }, [dispatch]);
 
   return (
     <>
