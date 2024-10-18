@@ -8,6 +8,10 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const selectedTheme = useSelectedTheme();
   
+  if (location.pathname === "/felicitaciones") {
+    return null;
+  }
+
   return (
     <header className="flex justify-between items-start p-4 bg-gradient-to-b from-orange-100 to-transparent fixed w-full">
       {selectedTheme == null && (

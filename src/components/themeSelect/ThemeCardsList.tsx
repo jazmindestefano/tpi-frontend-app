@@ -9,18 +9,14 @@ interface ThemeCardsListProps {
 
 export const ThemeCardsList: React.FC<ThemeCardsListProps> = ({ themes, onCardClick }) => {
   return (
-    <div
-      className={`grid w-full gap-y-10 pb-10 ${
-        themes.length === 2 ? 'grid-cols-1 sm:grid-cols-2' : 'grid-cols-1 sm:grid-cols-3'
-      }`}
-    >
+    <div className="flex flex-wrap justify-center w-full gap-y-10 pb-10 px-5">
       {themes.map((theme, index) => (
-        <div
-          className={`flex ${getJustifyClass(index)}`}
-          key={theme.id}
-        >
-          <ThemeCard theme={theme} onClick={() => onCardClick(theme)} />
-        </div>
+      <div
+        className={`flex justify-center sm:${getJustifyClass(index)} w-full sm:w-1/3`}
+        key={theme.id}
+      >
+        <ThemeCard theme={theme} onClick={() => onCardClick(theme)} />
+      </div>
       ))}
     </div>
   );
