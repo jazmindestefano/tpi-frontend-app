@@ -81,6 +81,18 @@ const AuditoryDiscriminationGame: React.FC = () => {
       speakText(`Seleccioná la imágen que empiece con la letra ${levels[currentLevel].description}`);
     }
   });
+
+  // todo: save in LS to not redirect
+  if (selectedTheme.id === -1) {
+    navigate('/error', {
+      state:{
+        error: {
+          message: 'No se seleccionó ningún juego!'
+        }
+      }
+    })
+    return
+  }
   
   return !isLoading && !getLevelsError && levels && levels.length != 0 ? (
     <div className="w-full layout">

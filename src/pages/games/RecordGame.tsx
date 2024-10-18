@@ -15,14 +15,16 @@ const RecordGame: React.FC = () => {
   const { isLoading, levels, currentLevel, levelOptions, isCorrectOption, isRecording, stopRecording, startRecording } = useRecordGame(selectedTheme.id);
   const speakText = useSpeakText()
   
-  if (selectedTheme.id === -1) {
-    navigate('/error')
-  }
+    // todo: save in LS to not redirect
+    if (selectedTheme.id === -1) {
+      navigate('/error')
+      return
+    }
 
   return !isLoading ? (
     <div className="w-full h-full relative flex justify-center items-center flex-col">
       <div className="w-full flex flex-col justify-center items-center gap-4">
-        <p className="font-bold text-2xl text-center">¿Cómo decís la palabra?</p>
+        <p className="font-bold text-3xl text-center">¿Cómo dirías la palabra?</p>
         <div className="flex flex-row justify-center items-center gap-4">
           <p className="font-bold text-8xl text-center">
             {levels && levels[currentLevel].description}
@@ -30,7 +32,7 @@ const RecordGame: React.FC = () => {
           <VolumeButton variant={"secondary"} onClick={() =>
             levels &&
             speakText(
-              `¿Cómo decís la palabra ${levels[currentLevel].description}?`
+              `¿Cómo dirías la palabra ${levels[currentLevel].description}?`
             )
           } />
         </div>

@@ -17,15 +17,9 @@ const ThemeSelector = () => {
   const navigate = useNavigate();
   const speakText = useSpeakText();
   
+  // todo: save in LS to not redirect
   if (selectedGame.id === -1) {
-    navigate('/error', {
-      state:{
-        error: {
-          message: 'No se seleccionó ningún juego!'
-        }
-      }
-    })
-    return
+    navigate('/error')
   }
 
   const onCardClick = (theme: Theme) => {

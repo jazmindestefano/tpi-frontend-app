@@ -4,6 +4,7 @@ import {Game, Theme} from "../../interfaces/interfaces.ts";
 interface GameState {
     selectedGame: Game;
     selectedTheme: Theme;
+    showModalFeedback: boolean;
 }
 
 const initialState: GameState = {
@@ -16,7 +17,8 @@ const initialState: GameState = {
         id: -1,
         name: '',
         image: ''
-    }
+    },
+    showModalFeedback: false,
 };
 
 const gameSlice = createSlice({
@@ -29,6 +31,9 @@ const gameSlice = createSlice({
         selectTheme(state, action: PayloadAction<Theme>){
             state.selectedTheme = action.payload
         },
+        setModalFeedback(state, action: PayloadAction<boolean>){
+            state.showModalFeedback = action.payload
+        },
         resetGame(state) {
             state.selectedGame = initialState.selectedGame;
             state.selectedTheme = initialState.selectedTheme;
@@ -36,5 +41,5 @@ const gameSlice = createSlice({
     },
 });
 
-export const { selectGame, selectTheme, resetGame } = gameSlice.actions;
+export const { selectGame, selectTheme, resetGame, setModalFeedback } = gameSlice.actions;
 export default gameSlice.reducer;
