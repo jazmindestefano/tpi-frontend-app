@@ -6,4 +6,4 @@ export const useSelectedTheme = (): Theme | null => useSelector((state: RootStat
 
 export const useSelectedGame = (): Game | null => useSelector((state: RootState) => state.game.selectedGame);
 
-export const useUser = (): User => useSelector((state: RootState) => state.user.user)
+export const useUser = (): User => useSelector((state: RootState) => state.user.user);

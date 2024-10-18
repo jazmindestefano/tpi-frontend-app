@@ -5,6 +5,7 @@ import { useAuditoryDiscrimination } from "../../hooks/useAuditoryDiscrimination
 import { getJustifyClass } from "../../helpers/justifyClass";
 import React from "react";
 import {VolumeButton} from "../../components/common/buttons/VolumeButton.tsx";
+import ProgressBar from "../../components/progressBar/ProgressBar.tsx";
 
 const AuditoryDiscriminationGame: React.FC<GameProps> = ({
   selectedThemeId,
@@ -12,8 +13,9 @@ const AuditoryDiscriminationGame: React.FC<GameProps> = ({
   const { isLoading, handleSelectedOption, levels, currentLevel, levelOptions } = useAuditoryDiscrimination(selectedThemeId);
 
   return !isLoading ? (
-    <div className="w-full layout">
-      <div className="w-full flex flex-col justify-center items-center gap-4">
+    <div className="w-full px-5">
+      <div className="flex-col-center gap-4">
+        <ProgressBar currentActivity={currentLevel + 1} totalActivities={levels?.length} />
         <h2 className="text-h2 text-center">
           Selecciona la imágen que empiece con la letra
         </h2>
@@ -30,7 +32,7 @@ const AuditoryDiscriminationGame: React.FC<GameProps> = ({
           />
         </div>
       </div>
-      <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 my-16 w-full`}>
+      <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 my-16 w-full px-0 md:px-20`}>
         {levelOptions.map((option, index) => (
           <div
             key={option.id}
