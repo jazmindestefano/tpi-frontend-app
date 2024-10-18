@@ -3,7 +3,7 @@
     "target": "ES2020",
     "useDefineForClassFields": true,
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "types": ["vite/client", "jest"],
+    "types": ["vite/client", "vitest/globals", "vitest/jsdom"],
     "module": "ESNext",
     "skipLibCheck": true,
 
@@ -20,7 +20,7 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
+    "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+  "include": ["src", "vite.config.ts"]
 }
