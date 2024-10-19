@@ -1,80 +1,112 @@
 import SpinnerLoader from "../../components/common/SpinnerLoader";
 import { useNavigate } from "react-router-dom";
 import useRecordGame from "../../hooks/useRecordGame.hook";
-import {VolumeButton} from "../../components/common/buttons/VolumeButton.tsx";
-import {RecordButton} from "../../components/common/buttons/RecordButton.tsx";
+import { RecordButton } from "../../components/common/buttons/RecordButton.tsx";
 import Button from "../../components/common/buttons/Button.tsx";
-import {ArrowRightIcon} from "../../components/common/icons/Icons.tsx";
-import React from "react";
-import {useSpeakText} from "../../hooks/useSpeakText.ts";
-import {useSelectedTheme} from "../../hooks/selectors.ts";
+import { ArrowRightIcon } from "../../components/common/icons/Icons.tsx";
+import { useSelectedTheme } from "../../hooks/selectors.ts";
+import ProgressBar from "../../components/progressBar/ProgressBar.tsx";
+import { GameHeader } from "./GameHeader.tsx";
+import useCustomMediaQuery from "../../hooks/useMediaQuery.ts";
 
 const RecordGame: React.FC = () => {
-  const selectedTheme = useSelectedTheme()
+  const selectedTheme = useSelectedTheme();
   const navigate = useNavigate();
-  const { isLoading, levels, currentLevel, levelOptions, isCorrectOption, isRecording, stopRecording, startRecording } = useRecordGame(selectedTheme.id);
-  const speakText = useSpeakText()
-  
-  if (selectedTheme.id === -1) {
-    navigate('/error')
+  const {
+    isLoading,
+    levels,
+    currentLevel,
+    levelOptions,
+    setCurrentLevel,
+    isRecording,
+    stopRecording,
+    startRecording,
+  } = useRecordGame(selectedTheme.id);
+  const { isDesktop } = useCustomMediaQuery();
+
+  // todo: save in LS to not redirect
+  if (selectedTheme.id === -1) {  
+    navigate("/error");
+    return null;
   }
 
+  console.log({ levels, currentLevel });
+
+
+  const handleNextPage = () => {
+    setCurrentLevel((prevState) => prevState + 1)
+    if (currentLevel === levels!.length - 1) {
+      navigate("/felicitaciones");
+    }
+  };
+    
+
   return !isLoading ? (
-    <div className="w-full h-full relative flex justify-center items-center flex-col">
-      <div className="w-full flex flex-col justify-center items-center gap-4">
-        <p className="font-bold text-2xl text-center">¿Cómo decís la palabra?</p>
-        <div className="flex flex-row justify-center items-center gap-4">
-          <p className="font-bold text-8xl text-center">
-            {levels && levels[currentLevel].description}
-          </p>
-          <VolumeButton variant={"secondary"} onClick={() =>
-            levels &&
-            speakText(
-              `¿Cómo decís la palabra ${levels[currentLevel].description}?`
-            )
-          } />
-        </div>
-      </div>
-      <div
-        className={`${
-          levelOptions.length === 1
-            ? "flex justify-center"
-            : "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-        } gap-10 my-8 w-full px-20`}
-      >
-        {levelOptions.map((option) => (
-          <div
-            key={option.id}
-            className={`flex flex-col items-center justify-center cursor-pointer rounded-3xl shadow-lg p-4 h-auto gap-6 bg-orange-50 ${
-              levelOptions.length === 1 ? "w-96" : "w-full"
-            }`}
-          >
-            <div
-              className="p-4 w-full rounded-3xl h-80 flex flex-col items-center justify-center"
-              onClick={() => {
-                isCorrectOption(option);
-              }}
-            >
-              <img
-                src={`/gameOptions/${option.name}.png`}
-                alt={option.name}
-                className="w-auto h-80"
-              />
+    <div className="flex-col-center lg:gap-20 px-32 gap-10 lg:pt-0 pt-10">
+        <ProgressBar
+          currentActivity={currentLevel + 1}
+          totalActivities={levels?.length}
+        />
+
+        <div className="flex justify-between items-center w-full">
+          <div className={isDesktop ? "w-9/10 flex-center" : "flex-col-center gap-10"}>
+            <div className="lg:w-2/5">
+              <GameHeader level={levels![currentLevel]} headerTitle="¿Cómo dirías la palabra?"></GameHeader>
             </div>
-            <RecordButton isRecording={isRecording} stopRecording={stopRecording} startRecording={startRecording} />
+            <div className="w-2/5 flex-col-center">
+              {levelOptions.map((option) => (
+                <div
+                  key={option.id}
+                  className="flex flex-col items-center justify-start cursor-pointer rounded-3xl shadow-lg p-4 h-auto gap-6 bg-orange-50 w-96"
+                >
+                  <div
+                    className="p-4 w-full rounded-3xl h-80 flex flex-col items-start justify-center"
+                  >
+                    <img
+                      src={`/gameOptions/${option.name}.png`}
+                      alt={option.name}
+                      className="w-auto h-80 bg-white rounded-3xl p-4"
+                    />
+                  </div>
+                  <div className={!isDesktop ? "flex justify-center items-center gap-10" : ""}>
+                    <RecordButton
+                      variant={"fourth"}
+                      isRecording={isRecording}
+                      stopRecording={stopRecording}
+                      startRecording={startRecording}
+                    />
+                    {!isDesktop && (
+                      <div className="w-1/10 flex justify-end self-center pr-10">
+                        <Button
+                          size={"circle"}
+                          shape={"circle"}
+                          variant={"primary"}
+                          onClick={handleNextPage}
+                        >
+                          <ArrowRightIcon />
+                        </Button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-        ))}
-        <div className="absolute right-0 left-0 flex justify-end self-center pr-10">
-          <Button
-            size={"circle"}
-            shape={"circle"}
-            variant={"primary"}
-            onClick={() => navigate('/nextPage')}
-          >
-            <ArrowRightIcon />
-          </Button>
+          {
+            isDesktop && (
+              <div className="w-1/10 flex justify-end self-center pr-10">
+                <Button
+                  size={"circle"}
+                  shape={"circle"}
+                  variant={"primary"}
+                  onClick={handleNextPage}
+                >
+                  <ArrowRightIcon />
+                </Button>
+              </div>
+            )
+          }
         </div>
-      </div>
     </div>
   ) : (
     <SpinnerLoader />

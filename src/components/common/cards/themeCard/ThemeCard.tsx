@@ -11,7 +11,7 @@ interface ThemeCardProps  {
 }
 
 export const ThemeCard: React.FC<ThemeCardProps> = ({theme, onClick}) => {
-  const speakText = useSpeakText()
+  const speakText = useSpeakText();
   
   return (
     <BaseCard className={"bg-orange-200 p-4 flex-col-center"}>

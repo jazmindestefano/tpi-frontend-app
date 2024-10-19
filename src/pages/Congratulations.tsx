@@ -1,20 +1,19 @@
 import {useNavigate} from 'react-router-dom';
 import Button from '../components/common/buttons/Button.tsx';
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import { useDispatch } from 'react-redux';
-import { resetGame } from '../redux/store/gameSlice.ts';
-import { FeedbackModal } from '../components/common/modals/FeedbackModal.tsx';
+import { resetGame, setModalFeedback,  } from '../redux/store/gameSlice.ts';
 import { VolumeButton } from '../components/common/buttons/VolumeButton.tsx';
 import { useSpeakText } from '../hooks/useSpeakText.ts';
 
 const Congratulations = () => {
-  const [showModal, setShowModal] = useState(false)
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const speakText = useSpeakText();
 
   useEffect(() => {
     dispatch(resetGame());
+    dispatch(setModalFeedback(true));
   }, [dispatch]);
 
   return (
@@ -48,31 +47,9 @@ const Congratulations = () => {
             }
           }
 
-          /* Animación de fondo con gradiente que va creciendo desde el centro */
-          @keyframes expand-gradient {
-            0% {
-              background: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.9) 20%);
-            }
-            15% {
-              background: radial-gradient(circle, rgba(255, 255, 255, 0.85) 0%, rgba(255, 255, 255, 0.7) 30%, rgba(251, 236, 202, 0.3) 50%);
-            }
-            30% {
-              background: radial-gradient(circle, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.5) 30%, rgba(251, 236, 202, 0.4) 50%, rgba(246, 216, 145, 0.3) 70%);
-            }
-            50% {
-              background: radial-gradient(circle, rgba(255, 255, 255, 0.5) 0%, rgba(251, 236, 202, 0.5) 25%, rgba(246, 216, 145, 0.5) 50%, rgba(238, 166, 49, 0.4) 70%);
-            }
-            85% {
-              background: radial-gradient(circle, rgba(255, 255, 255, 0) 0%, rgba(242, 193, 96, 0.4) 30%, rgba(238, 166, 49, 0.5) 50%, rgba(255, 187, 109, 0.4) 70%);
-            }
-            100% {
-              background: radial-gradient(circle, rgba(255, 255, 255, 0) 0%, rgba(242, 193, 96, 0.5) 30%, rgba(255, 187, 109, 0.6) 100%);
-            }
-          }
-
-          /* Contenedor con la animación del gradiente */
+          /* Fondo estático con gradiente radial */
           .container-animation {
-            animation: expand-gradient 3s ease-in-out forwards; /* Animación del fondo */
+            background: radial-gradient(circle, rgba(255, 255, 255, 0) 0%, rgba(242, 193, 96, 0.5) 30%, rgba(255, 187, 109, 0.6) 100%);
             width: 100vw;
             height: 100vh;
             display: flex;
@@ -89,7 +66,6 @@ const Congratulations = () => {
         `}
       </style>
 
-      <FeedbackModal show={showModal} onClose={() => setShowModal(false)} />
       <div className="flex flex-col w-full items-center justify-center h-full relative container-animation">
         
         {/* Contenedor del pin con la animación */}

@@ -7,3 +7,5 @@ export const useSelectedTheme = (): Theme => useSelector((state: RootState) => s
 export const useSelectedGame = (): Game => useSelector((state: RootState) => state.game.selectedGame);
 
 export const useUser = (): User => useSelector((state: RootState) => state.user.user);
+
+export const useShowModalFeedback = (): boolean => useSelector((state: RootState) => state.game.showModalFeedback);

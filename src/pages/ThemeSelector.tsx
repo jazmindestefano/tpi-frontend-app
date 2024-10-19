@@ -17,15 +17,9 @@ const ThemeSelector = () => {
   const navigate = useNavigate();
   const speakText = useSpeakText();
   
+  // todo: save in LS to not redirect
   if (selectedGame.id === -1) {
-    navigate('/error', {
-      state:{
-        error: {
-          message: 'No se seleccionó ningún juego!'
-        }
-      }
-    })
-    return
+    navigate('/error')
   }
 
   const onCardClick = (theme: Theme) => {
@@ -34,7 +28,7 @@ const ThemeSelector = () => {
   };
 
   return (
-    <div className="flex-col-center pt-20 md:pt-16 gap-20 md:gap-16">
+    <div className="flex-col-center xl:gap-10 pt-20">
       <div className="flex-center self-center gap-4">
         <h1 className="text-h1">
           Temáticas

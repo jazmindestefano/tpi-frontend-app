@@ -1,4 +1,4 @@
-import {createBrowserRouter} from 'react-router-dom';
+import { createBrowserRouter } from 'react-router-dom';
 import Home from '../pages/Home';
 import Profile from '../pages/Profile';
 import PageLayout from '../components/layout/pageLayout/PageLayout.tsx';
