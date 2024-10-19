@@ -1,4 +1,3 @@
-
 import { useNavigate } from 'react-router-dom'
 import Button from '../../common/buttons/Button.tsx'
 import { House, LogOut } from 'lucide-react'

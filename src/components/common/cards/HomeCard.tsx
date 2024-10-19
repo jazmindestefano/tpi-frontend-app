@@ -1,4 +1,3 @@
-
 import Button from '../buttons/Button'
 import { Game } from '../../../interfaces/interfaces'
 import { BaseCard } from './BaseCard'

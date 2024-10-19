@@ -1,4 +1,3 @@
-
 import { useNavigate } from 'react-router-dom'
 import { useGetGames } from '../hooks/queries.ts'
 import HomeCard from '../components/common/cards/HomeCard.tsx'
