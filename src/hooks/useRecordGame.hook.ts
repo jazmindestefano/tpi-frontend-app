@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { shuffleArray } from "../helpers/arrays";
 import { convertBlobToAudioFile } from "../helpers/blobs";
 import { useGetGameLevels } from "./queries.ts";
@@ -9,7 +8,6 @@ import { postUserRecording } from "../http/queries";
 import { LevelOption } from "../interfaces/interfaces";
 
 const useRecordGame = (selectedThemeId: number) => {
-    const navigate = useNavigate(); 
     const { levels, isLoading, error } = useGetGameLevels(selectedThemeId);
     const { isRecording, audio, startRecording, stopRecording } = useAudioRecording();
     const selecteGame = useSelectedGame();
@@ -25,18 +23,6 @@ const useRecordGame = (selectedThemeId: number) => {
             setLevelOptions(levelOptions);
         }
     }, [levels, isLoading, error, currentLevel]);
-
-    const isCorrectOption = (option: LevelOption) => {
-        if (levels && option.correct) {
-            if (currentLevel < levels.length - 1) {
-                setCurrentLevel((prevState) => prevState + 1);
-            } else {
-                navigate("/felicitaciones");
-            }
-        } else {
-            console.log("Respuesta incorrecta");
-        }
-    };
 
     useEffect(() => {
         if (audio) {
@@ -61,7 +47,7 @@ const useRecordGame = (selectedThemeId: number) => {
         stopRecording,
         currentLevel,
         levelOptions,
-        isCorrectOption,
+        setCurrentLevel,
     };
 };
 

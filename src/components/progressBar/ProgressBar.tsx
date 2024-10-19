@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
-import { useMediaQuery } from 'react-responsive';
+import useCustomMediaQuery from "../../hooks/useMediaQuery";
 
 export default function ProgressBar({
   currentActivity = 0,
   totalActivities = 1,
-  height = 88
+  height = 88,
 }: {
   currentActivity?: number
   totalActivities?: number
   height?: number
 }) {
   const [progress, setProgress] = useState(0);
-  const isDesktop = useMediaQuery({ minWidth: 768 });
+  const { isDesktop } = useCustomMediaQuery();
   const width = isDesktop ? 400 : 300;
 
   useEffect(() => {

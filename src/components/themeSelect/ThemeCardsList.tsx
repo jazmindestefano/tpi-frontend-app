@@ -16,7 +16,7 @@ export const ThemeCardsList: React.FC<ThemeCardsListProps> = ({
   }
 
   return (
-    <div className="flex flex-wrap justify-center w-full gap-y-10 pb-10 px-5">
+    <div className="flex flex-wrap justify-center w-full gap-10 px-5">
       {themes.map((theme, index) => (
         <div
           className={`flex justify-center sm:${getJustifyClass(index)} w-full sm:w-1/3`}
