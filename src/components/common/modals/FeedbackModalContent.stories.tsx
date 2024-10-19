@@ -21,6 +21,5 @@ export const Default: Story = {
     isPending: false,
     isSuccess: true,
     error: null,
-    onTimerTimeout: () => {},
   }
 };
