@@ -44,7 +44,7 @@ const HomeProfesionalCard: React.FC<HomeProfesionalCardProps> = ({
             />
             <h3 className="text-lg font-medium text-blue-800">{patient.name}</h3>
             <p className="text-blue-600">{patient.age} años</p>
-            <Button variant="secondary" className="mt-2 p-3 rounded-3xl" onClick={() => navigate("profesional/paciente/:id")}>
+            <Button variant="secondary" className="mt-2 p-3 rounded-3xl" onClick={() => navigate(`paciente/${patient.id}`)}>
                 <p className="text-center font-bold">Ver paciente</p>
             </Button>
           </div>

@@ -1,4 +1,4 @@
-import { LucideIcon, Users, LogOut } from 'lucide-react'; // Asegúrate de importar LogOut
+import { LucideIcon, Users, LogOut, Download, FolderDot } from 'lucide-react'; // Asegúrate de importar LogOut
 import { Outlet, useNavigate } from 'react-router-dom';
 import Button from '../../common/buttons/Button';
 
@@ -51,9 +51,19 @@ export default function Layout() {
         </Button>
       </aside>
       <main className="flex-1 p-8 overflow-auto relative">
-        <Button size={"square"} variant={"primary"} className="absolute top-4 right-4">
-            <LogOut className="text-white" />
-        </Button>
+        <div className="absolute top-4 right-4 flex gap-4">
+          <Button size={"square"} variant={"tertiary"}>
+            {/* exportar */}
+            <Download className="text-white" />
+          </Button>
+          <Button size={"square"} variant={"secondary"}>
+            {/* actividades */}
+            <FolderDot className="text-white" />
+          </Button>
+          <Button size={"square"} variant={"primary"}>
+              <LogOut className="text-white" />
+          </Button>
+        </div>
         <Outlet />
       </main>
     </div>
