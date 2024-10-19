@@ -25,11 +25,11 @@ export const FeedbackModalContent: React.FC<FeedbackModalProps> = ({
   const modalTitle = "¿Qué te pareció la actividad?"
   
   return (
-    <BaseModal className={classNames('rounded-3xl', className)} onClose={onModalClose} title={modalTitle}>
+    <BaseModal className={classNames('rounded-3xl h-96 flex flex-col items-center justify-between p-10', className)} onClose={onModalClose} title={modalTitle}>
       {isPending && <SpinnerLoader />}
       {error && <div>Error: {error.message}</div>}
       {!isPending && !isSuccess && (
-        <div className={"flex justify-evenly items-center"}>
+        <div className={"flex justify-evenly items-start w-full h-40"}>
           <Button variant={"transparent"} onClick={() => onRatingClick(1)}>
             <BadFeedbackIcon/>
           </Button>
