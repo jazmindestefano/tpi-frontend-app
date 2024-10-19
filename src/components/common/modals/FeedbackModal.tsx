@@ -3,6 +3,7 @@ import {FeedbackModalContent} from "./FeedbackModalContent.tsx";
 import {usePostFeedback} from "../../../hooks/queries.ts";
 import {useNavigate} from "react-router-dom";
 import {useUser, useSelectedGame} from "../../../hooks/selectors.ts";
+import { useEffect } from "react";
 
 interface FeedbackModalProps {
   show: boolean
@@ -18,6 +19,15 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({show, onClose}) => 
   const postFeedback = (ranking: number) => {
     mutate({ranking, gameId: selectedGame!.id, patientId: loggedUser!.id})
   }
+
+  useEffect(() => {
+    if (isSuccess) {
+      setTimeout(() => {
+        onClose()
+        navigate("/")
+      }, 500)
+    }
+  }, [isSuccess, onClose, navigate])
   
   return (
     <Overlay show={show} onClose={onClose}>
@@ -27,7 +37,6 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({show, onClose}) => 
         error={error}
         onModalClose={onClose}
         onRatingClick={postFeedback}
-        onTimerTimeout={() => navigate("/")}
       />
     </Overlay>
   );

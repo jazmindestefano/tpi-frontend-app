@@ -4,7 +4,6 @@ import Button from "../buttons/Button.tsx";
 import React from "react";
 import classNames from "classnames";
 import SpinnerLoader from "../SpinnerLoader.tsx";
-import Timer from "../timers/Timer.tsx";
 
 interface FeedbackModalProps {
   className?: string
@@ -13,7 +12,6 @@ interface FeedbackModalProps {
   isPending: boolean
   isSuccess: boolean
   error: Error | null
-  onTimerTimeout: () => void
 }
 
 export const FeedbackModalContent: React.FC<FeedbackModalProps> = ({
@@ -23,22 +21,15 @@ export const FeedbackModalContent: React.FC<FeedbackModalProps> = ({
   isPending,
   isSuccess,
   error,
-  onTimerTimeout  
 }) => {
   const modalTitle = "¿Qué te pareció la actividad?"
   
   return (
-    <BaseModal className={classNames('rounded-3xl', className)} onClose={onModalClose} title={modalTitle}>
+    <BaseModal className={classNames('rounded-3xl h-96 flex flex-col items-center justify-between p-10', className)} onClose={onModalClose} title={modalTitle}>
       {isPending && <SpinnerLoader />}
       {error && <div>Error: {error.message}</div>}
-      {isSuccess && (
-        <div>
-          <h2 className={"text-center text-2xl font-comfortaa"}>¡Gracias por tu feedback!</h2>
-          <Timer duration={3} onTimeout={onTimerTimeout} text={"Redirigiendo al HOME en..."}/>
-        </div>
-      )}
       {!isPending && !isSuccess && (
-        <div className={"flex justify-evenly items-center"}>
+        <div className={"flex justify-evenly items-start w-full h-40"}>
           <Button variant={"transparent"} onClick={() => onRatingClick(1)}>
             <BadFeedbackIcon/>
           </Button>
