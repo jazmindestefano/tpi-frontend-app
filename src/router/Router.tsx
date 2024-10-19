@@ -7,6 +7,7 @@ import ErrorPage from "../pages/Error.tsx";
 import GameSelectorPage from '../pages/GameSelector.tsx';
 import NotFoundPage from "../pages/NotFound.tsx";
 import CongratulationsPage from "../pages/Congratulations.tsx";
+import AchievementsPage from '../pages/Achievements.tsx';
 
 export const router = createBrowserRouter([
   {
@@ -39,6 +40,10 @@ export const router = createBrowserRouter([
       {
         path: "*",
         element: <NotFoundPage />
+      },
+      {
+        path: "/logros",
+        element: <AchievementsPage />
       }
     ],
   },

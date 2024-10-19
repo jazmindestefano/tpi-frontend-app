@@ -71,7 +71,7 @@ const Congratulations = () => {
         {/* Contenedor del pin con la animación */}
         <div className="h-96 pin-container">
           <img 
-            src='pines/pin-1.png' 
+            src='pines/taza.png' 
             className="pin-animation"
           />
         </div>
