@@ -1,39 +1,38 @@
+import HomeProfesionalCard from "../../components/common/cards/ProfesionalHomeCard";
+
 interface Patient {
   id: number;
   name: string;
   imageUrl: string;
+  age: number;
 }
 
 const patients: Patient[] = [
-  { id: 1, name: 'JUAN', imageUrl: '/avatar/horse-avatar.png' },
-  { id: 2, name: 'PEDRO', imageUrl: '/avatar/lion-avatar.png' },
-  { id: 3, name: 'MARIELA', imageUrl: '/avatar/rabbit-avatar.png' },
-  { id: 4, name: 'JUANA', imageUrl: '/avatar/horse-avatar.png' },
-  { id: 5, name: 'JORGE', imageUrl: '/avatar/rabbit-avatar.png' },
+  { id: 1, name: 'JUAN', imageUrl: '/avatar/horse-avatar.png', age: 7 },
+  { id: 2, name: 'PEDRO', imageUrl: '/avatar/lion-avatar.png', age: 5 },
+  { id: 3, name: 'MARIELA', imageUrl: '/avatar/rabbit-avatar.png', age: 8 },
+  { id: 4, name: 'JUANA', imageUrl: '/avatar/horse-avatar.png', age: 4 },
+  { id: 5, name: 'JORGE', imageUrl: '/avatar/rabbit-avatar.png', age: 7 },
 ];
 
 export default function HomeProfesional() {
   return (
-    <div>
-      <div className="flex flex-col justify-center items-start mb-6">
-        <h1 className="text-2xl font-bold">Hola, XXXX!</h1>
-        <p>28 de Septiembre 2024, Sabado</p>
+    <div className="flex flex-col items-start justify-start gap-4">
+      <div className="flex justify-between items-center">
+        <div>
+          <h1 className="text-2xl font-bold">Hola, Juliana!</h1>
+          <p className="text-gray-500">18 de Octubre 2024, Miércoles</p>
+        </div>
       </div>
-      <h2 className="text-xl font-semibold mb-4">Pacientes</h2>
-      <div className="space-y-4">
-        {patients.map((patient) => (
-          <div key={patient.id} className="flex items-center bg-orange-300 rounded-3xl p-4 text-white">
-            <img
-              src={patient.imageUrl}
-              alt={patient.name}
-              width={40}
-              height={40}
-              className="rounded-full mr-4"
-            />
-            <span className="text-lg font-medium">{patient.name}</span>
-          </div>
-        ))}
-      </div>
+        <div>
+            <h2 className="text-xl font-semibold mb-4">Pacientes</h2>
+            <div className="flex flex-wrap gap-10 lg:px-10 lg:py-6">
+                <HomeProfesionalCard isAddPatient={true} />
+                {patients.map((patient) => (
+                <HomeProfesionalCard key={patient.id} patient={patient} />
+                ))}
+            </div>
+        </div>
     </div>
   );
 }
