@@ -1,20 +1,20 @@
-import {useNavigate} from 'react-router-dom';
-import Button from '../components/common/buttons/Button.tsx';
-import {useEffect} from "react";
-import { useDispatch } from 'react-redux';
-import { resetGame, setModalFeedback,  } from '../redux/store/gameSlice.ts';
-import { VolumeButton } from '../components/common/buttons/VolumeButton.tsx';
-import { useSpeakText } from '../hooks/useSpeakText.ts';
+import { useNavigate } from 'react-router-dom'
+import Button from '../components/common/buttons/Button.tsx'
+import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { resetGame, setModalFeedback } from '../redux/store/gameSlice.ts'
+import { VolumeButton } from '../components/common/buttons/VolumeButton.tsx'
+import { useSpeakText } from '../hooks/useSpeakText.ts'
 
 const Congratulations = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const speakText = useSpeakText();
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const speakText = useSpeakText()
 
   useEffect(() => {
-    dispatch(resetGame());
-    dispatch(setModalFeedback(true));
-  }, [dispatch]);
+    dispatch(resetGame())
+    dispatch(setModalFeedback(true))
+  }, [dispatch])
 
   return (
     <>
@@ -67,35 +67,27 @@ const Congratulations = () => {
       </style>
 
       <div className="flex flex-col w-full items-center justify-center h-full relative container-animation">
-        
         {/* Contenedor del pin con la animación */}
         <div className="h-96 pin-container">
-          <img 
-            src='pines/pin-1.png' 
-            className="pin-animation"
-          />
+          <img src="pines/pin-1.png" className="pin-animation" />
         </div>
-        
-        <div className='flex-center gap-4'>
-          <p className="text-4xl text-black font-black mb-8 text-center my-5">
-            ¡Has completado el desafío!
-          </p>
-          <VolumeButton onClick={() => speakText("¡Has completado el desafío!")} />
+
+        <div className="flex-center gap-4">
+          <p className="text-4xl text-black font-black mb-8 text-center my-5">¡Has completado el desafío!</p>
+          <VolumeButton onClick={() => speakText('¡Has completado el desafío!')} />
         </div>
 
         <Button
-          onMouseEnter={() => speakText("Volver al Inicio")}
+          onMouseEnter={() => speakText('Volver al Inicio')}
           onClick={() => navigate('/')}
-          variant={"primary"}
+          variant={'primary'}
           className="px-6 py-3 text-white font-bold rounded-full shadow-lg hover:bg-gray-100 hover:text-black transition duration-300"
         >
-          <p className='text-2xl font-extrabold text-center'>
-           Volver al Inicio
-          </p>
+          <p className="text-2xl font-extrabold text-center">Volver al Inicio</p>
         </Button>
       </div>
     </>
-  );
-};
+  )
+}
 
-export default Congratulations;
+export default Congratulations

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react'
 
 interface TimerProps {
   duration: number
@@ -7,26 +7,29 @@ interface TimerProps {
 }
 
 const Timer: React.FC<TimerProps> = ({ duration, onTimeout, text }) => {
-  const [timeLeft, setTimeLeft] = useState(duration);
+  const [timeLeft, setTimeLeft] = useState(duration)
 
   useEffect(() => {
     if (timeLeft <= 0) {
       onTimeout()
-      return;
+      return
     }
 
     const timerId = setInterval(() => {
-      setTimeLeft(prevTime => prevTime - 1);
-    }, 1000);
+      setTimeLeft((prevTime) => prevTime - 1)
+    }, 1000)
 
-    return () => clearInterval(timerId);
-  }, [timeLeft, onTimeout]);
+    return () => clearInterval(timerId)
+  }, [timeLeft, onTimeout])
 
   return (
-    <div className={"flex justify-center items-center"}>
-      <p className={"font-comfortaa text-2xl"}>{text}{timeLeft}</p>
+    <div className={'flex justify-center items-center'}>
+      <p className={'font-comfortaa text-2xl'}>
+        {text}
+        {timeLeft}
+      </p>
     </div>
-  );
-};
+  )
+}
 
-export default Timer;
+export default Timer
