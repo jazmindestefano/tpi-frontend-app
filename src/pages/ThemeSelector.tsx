@@ -27,8 +27,12 @@ const ThemeSelector = () => {
     navigate(`/actividad/${selectedGame.id}`)
   };
 
+  if (isLoading) {
+    return <SpinnerLoader />;
+  }
+
   return (
-    <div className="flex-col-center xl:gap-10 pt-20">
+    <div className="flex-col-center xl:gap-10 pt-20 lg:pt-0">
       <div className="flex-center self-center gap-4">
         <h1 className="text-h1">
           Temáticas

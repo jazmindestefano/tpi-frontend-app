@@ -18,6 +18,17 @@ const Header: React.FC = () => {
       </div>
       )}
       <div className={`flex flex-row gap-4 ${location.pathname.includes("actividad") ? "ml-auto" : ""}`}>
+      <Button
+        size={"square"}
+        variant={"secondary"}
+        onClick={() => navigate("/logros")}
+        >
+        <img
+          src="/pines/medalla.png"
+          alt="Avatar"
+          className="object-cover h-10"
+        />
+      </Button>
       {location.pathname !== "/perfil" && (
         <Button
         size={"square"}

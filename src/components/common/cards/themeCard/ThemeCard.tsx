@@ -1,23 +1,23 @@
-import {Theme} from "../../../../interfaces/interfaces.ts";
-import React from "react";
-import {BaseCard} from "../BaseCard.tsx";
-import {BaseContainer} from "../BaseContainer.tsx";
-import {VolumeButton} from "../../buttons/VolumeButton.tsx";
-import {useSpeakText} from "../../../../hooks/useSpeakText.ts";
+import { useSpeakText } from "../../../../hooks/useSpeakText";
+import { Theme } from "../../../../interfaces/interfaces";
+import { VolumeButton } from "../../buttons/VolumeButton";
+import { BaseCard } from "../BaseCard";
+import { BaseContainer } from "../BaseContainer";
 
-interface ThemeCardProps  {
-  theme: Theme,
+interface ThemeCardProps {
+  theme: Theme;
   onClick: () => void;
+  bgColor: string;
 }
 
-export const ThemeCard: React.FC<ThemeCardProps> = ({theme, onClick}) => {
+export const ThemeCard: React.FC<ThemeCardProps> = ({ theme, onClick, bgColor }) => {
   const speakText = useSpeakText();
   
   return (
-    <BaseCard className={"bg-orange-200 p-4 flex-col-center"}>
+    <BaseCard className={`${bgColor} p-4 flex-col-center`}>
       <BaseContainer className={"gap-6"}>
         <div onClick={onClick} className="w-full">
-          <img className="rounded-3xl bg-[#F7F7F7] size-80 w-full p-4" src={`/themes/letras/${theme.name}.png`} alt={theme.name}/>
+          <img className="rounded-3xl bg-white size-80 w-full p-4" src={`/themes/letras/${theme.name}.png`} alt={theme.name} />
         </div>
         <div className="flex flex-col justify-center items-center w-full gap-2">
           <h3 className="text-h3">{theme.name}</h3>
