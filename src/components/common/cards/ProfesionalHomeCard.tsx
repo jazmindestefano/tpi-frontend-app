@@ -21,7 +21,7 @@ const HomeProfesionalCard: React.FC<HomeProfesionalCardProps> = ({
   className = '',
 }) => {
   return (
-    <div className={`"max-w-96 flex-col-center rounded-3xl h-80 w-80 shadow-lg cursor-pointer transition-transform duration-300 bg-blue-100 " ${className}`}>
+    <div className={`"max-w-96 flex-col-center rounded-3xl h-80 w-72 shadow-lg cursor-pointer transition-transform duration-300 bg-blue-100 " ${className}`}>
       {isAddPatient ? (
         <div className="flex flex-col items-center justify-center p-4 gap-10">
           <div className="w-16 h-16 bg-blue-200 rounded-full flex items-center justify-center mb-2">
