@@ -1,6 +1,7 @@
 import React from "react";
 import { PlusIcon } from "lucide-react";
 import Button from "../buttons/Button";
+import { useNavigate } from "react-router-dom";
 
 interface Patient {
   id?: number;
@@ -20,6 +21,8 @@ const HomeProfesionalCard: React.FC<HomeProfesionalCardProps> = ({
   isAddPatient = false,
   className = '',
 }) => {
+  const navigate = useNavigate();
+
   return (
     <div className={`"max-w-96 flex-col-center rounded-3xl h-80 w-72 shadow-lg cursor-pointer transition-transform duration-300 bg-blue-100 " ${className}`}>
       {isAddPatient ? (
@@ -41,7 +44,7 @@ const HomeProfesionalCard: React.FC<HomeProfesionalCardProps> = ({
             />
             <h3 className="text-lg font-medium text-blue-800">{patient.name}</h3>
             <p className="text-blue-600">{patient.age} años</p>
-            <Button variant="secondary" className="mt-2 p-3 rounded-3xl">
+            <Button variant="secondary" className="mt-2 p-3 rounded-3xl" onClick={() => navigate("profesional/paciente/:id")}>
                 <p className="text-center font-bold">Ver paciente</p>
             </Button>
           </div>
