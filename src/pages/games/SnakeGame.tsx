@@ -19,7 +19,7 @@ import { useSpeakText } from "../../hooks/useSpeakText";
 const items = ["A", "E", "I", "O", "U"];
 const cellSize = 50;
 
-const VowelSnakeGame: React.FC = () => {
+const SnakeGame: React.FC = () => {
   const [snake, setSnake] = useState([{ x: 7, y: 5 }]);
   const [direction, setDirection] = useState({ x: 1, y: 0 });
   const [item, setItem] = useState({ char: items[0], x: 10, y: 4 });
@@ -283,4 +283,4 @@ const VowelSnakeGame: React.FC = () => {
   );
 }
 
-export default VowelSnakeGame;
+export default SnakeGame;
