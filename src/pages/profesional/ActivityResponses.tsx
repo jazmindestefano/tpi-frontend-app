@@ -27,12 +27,12 @@ export default function ActivityResponses() {
             </Button>
           </div>
 
-          <ul className="space-y-2">
+          <ul className="space-y-4">
             {wordResponses.map((response, index) => (
-              <li key={index} className="bg-blue-100 rounded-lg p-4 flex justify-between items-center">
-                <span className="font-semibold">{response.word}</span>
-                <div className="flex items-center space-x-4">
-                  <span className="text-gray-600">{response.date}</span>
+              <li key={index} className="bg-blue-200 rounded-3xl px-6 py-4 flex justify-between items-center">
+                <span className="font-extrabold text-lg">{response.word}</span>
+                <div className="flex items-center space-x-6">
+                  <span className="text-gray-600 font-extrabold text-lg">{response.date}</span>
                   <Button variant="secondary" size="circle" shape='circle' className="text-blue-500 hover:text-blue-600">
                     <PlayCircle className="h-6 w-6" color='white' />
                   </Button>
