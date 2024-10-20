@@ -28,7 +28,7 @@ export default function Layout() {
     <div className="flex h-screen bg-gray-100 font-comfortaa">
       <aside className="w-32 bg-blue-500 flex flex-col items-center pt-20 pb-10">
         <div className="flex flex-col items-center space-y-4">
-          <div onClick={() => navigate('/profesional/inicio')} className="cursor-pointer">
+          <div onClick={() => navigate('/profesional')} className="cursor-pointer">
             <img src="/clara-logo-white.png" alt="Logo" className="h-8 transform rotate-[-90deg]" />
           </div>
         </div>

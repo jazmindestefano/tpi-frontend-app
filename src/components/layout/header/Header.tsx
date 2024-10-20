@@ -39,26 +39,6 @@ const Header: React.FC = () => {
           </Button>
         )}
       </div>
-      <div className={`flex flex-row gap-4 ${location.pathname.includes('actividad') ? 'ml-auto' : ''}`}>
-        {location.pathname !== '/perfil' && (
-          <Button
-            size={'square'}
-            variant={'tertiary'}
-            onClick={() => navigate(location.pathname !== '/perfil' ? '/perfil' : '/')}
-          >
-            <img src="/avatar/lion-avatar.png" alt="Avatar" className="object-cover h-10" />
-          </Button>
-        )}
-        {location.pathname === '/' ? (
-          <Button size={'square'} variant={'primary'}>
-            <LogOut className="text-white" />
-          </Button>
-        ) : (
-          <Button size={'square'} variant={'tertiary'} onClick={() => navigate('/')}>
-            <House />
-          </Button>
-        )}
-      </div>
     </header>
   )
 }

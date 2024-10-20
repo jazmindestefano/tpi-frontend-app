@@ -39,8 +39,8 @@ export default function AddPatientModal({ isOpen, onClose, onSubmit }: AddPatien
 
   return (
     <Overlay show={isOpen} onClose={onClose}>
-      <BaseModal title="Agregar Paciente" onClose={onClose} speak={false} className="gap-10 p-12 rounded-3xl">
-        <form onSubmit={handleSubmit} className="p-6 space-y-6 flex flex-col">
+      <BaseModal title="Agregar Paciente" onClose={onClose} speak={false} className="gap-10 p-16 rounded-3xl">
+        <form onSubmit={handleSubmit} className="space-y-6 flex flex-col">
           <div>
             <label htmlFor="childName" className="block text-sm font-medium text-gray-700">
               Nombre y apellido del niño/a *
