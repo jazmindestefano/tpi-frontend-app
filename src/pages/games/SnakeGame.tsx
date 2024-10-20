@@ -10,8 +10,10 @@ import {
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/buttons/Button";
-import { ContinueIcon, MicIcon } from "../../components/common/icons/Icons";
+import { ContinueIcon } from "../../components/common/icons/Icons";
 import { VolumeButton } from "../../components/common/buttons/VolumeButton";
+import { RecordButton } from "../../components/common/buttons/RecordButton";
+import { useAudioRecording } from "../../hooks/useAudioRecording";
 
 const items = ["A", "E", "I", "O", "U"];
 const cellSize = 50;
@@ -27,6 +29,9 @@ const VowelSnakeGame: React.FC = () => {
   const [gridSize, setGridSize] = useState({ width: 30, height: 9 });
   const [isGameFinished, setIsGameFinished] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { isRecording, audio, startRecording, stopRecording } = useAudioRecording();
+
+  console.log({audio})
 
   const togglePause = useCallback(() => {
     if (!showBigItem) {
@@ -258,9 +263,12 @@ const VowelSnakeGame: React.FC = () => {
               {eatenItems[eatenItems.length - 1]}
             </motion.div>
             <div className="flex space-x-4">
-              <Button variant="secondary" size="circle" shape={'circle'} onClick={recordAudio}>
-                <MicIcon />
-              </Button>
+            <RecordButton
+                      variant={"fourth"}
+                      isRecording={isRecording}
+                      stopRecording={stopRecording}
+                      startRecording={startRecording}
+                    />
               <VolumeButton />
               <Button variant="primary" size="circle" shape={'circle'} onClick={resumeGame}>
                 <ContinueIcon />
