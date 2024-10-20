@@ -65,17 +65,24 @@ export const postUserRecording = async ({ userId, activityId, gameId, userAudio 
 
 
 export const postAuditoryDiscriminationAnswer = async ({ patientId, activities }: PostAuditoryDiscriminationRequest) => {
+  const payload = {
+    patientId: patientId,
+    activities: activities,
+  };
 
-  const res = await unauthenticatedClient.post(`answers/text`, {
-    patientId,
-    activities
-  })
+  const res = await unauthenticatedClient.post(`answers/text`, payload, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+
+  console.log({ res });
 
   if (res.status === 200) {
-    return res.data
+    return res.data;
   }
-  return null
-}
+  return null;
+};
 
 export const postFeedback = async ({ranking, gameId, patientId}: PostFeedbackData) => {
   const res = await unauthenticatedClient.post(`postSurvey/${ranking}/${gameId}/${patientId}`)

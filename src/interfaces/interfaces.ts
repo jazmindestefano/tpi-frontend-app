@@ -46,19 +46,11 @@ export interface GameProps {
 }
 
 export interface LevelOptionRequest {
-  id: number;
-  name: string;
-  image: string;
-  correct: boolean;
-}
-
-export interface AuditoryDiscriminationActivitiesRequest {
-  id: number;
-  description: string;
-  options: LevelOptionRequest[];
+  activityId: number;
+  selectedOption: number;
 }
 
 export interface PostAuditoryDiscriminationRequest {
   patientId: number;
-  activities: AuditoryDiscriminationActivitiesRequest[];
+  activities: LevelOptionRequest[];
 }

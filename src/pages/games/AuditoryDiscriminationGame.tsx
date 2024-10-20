@@ -12,27 +12,19 @@ import ProgressBar from "../../components/progressBar/ProgressBar.tsx";
 
 const prepareData = ({
                        patiendId,
-                       optionSelected,
-                       levelId,
-                       levelDescription
+                       activityId,
+                       selectedOption,
                      }: {
   patiendId: number,
-  optionSelected: LevelOption,
-  levelId: number,
-  levelDescription: string
+  selectedOption: number,
+  activityId: number,
 }) => {
   return {
     patientId: patiendId,
     activities: [
       {
-        id: levelId,
-        description: levelDescription ?? "Default Description",
-        options: [{
-          id: optionSelected!.id,
-          name: optionSelected.name ?? "Default name",
-          image: optionSelected.image ?? "Default image",
-          correct: optionSelected!.correct,
-        }],
+        activityId: activityId,
+        selectedOption: selectedOption,
       },
     ],
   };
@@ -48,8 +40,7 @@ const AuditoryDiscriminationGame: React.FC = () => {
   const [currentLevel, setCurrentLevel] = useState<number>(0);
   const [options, setOptions] = useState<LevelOption[]>([]);
   // todo: all props need to be used
-  const { mutate, reset, error: postAnswerError, isPending, isSuccess } = usePostAuditoryDiscriminationAnswer()
-  console.log(reset, postAnswerError, isPending, isSuccess)
+  const { mutate} = usePostAuditoryDiscriminationAnswer()
   const speakText = useSpeakText()
 
   useEffect(() => {
@@ -66,17 +57,15 @@ const AuditoryDiscriminationGame: React.FC = () => {
     }
   }, [currentLevel, levels, navigate]);
 
-  const onOptionSelection = (option: LevelOption) => {
-    console.log(option)
+  const onOptionSelection = (selectedOption: LevelOption) => {
     mutate(prepareData({
+      activityId: levels![currentLevel].id,
       patiendId: user.id,
-      optionSelected: option,
-      levelId: levels![currentLevel].id,
-      levelDescription: levels![currentLevel].description
+      selectedOption: selectedOption.id,
     }));
     setCurrentLevel((prevState) => prevState + 1);
   };
-  
+
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       if (levels) {
