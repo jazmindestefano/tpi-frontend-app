@@ -8,6 +8,11 @@ import GameSelectorPage from '../pages/GameSelector.tsx';
 import NotFoundPage from "../pages/NotFound.tsx";
 import CongratulationsPage from "../pages/Congratulations.tsx";
 import AchievementsPage from '../pages/Achievements.tsx';
+import HomeProfesional from '../pages/profesional/HomeProfesional.tsx';
+import ProfesionalPageLayout from '../components/layout/profesionalPageLayout/ProfesionalPageLayout.tsx';
+import Dashboard from '../pages/profesional/Dashboard.tsx';
+import PatientActivities from '../pages/profesional/PatientActivities.tsx';
+import ActivityResponses from '../pages/profesional/ActivityResponses.tsx';
 
 export const router = createBrowserRouter([
   {
@@ -47,4 +52,26 @@ export const router = createBrowserRouter([
       }
     ],
   },
+  {
+    element: <ProfesionalPageLayout />,
+    children: [
+      {
+        path: "/profesional",
+        element: <HomeProfesional />
+      },
+      {
+        path: "/profesional/paciente/:patientId",
+        element: <Dashboard />
+      },
+      {
+        path: "/profesional/paciente/:patientId/actividades",
+        element: <PatientActivities />
+      },
+      {
+        path: "/profesional/paciente/:patientId/actividades/:activityId",
+        element: <ActivityResponses />
+      },
+
+    ]
+  }
 ]);
