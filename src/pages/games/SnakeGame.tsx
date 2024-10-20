@@ -33,21 +33,22 @@ const SnakeGame: React.FC = () => {
   const [gridSize, setGridSize] = useState({ width: 30, height: 9 });
   const [isGameFinished, setIsGameFinished] = useState<boolean>(false);
   const navigate = useNavigate();
-  const { isRecording, audio, startRecording, stopRecording } = useAudioRecording();
+  const { isRecording, audio, startRecording, stopRecording } =
+    useAudioRecording();
   const speakText = useSpeakText();
   const selecteGame = useSelectedGame();
 
   useEffect(() => {
     if (audio) {
-        const audioFile = convertBlobToAudioFile(audio, "user_audio.wav");
-        postUserRecording({
-            userId: 1, // hardcoded, fix when users exists
-            gameId: selecteGame!.id,
-            activityId: 1, // hardcoded, fix when activities exists
-            userAudio: audioFile,
-        });
+      const audioFile = convertBlobToAudioFile(audio, "user_audio.wav");
+      postUserRecording({
+        userId: 1, // hardcoded, fix when users exists
+        gameId: selecteGame!.id,
+        activityId: 1, // hardcoded, fix when activities exists
+        userAudio: audioFile,
+      });
     }
-}, [audio, selecteGame, isRecording]);
+  }, [audio, selecteGame, isRecording]);
 
   const togglePause = useCallback(() => {
     if (!showBigItem) {
@@ -64,7 +65,7 @@ const SnakeGame: React.FC = () => {
   const recordAudio = () => {
     // Simular la grabación de audio
     setRecordedAudios((prev) => [...prev, (prev[prev.length - 1] || 0) + 1]);
-    
+
     // Verificar si el juego ha terminado
     if (recordedAudios.length - 1 === items.length) {
       setIsGameFinished(true);
@@ -114,23 +115,25 @@ const SnakeGame: React.FC = () => {
           x: (prevSnake[0].x + direction.x + gridSize.width) % gridSize.width,
           y: (prevSnake[0].y + direction.y + gridSize.height) % gridSize.height,
         };
-      
+
         let newSnake = [newHead, ...prevSnake];
-      
+
         if (newHead.x === item.x && newHead.y === item.y) {
           const updatedEatenItems = [...eatenItems, item.char];
           setEatenItems(updatedEatenItems);
-      
+
           setShowBigItem(true);
           setIsPaused(true);
-      
+
           const remainingItems = items.filter(
             (v) => !updatedEatenItems.includes(v)
           );
-      
+
           if (remainingItems.length > 0) {
             setItem({
-              char: remainingItems[Math.floor(Math.random() * remainingItems.length)],
+              char: remainingItems[
+                Math.floor(Math.random() * remainingItems.length)
+              ],
               x: Math.floor(Math.random() * gridSize.width),
               y: Math.floor(Math.random() * gridSize.height),
             });
@@ -139,7 +142,7 @@ const SnakeGame: React.FC = () => {
           newSnake = newSnake.slice(0, -1);
         }
         return newSnake;
-      });      
+      });
     }, 500);
 
     return () => clearInterval(gameLoop);
@@ -279,14 +282,22 @@ const SnakeGame: React.FC = () => {
               {eatenItems[eatenItems.length - 1]}
             </motion.div>
             <div className="flex space-x-4">
-            <RecordButton
-                      variant={"fourth"}
-                      isRecording={isRecording}
-                      stopRecording={stopRecording}
-                      startRecording={startRecording}
-                    />
-              <VolumeButton onClick={() => speakText(eatenItems[eatenItems.length - 1])} />
-              <Button variant="primary" size="circle" shape={'circle'} onClick={resumeGame}>
+              <RecordButton
+                variant={"fourth"}
+                isRecording={isRecording}
+                stopRecording={stopRecording}
+                startRecording={startRecording}
+              />
+              <VolumeButton
+                onClick={() => speakText(eatenItems[eatenItems.length - 1])}
+              />
+              <Button
+                variant="primary"
+                size="circle"
+                shape={"circle"}
+                onClick={resumeGame}
+                aria-label="continue"
+              >
                 <ContinueIcon />
               </Button>
             </div>
@@ -295,6 +306,6 @@ const SnakeGame: React.FC = () => {
       </AnimatePresence>
     </div>
   );
-}
+};
 
 export default SnakeGame;

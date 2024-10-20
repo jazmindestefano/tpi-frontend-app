@@ -1,4 +1,4 @@
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
 import { MemoryRouter } from "react-router-dom";
 import SnakeGame from "../../../pages/games/SnakeGame";
@@ -18,7 +18,7 @@ vi.mock("react-router-dom", async (importOriginal) => {
     ...(actual as object),
     useNavigate: () => mockNavigate,
     MemoryRouter: (actual as { MemoryRouter: typeof MemoryRouter })
-      .MemoryRouter, // Asegurarse de que MemoryRouter esté incluido
+      .MemoryRouter,
   };
 });
 
@@ -47,23 +47,29 @@ describe("SnakeGame", () => {
     ).toBeInTheDocument();
   });
 
-  //   it("pauses and resumes the game", () => {
-  //     render(
-  //       <MemoryRouter>
-  //         <SnakeGame />
-  //       </MemoryRouter>
-  //     );
+  it("pauses and resumes the game", () => {
+    const { container } = render(
+      <MemoryRouter>
+        <SnakeGame />
+      </MemoryRouter>
+    );
 
-  //     expect(screen.queryByText(/PAUSED/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/PAUSED/i)).not.toBeInTheDocument();
 
-  //     const pauseButton = screen.getByLabelText(/pause game/i);
-  //     fireEvent.click(pauseButton);
+    const pauseButton = container.querySelector(".lucide-pause")?.parentElement;
+    if (pauseButton) {
+      fireEvent.click(pauseButton);
+    }
 
-  //     expect(screen.getByText(/PAUSED/i)).toBeInTheDocument();
+    expect(screen.getByText(/PAUSED/i)).toBeInTheDocument();
 
-  //     fireEvent.click(pauseButton);
-  //     expect(screen.queryByText(/PAUSED/i)).not.toBeInTheDocument();
-  //   });
+    const resumeButton = container.querySelector(".lucide-play")?.parentElement;
+    if (resumeButton) {
+      fireEvent.click(resumeButton);
+    }
+
+    expect(screen.queryByText(/PAUSED/i)).not.toBeInTheDocument();
+  });
 
   it("handles arrow key presses to change direction", () => {
     render(
@@ -77,6 +83,7 @@ describe("SnakeGame", () => {
 
   //   it("records audio when it becomes available", async () => {
   //     const mockAudioBlob = new Blob(["audio data"], { type: "audio/wav" });
+
   //     (useAudioRecording as jest.Mock).mockReturnValueOnce({
   //       isRecording: true,
   //       audio: mockAudioBlob,
@@ -84,15 +91,20 @@ describe("SnakeGame", () => {
   //       stopRecording: vi.fn(),
   //     });
 
+  //     const mockNavigate = jest.fn();
+
+  //     jest.mock("react-router-dom", () => ({
+  //       ...jest.requireActual("react-router-dom"),
+  //       useNavigate: () => mockNavigate,
+  //     }));
+
   //     render(
   //       <MemoryRouter>
   //         <SnakeGame />
   //       </MemoryRouter>
   //     );
 
-  //     await new Promise((resolve) => setTimeout(resolve, 1000));
-
-  //     expect(mockNavigate).toHaveBeenCalledWith("/felicitaciones");
+  //     await waitFor(() => expect(mockNavigate).toHaveBeenCalledWith("/felicitaciones"));
   //   });
 
   //   it("finishes the game when all items are eaten", () => {
@@ -102,7 +114,9 @@ describe("SnakeGame", () => {
   //       </MemoryRouter>
   //     );
 
-  //     fireEvent.click(screen.getByText(/continue/i));
+  //     const continueButton = screen.getByTestId("continue-button");
+
+  //     fireEvent.click(continueButton);
 
   //     expect(mockNavigate).toHaveBeenCalledWith("/felicitaciones");
   //   });
