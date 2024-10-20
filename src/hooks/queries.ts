@@ -79,14 +79,8 @@ export const usePostUserRecording = (): {
   isSuccess: boolean
 } => {
   const { mutate, reset, error, isPending, isSuccess } = useMutation({
-    mutationFn: async ({ userId, gameId, text, gameName, userAudio }: PostUserRecordingData) => {
-      return await ApiService.postUserRecording({
-        userId,
-        gameId,
-        gameName,
-        text,
-        userAudio
-      })
+    mutationFn: async ({ userId, gameId, activityId, userAudio }: PostUserRecordingData) => {
+      return await ApiService.postUserRecording({ userId, gameId, activityId, userAudio })
     }
   })
   return { mutate, reset, error, isPending, isSuccess }

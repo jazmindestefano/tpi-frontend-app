@@ -20,7 +20,6 @@ export const Default: Story = {
     onRatingClick: (n: number) => n,
     isPending: false,
     isSuccess: true,
-    error: null,
-    onTimerTimeout: () => {}
+    error: null
   }
 }

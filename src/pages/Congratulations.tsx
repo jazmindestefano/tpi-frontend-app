@@ -1,19 +1,25 @@
 import { useNavigate } from 'react-router-dom'
 import Button from '../components/common/buttons/Button.tsx'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { resetGame, setModalFeedback } from '../redux/store/gameSlice.ts'
 import { VolumeButton } from '../components/common/buttons/VolumeButton.tsx'
 import { useSpeakText } from '../hooks/useSpeakText.ts'
+import { achievementsData } from '../testData/achievementsData.ts'
 
 const Congratulations = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const speakText = useSpeakText()
+  const [randomPin, setRandomPin] = useState(achievementsData[0]) // Estado para almacenar el pin aleatorio
 
   useEffect(() => {
     dispatch(resetGame())
     dispatch(setModalFeedback(true))
+
+    // Selecciona un pin aleatorio del array achievementsData
+    const randomIndex = Math.floor(Math.random() * achievementsData.length)
+    setRandomPin(achievementsData[randomIndex])
   }, [dispatch])
 
   return (
@@ -59,17 +65,20 @@ const Congratulations = () => {
 
           /* Aplicamos la animación al pin */
           .pin-animation {
-            width: 400px; /* Ajusta el tamaño del pin según prefieras */
+            width: 300px; /* Ajusta el tamaño del pin según prefieras */
             animation: drop-in 1s ease-in-out, bounce 2s infinite ease-in-out;
           }
-
         `}
       </style>
 
       <div className="flex flex-col w-full items-center justify-center h-full relative container-animation">
         {/* Contenedor del pin con la animación */}
         <div className="h-96 pin-container">
-          <img src="pines/pin-1.png" className="pin-animation" />
+          <img
+            src={randomPin.image} // Imagen aleatoria
+            className="pin-animation"
+            alt="Pin aleatorio"
+          />
         </div>
 
         <div className="flex-center gap-4">

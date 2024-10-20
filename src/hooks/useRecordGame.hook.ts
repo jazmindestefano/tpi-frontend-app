@@ -14,7 +14,7 @@ const useRecordGame = (selectedThemeId: number) => {
   const [currentLevel, setCurrentLevel] = useState<number>(0)
   const [levelOptions, setLevelOptions] = useState<LevelOption[]>([])
 
-  console.log({ audio })
+  console.log({ levels })
 
   useEffect(() => {
     if (levels && !isLoading && !error) {
@@ -30,8 +30,7 @@ const useRecordGame = (selectedThemeId: number) => {
       postUserRecording({
         userId: 1, // hardcoded, fix when users exists
         gameId: selecteGame!.id,
-        gameName: 'RecordGame',
-        text: levels![currentLevel].description!,
+        activityId: levels![currentLevel].id,
         userAudio: audioFile
       })
     }

@@ -12,29 +12,19 @@ import ProgressBar from '../../components/progressBar/ProgressBar.tsx'
 
 const prepareData = ({
   patiendId,
-  optionSelected,
-  levelId,
-  levelDescription
+  activityId,
+  selectedOption
 }: {
   patiendId: number
-  optionSelected: LevelOption
-  levelId: number
-  levelDescription: string
+  selectedOption: number
+  activityId: number
 }) => {
   return {
     patientId: patiendId,
     activities: [
       {
-        id: levelId,
-        description: levelDescription ?? 'Default Description',
-        options: [
-          {
-            id: optionSelected!.id,
-            name: optionSelected.name ?? 'Default name',
-            image: optionSelected.image ?? 'Default image',
-            correct: optionSelected!.correct
-          }
-        ]
+        activityId: activityId,
+        selectedOption: selectedOption
       }
     ]
   }
@@ -49,8 +39,7 @@ const AuditoryDiscriminationGame: React.FC = () => {
   const [currentLevel, setCurrentLevel] = useState<number>(0)
   const [options, setOptions] = useState<LevelOption[]>([])
   // todo: all props need to be used
-  const { mutate, reset, error: postAnswerError, isPending, isSuccess } = usePostAuditoryDiscriminationAnswer()
-  console.log(reset, postAnswerError, isPending, isSuccess)
+  const { mutate } = usePostAuditoryDiscriminationAnswer()
   const speakText = useSpeakText()
 
   useEffect(() => {
@@ -67,24 +56,26 @@ const AuditoryDiscriminationGame: React.FC = () => {
     }
   }, [currentLevel, levels, navigate])
 
-  const onOptionSelection = (option: LevelOption) => {
-    console.log(option)
+  const onOptionSelection = (selectedOption: LevelOption) => {
     mutate(
       prepareData({
+        activityId: levels![currentLevel].id,
         patiendId: user.id,
-        optionSelected: option,
-        levelId: levels![currentLevel].id,
-        levelDescription: levels![currentLevel].description
+        selectedOption: selectedOption.id
       })
     )
     setCurrentLevel((prevState) => prevState + 1)
   }
 
   useEffect(() => {
-    if (levels) {
-      speakText(`Seleccioná la imágen que empiece con la letra ${levels[currentLevel].description}`)
-    }
-  })
+    const timeoutId = setTimeout(() => {
+      if (levels) {
+        speakText(`Seleccioná la imágen que empiece con la letra ${levels[currentLevel].description}`)
+      }
+    }, 1500)
+
+    return () => clearTimeout(timeoutId)
+  }, [levels, currentLevel, speakText])
 
   // todo: save in LS to not redirect
   if (selectedTheme.id === -1) {
@@ -99,7 +90,7 @@ const AuditoryDiscriminationGame: React.FC = () => {
   }
 
   return !isLoading && !getLevelsError && levels && levels.length != 0 ? (
-    <div className="w-full layout flex-col-center gap-10 px-10 md:px-40">
+    <div className="w-full layout flex-col-center gap-4 px-10 md:px-40 lg:pt-20 pt-10">
       <ProgressBar currentActivity={currentLevel + 1} totalActivities={levels?.length} />
       <GameHeader level={levels[currentLevel]} headerTitle="Selecciona la imágen que empiece con la letra"></GameHeader>
       <GameOptionsList options={options} onOptionSelection={onOptionSelection} />

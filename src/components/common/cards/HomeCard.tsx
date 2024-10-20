@@ -21,7 +21,7 @@ const HomeCard: React.FC<HomeCardProps> = ({ buttonVariant, backgroundColor, onC
         className={`gap-6 ${backgroundColor} rounded-3xl p-6 transition-transform duration-300 transform hover:scale-105`}
       >
         <div onClick={onClick} className="flex-col-center">
-          <img className="rounded-3xl object-cover size-96" src={`/${game.name.toUpperCase()}.png`} alt={game.name} />
+          <img className="rounded-3xl object-cover size-96" src={game.image} alt={game.name} />
           <h1 className="text-h1">{game.name.toUpperCase()}</h1>
         </div>
       </BaseContainer>

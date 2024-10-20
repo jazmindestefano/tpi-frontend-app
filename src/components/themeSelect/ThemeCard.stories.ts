@@ -21,6 +21,7 @@ export const Default: Story = {
       name: 'example',
       image: ''
     },
-    onClick: () => {}
+    onClick: () => {},
+    bgColor: '#f2c160'
   }
 }
