@@ -1,18 +1,18 @@
-import {Meta, StoryObj} from "@storybook/react";
-import {FeedbackModalContent} from "./FeedbackModalContent.tsx";
+import { Meta, StoryObj } from '@storybook/react'
+import { FeedbackModalContent } from './FeedbackModalContent.tsx'
 
 const meta = {
-  title: "Modals/FeedbackModalContent",
+  title: 'Modals/FeedbackModalContent',
   component: FeedbackModalContent,
-  tags: ["autodocs", "modal"],
+  tags: ['autodocs', 'modal'],
   parameters: {
-    layout: 'centered',
-  },
-} satisfies Meta<typeof FeedbackModalContent>;
+    layout: 'centered'
+  }
+} satisfies Meta<typeof FeedbackModalContent>
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
@@ -20,6 +20,6 @@ export const Default: Story = {
     onRatingClick: (n: number) => n,
     isPending: false,
     isSuccess: true,
-    error: null,
+    error: null
   }
-};
+}

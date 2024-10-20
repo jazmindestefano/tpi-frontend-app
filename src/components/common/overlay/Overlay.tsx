@@ -1,4 +1,4 @@
-import {ReactNode} from "react";
+import { ReactNode } from 'react'
 import ReactDom from 'react-dom'
 
 interface BaseModalProps {
@@ -7,11 +7,7 @@ interface BaseModalProps {
   children: ReactNode
 }
 
-export const Overlay = ({
-                        show,
-                        onClose,
-                        children
-                      }: BaseModalProps): JSX.Element | null => {
+export const Overlay = ({ show, onClose, children }: BaseModalProps): JSX.Element | null => {
   const handleClose = (event: React.MouseEvent): void => {
     if (event.target === event.currentTarget) {
       onClose()

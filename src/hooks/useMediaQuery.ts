@@ -1,10 +1,10 @@
-import { useMediaQuery } from "react-responsive";
+import { useMediaQuery } from 'react-responsive'
 
 const useCustomMediaQuery = () => {
-    const isDesktop = useMediaQuery({ minWidth: 768 });
-    return {
-        isDesktop,
-    };
+  const isDesktop = useMediaQuery({ minWidth: 768 })
+  return {
+    isDesktop
+  }
 }
 
-export default useCustomMediaQuery;
+export default useCustomMediaQuery

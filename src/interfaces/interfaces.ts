@@ -1,13 +1,13 @@
 export interface Theme {
-  id: number;
-  name: string;
-  image: string;
+  id: number
+  name: string
+  image: string
 }
 
 export interface Game {
-  id: number;
-  name: string;
-  image: string;
+  id: number
+  name: string
+  image: string
 }
 
 export interface User {
@@ -15,16 +15,16 @@ export interface User {
 }
 
 export interface GameLevel {
-  id: number;
-  description: string;
-  options: LevelOption[];
+  id: number
+  description: string
+  options: LevelOption[]
 }
 
 export interface LevelOption {
-  id: number,
-  name: string,
-  description: string,
-  image: string,
+  id: number
+  name: string
+  description: string
+  image: string
   correct: boolean
 }
 
@@ -42,15 +42,15 @@ export interface PostFeedbackData {
 }
 
 export interface GameProps {
-  selectedThemeId: number;
+  selectedThemeId: number
 }
 
 export interface LevelOptionRequest {
-  activityId: number;
-  selectedOption: number;
+  activityId: number
+  selectedOption: number
 }
 
 export interface PostAuditoryDiscriminationRequest {
-  patientId: number;
-  activities: LevelOptionRequest[];
+  patientId: number
+  activities: LevelOptionRequest[]
 }
