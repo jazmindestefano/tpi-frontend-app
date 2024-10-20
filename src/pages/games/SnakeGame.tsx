@@ -9,24 +9,68 @@ import {
   Play,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import Button from "../../components/common/buttons/Button";
+import { ContinueIcon } from "../../components/common/icons/Icons";
+import { VolumeButton } from "../../components/common/buttons/VolumeButton";
+import { RecordButton } from "../../components/common/buttons/RecordButton";
+import { useAudioRecording } from "../../hooks/useAudioRecording";
+import { useSpeakText } from "../../hooks/useSpeakText";
+import { useSelectedGame } from "../../hooks/selectors";
+import { convertBlobToAudioFile } from "../../helpers/blobs";
+import { postUserRecording } from "../../http/queries";
 
 const items = ["A", "E", "I", "O", "U"];
 const cellSize = 50;
 
-const VowelSnakeGame: React.FC = () => {
+const SnakeGame: React.FC = () => {
   const [snake, setSnake] = useState([{ x: 7, y: 5 }]);
   const [direction, setDirection] = useState({ x: 1, y: 0 });
   const [item, setItem] = useState({ char: items[0], x: 10, y: 4 });
   const [eatenItems, setEatenItems] = useState<string[]>([]);
+  const [recordedAudios, setRecordedAudios] = useState<number[]>([]);
   const [showBigItem, setShowBigItem] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const [gridSize, setGridSize] = useState({ width: 30, height: 9 });
   const [isGameFinished, setIsGameFinished] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { isRecording, audio, startRecording, stopRecording } = useAudioRecording();
+  const speakText = useSpeakText();
+  const selecteGame = useSelectedGame();
+
+  useEffect(() => {
+    if (audio) {
+        const audioFile = convertBlobToAudioFile(audio, "user_audio.wav");
+        postUserRecording({
+            userId: 1, // hardcoded, fix when users exists
+            gameId: selecteGame!.id,
+            gameName: "SnakeGame",
+            text: "Vowels",
+            userAudio: audioFile,
+        });
+    }
+}, [audio, selecteGame, isRecording]);
 
   const togglePause = useCallback(() => {
-    setIsPaused((prev) => !prev);
-  }, []);
+    if (!showBigItem) {
+      setIsPaused((prev) => !prev);
+    }
+  }, [showBigItem]);
+
+  const resumeGame = () => {
+    setShowBigItem(false);
+    setIsPaused(false);
+    recordAudio(); // todo: take out when functionality is implemented
+  };
+
+  const recordAudio = () => {
+    // Simular la grabación de audio
+    setRecordedAudios((prev) => [...prev, (prev[prev.length - 1] || 0) + 1]);
+    
+    // Verificar si el juego ha terminado
+    if (recordedAudios.length - 1 === items.length) {
+      setIsGameFinished(true);
+    }
+  };
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -74,12 +118,12 @@ const VowelSnakeGame: React.FC = () => {
       
         let newSnake = [newHead, ...prevSnake];
       
-        if (snake[0].x === item.x && snake[0].y === item.y) {
+        if (newHead.x === item.x && newHead.y === item.y) {
           const updatedEatenItems = [...eatenItems, item.char];
           setEatenItems(updatedEatenItems);
       
           setShowBigItem(true);
-          setTimeout(() => setShowBigItem(false), 1000);
+          setIsPaused(true);
       
           const remainingItems = items.filter(
             (v) => !updatedEatenItems.includes(v)
@@ -91,8 +135,6 @@ const VowelSnakeGame: React.FC = () => {
               x: Math.floor(Math.random() * gridSize.width),
               y: Math.floor(Math.random() * gridSize.height),
             });
-          } else {
-              setIsGameFinished(true);
           }
         } else {
           newSnake = newSnake.slice(0, -1);
@@ -102,11 +144,11 @@ const VowelSnakeGame: React.FC = () => {
     }, 500);
 
     return () => clearInterval(gameLoop);
-  }, [snake, direction, item, isPaused, gridSize, eatenItems, navigate, setIsGameFinished]);
+  }, [snake, direction, item, isPaused, gridSize, eatenItems]);
 
   useEffect(() => {
     if (isGameFinished) {
-      navigate("/felicitaciones");
+      setTimeout(() => navigate("/felicitaciones"), 1000);
     }
   }, [isGameFinished, navigate]);
 
@@ -155,7 +197,14 @@ const VowelSnakeGame: React.FC = () => {
             initial={{ scale: 0 }}
             animate={{ scale: 1 }}
             transition={{ type: "spring", stiffness: 300, damping: 20 }}
-          />
+          >
+            {index === 0 && (
+              <div className="w-full h-full flex items-center justify-center">
+                <div className="w-2 h-2 bg-black rounded-full mr-1" />
+                <div className="w-2 h-2 bg-black rounded-full" />
+              </div>
+            )}
+          </motion.div>
         ))}
         <motion.div
           className="absolute rounded-full flex items-center justify-center text-white font-bold"
@@ -173,7 +222,7 @@ const VowelSnakeGame: React.FC = () => {
         >
           {item.char}
         </motion.div>
-        {isPaused && (
+        {isPaused && !showBigItem && (
           <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
             <div className="text-white text-4xl font-bold">PAUSED</div>
           </div>
@@ -181,9 +230,10 @@ const VowelSnakeGame: React.FC = () => {
       </div>
       <div className="mt-4 flex space-x-2">
         {["ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"].map((key) => (
-          <button
+          <Button
             key={key}
-            className="p-2 bg-purple-500 text-white rounded-full hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-lg"
+            variant="secondary"
+            size="circle"
             onClick={() => {
               if (!isPaused) {
                 const event = new KeyboardEvent("keydown", { key });
@@ -196,15 +246,16 @@ const VowelSnakeGame: React.FC = () => {
             {key === "ArrowDown" && <ChevronDown />}
             {key === "ArrowLeft" && <ChevronLeft />}
             {key === "ArrowRight" && <ChevronRight />}
-          </button>
+          </Button>
         ))}
-        <button
-          className="p-2 bg-purple-500 text-white rounded-full hover:bg-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-400 shadow-lg"
+        <Button
+          variant="secondary"
+          size="circle"
           onClick={togglePause}
           aria-label={isPaused ? "Resume game" : "Pause game"}
         >
           {isPaused ? <Play /> : <Pause />}
-        </button>
+        </Button>
       </div>
       <div className="mt-4 text-2xl font-bold text-purple-800">
         Vocales comidas: {eatenItems.join(", ")}
@@ -215,19 +266,31 @@ const VowelSnakeGame: React.FC = () => {
       <AnimatePresence>
         {showBigItem && (
           <motion.div
-            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50"
+            className="fixed inset-0 flex flex-col items-center justify-center bg-black bg-opacity-50"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
           >
             <motion.div
-              className="text-9xl font-bold text-white"
+              className="text-9xl font-bold text-white mb-8"
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               exit={{ scale: 0 }}
             >
               {eatenItems[eatenItems.length - 1]}
             </motion.div>
+            <div className="flex space-x-4">
+            <RecordButton
+                      variant={"fourth"}
+                      isRecording={isRecording}
+                      stopRecording={stopRecording}
+                      startRecording={startRecording}
+                    />
+              <VolumeButton onClick={() => speakText(eatenItems[eatenItems.length - 1])} />
+              <Button variant="primary" size="circle" shape={'circle'} onClick={resumeGame}>
+                <ContinueIcon />
+              </Button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -235,4 +298,4 @@ const VowelSnakeGame: React.FC = () => {
   );
 }
 
-export default VowelSnakeGame
+export default SnakeGame;

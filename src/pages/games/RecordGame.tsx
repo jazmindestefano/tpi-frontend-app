@@ -30,8 +30,6 @@ const RecordGame: React.FC = () => {
     return null;
   }
 
-  console.log({ levels, currentLevel });
-
 
   const handleNextPage = () => {
     setCurrentLevel((prevState) => prevState + 1)
