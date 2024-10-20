@@ -1,5 +1,4 @@
-import React from 'react'
-import { Line } from 'react-chartjs-2'
+import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,9 +8,7 @@ import {
   Title,
   Tooltip,
   Legend,
-  ArcElement,
-} from 'chart.js'
-import Button from '../../components/common/buttons/Button'
+} from 'chart.js';
 
 ChartJS.register(
   CategoryScale,
@@ -20,9 +17,55 @@ ChartJS.register(
   LineElement,
   Title,
   Tooltip,
-  Legend,
-  ArcElement
-)
+  Legend
+);
+
+// Definición del tipo de datos para los grupos de sílabas
+type GroupData = {
+  dates: string[]; // Fechas para cada sílaba
+  values: number[]; // Valores para cada sílaba
+};
+
+type SyllableGroup = {
+  label: string;
+  data: {
+    [syllable: string]: GroupData; // Mapa de sílabas a datos
+  };
+};
+
+// Ejemplo de grupos de sílabas
+const groups: SyllableGroup[] = [
+  {
+    label: 'Grupo 1',
+    data: {
+      ba: { dates: ['2024-10-01', '2024-10-02', '2024-10-03', '2024-10-04', '2024-10-05'], values: [12, 10, 15, 20, 25] },
+      be: { dates: ['2024-10-01', '2024-10-02', '2024-10-03', '2024-10-04', '2024-10-05'], values: [8, 5, 3, 10, 12] },
+      bi: { dates: ['2024-10-01', '2024-10-02', '2024-10-03', '2024-10-04', '2024-10-05'], values: [5, 12, 15, 20, 25] },
+      bo: { dates: ['2024-10-01', '2024-10-02', '2024-10-03', '2024-10-04', '2024-10-05'], values: [2, 3, 10, 15, 20] },
+      bu: { dates: ['2024-10-01', '2024-10-02', '2024-10-03', '2024-10-04', '2024-10-05'], values: [1, 2, 5, 7, 10] },
+    },
+  },
+  {
+    label: 'Grupo 2',
+    data: {
+      ra: { dates: ['2024-10-01', '2024-10-02', '2024-10-03', '2024-10-04', '2024-10-05'], values: [10, 15, 20, 25, 30] },
+      re: { dates: ['2024-10-01', '2024-10-02', '2024-10-03', '2024-10-04', '2024-10-05'], values: [5, 10, 15, 20, 25] },
+      ri: { dates: ['2024-10-01', '2024-10-02', '2024-10-03', '2024-10-04', '2024-10-05'], values: [7, 12, 18, 22, 26] },
+      ro: { dates: ['2024-10-01', '2024-10-02', '2024-10-03', '2024-10-04', '2024-10-05'], values: [1, 3, 5, 7, 9] },
+      ru: { dates: ['2024-10-01', '2024-10-02', '2024-10-03', '2024-10-04', '2024-10-05'], values: [4, 6, 8, 10, 12] },
+    },
+  },
+  {
+    label: 'Grupo 3',
+    data: {
+      da: { dates: ['2024-10-01', '2024-10-02', '2024-10-03', '2024-10-04', '2024-10-05'], values: [10, 15, 20, 25, 30] },
+      de: { dates: ['2024-10-01', '2024-10-02', '2024-10-03', '2024-10-04', '2024-10-05'], values: [5, 10, 15, 20, 25] },
+      di: { dates: ['2024-10-01', '2024-10-02', '2024-10-03', '2024-10-04', '2024-10-05'], values: [7, 12, 18, 32, 26] },
+      do: { dates: ['2024-10-01', '2024-10-02', '2024-10-03', '2024-10-04', '2024-10-05'], values: [1, 3, 5, 7, 9] },
+      du: { dates: ['2024-10-01', '2024-10-02', '2024-10-03', '2024-10-04', '2024-10-05'], values: [4, 6, 8, 10, 12] },
+    },
+  },
+];
 
 const lineChartOptions = {
   responsive: true,
@@ -34,62 +77,9 @@ const lineChartOptions = {
       display: false,
     },
   },
-}
+};
 
-const lineChartData = {
-  labels: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
-  datasets: [
-    {
-      label: 'Vocales',
-      data: [12, 19, 3, 5, 2, 3, 10, 15, 16, 20],
-      borderColor: 'rgb(255, 99, 132)',
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    },
-    {
-      label: 'Sílabas',
-      data: [1, 8, 12, 5, 15, 3, 7, 10, 18, 22],
-      borderColor: 'rgb(53, 162, 235)',
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
-    },
-  ],
-}
-
-const doughnutChartOptions = {
-  responsive: true,
-  plugins: {
-    legend: {
-      display: false,
-    },
-  },
-  cutout: '70%',
-}
-
-const doughnutChartData = {
-  labels: ['Completado', 'Pendiente'],
-  datasets: [
-    {
-      data: [75, 25],
-      backgroundColor: ['#4CAF50', '#FFC107', '#2196F3'],
-      hoverBackgroundColor: ['#45a049', '#e6ac00', '#1e88e5'],
-    },
-  ],
-}
-
-interface IndicatorProps {
-  color: string
-  label: string
-  value: number
-}
-
-const Indicator: React.FC<IndicatorProps> = ({ color, label, value }) => (
-  <div className="flex items-center space-x-2">
-    <div className={`w-3 h-3 rounded-full ${color}`}></div>
-    <span className="text-sm text-gray-600">{label}</span>
-    <span className="text-sm font-semibold">{value}</span>
-  </div>
-)
-
-export default function Dashboard() {
+const Dashboard = () => {
   return (
     <div>
       <div className="flex justify-between items-center mb-6">
@@ -101,57 +91,32 @@ export default function Dashboard() {
         </div>
       </div>
 
-      <div className="grid grid-cols-2 gap-6">
-        <div className="col-span-2 md:col-span-1 bg-gray-50 p-4 rounded-lg">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold">Estadísticas</h2>
-            <Button variant="tertiary" className='p-3'>Exportar</Button>
-          </div>
-          <Line options={lineChartOptions} data={lineChartData} />
-        </div>
-
-        <div className="col-span-2 md:col-span-1 bg-gray-50 p-4 rounded-lg">
-          <h2 className="text-lg font-semibold mb-4">Vocales</h2>
-          <div className="flex justify-center">
-            <div className="w-48 h-48 relative">
-              <Line options={doughnutChartOptions} data={doughnutChartData} />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-3xl font-bold">12</span>
+      <div className="grid grid-cols-2 gap-6 w-full">
+        {groups.map((group, index) => (
+          <div key={index} className="col-span-2 md:col-span-1 bg-gray-50 p-4 rounded-lg">
+            <h2 className="text-lg font-semibold mb-4">{group.label}</h2>
+            <div className="flex justify-center">
+              <div className="w-full h-96 relative">
+                <Line
+                  style={{ width: '100%', height: '100%' }}
+                  options={lineChartOptions}
+                  data={{
+                    labels: group.data[Object.keys(group.data)[0]].dates, // Usa las fechas del primer conjunto de datos
+                    datasets: Object.keys(group.data).map((syllable) => ({
+                      label: syllable,
+                      data: group.data[syllable].values, // Utiliza los valores de cada sílaba
+                      borderColor: `rgb(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)})`,
+                      backgroundColor: 'rgba(53, 162, 235, 0.2)',
+                    })),
+                  }}
+                />
               </div>
             </div>
           </div>
-          <div className="mt-4 space-y-2">
-            <Indicator color="bg-green-500" label="Completadas" value={8} />
-            <Indicator color="bg-yellow-500" label="En progreso" value={3} />
-            <Indicator color="bg-blue-500" label="Pendientes" value={1} />
-          </div>
-        </div>
-
-        <div className="col-span-2 md:col-span-1 bg-gray-50 p-4 rounded-lg">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold">Estadísticas</h2>
-            <Button variant="tertiary" className='p-3'>Exportar</Button>
-          </div>
-          <Line options={lineChartOptions} data={lineChartData} />
-        </div>
-
-        <div className="col-span-2 md:col-span-1 bg-gray-50 p-4 rounded-lg">
-          <h2 className="text-lg font-semibold mb-4">Sílabas</h2>
-          <div className="flex justify-center">
-            <div className="w-48 h-48 relative">
-              <Line options={doughnutChartOptions} data={doughnutChartData} />
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="text-3xl font-bold">12</span>
-              </div>
-            </div>
-          </div>
-          <div className="mt-4 space-y-2">
-            <Indicator color="bg-green-500" label="Completadas" value={8} />
-            <Indicator color="bg-yellow-500" label="En progreso" value={3} />
-            <Indicator color="bg-blue-500" label="Pendientes" value={1} />
-          </div>
-        </div>
+        ))}
       </div>
     </div>
-  )
-}
+  );
+};
+
+export default Dashboard;
