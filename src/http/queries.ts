@@ -43,6 +43,8 @@ export const postUserRecording = async ({ userId, activityId, gameId, userAudio 
     gameId: gameId
   });
 
+  console.log({data})
+
   formData.append('data', new Blob([data], { type: 'application/json' }));
 
   formData.append('user_audio_file', userAudio);
