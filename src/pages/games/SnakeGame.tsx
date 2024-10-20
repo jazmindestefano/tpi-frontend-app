@@ -7,11 +7,11 @@ import {
   ChevronRight,
   Pause,
   Play,
-  Volume2,
-  Mic,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import Button from "../../components/common/buttons/Button";
+import { ContinueIcon, MicIcon } from "../../components/common/icons/Icons";
+import { VolumeButton } from "../../components/common/buttons/VolumeButton";
 
 const items = ["A", "E", "I", "O", "U"];
 const cellSize = 50;
@@ -258,14 +258,12 @@ const VowelSnakeGame: React.FC = () => {
               {eatenItems[eatenItems.length - 1]}
             </motion.div>
             <div className="flex space-x-4">
-              <Button variant="secondary" size="circle" onClick={recordAudio}>
-                <Mic className="mr-2 h-4 w-4" /> Grabar
+              <Button variant="secondary" size="circle" shape={'circle'} onClick={recordAudio}>
+                <MicIcon />
               </Button>
-              <Button variant="secondary" size="circle" onClick={() => {}}>
-                <Volume2 className="mr-2 h-4 w-4" /> Escuchar
-              </Button>
-              <Button variant="primary" size="circle" onClick={resumeGame}>
-                Continuar
+              <VolumeButton />
+              <Button variant="primary" size="circle" shape={'circle'} onClick={resumeGame}>
+                <ContinueIcon />
               </Button>
             </div>
           </motion.div>
