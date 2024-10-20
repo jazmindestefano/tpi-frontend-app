@@ -40,7 +40,7 @@ export default function Layout() {
           </div>
         </div>
         <nav className="flex-1 flex flex-col items-center justify-center space-y-4">
-          <SidebarItem icon={Users} href="/patients" />
+          <SidebarItem icon={Users} href="/profesional" />
         </nav>
         <Button variant={'tertiary'} className="mt-auto p-4 hover:bg-blue-500 rounded-lg transition-colors">
           <img
@@ -56,7 +56,7 @@ export default function Layout() {
             {/* exportar */}
             <Download className="text-white" />
           </Button>
-          <Button size={"square"} variant={"secondary"}>
+          <Button size={"square"} variant={"secondary"} onClick={() => navigate("/profesional/paciente/1/actividades")}>
             {/* actividades */}
             <FolderDot className="text-white" />
           </Button>

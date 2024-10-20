@@ -105,7 +105,7 @@ export default function Dashboard() {
         <div className="col-span-2 md:col-span-1 bg-gray-50 p-4 rounded-lg">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-semibold">Estadísticas</h2>
-            <Button variant="tertiary">Export</Button>
+            <Button variant="tertiary" className='p-3'>Exportar</Button>
           </div>
           <Line options={lineChartOptions} data={lineChartData} />
         </div>
@@ -130,7 +130,7 @@ export default function Dashboard() {
         <div className="col-span-2 md:col-span-1 bg-gray-50 p-4 rounded-lg">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-lg font-semibold">Estadísticas</h2>
-            <Button variant="tertiary">Export</Button>
+            <Button variant="tertiary" className='p-3'>Exportar</Button>
           </div>
           <Line options={lineChartOptions} data={lineChartData} />
         </div>
