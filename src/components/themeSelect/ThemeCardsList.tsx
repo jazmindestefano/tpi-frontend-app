@@ -25,8 +25,6 @@ export const ThemeCardsList: React.FC<ThemeCardsListProps> = ({ themes, onCardCl
   const [showScrollButtons, setShowScrollButtons] = useState(true);
   const [assignedColors, setAssignedColors] = useState<string[]>([]);
 
-  console.log({ scrollRef});
-
   const scroll = (direction: string) => {
     if (scrollRef.current) {
       const scrollAmount = direction === "left" ? -600 : 600;
