@@ -33,7 +33,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
         <div onClick={onClick} className="flex-col-center">
           <img
             className="rounded-3xl object-cover size-96"
-            src={`/${game.name.toUpperCase()}.png`}
+            src={game.image}
             alt={game.name}
           />
           <h1 className="text-h1">
