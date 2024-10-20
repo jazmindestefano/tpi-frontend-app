@@ -14,6 +14,7 @@ import { ContinueIcon } from "../../components/common/icons/Icons";
 import { VolumeButton } from "../../components/common/buttons/VolumeButton";
 import { RecordButton } from "../../components/common/buttons/RecordButton";
 import { useAudioRecording } from "../../hooks/useAudioRecording";
+import { useSpeakText } from "../../hooks/useSpeakText";
 
 const items = ["A", "E", "I", "O", "U"];
 const cellSize = 50;
@@ -30,6 +31,7 @@ const VowelSnakeGame: React.FC = () => {
   const [isGameFinished, setIsGameFinished] = useState<boolean>(false);
   const navigate = useNavigate();
   const { isRecording, audio, startRecording, stopRecording } = useAudioRecording();
+  const speakText = useSpeakText();
 
   console.log({audio})
 
@@ -269,7 +271,7 @@ const VowelSnakeGame: React.FC = () => {
                       stopRecording={stopRecording}
                       startRecording={startRecording}
                     />
-              <VolumeButton />
+              <VolumeButton onClick={() => speakText(eatenItems[eatenItems.length - 1])} />
               <Button variant="primary" size="circle" shape={'circle'} onClick={resumeGame}>
                 <ContinueIcon />
               </Button>
