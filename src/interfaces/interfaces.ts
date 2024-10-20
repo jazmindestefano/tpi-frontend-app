@@ -31,8 +31,7 @@ export interface LevelOption {
 export interface PostUserRecordingData {
   userId: number
   gameId: number
-  gameName: string
-  text: string
+  activityId: number
   userAudio: Blob
 }
 

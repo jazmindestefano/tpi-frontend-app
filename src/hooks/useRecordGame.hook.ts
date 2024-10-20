@@ -30,8 +30,7 @@ const useRecordGame = (selectedThemeId: number) => {
             postUserRecording({
                 userId: 1, // hardcoded, fix when users exists
                 gameId: selecteGame!.id,
-                gameName: "RecordGame",
-                text: levels![currentLevel].description!,
+                activityId: currentLevel,
                 userAudio: audioFile,
             });
         }

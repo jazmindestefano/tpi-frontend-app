@@ -72,11 +72,10 @@ export const usePostUserRecording = (): {
     mutationFn: async ({
       userId,
       gameId,
-      text,
-      gameName,
+      activityId,
       userAudio,
     }: PostUserRecordingData) => {
-      return await ApiService.postUserRecording({userId, gameId, gameName, text, userAudio})
+      return await ApiService.postUserRecording({userId, gameId, activityId, userAudio})
     }
   })
   return { mutate, reset, error, isPending, isSuccess }
