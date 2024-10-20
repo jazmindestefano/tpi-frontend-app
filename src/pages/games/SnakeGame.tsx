@@ -15,6 +15,9 @@ import { VolumeButton } from "../../components/common/buttons/VolumeButton";
 import { RecordButton } from "../../components/common/buttons/RecordButton";
 import { useAudioRecording } from "../../hooks/useAudioRecording";
 import { useSpeakText } from "../../hooks/useSpeakText";
+import { useSelectedGame } from "../../hooks/selectors";
+import { convertBlobToAudioFile } from "../../helpers/blobs";
+import { postUserRecording } from "../../http/queries";
 
 const items = ["A", "E", "I", "O", "U"];
 const cellSize = 50;
@@ -32,8 +35,20 @@ const SnakeGame: React.FC = () => {
   const navigate = useNavigate();
   const { isRecording, audio, startRecording, stopRecording } = useAudioRecording();
   const speakText = useSpeakText();
+  const selecteGame = useSelectedGame();
 
-  console.log({audio})
+  useEffect(() => {
+    if (audio) {
+        const audioFile = convertBlobToAudioFile(audio, "user_audio.wav");
+        postUserRecording({
+            userId: 1, // hardcoded, fix when users exists
+            gameId: selecteGame!.id,
+            gameName: "SnakeGame",
+            text: "Vowels",
+            userAudio: audioFile,
+        });
+    }
+}, [audio, selecteGame, isRecording]);
 
   const togglePause = useCallback(() => {
     if (!showBigItem) {
