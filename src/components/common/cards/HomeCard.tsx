@@ -36,7 +36,7 @@ const HomeCard: React.FC<HomeCardProps> = ({
             src={game.image}
             alt={game.name}
           />
-          <h1 className="text-h1">
+          <h1 className="text-h1" data-testid="home-card-name">
             {game.name.toUpperCase()}
           </h1>
         </div>

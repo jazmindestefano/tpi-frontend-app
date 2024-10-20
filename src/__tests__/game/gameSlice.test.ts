@@ -1,5 +1,5 @@
-import gameReducer, {selectTheme} from '../redux/store/gameSlice'
-import {Theme} from "../interfaces/interfaces";
+import gameReducer, {selectTheme} from '../../redux/store/gameSlice'
+import {Theme} from "../../interfaces/interfaces";
 
 describe('gameSlice', () => {
   const initialState = {
