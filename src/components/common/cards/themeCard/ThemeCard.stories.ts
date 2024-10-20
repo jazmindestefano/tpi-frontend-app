@@ -21,6 +21,7 @@ export const Default: Story = {
       name: 'Princesas',
       image: 'themes/letras/Princesas.png'
     },
-    onClick: () => alert('Theme clicked!')
+    onClick: () => alert('Theme clicked!'),
+    bgColor: '#ffffff'
   }
 }
