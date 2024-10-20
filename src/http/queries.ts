@@ -85,7 +85,11 @@ export const postAuditoryDiscriminationAnswer = async ({ patientId, activities }
 };
 
 export const postFeedback = async ({ranking, gameId, patientId}: PostFeedbackData) => {
-  const res = await unauthenticatedClient.post(`postSurvey/${ranking}/${gameId}/${patientId}`)
+  const res = await unauthenticatedClient.post(`games/feedback`,{
+    ranking,
+    gameId,
+    patientId
+  })
 
   if (res.status === 201) {
     return res.data
