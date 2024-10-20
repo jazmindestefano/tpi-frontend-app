@@ -43,8 +43,7 @@ const SnakeGame: React.FC = () => {
         postUserRecording({
             userId: 1, // hardcoded, fix when users exists
             gameId: selecteGame!.id,
-            gameName: "SnakeGame",
-            text: "Vowels",
+            activityId: 1, // hardcoded, fix when activities exists
             userAudio: audioFile,
         });
     }
