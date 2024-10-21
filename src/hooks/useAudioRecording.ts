@@ -22,7 +22,8 @@ export const useAudioRecording = (props?: UseAudioRecordingProps) => {
 
   useEffect(() => {
     let mediaStream: MediaStream
-    navigator.mediaDevices.getUserMedia({ audio: true })
+    navigator.mediaDevices
+      .getUserMedia({ audio: true })
       .then((stream) => {
         mediaStream = stream
         mediaRecorderRef.current = new MediaRecorder(stream)

@@ -26,8 +26,7 @@ const SnakeGame: React.FC = () => {
   const [gridSize, setGridSize] = useState({ width: 30, height: 9 })
   const [isGameFinished, setIsGameFinished] = useState<boolean>(false)
   const navigate = useNavigate()
-  const { isRecording, audio, startRecording, stopRecording } =
-    useAudioRecording()
+  const { isRecording, audio, startRecording, stopRecording } = useAudioRecording()
   const speakText = useSpeakText()
   const selecteGame = useSelectedGame()
 
@@ -116,14 +115,11 @@ const SnakeGame: React.FC = () => {
           setShowBigItem(true)
           setIsPaused(true)
 
-          const remainingItems = items.filter(
-            (v) => !updatedEatenItems.includes(v))
+          const remainingItems = items.filter((v) => !updatedEatenItems.includes(v))
 
           if (remainingItems.length > 0) {
             setItem({
-              char: remainingItems[
-                Math.floor(Math.random() * remainingItems.length)
-              ],
+              char: remainingItems[Math.floor(Math.random() * remainingItems.length)],
               x: Math.floor(Math.random() * gridSize.width),
               y: Math.floor(Math.random() * gridSize.height)
             })
@@ -273,16 +269,8 @@ const SnakeGame: React.FC = () => {
                 stopRecording={stopRecording}
                 startRecording={startRecording}
               />
-              <VolumeButton
-                onClick={() => speakText(eatenItems[eatenItems.length - 1])}
-              />
-              <Button
-                variant="primary"
-                size="circle"
-                shape={"circle"}
-                onClick={resumeGame}
-                aria-label="continue"
-              >
+              <VolumeButton onClick={() => speakText(eatenItems[eatenItems.length - 1])} />
+              <Button variant="primary" size="circle" shape={'circle'} onClick={resumeGame} aria-label="continue">
                 <ContinueIcon />
               </Button>
             </div>
@@ -291,6 +279,6 @@ const SnakeGame: React.FC = () => {
       </AnimatePresence>
     </div>
   )
-};
+}
 
 export default SnakeGame

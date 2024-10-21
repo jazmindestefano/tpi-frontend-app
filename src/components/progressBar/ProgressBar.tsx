@@ -14,11 +14,8 @@ export default function ProgressBar({
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
-    const validTotalActivities = totalActivities > 0 ? totalActivities : 1;
-    const newProgress = Math.min(
-      Math.max((currentActivity / validTotalActivities) * 100, 0),
-      100
-    )
+    const validTotalActivities = totalActivities > 0 ? totalActivities : 1
+    const newProgress = Math.min(Math.max((currentActivity / validTotalActivities) * 100, 0), 100)
     setProgress(newProgress)
   }, [currentActivity, totalActivities])
 
@@ -56,7 +53,7 @@ export default function ProgressBar({
           top: -30,
           left: `calc(${progress}% - 20px)`,
           transition: 'left 0.3s ease-in-out',
-          height: height * 4,
+          height: height * 4
         }}
       />
     </div>
