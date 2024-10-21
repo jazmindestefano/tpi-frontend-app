@@ -3,8 +3,8 @@ import axios, {
   type AxiosRequestHeaders,
   type AxiosResponse,
   type InternalAxiosRequestConfig
-} from "axios";
-import env from "../config/env.ts";
+} from 'axios'
+import env from '../config/env.ts'
 
 const authenticatedClient = axios.create({
   baseURL: env.apiUrl
@@ -24,7 +24,7 @@ authenticatedClient.interceptors.request.use(
   },
   async (e: AxiosError): Promise<AxiosError> => {
     console.error(`Request error: ${JSON.stringify(e)}`)
-    throw e;
+    throw e
   }
 )
 
@@ -44,7 +44,7 @@ unauthenticatedClient.interceptors.request.use(
   },
   async (e: AxiosError): Promise<AxiosError> => {
     console.error(`Request error: ${JSON.stringify(e)}`)
-    throw e;
+    throw e
   }
 )
 
@@ -58,4 +58,4 @@ unauthenticatedClient.interceptors.response.use(
   }
 )
 
-export {unauthenticatedClient, authenticatedClient};
+export { unauthenticatedClient, authenticatedClient }

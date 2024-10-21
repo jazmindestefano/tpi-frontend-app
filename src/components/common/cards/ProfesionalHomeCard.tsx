@@ -1,42 +1,38 @@
-import React, { useState } from "react";
-import { PlusIcon } from "lucide-react";
-import Button from "../buttons/Button";
-import { useNavigate } from "react-router-dom";
-import AddPatientModal from "../modals/EmailInviteModal";
+import React, { useState } from 'react'
+import { PlusIcon } from 'lucide-react'
+import Button from '../buttons/Button'
+import { useNavigate } from 'react-router-dom'
+import AddPatientModal from '../modals/EmailInviteModal'
 
 interface Patient {
-  id?: number;
-  name?: string;
-  imageUrl?: string;
-  age?: number;
+  id?: number
+  name?: string
+  imageUrl?: string
+  age?: number
 }
 
 interface HomeProfesionalCardProps {
-  patient?: Patient;
-  isAddPatient?: boolean;
-  className?: string;
+  patient?: Patient
+  isAddPatient?: boolean
+  className?: string
 }
 
-const HomeProfesionalCard: React.FC<HomeProfesionalCardProps> = ({
-  patient,
-  isAddPatient = false,
-  className = '',
-}) => {
-  const navigate = useNavigate();
-  const [isModalOpen, setIsModalOpen] = useState(false);
+const HomeProfesionalCard: React.FC<HomeProfesionalCardProps> = ({ patient, isAddPatient = false, className = '' }) => {
+  const navigate = useNavigate()
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   const handleAddPatientClick = () => {
-    setIsModalOpen(true);
-  };
+    setIsModalOpen(true)
+  }
 
   const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
+    setIsModalOpen(false)
+  }
 
   const handleModalSubmit = (patientData: unknown) => {
-    console.log('New patient data:', patientData);
-    setIsModalOpen(false);
-  };
+    console.log('New patient data:', patientData)
+    setIsModalOpen(false)
+  }
 
   return (
     <>
@@ -54,13 +50,7 @@ const HomeProfesionalCard: React.FC<HomeProfesionalCardProps> = ({
         ) : (
           patient && (
             <div className="flex-col-center p-4 gap-2">
-              <img
-                src={patient.imageUrl}
-                alt={patient.name}
-                width={64}
-                height={64}
-                className="rounded-full mb-2"
-              />
+              <img src={patient.imageUrl} alt={patient.name} width={64} height={64} className="rounded-full mb-2" />
               <h3 className="text-lg font-medium text-blue-800">{patient.name}</h3>
               <p className="text-blue-600">{patient.age} años</p>
               <Button
@@ -75,13 +65,9 @@ const HomeProfesionalCard: React.FC<HomeProfesionalCardProps> = ({
         )}
       </div>
 
-      <AddPatientModal
-        isOpen={isModalOpen}
-        onClose={handleModalClose}
-        onSubmit={handleModalSubmit}
-      />
+      <AddPatientModal isOpen={isModalOpen} onClose={handleModalClose} onSubmit={handleModalSubmit} />
     </>
-  );
-};
+  )
+}
 
-export default HomeProfesionalCard;
+export default HomeProfesionalCard

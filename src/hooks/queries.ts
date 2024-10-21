@@ -1,5 +1,5 @@
 import * as ApiService from '../http/queries.ts'
-import {useMutation, useQuery} from "@tanstack/react-query";
+import { useMutation, useQuery } from '@tanstack/react-query'
 
 import {
   Game,
@@ -8,19 +8,27 @@ import {
   PostFeedbackData,
   PostUserRecordingData,
   Theme
-} from "../interfaces/interfaces.ts";
+} from '../interfaces/interfaces.ts'
 
 const mockedPalabras = [
   {
     id: 1,
-    description: "Mesa",
+    description: 'Mesa',
     options: [
-      { id: 1, name: "Mesa", correct: true, image: "Mesa", description: "Mesa" },
-    ],
-  },
-];
+      {
+        id: 1,
+        name: 'Mesa',
+        correct: true,
+        image: 'Mesa',
+        description: 'Mesa'
+      }
+    ]
+  }
+]
 
-export const useGetThemesByGameId = (gameId: number): {
+export const useGetThemesByGameId = (
+  gameId: number
+): {
   themes: Theme[] | null | undefined
   error: Error | null
   isLoading: boolean
@@ -44,22 +52,24 @@ export const useGetGames = (): {
   return { games: data, error, isLoading }
 }
 
-export const useGetGameLevels = (themeId: number): {
-  levels: GameLevel[] | null | undefined,
-  error: Error | null,
+export const useGetGameLevels = (
+  themeId: number
+): {
+  levels: GameLevel[] | null | undefined
+  error: Error | null
   isLoading: boolean
 } => {
   const { data, error, isLoading } = useQuery({
     queryKey: ['getGameLevels', themeId],
-    queryFn: async () => await ApiService.getGameLevels(themeId),
-  });
+    queryFn: async () => await ApiService.getGameLevels(themeId)
+  })
 
   if (themeId === 2) {
-    return { levels: mockedPalabras, error: null, isLoading: false };
+    return { levels: mockedPalabras, error: null, isLoading: false }
   }
 
-  return { levels: data, error, isLoading };
-};
+  return { levels: data, error, isLoading }
+}
 
 export const usePostUserRecording = (): {
   mutate: (args: PostUserRecordingData) => void
@@ -69,13 +79,8 @@ export const usePostUserRecording = (): {
   isSuccess: boolean
 } => {
   const { mutate, reset, error, isPending, isSuccess } = useMutation({
-    mutationFn: async ({
-      userId,
-      gameId,
-      activityId,
-      userAudio,
-    }: PostUserRecordingData) => {
-      return await ApiService.postUserRecording({userId, gameId, activityId, userAudio})
+    mutationFn: async ({ userId, gameId, activityId, userAudio }: PostUserRecordingData) => {
+      return await ApiService.postUserRecording({ userId, gameId, activityId, userAudio })
     }
   })
   return { mutate, reset, error, isPending, isSuccess }
@@ -89,8 +94,8 @@ export const usePostFeedback = (): {
   isSuccess: boolean
 } => {
   const { mutate, reset, error, isPending, isSuccess } = useMutation({
-    mutationFn: async ({ranking, gameId, patientId}: PostFeedbackData) => {
-      return await ApiService.postFeedback({ranking, gameId, patientId})
+    mutationFn: async ({ ranking, gameId, patientId }: PostFeedbackData) => {
+      return await ApiService.postFeedback({ ranking, gameId, patientId })
     }
   })
   return { mutate, reset, error, isPending, isSuccess }
@@ -104,8 +109,11 @@ export const usePostAuditoryDiscriminationAnswer = (): {
   isSuccess: boolean
 } => {
   const { mutate, reset, error, isPending, isSuccess } = useMutation({
-    mutationFn: async ({patientId, activities}: PostAuditoryDiscriminationRequest) => {
-      return await ApiService.postAuditoryDiscriminationAnswer({patientId, activities})
+    mutationFn: async ({ patientId, activities }: PostAuditoryDiscriminationRequest) => {
+      return await ApiService.postAuditoryDiscriminationAnswer({
+        patientId,
+        activities
+      })
     }
   })
   return { mutate, reset, error, isPending, isSuccess }

@@ -1,20 +1,20 @@
-import {Meta, StoryObj} from "@storybook/react";
+import { Meta, StoryObj } from '@storybook/react'
 import Header from './Header'
-import {reactRouterParameters, withRouter} from "storybook-addon-remix-react-router";
+import { reactRouterParameters, withRouter } from 'storybook-addon-remix-react-router'
 
 const meta = {
   title: 'Layout/Header',
   component: Header,
   parameters: {
-    layout: 'fullscreen',
+    layout: 'fullscreen'
   },
   decorators: [withRouter],
-  tags: ['autodocs'],
-} satisfies Meta<typeof Header>;
+  tags: ['autodocs']
+} satisfies Meta<typeof Header>
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   parameters: {
@@ -24,5 +24,4 @@ export const Default: Story = {
       }
     })
   }
-};
-
+}

@@ -1,18 +1,18 @@
-import {Meta, StoryObj} from "@storybook/react";
-import { ThemeCard } from "../common/cards/themeCard/ThemeCard";
+import { Meta, StoryObj } from '@storybook/react'
+import { ThemeCard } from '../common/cards/themeCard/ThemeCard'
 
 const meta = {
-  title: "ThemeSelect/ThemeCard",
+  title: 'ThemeSelect/ThemeCard',
   component: ThemeCard,
   parameters: {
-    layout: 'center',
+    layout: 'center'
   },
   tags: ['autodocs']
-} satisfies Meta<typeof ThemeCard>;
+} satisfies Meta<typeof ThemeCard>
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
@@ -24,4 +24,4 @@ export const Default: Story = {
     onClick: () => {},
     bgColor: '#f2c160'
   }
-};
+}
