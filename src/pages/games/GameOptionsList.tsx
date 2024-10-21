@@ -21,7 +21,11 @@ export const GameOptionsList: React.FC<GameOptionsListProps> = ({ options, onOpt
             className="p-4 w-full rounded-3xl h-80 flex-col-center bg-white"
             onClick={() => onOptionSelection(option)}
           >
-            <img src={`/gameOptions/${option.name.toLowerCase().replace(" ", "_").replace(" ", "_").replace(" ", "_").replace("ñ", "ni")}.png`} alt={option.name} className="w-auto h-80 rounded-3xl" />
+            <img
+              src={`/gameOptions/${option.name.toLowerCase().replace(' ', '_').replace(' ', '_').replace(' ', '_').replace('ñ', 'ni')}.png`}
+              alt={option.name}
+              className="w-auto h-80 rounded-3xl"
+            />
           </div>
           <VolumeButton variant={'fourth'} onClick={() => speakText(option.name)} />
         </div>

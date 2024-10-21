@@ -20,12 +20,10 @@ interface ThemeCardsListProps {
   onCardClick: (theme: Theme) => void
 }
 
-export const ThemeCardsList: React.FC<ThemeCardsListProps> = ({ themes, onCardClick }) => {
+export const ThemeCardsList: React.FC<ThemeCardsListProps> = ({ themes = [], onCardClick }) => {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [showScrollButtons, setShowScrollButtons] = useState(true)
   const [assignedColors, setAssignedColors] = useState<string[]>([])
-
-  console.log({ scrollRef })
 
   const scroll = (direction: string) => {
     if (scrollRef.current) {
