@@ -1,10 +1,10 @@
-import { ThemeCard } from '../common/cards/themeCard/ThemeCard.tsx'
-import { Theme } from '../../interfaces/interfaces.ts'
-import { useRef, useState, useEffect } from 'react'
-import Button from '../common/buttons/Button.tsx'
-import { ArrowLeftIcon, ArrowRightIcon } from '../common/icons/Icons.tsx'
+import { useState, useEffect, useLayoutEffect } from 'react'
+import { ThemeCard } from '../common/cards/themeCard/ThemeCard'
+import { Theme } from '../../interfaces/interfaces'
+import Button from '../common/buttons/Button'
+import { ArrowLeftIcon, ArrowRightIcon } from '../common/icons/Icons'
+import { useScroll } from '../../hooks/useScroll'
 
-// Lista de colores de fondo vivos
 const bgColors = [
   'bg-orange-300',
   'bg-blue-300',
@@ -20,74 +20,86 @@ interface ThemeCardsListProps {
   onCardClick: (theme: Theme) => void
 }
 
-export const ThemeCardsList: React.FC<ThemeCardsListProps> = ({ themes, onCardClick }) => {
-  const scrollRef = useRef<HTMLDivElement>(null)
-  const [showScrollButtons, setShowScrollButtons] = useState(true)
+export default function ThemeCardsList({ themes, onCardClick }: ThemeCardsListProps) {
+  const { scrollRef, scroll, checkScrollButtons, showScrollButtons } = useScroll()
   const [assignedColors, setAssignedColors] = useState<string[]>([])
-
-  console.log({ scrollRef })
-
-  const scroll = (direction: string) => {
-    if (scrollRef.current) {
-      const scrollAmount = direction === 'left' ? -600 : 600
-      scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' })
-    }
-  }
-
-  const checkScrollButtons = () => {
-    if (scrollRef.current) {
-      const { scrollWidth, clientWidth } = scrollRef.current
-      console.log({ scrollWidth, clientWidth })
-      setShowScrollButtons(scrollWidth > clientWidth)
-    }
-  }
+  const [loadedImages, setLoadedImages] = useState(0)
 
   useEffect(() => {
-    const colors = [...bgColors]
-    const colorsToAssign = colors.sort(() => Math.random() - 0.5).slice(0, themes.length)
+    const colorsToAssign = [...bgColors].sort(() => Math.random() - 0.5).slice(0, themes.length)
     setAssignedColors(colorsToAssign)
+  }, [themes.length])
 
-    checkScrollButtons()
-  }, [themes])
+  useLayoutEffect(() => {
+    if (loadedImages === themes.length) {
+      checkScrollButtons()
+    }
+  }, [checkScrollButtons, loadedImages, themes.length])
 
-  // to-do: check if this is the best way to check if the scroll buttons should be shown
   useEffect(() => {
-    checkScrollButtons()
-  }, [assignedColors.length])
+    const handleResize = () => {
+      checkScrollButtons()
+    }
+
+    window.addEventListener('resize', handleResize)
+
+    const currentScrollRef = scrollRef.current
+    if (currentScrollRef) {
+      currentScrollRef.addEventListener('scroll', checkScrollButtons)
+    }
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+      if (currentScrollRef) {
+        currentScrollRef.removeEventListener('scroll', checkScrollButtons)
+      }
+    }
+  }, [scrollRef, checkScrollButtons])
+
+  const handleImageLoad = () => {
+    setLoadedImages((prev) => prev + 1)
+  }
 
   return (
     <div className="relative pb-10 px-5 lg:px-32">
-      {showScrollButtons && (
-        <Button
-          shape={'circle'}
-          size={'circle'}
-          onClick={() => scroll('left')}
-          className="absolute left-5 top-1/2 transform -translate-y-1/2 z-10"
-        >
-          <ArrowLeftIcon />
-        </Button>
-      )}
+      <Button
+        variant="primary"
+        size="circle"
+        shape={'circle'}
+        onClick={() => scroll('left')}
+        className={`absolute left-5 top-1/2 transform -translate-y-1/2 z-10 transition-opacity duration-300 ${
+          showScrollButtons ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+      >
+        <ArrowLeftIcon />
+      </Button>
       <div
         ref={scrollRef}
-        className="flex overflow-x-auto gap-5 scroll-smooth"
-        style={{ scrollbarWidth: 'none', overflow: 'hidden' }}
+        className="flex overflow-x-auto gap-5 scroll-smooth hide-scrollbar"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {themes.map((theme, index) => (
           <div key={theme.id} className="flex-shrink-0">
-            <ThemeCard theme={theme} onClick={() => onCardClick(theme)} bgColor={assignedColors[index]} />
+            <ThemeCard
+              theme={theme}
+              onClick={() => onCardClick(theme)}
+              bgColor={assignedColors[index]}
+              onImageLoad={handleImageLoad}
+            />
           </div>
         ))}
       </div>
-      {showScrollButtons && (
-        <Button
-          shape={'circle'}
-          size={'circle'}
-          onClick={() => scroll('right')}
-          className="absolute right-5 top-1/2 transform -translate-y-1/2 z-10"
-        >
-          <ArrowRightIcon />
-        </Button>
-      )}
+      <Button
+        variant="primary"
+        size="circle"
+        shape={'circle'}
+        onClick={() => scroll('right')}
+        className={`absolute right-5 top-1/2 transform -translate-y-1/2 z-10 transition-opacity duration-300 ${
+          showScrollButtons ? 'opacity-100' : 'opacity-0 pointer-events-none'
+        }`}
+      >
+        <ArrowRightIcon />
+      </Button>
     </div>
   )
 }
