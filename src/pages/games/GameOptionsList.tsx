@@ -22,7 +22,7 @@ export const GameOptionsList: React.FC<GameOptionsListProps> = ({ options, onOpt
             onClick={() => onOptionSelection(option)}
           >
             <img
-              src={`/gameOptions/${option.name.toLowerCase().replace(' ', '_').replace(' ', '_').replace(' ', '_').replace('ñ', 'ni')}.png`}
+              src={`/gameOptions/${option.name.toLowerCase()}.png`}
               alt={option.name}
               className="w-auto h-80 rounded-3xl"
             />

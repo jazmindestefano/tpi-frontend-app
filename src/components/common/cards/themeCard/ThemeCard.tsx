@@ -19,7 +19,7 @@ export const ThemeCard: React.FC<ThemeCardProps> = ({ theme, onClick, bgColor })
         <div onClick={onClick} className="w-full">
           <img
             className="rounded-3xl bg-white size-80 w-full p-4"
-            src={`/themes/letras/${theme.name}.png`}
+            src={`themes/letras/${theme.name.toLowerCase()}.png`}
             alt={theme.name}
           />
         </div>
