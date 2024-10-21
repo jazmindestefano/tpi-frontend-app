@@ -9,18 +9,21 @@ import SpinnerLoader from '../components/common/SpinnerLoader.tsx'
 import { VolumeButton } from '../components/common/buttons/VolumeButton.tsx'
 import { useSpeakText } from '../hooks/useSpeakText.ts'
 import { useSelectedGame } from '../hooks/selectors.ts'
+import { useEffect } from 'react'
 
 const ThemeSelector = () => {
   const selectedGame = useSelectedGame()
-  const { themes, isLoading, error } = useGetThemesByGameId(selectedGame.id)
+  const { themes = [], isLoading, error } = useGetThemesByGameId(selectedGame.id)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const speakText = useSpeakText()
 
   // todo: save in LS to not redirect
-  if (selectedGame.id === -1) {
-    navigate('/error')
-  }
+  useEffect(() => {
+    if (selectedGame.id === -1 || error) {
+      navigate('/error')
+    }
+  }, [selectedGame.id, navigate, error])
 
   const onCardClick = (theme: Theme) => {
     dispatch(selectTheme(theme))
@@ -37,9 +40,7 @@ const ThemeSelector = () => {
         <h1 className="text-h1">Temáticas</h1>
         <VolumeButton variant={'secondary'} onClick={() => speakText('Temáticas')} />
       </div>
-      {isLoading ? (
-        <SpinnerLoader />
-      ) : themes && themes.length !== 0 && !error ? (
+      {themes && themes.length > 0 ? (
         <ThemeCardsList themes={themes} onCardClick={onCardClick} />
       ) : (
         <h1 className="text-h1">No hay temáticas disponibles</h1>

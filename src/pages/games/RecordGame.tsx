@@ -46,7 +46,7 @@ const RecordGame: React.FC = () => {
               >
                 <div className="p-4 w-full rounded-3xl h-80 flex flex-col items-start justify-center">
                   <img
-                    src={`/gameOptions/${option.name}.png`}
+                    src={`/gameOptions/${option.name.toLowerCase().replace(' ', '_').replace('ñ', 'ni')}.png`}
                     alt={option.name}
                     className="w-auto h-80 bg-white rounded-3xl p-4"
                   />
