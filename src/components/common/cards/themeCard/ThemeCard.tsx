@@ -12,16 +12,14 @@ interface ThemeCardProps {
 
 export const ThemeCard: React.FC<ThemeCardProps> = ({ theme, onClick, bgColor }) => {
   const speakText = useSpeakText()
-  var imageName = theme.name.toLowerCase().replace(" ", "_").replace("ñ", "ni");
 
   return (
     <BaseCard className={`${bgColor} p-4 flex-col-center`}>
       <BaseContainer className={'gap-6'}>
         <div onClick={onClick} className="w-full">
-          
           <img
             className="rounded-3xl bg-white size-80 w-full p-4"
-            src={`/themes/letras/${imageName}.png`}
+            src={`themes/letras/${theme.name.toLowerCase()}.png`}
             alt={theme.name}
           />
         </div>

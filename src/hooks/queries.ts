@@ -10,22 +10,6 @@ import {
   Theme
 } from '../interfaces/interfaces.ts'
 
-const mockedPalabras = [
-  {
-    id: 1,
-    description: 'Mesa',
-    options: [
-      {
-        id: 1,
-        name: 'Mesa',
-        correct: true,
-        image: 'Mesa',
-        description: 'Mesa'
-      }
-    ]
-  }
-]
-
 export const useGetThemesByGameId = (
   gameId: number
 ): {
@@ -63,10 +47,6 @@ export const useGetGameLevels = (
     queryKey: ['getGameLevels', themeId],
     queryFn: async () => await ApiService.getGameLevels(themeId)
   })
-
-  if (themeId === 2) {
-    return { levels: mockedPalabras, error: null, isLoading: false }
-  }
 
   return { levels: data, error, isLoading }
 }
