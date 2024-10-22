@@ -19,7 +19,7 @@ describe('ThemeCard component', () => {
   const mockBgColor = 'bg-blue-500'
 
   it('renders theme name and image correctly', () => {
-    render(<ThemeCard theme={mockTheme} onClick={mockOnClick} bgColor={mockBgColor} />)
+    render(<ThemeCard theme={mockTheme} onClick={mockOnClick} bgColor={mockBgColor} onImageLoad={() => {}} />)
 
     const themeName = screen.getByText(mockTheme.name)
     const themeImage = screen.getByAltText(mockTheme.name)
@@ -30,14 +30,14 @@ describe('ThemeCard component', () => {
   })
 
   it('applies the correct background color class', () => {
-    render(<ThemeCard theme={mockTheme} onClick={mockOnClick} bgColor={mockBgColor} />)
+    render(<ThemeCard theme={mockTheme} onClick={mockOnClick} bgColor={mockBgColor} onImageLoad={() => {}} />)
 
     const cardElement = screen.getByRole('img').closest('div')
     expect(cardElement).toHaveClass(mockBgColor)
   })
 
   it('calls onClick function when image is clicked', () => {
-    render(<ThemeCard theme={mockTheme} onClick={mockOnClick} bgColor={mockBgColor} />)
+    render(<ThemeCard theme={mockTheme} onClick={mockOnClick} bgColor={mockBgColor} onImageLoad={() => {}} />)
 
     const themeImage = screen.getByAltText(mockTheme.name)
     fireEvent.click(themeImage)
@@ -46,7 +46,7 @@ describe('ThemeCard component', () => {
   })
 
   it('calls speakText when VolumeButton is clicked', () => {
-    render(<ThemeCard theme={mockTheme} onClick={mockOnClick} bgColor={mockBgColor} />)
+    render(<ThemeCard theme={mockTheme} onClick={mockOnClick} bgColor={mockBgColor} onImageLoad={() => {}} />)
 
     const volumeButton = screen.getByRole('button')
     fireEvent.click(volumeButton)
