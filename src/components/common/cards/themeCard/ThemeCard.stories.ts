@@ -22,6 +22,7 @@ export const Default: Story = {
       image: 'themes/letras/Princesas.png'
     },
     onClick: () => alert('Theme clicked!'),
-    bgColor: '#ffffff'
+    bgColor: '#ffffff',
+    onImageLoad: () => console.log('Image loaded!')
   }
 }

@@ -22,6 +22,7 @@ export const Default: Story = {
       image: ''
     },
     onClick: () => {},
-    bgColor: '#f2c160'
+    bgColor: '#f2c160',
+    onImageLoad: () => {}
   }
 }
