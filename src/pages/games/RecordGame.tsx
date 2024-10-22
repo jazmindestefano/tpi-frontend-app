@@ -1,6 +1,6 @@
 import SpinnerLoader from '../../components/common/SpinnerLoader'
 import { useNavigate } from 'react-router-dom'
-import useRecordGame from '../../hooks/useRecordGame.hook'
+import useRecordGame from '../../hooks/useRecordGame'
 import { RecordButton } from '../../components/common/buttons/RecordButton.tsx'
 import Button from '../../components/common/buttons/Button.tsx'
 import { ArrowRightIcon } from '../../components/common/icons/Icons.tsx'
