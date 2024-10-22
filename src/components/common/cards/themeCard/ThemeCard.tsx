@@ -34,7 +34,7 @@ export const ThemeCard: React.FC<ThemeCardProps> = ({ theme, onClick, bgColor, o
             )}
             <img
               className={`rounded-3xl bg-white w-full h-full object-contain p-4 transition-opacity duration-500 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
-              src={`themes/letras/${theme.name.toLowerCase()}.png`}
+              src={theme.image}
               alt={theme.name}
               onLoad={() => setImageLoaded(true)}
             />
