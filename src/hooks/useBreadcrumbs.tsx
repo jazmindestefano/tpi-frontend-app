@@ -15,7 +15,7 @@ const useBreadcrumbs = () => {
     }
   })
 
-  return [{ name: 'Inicio', path: '/' }, ...breadcrumbs]
+  return [{ name: 'Inicio', path: '/profesional' }, ...breadcrumbs]
 }
 
 export default useBreadcrumbs

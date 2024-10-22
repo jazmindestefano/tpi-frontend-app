@@ -176,7 +176,11 @@ export default function Dashboard() {
 
   return (
     <div className="w-full mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6 text-center">Progreso del Lenguaje</h1>
+      <div className="flex items-center mb-6">
+        <div className="flex-center">
+          <h1 className="text-3xl font-bold mb-6 text-center">Seguimiento del Progreso de Juan</h1>
+        </div>
+      </div>
       <ResponsiveGridLayout
         className="layout"
         layouts={{ lg: layout }}
