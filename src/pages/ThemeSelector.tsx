@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { useGetThemesByGameId } from '../hooks/queries'
 import { Theme } from '../interfaces/interfaces'
 import { selectTheme } from '../redux/store/gameSlice'
-import { ThemeCardsList } from '../components/themeSelect/ThemeCardsList'
+import ThemeCardsList from '../components/themeSelect/ThemeCardsList'
 import SpinnerLoader from '../components/common/SpinnerLoader.tsx'
 
 import { VolumeButton } from '../components/common/buttons/VolumeButton.tsx'
