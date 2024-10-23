@@ -90,7 +90,7 @@ const AuditoryDiscriminationGame: React.FC = () => {
   }
 
   return !isLoading && !getLevelsError && levels && levels.length != 0 ? (
-    <div className="w-full layout flex-col-center gap-4 px-10 md:px-40 lg:pt-20 pt-10">
+    <div className="w-full layout flex-col-center gap-4 px-10 md:px-40 pt-20">
       <ProgressBar currentActivity={currentLevel + 1} totalActivities={levels?.length} />
       <GameHeader level={levels[currentLevel]} headerTitle="Selecciona la imágen que empiece con la letra"></GameHeader>
       <GameOptionsList options={options} onOptionSelection={onOptionSelection} />

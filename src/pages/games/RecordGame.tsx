@@ -30,7 +30,7 @@ const RecordGame: React.FC = () => {
   }
 
   return !isLoading ? (
-    <div className="flex-col-center lg:gap-20 px-32 gap-10 lg:pt-0 pt-10">
+    <div className="flex-col-center lg:gap-20 px-32 gap-10 lg:pt-0 pt-16">
       <ProgressBar currentActivity={currentLevel + 1} totalActivities={levels?.length} />
 
       <div className="flex justify-between items-center w-full">

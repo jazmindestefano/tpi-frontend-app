@@ -4,7 +4,8 @@ export const buttonVariants = cva(['cursor-pointer flex items-center justify-cen
   variants: {
     size: {
       circle: 'w-[3.75rem] h-[3.75rem]',
-      square: 'w-[3.75rem] h-[3.75rem]'
+      square: 'w-[3.75rem] h-[3.75rem]',
+      mobile: 'w-[2.75rem] h-[2.75rem]'
     },
     variant: {
       primary: ['text-black bg-[#f2c160]', 'hover:bg-[#eea631]'],
