@@ -27,7 +27,7 @@ describe('ActivityCard component', () => {
       </MemoryRouter>
     )
 
-    const buttonElement = screen.getByRole('button', { name: /ver respuestas/i })
+    const buttonElement = screen.getByLabelText('Ver respuestas')
     expect(buttonElement).toBeInTheDocument()
   })
 })

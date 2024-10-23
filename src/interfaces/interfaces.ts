@@ -54,3 +54,8 @@ export interface PostAuditoryDiscriminationRequest {
   patientId: number
   activities: LevelOptionRequest[]
 }
+
+export interface Achievement {
+  id: number
+  image: string
+}
