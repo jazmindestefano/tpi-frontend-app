@@ -2,7 +2,7 @@ import { useNavigate } from 'react-router-dom'
 import Button from '../components/common/buttons/Button.tsx'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { resetGame, setModalFeedback } from '../redux/store/gameSlice.ts'
+import { setModalFeedback } from '../redux/store/gameSlice.ts'
 import { VolumeButton } from '../components/common/buttons/VolumeButton.tsx'
 import { useSpeakText } from '../hooks/useSpeakText.ts'
 import { useRandomAchievement } from '../hooks/queries.ts'
@@ -14,7 +14,6 @@ const Congratulations = () => {
   const { achievement } = useRandomAchievement(1)
 
   useEffect(() => {
-    dispatch(resetGame())
     dispatch(setModalFeedback(true))
   }, [dispatch])
 
