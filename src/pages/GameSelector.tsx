@@ -1,41 +1,28 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { useSelectedTheme } from "../hooks/selectors";
-import AuditoryDiscriminationGame from "./games/AuditoryDisminationGame";
-import RecordGame from "./games/RecordGame";
-import VowelSnakeGame from "./games/SnakeGame";
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { useSelectedGame } from '../hooks/selectors'
+import AuditoryDiscriminationGame from './games/AuditoryDiscriminationGame.tsx'
+import RecordGame from './games/RecordGame'
+import VowelSnakeGame from './games/SnakeGame'
+
+const gameMap: Record<number, React.FC> = {
+  1: AuditoryDiscriminationGame,
+  2: RecordGame,
+  3: VowelSnakeGame
+}
 
 const GameSelector: React.FC = () => {
   const navigate = useNavigate()
-  const selectedTheme = useSelectedTheme()
-  
+  const selectedGame = useSelectedGame()
+
   useEffect(() => {
-    if (!selectedTheme) {
-      navigate('/error');
-      return;
+    if (selectedGame.id === -1) {
+      navigate('/error')
+      return
     }
   })
-  
-  let GameComponent;
+  const GameComponent = gameMap[selectedGame.id]
+  return <GameComponent />
+}
 
-    switch (selectedTheme!.id) {
-      case 1:
-        GameComponent = AuditoryDiscriminationGame;
-        break;
-      case 2:
-        GameComponent = RecordGame;
-        break;
-      case 3:
-        GameComponent = VowelSnakeGame;
-        break;
-      default:
-        navigate('/error');
-        return null;
-    }
-
-    return (
-      <GameComponent selectedThemeId={selectedTheme!.id} />
-    );
-};
-
-export default GameSelector;
+export default GameSelector

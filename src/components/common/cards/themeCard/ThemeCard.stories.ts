@@ -1,26 +1,28 @@
-import {Meta, StoryObj} from "@storybook/react";
-import { ThemeCard } from "./ThemeCard";
+import { Meta, StoryObj } from '@storybook/react'
+import { ThemeCard } from './ThemeCard'
 
 const meta = {
   title: 'Common/ThemeCard',
   component: ThemeCard,
   parameters: {
-    layout: 'centered',
+    layout: 'centered'
   },
-  tags: ['autodocs'],
-} satisfies Meta<typeof ThemeCard>;
+  tags: ['autodocs']
+} satisfies Meta<typeof ThemeCard>
 
-export default meta;
+export default meta
 
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj<typeof meta>
 
 export const Default: Story = {
   args: {
     theme: {
       id: 1,
-      name: "Princesas",
-      image: "themes/letras/Princesas.png",
+      name: 'Princesas',
+      image: 'themes/letras/Princesas.png'
     },
     onClick: () => alert('Theme clicked!'),
-  },
-};
+    bgColor: '#ffffff',
+    onImageLoad: () => console.log('Image loaded!')
+  }
+}

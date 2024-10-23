@@ -1,19 +1,19 @@
 import * as ApiService from '../http/queries.ts'
-import {useMutation, useQuery} from "@tanstack/react-query";
+import { useMutation, useQuery } from '@tanstack/react-query'
 
-import {Game, GameLevel, PostUserRecordingData, Theme} from "../interfaces/interfaces.ts";
+import {
+  Achievement,
+  Game,
+  GameLevel,
+  PostAuditoryDiscriminationRequest,
+  PostFeedbackData,
+  PostUserRecordingData,
+  Theme
+} from '../interfaces/interfaces.ts'
 
-const mockedPalabras = [
-  {
-    id: 1,
-    description: "Mesa",
-    options: [
-      { id: 1, name: "Mesa", correct: true, image: "Mesa", description: "Mesa" },
-    ],
-  },
-];
-
-export const useGetThemesByGameId = (gameId: number): {
+export const useGetThemesByGameId = (
+  gameId: number
+): {
   themes: Theme[] | null | undefined
   error: Error | null
   isLoading: boolean
@@ -37,22 +37,20 @@ export const useGetGames = (): {
   return { games: data, error, isLoading }
 }
 
-export const useGetGameLevels = (themeId: number): {
-  levels: GameLevel[] | null | undefined,
-  error: Error | null,
+export const useGetGameLevels = (
+  themeId: number
+): {
+  levels: GameLevel[] | null | undefined
+  error: Error | null
   isLoading: boolean
 } => {
   const { data, error, isLoading } = useQuery({
     queryKey: ['getGameLevels', themeId],
-    queryFn: async () => await ApiService.getGameLevels(themeId),
-  });
+    queryFn: async () => await ApiService.getGameLevels(themeId)
+  })
 
-  if (themeId === 2) {
-    return { levels: mockedPalabras, error: null, isLoading: false };
-  }
-
-  return { levels: data, error, isLoading };
-};
+  return { levels: data, error, isLoading }
+}
 
 export const usePostUserRecording = (): {
   mutate: (args: PostUserRecordingData) => void
@@ -62,15 +60,70 @@ export const usePostUserRecording = (): {
   isSuccess: boolean
 } => {
   const { mutate, reset, error, isPending, isSuccess } = useMutation({
-    mutationFn: async ({
-      userId,
-      gameId,
-      text,
-      gameName,
-      userAudio,
-    }: PostUserRecordingData) => {
-      return await ApiService.postUserRecording({userId, gameId, gameName, text, userAudio})
+    mutationFn: async ({ userId, gameId, activityId, userAudio }: PostUserRecordingData) => {
+      return await ApiService.postUserRecording({ userId, gameId, activityId, userAudio })
     }
   })
   return { mutate, reset, error, isPending, isSuccess }
+}
+
+export const usePostFeedback = (): {
+  mutate: (args: PostFeedbackData) => void
+  reset: () => void
+  error: Error | null
+  isPending: boolean
+  isSuccess: boolean
+} => {
+  const { mutate, reset, error, isPending, isSuccess } = useMutation({
+    mutationFn: async ({ ranking, gameId, patientId }: PostFeedbackData) => {
+      return await ApiService.postFeedback({ ranking, gameId, patientId })
+    }
+  })
+  return { mutate, reset, error, isPending, isSuccess }
+}
+
+export const usePostAuditoryDiscriminationAnswer = (): {
+  mutate: (args: PostAuditoryDiscriminationRequest) => void
+  reset: () => void
+  error: Error | null
+  isPending: boolean
+  isSuccess: boolean
+} => {
+  const { mutate, reset, error, isPending, isSuccess } = useMutation({
+    mutationFn: async ({ patientId, activities }: PostAuditoryDiscriminationRequest) => {
+      return await ApiService.postAuditoryDiscriminationAnswer({
+        patientId,
+        activities
+      })
+    }
+  })
+  return { mutate, reset, error, isPending, isSuccess }
+}
+
+export const useRandomAchievement = (
+  patientId: number
+): {
+  achievement: Achievement | null | undefined
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['patientId', patientId],
+    queryFn: async () => await ApiService.getRandomAchievement(patientId)
+  })
+  return { achievement: data, error, isLoading }
+}
+
+export const useAchievements = (
+  patientId: number
+): {
+  achievement: Achievement[] | null | undefined
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['patientId', patientId],
+    queryFn: async () => await ApiService.getAchievements(patientId)
+  })
+  return { achievement: data, error, isLoading }
 }

@@ -1,63 +1,52 @@
-import { useNavigate, useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { useGetThemesByGameId } from "../hooks/queries";
-import { Theme } from "../interfaces/interfaces";
-import { selectTheme } from "../redux/store/gameSlice";
-import { ThemeCardsList } from "../components/themeSelect/ThemeCardsList";
-import SpinnerLoader from "../components/common/SpinnerLoader.tsx";
+import { useNavigate } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
+import { useGetThemesByGameId } from '../hooks/queries'
+import { Theme } from '../interfaces/interfaces'
+import { selectTheme } from '../redux/store/gameSlice'
+import ThemeCardsList from '../components/themeSelect/ThemeCardsList'
+import SpinnerLoader from '../components/common/SpinnerLoader.tsx'
 
-const snakeThemes = [
-  { id: 1, name: "Silabas", image: "Silabas" },
-  { id: 2, name: "Vocales", image: "Vocales" },
-];
-
-const palabrasThemes = [
-  { id: 2, name: "Banio", image: "Banio" },
-  { id: 2, name: "Patio", image: "Patio" },
-  { id: 2, name: "Cocina", image: "Cocina" },
-];
+import { VolumeButton } from '../components/common/buttons/VolumeButton.tsx'
+import { useSpeakText } from '../hooks/useSpeakText.ts'
+import { useSelectedGame } from '../hooks/selectors.ts'
+import { useEffect } from 'react'
 
 const ThemeSelector = () => {
-  const { gameId } = useParams();
-  const { themes, isLoading, error } = useGetThemesByGameId(Number(gameId));
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const selectedGame = useSelectedGame()
+  const { themes = [], isLoading, error } = useGetThemesByGameId(selectedGame.id)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const speakText = useSpeakText()
 
-  console.log({ gameId });
+  // todo: save in LS to not redirect
+  useEffect(() => {
+    if (selectedGame.id === -1 || error) {
+      navigate('/error')
+    }
+  }, [selectedGame.id, navigate, error])
 
   const onCardClick = (theme: Theme) => {
-    console.log(`card clickeada: ${theme.id}`);
-    dispatch(selectTheme(theme));
-    switch (gameId) {
-      case "1":
-        navigate(`/actividad/${gameId}`);
-        break;
-      case "2":
-        navigate(`/actividad/${gameId}`);
-        break;
-      case "3":
-        navigate(`/viborita`);
-        break;
-      default:
-        navigate(`/`);
-    }
-  };
+    dispatch(selectTheme(theme))
+    navigate(`/actividad/${selectedGame.id}`)
+  }
+
+  if (isLoading) {
+    return <SpinnerLoader />
+  }
 
   return (
-    <>
-      {gameId == "3" ? (
-        <ThemeCardsList themes={snakeThemes} onCardClick={onCardClick} />
-      ) : gameId == "2" ? (
-        <ThemeCardsList themes={palabrasThemes} onCardClick={onCardClick} />
-      ) : isLoading ? (
-        <SpinnerLoader />
-      ) : themes && themes.length !== 0 && !error ? (
+    <div className="flex-col-center xl:gap-10 pt-20 lg:pt-0">
+      <div className="flex-center self-center gap-4">
+        <h1 className="text-h1">Temáticas</h1>
+        <VolumeButton variant={'secondary'} onClick={() => speakText('Temáticas')} />
+      </div>
+      {themes && themes.length > 0 ? (
         <ThemeCardsList themes={themes} onCardClick={onCardClick} />
       ) : (
-        <h1>No hay tematicas disponibles</h1>
+        <h1 className="text-h1">No hay temáticas disponibles</h1>
       )}
-    </>
-  );
-};
+    </div>
+  )
+}
 
-export default ThemeSelector;
+export default ThemeSelector
