@@ -30,7 +30,7 @@ describe('BaseModal component', () => {
       </BaseModal>
     )
 
-    const closeButton = screen.getByRole('button')
+    const closeButton = screen.getByLabelText('close')
     fireEvent.click(closeButton)
 
     expect(mockOnClose).toHaveBeenCalled()

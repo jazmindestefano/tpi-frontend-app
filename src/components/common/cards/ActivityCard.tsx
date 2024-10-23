@@ -25,6 +25,7 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({ actividad, className
           variant="secondary"
           className="mt-2 p-3 rounded-3xl"
           onClick={() => navigate(`/profesional/paciente/1/actividades/${actividad.id}`)}
+          ariaLabel="Ver respuestas"
         >
           <p className="text-center font-bold">Ver respuestas</p>
         </Button>
