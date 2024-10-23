@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import Button from '../../common/buttons/Button.tsx'
-import { House, LogOut } from 'lucide-react'
+import { BookHeart, House, LogOut } from 'lucide-react'
 
 const Header: React.FC = () => {
   const navigate = useNavigate()
@@ -17,6 +17,10 @@ const Header: React.FC = () => {
         </div>
       )}
       <div className={`flex flex-row gap-4 ${location.pathname.includes('actividad') ? 'ml-auto' : ''}`}>
+        {/* solo hasta tener login */}
+        <Button size={'square'} variant={'fourth'} onClick={() => navigate('/profesional')}>
+          <BookHeart color="white" />
+        </Button>
         <Button size={'square'} variant={'secondary'} onClick={() => navigate('/logros')}>
           <img src="/pines/medalla.png" alt="Avatar" className="object-cover h-10" />
         </Button>
