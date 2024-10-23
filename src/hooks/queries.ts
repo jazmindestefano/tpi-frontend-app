@@ -8,7 +8,8 @@ import {
   PostAuditoryDiscriminationRequest,
   PostFeedbackData,
   PostUserRecordingData,
-  Theme
+  Theme,
+  Word
 } from '../interfaces/interfaces.ts'
 
 export const useGetThemesByGameId = (
@@ -98,6 +99,21 @@ export const usePostAuditoryDiscriminationAnswer = (): {
     }
   })
   return { mutate, reset, error, isPending, isSuccess }
+}
+
+export const useGetWordsByUserId = (
+  userId: number
+): {
+  words: Word[] | null | undefined
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['getWordsByUser'],
+    queryFn: async () => await ApiService.getWordsByUserId(userId)
+  })
+
+  return { words: data, error, isLoading }
 }
 
 export const useRandomAchievement = (

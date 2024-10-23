@@ -30,13 +30,11 @@ export const useAudioRecording = (props?: UseAudioRecordingProps) => {
         mediaRecorderRef.current = new MediaRecorder(stream)
         // Registers event for ondataavailable event
         mediaRecorderRef.current.ondataavailable = (event) => {
-          console.log(event)
           audioChunksRef.current.push(event.data)
         }
 
         // Registers event for onstop event
-        mediaRecorderRef.current.onstop = (event) => {
-          console.log(event)
+        mediaRecorderRef.current.onstop = () => {
           setAudio(new Blob(audioChunksRef.current, { type: audioMimeType }))
         }
       })
@@ -58,7 +56,6 @@ export const useAudioRecording = (props?: UseAudioRecordingProps) => {
       audioChunksRef.current = []
       // Collect audio data in chunks
       if (mediaRecorderRef.current) {
-        console.log('grabando...')
         mediaRecorderRef.current.start()
         setIsRecording(true)
       }
@@ -73,7 +70,6 @@ export const useAudioRecording = (props?: UseAudioRecordingProps) => {
   const stopRecording = () => {
     if (mediaRecorderRef.current) {
       try {
-        console.log('parando...')
         mediaRecorderRef.current.stop()
       } catch (e) {
         console.error(e)

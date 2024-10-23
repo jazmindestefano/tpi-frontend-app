@@ -1,4 +1,4 @@
-import { useState, useEffect, useLayoutEffect } from 'react'
+import { useState, useEffect, useLayoutEffect, useCallback } from 'react'
 import { ThemeCard } from '../common/cards/themeCard/ThemeCard'
 import { Theme } from '../../interfaces/interfaces'
 import Button from '../common/buttons/Button'
@@ -36,29 +36,7 @@ export default function ThemeCardsList({ themes, onCardClick }: ThemeCardsListPr
     }
   }, [checkScrollButtons, loadedImages, themes.length])
 
-  useEffect(() => {
-    const handleResize = () => {
-      checkScrollButtons()
-    }
-
-    window.addEventListener('resize', handleResize)
-
-    const currentScrollRef = scrollRef.current
-    if (currentScrollRef) {
-      currentScrollRef.addEventListener('scroll', checkScrollButtons)
-    }
-
-    return () => {
-      window.removeEventListener('resize', handleResize)
-      if (currentScrollRef) {
-        currentScrollRef.removeEventListener('scroll', checkScrollButtons)
-      }
-    }
-  }, [scrollRef, checkScrollButtons])
-
-  const handleImageLoad = () => {
-    setLoadedImages((prev) => prev + 1)
-  }
+  const test = useCallback(() => setLoadedImages((prev) => prev + 1), [])
 
   return (
     <div className="relative pb-10 px-5 lg:px-32">
@@ -84,7 +62,7 @@ export default function ThemeCardsList({ themes, onCardClick }: ThemeCardsListPr
               theme={theme}
               onClick={() => onCardClick(theme)}
               bgColor={assignedColors[index]}
-              onImageLoad={handleImageLoad}
+              onImageLoad={test}
             />
           </div>
         ))}

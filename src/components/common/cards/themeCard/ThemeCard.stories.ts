@@ -23,6 +23,6 @@ export const Default: Story = {
     },
     onClick: () => alert('Theme clicked!'),
     bgColor: '#ffffff',
-    onImageLoad: () => console.log('Image loaded!')
+    onImageLoad: () => {}
   }
 }

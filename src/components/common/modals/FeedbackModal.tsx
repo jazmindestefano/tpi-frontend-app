@@ -1,9 +1,10 @@
 import { Overlay } from '../overlay/Overlay.tsx'
 import { FeedbackModalContent } from './FeedbackModalContent.tsx'
 import { usePostFeedback } from '../../../hooks/queries.ts'
-import { useNavigate } from 'react-router-dom'
-import { useUser, useSelectedGame } from '../../../hooks/selectors.ts'
+import { useSelectedGame, useUser } from '../../../hooks/selectors.ts'
 import { useEffect } from 'react'
+import { resetGame } from '../../../redux/store/gameSlice.ts'
+import { useDispatch } from 'react-redux'
 
 interface FeedbackModalProps {
   show: boolean
@@ -11,23 +12,22 @@ interface FeedbackModalProps {
 }
 
 export const FeedbackModal: React.FC<FeedbackModalProps> = ({ show, onClose }) => {
-  const navigate = useNavigate()
   const { mutate, isPending, isSuccess, error } = usePostFeedback()
+  const dispatch = useDispatch()
   const selectedGame = useSelectedGame()
-  const loggedUser = useUser()
-
-  const postFeedback = (ranking: number) => {
-    mutate({ ranking, gameId: selectedGame!.id, patientId: loggedUser!.id })
-  }
+  const user = useUser()
 
   useEffect(() => {
     if (isSuccess) {
-      setTimeout(() => {
-        onClose()
-        navigate('/')
-      }, 500)
+      onClose()
     }
-  }, [isSuccess, onClose, navigate])
+  }, [isSuccess, onClose])
+
+  useEffect(() => {
+    if (!show && !isPending) {
+      dispatch(resetGame())
+    }
+  }, [dispatch, isPending, show])
 
   return (
     <Overlay show={show} onClose={onClose}>
@@ -36,7 +36,9 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ show, onClose }) =
         isSuccess={isSuccess}
         error={error}
         onModalClose={onClose}
-        onRatingClick={postFeedback}
+        onRatingClick={(ranking: number) => {
+          mutate({ ranking, gameId: selectedGame.id, patientId: user.id })
+        }}
       />
     </Overlay>
   )
