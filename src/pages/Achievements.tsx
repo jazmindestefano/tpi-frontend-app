@@ -1,29 +1,14 @@
 import { VolumeButton } from '../components/common/buttons/VolumeButton'
+import SpinnerLoader from '../components/common/SpinnerLoader'
+import { useAchievements } from '../hooks/useAchievement'
 import { useSpeakText } from '../hooks/useSpeakText'
-import { Achievement, achievementsData } from '../testData/achievementsData'
-
-interface AchievementCount {
-  [key: string]: number
-}
-
-const groupAchievements = (achievements: Achievement[]): AchievementCount => {
-  return achievements.reduce((acc: AchievementCount, achievement: Achievement) => {
-    acc[achievement.image] = (acc[achievement.image] || 0) + 1
-    return acc
-  }, {})
-}
 
 const AchievementsPage = () => {
   const speakText = useSpeakText()
+  const { uniqueAchievements, error, isLoading } = useAchievements()
 
-  const achievementCount = groupAchievements(achievementsData)
-
-  const uniqueAchievements = Object.keys(achievementCount).map((image, index) => ({
-    id: index + 1,
-    image,
-    count: achievementCount[image],
-    bgColor: achievementsData.find((ach) => ach.image === image)?.bgColor || '#fff'
-  }))
+  if (isLoading) return <SpinnerLoader />
+  if (error) return <div>Error al cargar los logros</div>
 
   return (
     <div className="flex flex-col items-center justify-start lg:pt-28 pt-16 w-full h-screen lg:px-32 px-10">
