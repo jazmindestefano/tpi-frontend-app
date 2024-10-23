@@ -11,8 +11,8 @@ export const useSpeakText = (props?: UseSpeakTextHookProps) => {
   const { language = 'es-AR', apiUrl = env.apiUrl } = props || {}
   const utteranceRef = useRef<SpeechSynthesisUtterance | null>(null)
   const [isSpeechSynthesisAvailable, setIsSpeechSynthesisAvailable] = useState<boolean>(true)
+  const [voiceAvailable, setVoiceAvailable] = useState<SpeechSynthesisVoice | null>(null)
 
-  // Cleanup when component unmounts
   useEffect(() => {
     return () => {
       if (utteranceRef.current) {
@@ -22,11 +22,29 @@ export const useSpeakText = (props?: UseSpeakTextHookProps) => {
   }, [])
 
   useEffect(() => {
-    // Check if browser supports speech synthesis
-    if (!window.speechSynthesis || !window.speechSynthesis.getVoices().length) {
-      setIsSpeechSynthesisAvailable(false)
+    const checkVoiceAvailability = () => {
+      if (!window.speechSynthesis) {
+        setIsSpeechSynthesisAvailable(false)
+        return
+      }
+
+      const voices = window.speechSynthesis.getVoices()
+      const voice = voices.find((v) => v.lang === language)
+
+      if (voice) {
+        setVoiceAvailable(voice)
+      } else {
+        setVoiceAvailable(null)
+      }
     }
-  }, [])
+
+    // Ensure the voices are loaded before checking
+    if (window.speechSynthesis.getVoices().length > 0) {
+      checkVoiceAvailability()
+    } else {
+      window.speechSynthesis.onvoiceschanged = checkVoiceAvailability
+    }
+  }, [language])
 
   const fetchAudioFromApi = useCallback(
     async (text: string) => {
@@ -35,15 +53,7 @@ export const useSpeakText = (props?: UseSpeakTextHookProps) => {
         return
       }
       try {
-        const response = await axios.post(
-          `${apiUrl}/text-to-speech`,
-          {
-            text
-          },
-          {
-            responseType: 'arraybuffer'
-          }
-        )
+        const response = await axios.post(`${apiUrl}/text-to-speech`, { text }, { responseType: 'arraybuffer' })
         const audioBlob = new Blob([new Uint8Array(response.data)], { type: 'audio/mp3' })
         const audioUrl = URL.createObjectURL(audioBlob)
         return new Audio(audioUrl)
@@ -56,21 +66,21 @@ export const useSpeakText = (props?: UseSpeakTextHookProps) => {
 
   return useCallback(
     (text: string) => {
-      if (isSpeechSynthesisAvailable && window.speechSynthesis.getVoices().length) {
+      if (isSpeechSynthesisAvailable && voiceAvailable) {
         if (utteranceRef.current) {
           window.speechSynthesis.cancel()
         }
 
         const utterance = new SpeechSynthesisUtterance(text)
         utterance.lang = language
+        utterance.voice = voiceAvailable
         utterance.onend = () => {
-          utteranceRef.current = null // Clear ref after speech ends
+          utteranceRef.current = null
         }
 
         utteranceRef.current = utterance
         window.speechSynthesis.speak(utterance)
       } else {
-        // Fallback to API if speech synthesis is not available
         fetchAudioFromApi(text)
           .then((audio) => audio?.play())
           .catch((e) => {
@@ -78,6 +88,6 @@ export const useSpeakText = (props?: UseSpeakTextHookProps) => {
           })
       }
     },
-    [fetchAudioFromApi, isSpeechSynthesisAvailable, language]
+    [fetchAudioFromApi, isSpeechSynthesisAvailable, voiceAvailable, language]
   )
 }
