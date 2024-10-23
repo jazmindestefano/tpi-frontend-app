@@ -4,9 +4,11 @@ import {
   Theme,
   PostUserRecordingData,
   PostAuditoryDiscriminationRequest,
-  PostFeedbackData
+  PostFeedbackData,
+  Word
 } from '../interfaces/interfaces.ts'
 import { unauthenticatedClient } from './clients.ts'
+import { convertBlobToAudioFile } from '../helpers/blobs.ts'
 
 export const getThemesByGameId = async (gameId: number): Promise<Theme[] | null> => {
   // will change to an authenticated client probably
@@ -42,11 +44,8 @@ export const postUserRecording = async ({ userId, activityId, gameId, userAudio 
     gameId: gameId
   })
 
-  console.log({ data })
-
   formData.append('data', new Blob([data], { type: 'application/json' }))
-
-  formData.append('user_audio_file', userAudio)
+  formData.append('user_audio_file', convertBlobToAudioFile(userAudio, 'user_audio'))
 
   const res = await unauthenticatedClient.post(`answers/audio`, formData, {
     headers: {
@@ -75,8 +74,6 @@ export const postAuditoryDiscriminationAnswer = async ({
     }
   })
 
-  console.log({ res })
-
   if (res.status === 200) {
     return res.data
   }
@@ -93,5 +90,15 @@ export const postFeedback = async ({ ranking, gameId, patientId }: PostFeedbackD
   if (res.status === 201) {
     return res.data
   }
+  return null
+}
+
+export const getWordsByUserId = async (userId: number): Promise<Word[] | null> => {
+  const res = await unauthenticatedClient.get<Word[]>(`/words/${userId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+
   return null
 }

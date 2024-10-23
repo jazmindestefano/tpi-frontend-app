@@ -54,3 +54,8 @@ export interface PostAuditoryDiscriminationRequest {
   patientId: number
   activities: LevelOptionRequest[]
 }
+
+export interface Word {
+  fullWord: string
+  syllables: string[]
+}

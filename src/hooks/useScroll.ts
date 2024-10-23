@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect, useCallback } from 'react'
 
 export const useScroll = () => {
   const scrollRef = useRef<HTMLDivElement>(null)
@@ -11,21 +11,21 @@ export const useScroll = () => {
     }
   }
 
-  const checkScrollButtons = () => {
+  const checkScrollButtons = useCallback(() => {
     if (scrollRef.current) {
       const { scrollWidth, clientWidth } = scrollRef.current
       setShowScrollButtons(scrollWidth > clientWidth)
     }
-  }
+  }, [])
+
+  const handleResize = useCallback(() => {
+    checkScrollButtons()
+  }, [checkScrollButtons])
 
   useEffect(() => {
-    const handleResize = () => {
-      checkScrollButtons()
-    }
+    const currentScrollRef = scrollRef.current
 
     window.addEventListener('resize', handleResize)
-
-    const currentScrollRef = scrollRef.current
     if (currentScrollRef) {
       currentScrollRef.addEventListener('scroll', checkScrollButtons)
     }
@@ -36,7 +36,7 @@ export const useScroll = () => {
         currentScrollRef.removeEventListener('scroll', checkScrollButtons)
       }
     }
-  }, [])
+  }, [checkScrollButtons, handleResize])
 
   return { scrollRef, showScrollButtons, scroll, checkScrollButtons }
 }
