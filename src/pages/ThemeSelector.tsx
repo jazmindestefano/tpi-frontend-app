@@ -13,7 +13,7 @@ import { useEffect } from 'react'
 
 const ThemeSelector = () => {
   const selectedGame = useSelectedGame()
-  const { themes = [], isLoading, error } = useGetThemesByGameId(selectedGame.id)
+  const { themes, isLoading, error } = useGetThemesByGameId(selectedGame.id)
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const speakText = useSpeakText()

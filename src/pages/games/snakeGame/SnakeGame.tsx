@@ -2,67 +2,58 @@ import React, { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-import Button from '../../components/common/buttons/Button'
-import { ContinueIcon } from '../../components/common/icons/Icons'
-import { VolumeButton } from '../../components/common/buttons/VolumeButton'
-import { RecordButton } from '../../components/common/buttons/RecordButton'
-import { useAudioRecording } from '../../hooks/useAudioRecording'
-import { useSpeakText } from '../../hooks/useSpeakText'
-import { useSelectedGame } from '../../hooks/selectors'
-import { convertBlobToAudioFile } from '../../helpers/blobs'
-import { postUserRecording } from '../../http/queries'
+import Button from '../../../components/common/buttons/Button.tsx'
+import { ContinueIcon } from '../../../components/common/icons/Icons.tsx'
+import { VolumeButton } from '../../../components/common/buttons/VolumeButton.tsx'
+import { RecordButton } from '../../../components/common/buttons/RecordButton.tsx'
+import { useAudioRecording } from '../../../hooks/useAudioRecording.ts'
+import { useSpeakText } from '../../../hooks/useSpeakText.ts'
+import { useSelectedGame, useUser } from '../../../hooks/selectors.ts'
+import { usePostUserRecording } from '../../../hooks/queries.ts'
 
-const items = ['A', 'E', 'I', 'O', 'U']
-const cellSize = 50
+interface SnakeGameProps {
+  items: string[]
+  cellSize?: number
+}
 
-const SnakeGame: React.FC = () => {
+const SnakeGame: React.FC<SnakeGameProps> = ({ items, cellSize = 50 }) => {
   const [snake, setSnake] = useState([{ x: 7, y: 5 }])
   const [direction, setDirection] = useState({ x: 1, y: 0 })
   const [item, setItem] = useState({ char: items[0], x: 10, y: 4 })
   const [eatenItems, setEatenItems] = useState<string[]>([])
-  const [recordedAudios, setRecordedAudios] = useState<number[]>([])
   const [showBigItem, setShowBigItem] = useState(false)
   const [isPaused, setIsPaused] = useState(false)
   const [gridSize, setGridSize] = useState({ width: 30, height: 9 })
   const [isGameFinished, setIsGameFinished] = useState<boolean>(false)
   const navigate = useNavigate()
+  const user = useUser()
   const { isRecording, audio, startRecording, stopRecording } = useAudioRecording()
+  const { mutate } = usePostUserRecording()
   const speakText = useSpeakText()
-  const selecteGame = useSelectedGame()
+  const selectedGame = useSelectedGame()
 
   useEffect(() => {
-    if (audio) {
-      const audioFile = convertBlobToAudioFile(audio, 'user_audio.wav')
-      postUserRecording({
-        userId: 1, // hardcoded, fix when users exists
-        gameId: selecteGame!.id,
-        activityId: 1, // hardcoded, fix when activities exists
-        userAudio: audioFile
+    if (user.id === -1) {
+      navigate('/')
+    }
+  }, [navigate, user])
+
+  useEffect(() => {
+    if (audio && !isRecording) {
+      mutate({
+        userId: user.id,
+        gameId: selectedGame.id,
+        activityId: 1, // todo: fix hardcoded value
+        userAudio: audio
       })
     }
-  }, [audio, selecteGame, isRecording])
+  }, [audio, selectedGame, isRecording, mutate, user])
 
   const togglePause = useCallback(() => {
     if (!showBigItem) {
       setIsPaused((prev) => !prev)
     }
   }, [showBigItem])
-
-  const resumeGame = () => {
-    setShowBigItem(false)
-    setIsPaused(false)
-    recordAudio() // todo: take out when functionality is implemented
-  }
-
-  const recordAudio = () => {
-    // Simular la grabación de audio
-    setRecordedAudios((prev) => [...prev, (prev[prev.length - 1] || 0) + 1])
-
-    // Verificar si el juego ha terminado
-    if (recordedAudios.length - 1 === items.length) {
-      setIsGameFinished(true)
-    }
-  }
 
   useEffect(() => {
     const handleKeyPress = (e: KeyboardEvent) => {
@@ -101,6 +92,11 @@ const SnakeGame: React.FC = () => {
   useEffect(() => {
     if (isPaused) return
 
+    if (eatenItems.length === items.length) {
+      setIsGameFinished(true)
+      return
+    }
+
     const gameLoop = setInterval(() => {
       setSnake((prevSnake) => {
         const newHead = {
@@ -134,7 +130,7 @@ const SnakeGame: React.FC = () => {
     }, 500)
 
     return () => clearInterval(gameLoop)
-  }, [snake, direction, item, isPaused, gridSize, eatenItems])
+  }, [snake, direction, item, isPaused, gridSize, eatenItems, items])
 
   useEffect(() => {
     if (isGameFinished) {
@@ -272,7 +268,15 @@ const SnakeGame: React.FC = () => {
                 startRecording={startRecording}
               />
               <VolumeButton onClick={() => speakText(eatenItems[eatenItems.length - 1])} />
-              <Button variant="primary" size="circle" shape={'circle'} onClick={resumeGame}>
+              <Button
+                variant="primary"
+                size="circle"
+                shape={'circle'}
+                onClick={() => {
+                  setShowBigItem(false)
+                  setIsPaused(false)
+                }}
+              >
                 <ContinueIcon />
               </Button>
             </div>

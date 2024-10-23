@@ -1,21 +1,18 @@
 import { useState, useEffect } from 'react'
 import { shuffleArray } from '../helpers/arrays'
-import { convertBlobToAudioFile } from '../helpers/blobs'
-import { useGetGameLevels } from './queries.ts'
-import { useSelectedGame } from './selectors.ts'
+import { useGetGameLevels, usePostUserRecording } from './queries.ts'
+import { useSelectedGame, useUser } from './selectors.ts'
 import { useAudioRecording } from './useAudioRecording.ts'
-import { postUserRecording } from '../http/queries'
 import { LevelOption } from '../interfaces/interfaces'
 
 const useRecordGame = (selectedThemeId: number) => {
   const { levels, isLoading, error } = useGetGameLevels(selectedThemeId)
   const { isRecording, audio, startRecording, stopRecording } = useAudioRecording()
-  const selecteGame = useSelectedGame()
+  const { mutate } = usePostUserRecording()
   const [currentLevel, setCurrentLevel] = useState<number>(0)
   const [levelOptions, setLevelOptions] = useState<LevelOption[]>([])
-
-  console.log({ levels })
-
+  const user = useUser()
+  const selectedGame = useSelectedGame()
   useEffect(() => {
     if (levels && !isLoading && !error) {
       const levelOptions = [...levels[currentLevel].options]
@@ -26,15 +23,14 @@ const useRecordGame = (selectedThemeId: number) => {
 
   useEffect(() => {
     if (audio) {
-      const audioFile = convertBlobToAudioFile(audio, 'user_audio.wav')
-      postUserRecording({
-        userId: 1, // hardcoded, fix when users exists
-        gameId: selecteGame!.id,
-        activityId: levels![currentLevel].id,
-        userAudio: audioFile
+      mutate({
+        userId: user.id,
+        gameId: selectedGame.id,
+        activityId: 1, // todo: fix hardcoded value
+        userAudio: audio
       })
     }
-  }, [audio, currentLevel, levels, selecteGame])
+  }, [audio, currentLevel, levels, mutate, selectedGame, user])
 
   return {
     levels,
