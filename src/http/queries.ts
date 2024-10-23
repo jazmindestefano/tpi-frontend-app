@@ -12,7 +12,7 @@ import { convertBlobToAudioFile } from '../helpers/blobs.ts'
 
 export const getThemesByGameId = async (gameId: number): Promise<Theme[] | null> => {
   // will change to an authenticated client probably
-  const res = await unauthenticatedClient.get(`games/${gameId}/themes`)
+  const res = await unauthenticatedClient.get(`/games/${gameId}/themes`)
   if (res.status === 200) {
     return res.data
   }
@@ -47,7 +47,7 @@ export const postUserRecording = async ({ userId, activityId, gameId, userAudio 
   formData.append('data', new Blob([data], { type: 'application/json' }))
   formData.append('user_audio_file', convertBlobToAudioFile(userAudio, 'user_audio'))
 
-  const res = await unauthenticatedClient.post(`answers/audio`, formData, {
+  const res = await unauthenticatedClient.post(`/answers/audio`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
@@ -68,7 +68,7 @@ export const postAuditoryDiscriminationAnswer = async ({
     activities: activities
   }
 
-  const res = await unauthenticatedClient.post(`answers/text`, payload, {
+  const res = await unauthenticatedClient.post(`/answers/text`, payload, {
     headers: {
       'Content-Type': 'application/json'
     }
@@ -81,7 +81,7 @@ export const postAuditoryDiscriminationAnswer = async ({
 }
 
 export const postFeedback = async ({ ranking, gameId, patientId }: PostFeedbackData) => {
-  const res = await unauthenticatedClient.post(`games/feedback`, {
+  const res = await unauthenticatedClient.post(`/games/feedback`, {
     ranking,
     gameId,
     patientId
@@ -104,7 +104,7 @@ export const getWordsByUserId = async (userId: number): Promise<Word[] | null> =
 }
 
 export const getRandomAchievement = async (patientId: number) => {
-  const res = await unauthenticatedClient.get(`randomAchievement/${patientId}`)
+  const res = await unauthenticatedClient.get(`/randomAchievement/${patientId}`)
 
   if (res.status === 200) {
     return res.data
@@ -113,7 +113,7 @@ export const getRandomAchievement = async (patientId: number) => {
 }
 
 export const getAchievements = async (patientId: number) => {
-  const res = await unauthenticatedClient.get(`achivements/${patientId}`)
+  const res = await unauthenticatedClient.get(`/achivements/${patientId}`)
 
   if (res.status === 200) {
     return res.data
