@@ -2,6 +2,7 @@ import * as ApiService from '../http/queries.ts'
 import { useMutation, useQuery } from '@tanstack/react-query'
 
 import {
+  Achievement,
   Game,
   GameLevel,
   PostAuditoryDiscriminationRequest,
@@ -113,4 +114,32 @@ export const useGetWordsByUserId = (
   })
 
   return { words: data, error, isLoading }
+}
+
+export const useRandomAchievement = (
+  patientId: number
+): {
+  achievement: Achievement | null | undefined
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['patientId', patientId],
+    queryFn: async () => await ApiService.getRandomAchievement(patientId)
+  })
+  return { achievement: data, error, isLoading }
+}
+
+export const useAchievements = (
+  patientId: number
+): {
+  achievement: Achievement[] | null | undefined
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['patientId', patientId],
+    queryFn: async () => await ApiService.getAchievements(patientId)
+  })
+  return { achievement: data, error, isLoading }
 }

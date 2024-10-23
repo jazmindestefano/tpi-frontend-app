@@ -59,3 +59,8 @@ export interface Word {
   fullWord: string
   syllables: string[]
 }
+
+export interface Achievement {
+  id: number
+  image: string
+}

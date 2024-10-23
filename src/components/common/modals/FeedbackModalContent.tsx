@@ -26,14 +26,14 @@ export const FeedbackModalContent: React.FC<FeedbackModalProps> = ({
 
   return (
     <BaseModal
-      className={classNames('rounded-3xl h-96 flex flex-col items-center justify-between p-10', className)}
+      className={classNames('rounded-3xl flex-col-center gap-4', className)}
       onClose={onModalClose}
       title={modalTitle}
     >
       {isPending && <SpinnerLoader />}
       {error && <div>Error: {error.message}</div>}
       {!isPending && !isSuccess && (
-        <div className={'flex justify-evenly items-start w-full h-40'}>
+        <div className={'flex justify-evenly items-start w-full'}>
           <Button variant={'transparent'} onClick={() => onRatingClick(1)}>
             <BadFeedbackIcon />
           </Button>

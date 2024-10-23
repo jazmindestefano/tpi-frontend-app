@@ -102,3 +102,21 @@ export const getWordsByUserId = async (userId: number): Promise<Word[] | null> =
 
   return null
 }
+
+export const getRandomAchievement = async (patientId: number) => {
+  const res = await unauthenticatedClient.get(`randomAchievement/${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
+
+export const getAchievements = async (patientId: number) => {
+  const res = await unauthenticatedClient.get(`achivements/${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
