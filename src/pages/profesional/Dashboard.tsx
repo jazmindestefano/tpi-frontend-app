@@ -175,8 +175,8 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="w-full mx-auto p-4">
-      <div className="flex items-center mb-6">
+    <div className="w-full mx-auto lg:p-4">
+      <div className="flex items-center mb-6 lg:pt-0 pt-20">
         <div className="flex-center">
           <h1 className="text-3xl font-bold mb-6 text-center">Seguimiento del Progreso de Juan</h1>
         </div>

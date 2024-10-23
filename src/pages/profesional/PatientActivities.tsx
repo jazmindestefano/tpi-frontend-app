@@ -8,7 +8,7 @@ const actividades: Activity[] = [
 
 export default function PatientActivities() {
   return (
-    <div className="flex flex-col items-start justify-start gap-4">
+    <div className="flex flex-col items-start justify-start gap-4 lg:pt-0 pt-20">
       <div>
         <h2 className="text-2xl font-extrabold mb-4">Actividades</h2>
         <div className="flex flex-wrap gap-10 lg:px-10 lg:py-6">

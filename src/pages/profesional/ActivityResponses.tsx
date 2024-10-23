@@ -15,7 +15,7 @@ const wordResponses: WordResponse[] = [
 
 export default function ActivityResponses() {
   return (
-    <div className="flex flex-col gap-5">
+    <div className="flex flex-col gap-5 lg:pt-0 pt-20">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Respuestas Palabras</h1>
       </div>

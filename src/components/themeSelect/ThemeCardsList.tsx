@@ -4,6 +4,7 @@ import { Theme } from '../../interfaces/interfaces'
 import Button from '../common/buttons/Button'
 import { ArrowLeftIcon, ArrowRightIcon } from '../common/icons/Icons'
 import { useScroll } from '../../hooks/useScroll'
+import useWindowSize from '../../hooks/useWindowSize'
 
 const bgColors = [
   'bg-orange-300',
@@ -24,6 +25,7 @@ export default function ThemeCardsList({ themes, onCardClick }: ThemeCardsListPr
   const { scrollRef, scroll, checkScrollButtons, showScrollButtons } = useScroll()
   const [assignedColors, setAssignedColors] = useState<string[]>([])
   const [loadedImages, setLoadedImages] = useState(0)
+  const windowSize = useWindowSize()
 
   useEffect(() => {
     const colorsToAssign = [...bgColors].sort(() => Math.random() - 0.5).slice(0, themes.length)
@@ -40,44 +42,57 @@ export default function ThemeCardsList({ themes, onCardClick }: ThemeCardsListPr
 
   return (
     <div className="relative pb-10 px-5 lg:px-32">
-      <Button
-        variant="primary"
-        size="circle"
-        shape={'circle'}
-        onClick={() => scroll('left')}
-        className={`absolute left-5 top-1/2 transform -translate-y-1/2 z-10 transition-opacity duration-300 ${
-          showScrollButtons ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
-      >
-        <ArrowLeftIcon />
-      </Button>
-      <div
-        ref={scrollRef}
-        className="flex overflow-x-auto gap-5 scroll-smooth hide-scrollbar"
-        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
-      >
-        {themes.map((theme, index) => (
-          <div key={theme.id} className="flex-shrink-0">
-            <ThemeCard
-              theme={theme}
-              onClick={() => onCardClick(theme)}
-              bgColor={assignedColors[index]}
-              onImageLoad={test}
-            />
+      {windowSize.width < 768 ? (
+        <div className="flex flex-col gap-5">
+          {themes.map((theme, index) => (
+            <div key={theme.id} className="flex-shrink-0">
+              <ThemeCard
+                theme={theme}
+                onClick={() => onCardClick(theme)}
+                bgColor={assignedColors[index]}
+                onImageLoad={test}
+              />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <>
+          <Button
+            variant="primary"
+            size="circle"
+            shape={'circle'}
+            onClick={() => scroll('left')}
+            className={`absolute left-5 top-1/2 transform -translate-y-1/2 z-10 transition-opacity duration-300 ${showScrollButtons ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+          >
+            <ArrowLeftIcon />
+          </Button>
+          <div
+            ref={scrollRef}
+            className="flex overflow-x-auto gap-5 scroll-smooth hide-scrollbar"
+            style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+          >
+            {themes.map((theme, index) => (
+              <div key={theme.id} className="flex-shrink-0">
+                <ThemeCard
+                  theme={theme}
+                  onClick={() => onCardClick(theme)}
+                  bgColor={assignedColors[index]}
+                  onImageLoad={test}
+                />
+              </div>
+            ))}
           </div>
-        ))}
-      </div>
-      <Button
-        variant="primary"
-        size="circle"
-        shape={'circle'}
-        onClick={() => scroll('right')}
-        className={`absolute right-5 top-1/2 transform -translate-y-1/2 z-10 transition-opacity duration-300 ${
-          showScrollButtons ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
-      >
-        <ArrowRightIcon />
-      </Button>
+          <Button
+            variant="primary"
+            size="circle"
+            shape={'circle'}
+            onClick={() => scroll('right')}
+            className={`absolute right-5 top-1/2 transform -translate-y-1/2 z-10 transition-opacity duration-300 ${showScrollButtons ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+          >
+            <ArrowRightIcon />
+          </Button>
+        </>
+      )}
     </div>
   )
 }
