@@ -11,7 +11,7 @@ import { useShowModalFeedback } from '../hooks/selectors.ts'
 import { useState } from 'react'
 
 const getCardBgColor = (index: number) => {
-  const colors = ['bg-blue-300', 'bg-orange-300', 'bg-orange-150']
+  const colors = ['bg-blue-500', 'bg-orange-400', 'bg-yellow-500']
   return colors[index % colors.length]
 }
 
