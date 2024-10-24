@@ -3,9 +3,8 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  envPrefix: 'VITE_',
   define: {
-    'process.env': process.env
+    __APP_ENV__: process.env.VITE_VERCEL_ENV
   },
   test: {
     globals: true,
