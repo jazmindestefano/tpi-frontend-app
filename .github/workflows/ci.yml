@@ -4,8 +4,6 @@ env:
   VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
   VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
   VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-  ENVIRONMENT: ${{ github.ref == 'refs/heads/develop' && 'preview' || 'production' }}
-  GITHUB_REF: ${{ github.ref }}
 
 on:
   pull_request:
@@ -43,6 +41,10 @@ jobs:
     needs: build_and_test
     runs-on: ubuntu-latest
     if: github.event_name == 'push'
+
+    env:
+      ENVIRONMENT_TYPE: ${{ github.ref == 'refs/heads/develop' && 'preview' || 'production' }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -51,10 +53,10 @@ jobs:
         run: npm install --global vercel@latest
 
       - name: Pull Vercel Environment Information
-        run: vercel pull --yes --environment=${{ env.ENVIRONMENT }} --token=${{ env.VERCEL_TOKEN }}
+        run: vercel pull --yes --environment=${{ env.ENVIRONMENT_TYPE }} --token=${{ env.VERCEL_TOKEN }}
 
       - name: Build Project Artifacts
-        run: vercel build --token=${{ env.VERCEL_TOKEN }} ${{ env.GITHUB_REF == 'refs/heads/develop' && '' || '--prod' }}
+        run: vercel build --token=${{ env.VERCEL_TOKEN }} ${{ env.ENVIRONMENT_TYPE == 'preview' && '' || '--prod' }}
 
       - name: Deploy Project Artifacts to Vercel
-        run: vercel deploy --prebuilt --token=${{ env.VERCEL_TOKEN }} ${{ env.GITHUB_REF == 'refs/heads/develop' && '' || '--prod' }}
+        run: vercel deploy --prebuilt --token=${{ env.VERCEL_TOKEN }} ${{ env.ENVIRONMENT_TYPE == 'preview' && '' || '--prod' }}
