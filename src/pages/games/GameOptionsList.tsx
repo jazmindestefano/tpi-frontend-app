@@ -23,7 +23,7 @@ export const GameOptionsList: React.FC<GameOptionsListProps> = ({ options, onOpt
           >
             <img
               src={`/gameOptions/${option.name.toLowerCase()}.png`}
-              alt={option.name}
+              alt={option.name.toUpperCase()}
               className="w-auto h-80 rounded-3xl"
             />
           </div>
