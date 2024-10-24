@@ -1,16 +1,16 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useRef } from 'react'
 import { useTextToSpeech } from './queries.ts'
 
 export const useSpeakText = () => {
   const { mutateAsync: tts } = useTextToSpeech()
   const audioRef = useRef<HTMLAudioElement | null>(null)
-  const [isSpeaking, setIsSpeaking] = useState(false)
+  const isSpeakingRef = useRef(false)
 
   return useCallback(
     (text: string) => {
-      if (isSpeaking) return
+      if (isSpeakingRef.current) return
 
-      setIsSpeaking(true)
+      isSpeakingRef.current = true
 
       // Stop the previous audio if it's still playing
       if (audioRef.current) {
@@ -30,7 +30,7 @@ export const useSpeakText = () => {
           audio.onended = () => {
             URL.revokeObjectURL(audioUrl)
             audioRef.current = null
-            setIsSpeaking(false)
+            isSpeakingRef.current = false
           }
 
           // Play the audio
@@ -39,9 +39,9 @@ export const useSpeakText = () => {
         .catch((error) => {
           console.error('Error during TTS request:', error)
           audioRef.current = null
-          setIsSpeaking(false)
+          isSpeakingRef.current = false
         })
     },
-    [isSpeaking, tts]
+    [tts]
   )
 }
