@@ -24,3 +24,8 @@ dist-ssr
 *.sw?
 
 *storybook.log
+
+# Env
+.env
+.env.development
+.env.production
