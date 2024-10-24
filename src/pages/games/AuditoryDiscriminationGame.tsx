@@ -73,9 +73,8 @@ const AuditoryDiscriminationGame: React.FC = () => {
         speakText(`Seleccioná la imágen que empiece con la letra ${levels[currentLevel].description}`)
       }
     }, 1500)
-
     return () => clearTimeout(timeoutId)
-  }, [levels, currentLevel, speakText])
+  }, [currentLevel, levels, speakText])
 
   // todo: save in LS to not redirect
   if (selectedTheme.id === -1) {

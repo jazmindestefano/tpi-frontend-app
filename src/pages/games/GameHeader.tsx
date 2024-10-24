@@ -9,7 +9,7 @@ interface GameHeaderProps {
 
 export const GameHeader: React.FC<GameHeaderProps> = ({ level, headerTitle }) => {
   const speakText = useSpeakText()
-
+  console.log('me renderizo')
   return (
     <div className="w-full flex flex-col justify-center items-center gap-4">
       <h2 className="text-h2 text-center">{headerTitle}</h2>
