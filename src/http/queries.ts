@@ -120,3 +120,15 @@ export const getAchievements = async (patientId: number) => {
   }
   return null
 }
+
+export const getSynthesizedAudio = async (text: string) => {
+  const res = await unauthenticatedClient.post(
+    `/text-to-speech`,
+    {
+      text
+    },
+    { responseType: 'arraybuffer' }
+  )
+
+  return new Blob([new Uint8Array(res.data)], { type: 'audio/mp3' })
+}

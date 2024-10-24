@@ -143,3 +143,16 @@ export const useAchievements = (
   })
   return { achievement: data, error, isLoading }
 }
+
+export const useTextToSpeech = (): {
+  mutateAsync: (text: string) => Promise<Blob>
+  error: Error | null
+  isPending: boolean
+  isSuccess: boolean
+} => {
+  const { error, isSuccess, isPending, mutateAsync } = useMutation({
+    mutationFn: async (text: string) => await ApiService.getSynthesizedAudio(text)
+  })
+
+  return { error, isSuccess, isPending, mutateAsync }
+}
