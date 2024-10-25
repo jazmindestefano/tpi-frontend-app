@@ -1,20 +1,17 @@
 import React, { ReactNode } from 'react'
 import classNames from 'classnames'
 import Button from '../buttons/Button.tsx'
-import { VolumeIcon } from '../icons/Icons.tsx'
-import { useSpeakText } from '../../../hooks/useSpeakText.ts'
 import { X } from 'lucide-react'
+import { HearableButton } from '../buttons/HearableButton.tsx'
 
 interface BaseModalProps {
   children: ReactNode
   className?: string
   onClose: () => void
   title: string
-  speak?: boolean
 }
 
-export const BaseModal: React.FC<BaseModalProps> = ({ className, children, onClose, title, speak = true }) => {
-  const speakText = useSpeakText()
+export const BaseModal: React.FC<BaseModalProps> = ({ className, children, onClose, title }) => {
   return (
     <div className={classNames('bg-orange-50 border-orange-100 p-6 w-fit', className)}>
       <div className={'flex flex-col flex-nowrap justify-between items-start gap-8 mb-4'}>
@@ -23,17 +20,7 @@ export const BaseModal: React.FC<BaseModalProps> = ({ className, children, onClo
         </Button>
         <div className={'flex flex-nowrap items-center gap-4'}>
           <h1 className={'font-comfortaa text-3xl'}>{title}</h1>
-          {speak && (
-            <Button
-              size={'circle'}
-              shape={'circle'}
-              variant={'secondary'}
-              onClick={() => speakText(title)}
-              ariaLabel="volume"
-            >
-              <VolumeIcon />
-            </Button>
-          )}
+          <HearableButton text={title} />
         </div>
       </div>
       {children}

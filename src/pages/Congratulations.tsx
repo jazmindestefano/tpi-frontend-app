@@ -3,9 +3,9 @@ import Button from '../components/common/buttons/Button.tsx'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { setModalFeedback } from '../redux/store/gameSlice.ts'
-import { VolumeButton } from '../components/common/buttons/VolumeButton.tsx'
 import { useSpeakText } from '../hooks/useSpeakText.ts'
 import { useRandomAchievement } from '../hooks/queries.ts'
+import { HearableButton } from '../components/common/buttons/HearableButton.tsx'
 
 const Congratulations = () => {
   const dispatch = useDispatch()
@@ -73,8 +73,8 @@ const Congratulations = () => {
         </div>
 
         <div className="flex-center gap-4">
-          <p className="text-4xl text-black font-black mb-8 text-center my-5">¡Has completado el desafío!</p>
-          <VolumeButton onClick={() => speakText('¡Has completado el desafío!')} />
+          <p className="text-4xl text-black font-black mb-8 text-center my-5">¡Completaste el desafío!</p>
+          <HearableButton text={'¡Completaste el desafío!'} />
         </div>
 
         <Button

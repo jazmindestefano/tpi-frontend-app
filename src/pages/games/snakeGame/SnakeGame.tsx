@@ -4,12 +4,11 @@ import { ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Pause, Play } from '
 import { useNavigate } from 'react-router-dom'
 import Button from '../../../components/common/buttons/Button.tsx'
 import { ContinueIcon } from '../../../components/common/icons/Icons.tsx'
-import { VolumeButton } from '../../../components/common/buttons/VolumeButton.tsx'
 import { RecordButton } from '../../../components/common/buttons/RecordButton.tsx'
 import { useAudioRecording } from '../../../hooks/useAudioRecording.ts'
-import { useSpeakText } from '../../../hooks/useSpeakText.ts'
 import { useSelectedGame, useUser } from '../../../hooks/selectors.ts'
 import { usePostUserRecording } from '../../../hooks/queries.ts'
+import { HearableButton } from '../../../components/common/buttons/HearableButton.tsx'
 
 interface SnakeGameProps {
   items: string[]
@@ -29,7 +28,6 @@ const SnakeGame: React.FC<SnakeGameProps> = ({ items, cellSize = 50 }) => {
   const user = useUser()
   const { isRecording, audio, startRecording, stopRecording } = useAudioRecording()
   const { mutate } = usePostUserRecording()
-  const speakText = useSpeakText()
   const selectedGame = useSelectedGame()
 
   useEffect(() => {
@@ -267,7 +265,7 @@ const SnakeGame: React.FC<SnakeGameProps> = ({ items, cellSize = 50 }) => {
                 stopRecording={stopRecording}
                 startRecording={startRecording}
               />
-              <VolumeButton onClick={() => speakText(eatenItems[eatenItems.length - 1])} />
+              <HearableButton text={eatenItems[eatenItems.length - 1]} />
               <Button
                 variant="primary"
                 size="circle"
