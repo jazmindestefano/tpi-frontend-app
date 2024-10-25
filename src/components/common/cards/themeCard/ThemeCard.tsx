@@ -1,10 +1,9 @@
 import { useEffect } from 'react'
-import { useSpeakText } from '../../../../hooks/useSpeakText'
 import { Theme } from '../../../../interfaces/interfaces'
-import { VolumeButton } from '../../buttons/VolumeButton'
 import { BaseCard } from '../BaseCard'
 import { BaseContainer } from '../BaseContainer'
 import { useImageSkeleton } from '../../../../hooks/useImageSkeleton'
+import { HearableButton } from '../../buttons/HearableButton.tsx'
 
 interface ThemeCardProps {
   theme: Theme
@@ -15,7 +14,6 @@ interface ThemeCardProps {
 
 export const ThemeCard: React.FC<ThemeCardProps> = ({ theme, onClick, bgColor, onImageLoad }) => {
   const { imageLoaded, handleImageLoad } = useImageSkeleton({ totalImages: 1 })
-  const speakText = useSpeakText()
 
   useEffect(() => {
     if (imageLoaded) {
@@ -44,7 +42,7 @@ export const ThemeCard: React.FC<ThemeCardProps> = ({ theme, onClick, bgColor, o
         </div>
         <div className="flex flex-col justify-center items-center w-full gap-2">
           <h3 className="text-h3">{theme.name.toUpperCase()}</h3>
-          <VolumeButton variant={'secondary'} onClick={() => speakText(theme.name)} />
+          <HearableButton variant={'secondary'} text={theme.name} />
         </div>
       </BaseContainer>
     </BaseCard>

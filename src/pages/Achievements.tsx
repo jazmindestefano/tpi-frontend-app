@@ -1,10 +1,8 @@
-import { VolumeButton } from '../components/common/buttons/VolumeButton'
 import SpinnerLoader from '../components/common/SpinnerLoader'
 import { useAchievements } from '../hooks/useAchievement'
-import { useSpeakText } from '../hooks/useSpeakText'
+import { HearableButton } from '../components/common/buttons/HearableButton.tsx'
 
 const AchievementsPage = () => {
-  const speakText = useSpeakText()
   const { uniqueAchievements, error, isLoading } = useAchievements()
 
   if (isLoading) return <SpinnerLoader />
@@ -14,7 +12,7 @@ const AchievementsPage = () => {
     <div className="flex flex-col items-center justify-start lg:pt-28 pt-16 w-full h-screen lg:px-32 px-10">
       <div className="flex-center gap-4">
         <h1 className="text-4xl font-bold">Logros</h1>
-        <VolumeButton onClick={() => speakText('Logros')} />
+        <HearableButton text={'Logros'} />
       </div>
       <div className="flex flex-wrap justify-center mt-4">
         {uniqueAchievements.map((achievement) => (
