@@ -1,7 +1,6 @@
 import { getJustifyClass } from '../../helpers/styles.ts'
-import { VolumeButton } from '../../components/common/buttons/VolumeButton.tsx'
 import { LevelOption } from '../../interfaces/interfaces.ts'
-import { useSpeakText } from '../../hooks/useSpeakText.ts'
+import { HearableButton } from '../../components/common/buttons/HearableButton.tsx'
 
 interface GameOptionsListProps {
   options: LevelOption[]
@@ -9,7 +8,6 @@ interface GameOptionsListProps {
 }
 
 export const GameOptionsList: React.FC<GameOptionsListProps> = ({ options, onOptionSelection }) => {
-  const speakText = useSpeakText()
   return (
     <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 my-16 w-full`}>
       {options.map((option, index) => (
@@ -27,7 +25,7 @@ export const GameOptionsList: React.FC<GameOptionsListProps> = ({ options, onOpt
               className="w-auto h-80 rounded-3xl"
             />
           </div>
-          <VolumeButton variant={'fourth'} onClick={() => speakText(option.name)} />
+          <HearableButton variant={'fourth'} text={option.name} />
         </div>
       ))}
     </div>

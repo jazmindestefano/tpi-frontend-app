@@ -4,11 +4,10 @@ import HomeCard from '../components/common/cards/HomeCard.tsx'
 import SpinnerLoader from '../components/common/SpinnerLoader.tsx'
 import { useDispatch } from 'react-redux'
 import { selectGame, setModalFeedback } from '../redux/store/gameSlice.ts'
-import { VolumeButton } from '../components/common/buttons/VolumeButton.tsx'
-import { useSpeakText } from '../hooks/useSpeakText.ts'
 import { FeedbackModal } from '../components/common/modals/FeedbackModal.tsx'
 import { useShowModalFeedback } from '../hooks/selectors.ts'
 import { useState } from 'react'
+import { HearableButton } from '../components/common/buttons/HearableButton.tsx'
 
 const getCardBgColor = (index: number) => {
   const colors = ['bg-blue-500', 'bg-orange-400', 'bg-yellow-500']
@@ -19,7 +18,6 @@ const Home: React.FC = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { games, isLoading, error } = useGetGames()
-  const speakText = useSpeakText()
   const showModalFeedBack = useShowModalFeedback()
   const [showModal, setShowModal] = useState(showModalFeedBack)
 
@@ -43,7 +41,7 @@ const Home: React.FC = () => {
       <div className="flex-col-center gap-6 layout">
         <div className="flex-center gap-4">
           <h1 className="text-h1">Juegos</h1>
-          <VolumeButton variant={'secondary'} onClick={() => speakText('Juegos')} />
+          <HearableButton variant={'secondary'} text={'Juegos'} />
         </div>
         <div className="w-full grid grid-cols-1 md:grid-cols-3 xl:px-20 gap-10 pb-10">
           {games.map((game) => (

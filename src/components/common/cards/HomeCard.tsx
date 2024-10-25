@@ -1,9 +1,7 @@
-import Button from '../buttons/Button'
 import { Game } from '../../../interfaces/interfaces'
 import { BaseCard } from './BaseCard'
 import { BaseContainer } from './BaseContainer'
-import { VolumeIcon } from '../icons/Icons'
-import { useSpeakText } from '../../../hooks/useSpeakText.ts'
+import { HearableButton } from '../buttons/HearableButton.tsx'
 
 interface HomeCardProps {
   buttonVariant: 'primary' | 'secondary' | 'tertiary' | 'fourth'
@@ -13,8 +11,6 @@ interface HomeCardProps {
 }
 
 const HomeCard: React.FC<HomeCardProps> = ({ buttonVariant, backgroundColor, onClick, game }) => {
-  const speakText = useSpeakText()
-
   return (
     <BaseCard className={'flex-col-center gap-4 shadow-none'}>
       <BaseContainer
@@ -27,15 +23,11 @@ const HomeCard: React.FC<HomeCardProps> = ({ buttonVariant, backgroundColor, onC
           </h1>
         </div>
       </BaseContainer>
-      <Button
-        className="transition-transform duration-300 transform hover:scale-105 mt-2"
-        size="circle"
-        shape="circle"
+      <HearableButton
         variant={buttonVariant}
-        onClick={() => speakText(game.name)}
-      >
-        <VolumeIcon />
-      </Button>
+        text={game.name}
+        className={'transition-transform duration-300 transform hover:scale-105 mt-2'}
+      />
     </BaseCard>
   )
 }
