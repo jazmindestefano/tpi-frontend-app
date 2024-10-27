@@ -10,7 +10,7 @@ import { GameHeader } from './GameHeader.tsx'
 import { useSpeakText } from '../../hooks/useSpeakText.ts'
 import ProgressBar from '../../components/progressBar/ProgressBar.tsx'
 
-const prepareData = ({
+export const prepareData = ({
   patiendId,
   activityId,
   selectedOption
@@ -18,29 +18,36 @@ const prepareData = ({
   patiendId: number
   selectedOption: number
   activityId: number
-}) => {
-  return {
-    patientId: patiendId,
-    activities: [
-      {
-        activityId: activityId,
-        selectedOption: selectedOption
-      }
-    ]
+}) => ({
+  patientId: patiendId,
+  activities: [{ activityId, selectedOption }]
+})
+
+export const validateTheme = (themeId: number, navigate: (path: string) => void) => {
+  if (themeId === -1) {
+    navigate('/error')
   }
 }
 
+export const navigateToCongratulations = (
+  currentLevel: number,
+  totalLevels: number,
+  navigate: (path: string) => void
+) => {
+  if (currentLevel >= totalLevels - 1) navigate('/felicitaciones')
+}
+
 const AuditoryDiscriminationGame: React.FC = () => {
-  // todo: possible to lift up state to parent
   const selectedTheme = useSelectedTheme()
   const navigate = useNavigate()
   const user = useUser()
   const { levels, isLoading, error: getLevelsError } = useGetGameLevels(selectedTheme!.id)
   const [currentLevel, setCurrentLevel] = useState<number>(0)
   const [options, setOptions] = useState<LevelOption[]>([])
-  // todo: all props need to be used
   const { mutate } = usePostAuditoryDiscriminationAnswer()
   const speakText = useSpeakText()
+
+  useEffect(() => validateTheme(selectedTheme.id, navigate), [selectedTheme.id, navigate])
 
   useEffect(() => {
     if (levels && !isLoading && !getLevelsError) {
@@ -50,11 +57,10 @@ const AuditoryDiscriminationGame: React.FC = () => {
     }
   }, [levels, isLoading, getLevelsError, currentLevel])
 
-  useEffect(() => {
-    if (levels && currentLevel >= levels.length - 1) {
-      navigate('/felicitaciones')
-    }
-  }, [currentLevel, levels, navigate])
+  useEffect(
+    () => navigateToCongratulations(currentLevel, levels?.length || 0, navigate),
+    [currentLevel, levels, navigate]
+  )
 
   const onOptionSelection = (selectedOption: LevelOption) => {
     mutate(
@@ -69,30 +75,15 @@ const AuditoryDiscriminationGame: React.FC = () => {
 
   useEffect(() => {
     const timeoutId = setTimeout(() => {
-      if (levels) {
-        speakText(`Seleccioná la imágen que empiece con la letra ${levels[currentLevel].description}`)
-      }
+      if (levels) speakText(`Seleccioná la imágen que empiece con la letra ${levels[currentLevel].description}`)
     }, 1500)
-
     return () => clearTimeout(timeoutId)
   }, [levels, currentLevel, speakText])
 
-  // todo: save in LS to not redirect
-  if (selectedTheme.id === -1) {
-    navigate('/error', {
-      state: {
-        error: {
-          message: 'No se seleccionó ningún juego!'
-        }
-      }
-    })
-    return
-  }
-
-  return !isLoading && !getLevelsError && levels && levels.length != 0 ? (
+  return !isLoading && !getLevelsError && levels?.length ? (
     <div className="w-full layout flex-col-center gap-4 px-10 md:px-40 lg:pt-20 pt-10">
       <ProgressBar currentActivity={currentLevel + 1} totalActivities={levels?.length} />
-      <GameHeader level={levels[currentLevel]} headerTitle="Selecciona la imágen que empiece con la letra"></GameHeader>
+      <GameHeader level={levels[currentLevel]} headerTitle="Selecciona la imágen que empiece con la letra" />
       <GameOptionsList options={options} onOptionSelection={onOptionSelection} />
     </div>
   ) : (

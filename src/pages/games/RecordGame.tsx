@@ -9,6 +9,25 @@ import ProgressBar from '../../components/progressBar/ProgressBar.tsx'
 import { GameHeader } from './GameHeader.tsx'
 import useCustomMediaQuery from '../../hooks/useMediaQuery.ts'
 
+export const validateThemeAndNavigate = (themeId: number, navigate: (path: string) => void) => {
+  if (themeId === -1) navigate('/error')
+}
+
+export const goToNextLevel = (
+  currentLevel: number,
+  levelsLength: number,
+  setCurrentLevel: (level: number) => void,
+  navigate: (path: string) => void
+) => {
+  if (currentLevel < levelsLength - 1) {
+    setCurrentLevel(currentLevel + 1)
+  } else {
+    navigate('/felicitaciones')
+  }
+}
+
+export const getContainerClass = (isDesktop: boolean) => (isDesktop ? 'w-9/10 flex-center' : 'flex-col-center gap-10')
+
 const RecordGame: React.FC = () => {
   const selectedTheme = useSelectedTheme()
   const navigate = useNavigate()
@@ -16,27 +35,18 @@ const RecordGame: React.FC = () => {
     useRecordGame(selectedTheme.id)
   const { isDesktop } = useCustomMediaQuery()
 
-  // todo: save in LS to not redirect
-  if (selectedTheme.id === -1) {
-    navigate('/error')
-    return null
-  }
+  validateThemeAndNavigate(selectedTheme.id, navigate)
 
-  const handleNextPage = () => {
-    setCurrentLevel((prevState) => prevState + 1)
-    if (currentLevel === levels!.length - 1) {
-      navigate('/felicitaciones')
-    }
-  }
+  const handleNextPage = () => goToNextLevel(currentLevel, levels!.length, setCurrentLevel, navigate)
 
   return !isLoading ? (
     <div className="flex-col-center lg:gap-20 px-32 gap-10 lg:pt-0 pt-10">
       <ProgressBar currentActivity={currentLevel + 1} totalActivities={levels?.length} />
 
       <div className="flex justify-between items-center w-full">
-        <div className={isDesktop ? 'w-9/10 flex-center' : 'flex-col-center gap-10'}>
+        <div className={getContainerClass(isDesktop)}>
           <div className="lg:w-2/5">
-            <GameHeader level={levels![currentLevel]} headerTitle="¿Cómo dirías la palabra?"></GameHeader>
+            <GameHeader level={levels![currentLevel]} headerTitle="¿Cómo dirías la palabra?" />
           </div>
           <div className="w-2/5 flex-col-center">
             {levelOptions.map((option) => (
