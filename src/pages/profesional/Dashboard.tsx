@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Responsive, WidthProvider } from 'react-grid-layout'
 import {
   Chart as ChartJS,
@@ -12,16 +12,17 @@ import {
   Legend
 } from 'chart.js'
 import { Line, Bar } from 'react-chartjs-2'
-import { ThumbsUp, ThumbsDown, Star } from 'lucide-react'
+import { ThumbsUp, ThumbsDown, Star, ArrowRight } from 'lucide-react'
+import { useNavigate } from 'react-router-dom'
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
-import useChart from '../../hooks/useChart'
+import useChart, { ChartData } from '../../hooks/useChart'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend)
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
-const lineChartOptions = (title: string) => ({
+const chartOptions = (title: string) => ({
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
@@ -50,38 +51,16 @@ const lineChartOptions = (title: string) => ({
   }
 })
 
-const barChartOptions = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: {
-      position: 'top' as const
-    },
-    title: {
-      display: true,
-      text: 'Precisión en Actividades de Letras'
-    }
-  },
-  scales: {
-    y: {
-      beginAtZero: true,
-      max: 100,
-      title: {
-        display: true,
-        text: 'Precisión (%)'
-      }
-    }
-  }
-}
-
 export default function Dashboard() {
+  const navigate = useNavigate()
   const [layout, setLayout] = useState([
-    { i: 'syllables', x: 0, y: 0, w: 6, h: 2 },
-    { i: 'phonemes', x: 6, y: 0, w: 6, h: 2 },
-    { i: 'letters', x: 0, y: 2, w: 6, h: 2 },
-    { i: 'lowestSyllables', x: 6, y: 2, w: 6, h: 2 },
-    { i: 'lowestPhonemes', x: 0, y: 4, w: 6, h: 2 },
-    { i: 'feedback', x: 6, y: 4, w: 6, h: 2 }
+    { i: 'today', x: 0, y: 0, w: 12, h: 1 },
+    { i: 'syllables', x: 0, y: 1, w: 6, h: 2 },
+    { i: 'phonemes', x: 6, y: 1, w: 6, h: 2 },
+    { i: 'letters', x: 0, y: 3, w: 6, h: 2 },
+    { i: 'lowestSyllables', x: 6, y: 3, w: 6, h: 2 },
+    { i: 'lowestPhonemes', x: 0, y: 5, w: 6, h: 2 },
+    { i: 'feedback', x: 6, y: 5, w: 6, h: 2 }
   ])
 
   const {
@@ -91,79 +70,75 @@ export default function Dashboard() {
     lowestSyllablesData,
     lowestPhonemesData,
     surveyFeedback,
+    todayActivities,
     isLoading,
     error
   } = useChart()
 
-  const renderChart = (chartId: string) => {
+  const [currentDate, setCurrentDate] = useState('')
+  const [chartTypes, setChartTypes] = useState({
+    syllables: 'line',
+    phonemes: 'line',
+    letters: 'bar',
+    lowestSyllables: 'bar',
+    lowestPhonemes: 'bar'
+  })
+
+  useEffect(() => {
+    const today = new Date()
+    setCurrentDate(today.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' }))
+  }, [])
+
+  const renderChart = (chartId: keyof typeof chartTypes, data: ChartData | null) => {
+    if (!data) return <div>No data available</div>
+    console.log({ data })
+    const ChartComponent = chartTypes[chartId] === 'line' ? Line : Bar
+    return <ChartComponent options={chartOptions(getChartTitle(chartId))} data={data} />
+  }
+
+  const getChartTitle = (chartId: string) => {
     switch (chartId) {
       case 'syllables':
-        return syllablesData && <Line options={lineChartOptions('Progreso de Sílabas')} data={syllablesData} />
+        return 'Progreso de Sílabas'
       case 'phonemes':
-        return phonemesData && <Line options={lineChartOptions('Progreso de Fonemas')} data={phonemesData} />
+        return 'Progreso de Fonemas'
       case 'letters':
-        return activitiesLettersData && <Bar options={barChartOptions} data={activitiesLettersData} />
+        return 'Precisión en Actividades de Letras'
       case 'lowestSyllables':
-        return (
-          lowestSyllablesData && (
-            <Bar
-              options={{
-                ...barChartOptions,
-                plugins: { ...barChartOptions.plugins, title: { display: true, text: 'Sílabas con Menor Puntaje' } }
-              }}
-              data={lowestSyllablesData}
-            />
-          )
-        )
+        return 'Sílabas con Menor Puntaje'
       case 'lowestPhonemes':
-        return (
-          lowestPhonemesData && (
-            <Bar
-              options={{
-                ...barChartOptions,
-                plugins: { ...barChartOptions.plugins, title: { display: true, text: 'Fonemas con Menor Puntaje' } }
-              }}
-              data={lowestPhonemesData}
-            />
-          )
-        )
-      case 'feedback':
-        return (
-          surveyFeedback && (
-            <div className="flex flex-col justify-center h-full">
-              <h2 className="text-2xl font-semibold mb-4">Feedback del Juego</h2>
-              <div className="flex justify-around items-center">
-                <div className="text-center">
-                  <h3 className="text-lg font-semibold mb-2">Actividad Más Gustada</h3>
-                  <p>{surveyFeedback.most_liked_activity.activity_name}</p>
-                  <div className="flex items-center justify-center mt-2">
-                    <ThumbsUp className="text-green-500 mr-2" />
-                    <Star className="text-yellow-500" />
-                    <Star className="text-yellow-500" />
-                    <Star className="text-yellow-500" />
-                    <Star className="text-yellow-500" />
-                    <Star className="text-yellow-500" />
-                  </div>
-                </div>
-                <div className="text-center">
-                  <h3 className="text-lg font-semibold mb-2">Actividad Menos Gustada</h3>
-                  <p>{surveyFeedback.least_liked_activity.activity_name}</p>
-                  <div className="flex items-center justify-center mt-2">
-                    <ThumbsDown className="text-red-500 mr-2" />
-                    <Star className="text-yellow-500" />
-                    <Star className="text-yellow-500" />
-                    <Star className="text-gray-300" />
-                    <Star className="text-gray-300" />
-                    <Star className="text-gray-300" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          )
-        )
+        return 'Fonemas con Menor Puntaje'
       default:
-        return null
+        return ''
     }
+  }
+
+  const renderTodayActivities = () => {
+    return (
+      <div className="bg-white rounded-lg shadow-md p-4">
+        <h2 className="text-2xl font-semibold mb-4">¿Qué pasó hoy?</h2>
+        <p className="text-gray-600 mb-4">{currentDate}</p>
+        <div className="flex justify-between mb-4">
+          {['Letras', 'Palabras', 'La Viborita'].map((activity, index) => (
+            <div key={index} className="bg-blue-100 rounded-lg p-4 w-[30%] text-center">
+              <h3 className="font-semibold mb-2">{activity}</h3>
+              <p className="text-2xl font-bold">{todayActivities ? todayActivities[activity.toLowerCase()] || 0 : 0}</p>
+              <p className="text-sm text-gray-600">veces jugadas</p>
+            </div>
+          ))}
+        </div>
+        <button
+          onClick={() => navigate('/profesional/paciente/1/timeline')}
+          className="bg-blue-500 text-white px-4 py-2 rounded-full flex items-center justify-center w-full"
+        >
+          Ver más <ArrowRight className="ml-2" size={20} />
+        </button>
+      </div>
+    )
+  }
+
+  const handleChartTypeChange = (chartId: string, type: 'line' | 'bar') => {
+    setChartTypes((prev) => ({ ...prev, [chartId]: type }))
   }
 
   if (isLoading) {
@@ -191,21 +166,75 @@ export default function Dashboard() {
         isDraggable={true}
         isResizable={true}
       >
-        {layout.map((item) => (
-          <div key={item.i} className="bg-white rounded-lg shadow-md overflow-hidden">
-            <div className="p-4 border-b border-gray-200">
-              <h2 className="text-xl font-semibold">
-                {item.i === 'syllables' && 'Avance de Puntaje por Sílaba'}
-                {item.i === 'phonemes' && 'Avance de Puntaje por Fonema'}
-                {item.i === 'letters' && 'Precisión en Actividades de Letras'}
-                {item.i === 'lowestSyllables' && 'Sílabas con Menor Puntaje'}
-                {item.i === 'lowestPhonemes' && 'Fonemas con Menor Puntaje'}
-                {item.i === 'feedback' && 'Feedback del Juego'}
-              </h2>
+        <div key="today" className="bg-white rounded-lg shadow-md overflow-hidden">
+          {renderTodayActivities()}
+        </div>
+        {layout
+          .filter((item) => item.i !== 'today' && item.i !== 'feedback')
+          .map((item) => (
+            <div key={item.i} className="bg-white rounded-lg shadow-md overflow-hidden">
+              <div className="p-4 border-b border-gray-200 flex justify-between items-center">
+                <h2 className="text-xl font-semibold">{getChartTitle(item.i)}</h2>
+                <select
+                  value={chartTypes[item.i as keyof typeof chartTypes]}
+                  onChange={(e) => handleChartTypeChange(item.i, e.target.value as 'line' | 'bar')}
+                  className="border rounded p-2"
+                >
+                  <option value="line">Línea</option>
+                  <option value="bar">Barra</option>
+                </select>
+              </div>
+              <div className="p-4 h-[calc(100%-4rem)]">
+                {renderChart(
+                  item.i as keyof typeof chartTypes,
+                  {
+                    syllables: syllablesData,
+                    phonemes: phonemesData,
+                    letters: activitiesLettersData,
+                    lowestSyllables: lowestSyllablesData,
+                    lowestPhonemes: lowestPhonemesData
+                  }[item.i as keyof typeof chartTypes]
+                )}
+              </div>
             </div>
-            <div className="p-4 h-[calc(100%-4rem)]">{renderChart(item.i)}</div>
+          ))}
+        <div key="feedback" className="bg-white rounded-lg shadow-md overflow-hidden">
+          <div className="p-4 border-b border-gray-200">
+            <h2 className="text-xl font-semibold">Feedback del Juego</h2>
           </div>
-        ))}
+          <div className="p-4 h-[calc(100%-4rem)]">
+            {surveyFeedback && (
+              <div className="flex flex-col justify-center h-full">
+                <div className="flex justify-around items-center">
+                  <div className="text-center">
+                    <h3 className="text-lg font-semibold mb-2">Actividad Más Gustada</h3>
+                    <p>{surveyFeedback.most_liked_activity.activity_name}</p>
+                    <div className="flex items-center justify-center mt-2">
+                      <ThumbsUp className="text-green-500 mr-2" />
+                      <Star className="text-yellow-500" />
+                      <Star className="text-yellow-500" />
+                      <Star className="text-yellow-500" />
+                      <Star className="text-yellow-500" />
+                      <Star className="text-yellow-500" />
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <h3 className="text-lg font-semibold mb-2">Actividad Menos Gustada</h3>
+                    <p>{surveyFeedback.least_liked_activity.activity_name}</p>
+                    <div className="flex items-center justify-center mt-2">
+                      <ThumbsDown className="text-red-500 mr-2" />
+                      <Star className="text-yellow-500" />
+                      <Star className="text-yellow-500" />
+                      <Star className="text-gray-300" />
+                      <Star className="text-gray-300" />
+                      <Star className="text-gray-300" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
       </ResponsiveGridLayout>
     </div>
   )
