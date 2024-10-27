@@ -1,24 +1,26 @@
 import { useEffect, useState } from 'react'
-import { useSpeakText } from './useSpeakText'
 import { Step } from 'react-joyride'
+import { useSpeakText } from './useSpeakText'
 
 const useProductTour = ({ steps }: { steps: Step[] }) => {
   const [runTour, setRunTour] = useState(false)
-  const speakText = useSpeakText()
+  const [currentStepIndex, setCurrentStepIndex] = useState(0)
+  const textToSpeak = useSpeakText()
 
   useEffect(() => {
     setRunTour(true)
   }, [])
 
-  const handleJoyrideCallback = ({ action, index, type }: { action: string; index: number; type: string }) => {
-    if (type === 'step:after' && action === 'next') {
-      const textToSpeak = steps[index].content?.toString()
+  useEffect(() => {
+    const stepContent = steps[currentStepIndex]?.content?.toString()
+    if (stepContent) {
+      textToSpeak(stepContent)
+    }
+  }, [currentStepIndex, steps, textToSpeak])
 
-      console.log('textToSpeak', textToSpeak)
-
-      if (textToSpeak) {
-        speakText(textToSpeak)
-      }
+  const handleJoyrideCallback = ({ index, type }: { index: number; type: string }) => {
+    if (type === 'step:after' || type === 'step:before') {
+      setCurrentStepIndex(index)
     }
   }
 
