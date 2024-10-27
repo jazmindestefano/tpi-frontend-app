@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGetGames } from '../hooks/queries.ts'
 import HomeCard from '../components/common/cards/HomeCard.tsx'
@@ -6,18 +7,13 @@ import { useDispatch } from 'react-redux'
 import { selectGame, setModalFeedback } from '../redux/store/gameSlice.ts'
 import { FeedbackModal } from '../components/common/modals/FeedbackModal.tsx'
 import { useShowModalFeedback } from '../hooks/selectors.ts'
-import { useState } from 'react'
 import { HearableButton } from '../components/common/buttons/HearableButton.tsx'
+import { getCardBgColor } from '../helpers/colors.ts'
 
-const getCardBgColor = (index: number) => {
-  const colors = ['bg-blue-500', 'bg-orange-400', 'bg-yellow-500']
-  return colors[index % colors.length]
-}
-
-const Home: React.FC = () => {
+export default function Home() {
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { games, isLoading, error } = useGetGames()
+  const { games, isLoading: gamesLoading, error } = useGetGames()
   const showModalFeedBack = useShowModalFeedback()
   const [showModal, setShowModal] = useState(showModalFeedBack)
 
@@ -25,7 +21,7 @@ const Home: React.FC = () => {
     return <h1>¡Ups! Parece que estamos teniendo un problema.</h1>
   }
 
-  if (isLoading) {
+  if (gamesLoading) {
     return <SpinnerLoader />
   }
 
@@ -41,7 +37,7 @@ const Home: React.FC = () => {
       <div className="flex-col-center gap-6 layout">
         <div className="flex-center gap-4">
           <h1 className="text-h1">Juegos</h1>
-          <HearableButton variant={'secondary'} text={'Juegos'} />
+          <HearableButton variant={'secondary'} text={'Juegos'} className="volume-icon" />
         </div>
         <div className="w-full grid grid-cols-1 md:grid-cols-3 xl:px-20 gap-10 pb-10">
           {games.map((game) => (
@@ -61,5 +57,3 @@ const Home: React.FC = () => {
     <h1 className="text-h1">No hay juegos disponibles</h1>
   )
 }
-
-export default Home

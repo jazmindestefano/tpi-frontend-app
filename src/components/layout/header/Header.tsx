@@ -19,7 +19,7 @@ const Header: React.FC = () => {
         </div>
       )}
       <div className={`flex flex-row gap-4 ${location.pathname.includes('actividad') ? 'ml-auto' : ''}`}>
-        {/* solo hasta tener login */}
+        {/* Resto de los botones */}
         <Button
           size={'square'}
           variant={'fourth'}
@@ -33,6 +33,7 @@ const Header: React.FC = () => {
           variant={'secondary'}
           onClick={() => navigate('/logros')}
           onMouseEnter={() => speakText('Ir a Mis Logros')}
+          className="achievements-button"
         >
           <img src="/pines/medalla.png" alt="Avatar" className="object-cover h-10" />
         </Button>
@@ -42,12 +43,18 @@ const Header: React.FC = () => {
             variant={'tertiary'}
             onClick={() => navigate(location.pathname !== '/perfil' ? '/perfil' : '/')}
             onMouseEnter={() => speakText('Ir a Mi Perfil')}
+            className="profile-button"
           >
             <img src="/avatar/lion-avatar.png" alt="Avatar" className="object-cover h-10" />
           </Button>
         )}
         {location.pathname === '/' ? (
-          <Button size={'square'} variant={'primary'} onMouseEnter={() => speakText('Salir de la Aplicación')}>
+          <Button
+            size={'square'}
+            variant={'primary'}
+            onMouseEnter={() => speakText('Salir de la Aplicación')}
+            className="logout-button"
+          >
             <LogOut className="text-white" />
           </Button>
         ) : (
