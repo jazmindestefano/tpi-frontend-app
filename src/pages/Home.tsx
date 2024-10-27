@@ -37,7 +37,7 @@ export default function Home() {
       <div className="flex-col-center gap-6 layout">
         <div className="flex-center gap-4">
           <h1 className="text-h1">Juegos</h1>
-          <HearableButton variant={'secondary'} text={'Juegos'} className="volume-icon" />
+          <HearableButton variant={'secondary'} text={'Elegí un juego'} className="volume-icon" />
         </div>
         <div className="w-full grid grid-cols-1 md:grid-cols-3 xl:px-20 gap-10 pb-10">
           {games.map((game) => (

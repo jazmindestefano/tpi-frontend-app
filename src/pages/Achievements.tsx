@@ -12,7 +12,7 @@ const AchievementsPage = () => {
     <div className="flex flex-col items-center justify-start lg:pt-28 pt-16 w-full h-screen lg:px-32 px-10">
       <div className="flex-center gap-4">
         <h1 className="text-4xl font-bold">Logros</h1>
-        <HearableButton text={'Logros'} />
+        <HearableButton text={'Estos son tus logros'} />
       </div>
       <div className="flex flex-wrap justify-center mt-4">
         {uniqueAchievements.map((achievement) => (
