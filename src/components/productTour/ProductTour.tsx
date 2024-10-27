@@ -12,6 +12,13 @@ const ProductTour = () => {
       continuous={true}
       showSkipButton={true}
       showProgress={true}
+      locale={{
+        back: 'Atrás',
+        close: 'Cerrar',
+        last: 'Finalizar',
+        next: 'Siguiente',
+        skip: 'Saltar'
+      }}
       callback={handleJoyrideCallback}
       styles={{
         options: {
@@ -21,6 +28,7 @@ const ProductTour = () => {
           primaryColor: '#3498db',
           textColor: '#004a14',
           width: 300,
+          beaconSize: 36,
           zIndex: 1000
         }
       }}
