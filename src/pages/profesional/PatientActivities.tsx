@@ -1,4 +1,5 @@
 import { Activity, ActivityCard } from '../../components/common/cards/ActivityCard'
+import BackButton from '../../components/common/buttons/BackButton'
 
 const actividades: Activity[] = [
   { id: 1, name: 'Palabras' },
@@ -8,8 +9,9 @@ const actividades: Activity[] = [
 
 export default function PatientActivities() {
   return (
-    <div className="flex flex-col items-start justify-start gap-4 lg:pt-0 pt-20">
+    <div className="flex flex-col items-start justify-start gap-4 lg:p-4 pt-20">
       <div>
+        <BackButton text="Volver al Dashboard" route="/profesional/paciente/1" />
         <h2 className="text-2xl font-extrabold mb-4">Actividades</h2>
         <div className="flex flex-wrap gap-10 lg:px-10 lg:py-6">
           {actividades.length > 0 ? (

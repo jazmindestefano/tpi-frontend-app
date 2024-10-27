@@ -1,9 +1,7 @@
-import { useNavigate } from 'react-router-dom'
-import { ArrowLeft } from 'lucide-react'
 import useTimeline from '../../hooks/useTimeline'
+import BackButton from '../../components/common/buttons/BackButton'
 
 export default function Timeline() {
-  const navigate = useNavigate()
   const { activities, visibleActivities, lastActivityRef, isLoading, error } = useTimeline()
 
   if (isLoading) {
@@ -15,15 +13,8 @@ export default function Timeline() {
   }
 
   return (
-    <div className="container mx-auto p-4 pb-40 min-h-screen">
-      <button
-        onClick={() => navigate(`/profesional/paciente/1`)}
-        className="mb-8 flex items-center text-blue-600 hover:text-blue-800 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-blue-500 rounded-md"
-        aria-label="Volver al Dashboard"
-      >
-        <ArrowLeft className="mr-2 h-5 w-5" />
-        <span className="text-lg">Volver al Dashboard</span>
-      </button>
+    <div className="container p-4 pb-40 min-h-screen">
+      <BackButton text="Volver al Dashboard" route="/profesional/paciente/1" />
       <h1 className="text-3xl font-bold mb-8 text-gray-800">Línea de Tiempo de Actividades</h1>
       <div className="relative space-y-6 pl-[9%]">
         <div className="absolute left-[5%] top-[24px] bottom-0 w-0.5 bg-blue-300"></div>
