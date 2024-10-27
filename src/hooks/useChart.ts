@@ -16,7 +16,7 @@ export interface ActivityLetterData {
   accuracy_rate: number
 }
 
-interface ChartData {
+export interface ChartData {
   labels: string[]
   datasets: {
     label: string
@@ -39,13 +39,14 @@ export interface SurveyFeedback {
   }
 }
 
-interface UseChartDataReturn {
+export interface UseChartDataReturn {
   syllablesData: ChartData | null
   phonemesData: ChartData | null
   activitiesLettersData: ChartData | null
   lowestSyllablesData: ChartData | null
   lowestPhonemesData: ChartData | null
   surveyFeedback: SurveyFeedback | null
+  todayActivities: Record<string, number> | null
   isLoading: boolean
   error: string | null
 }
@@ -163,7 +164,8 @@ const useChart = (): UseChartDataReturn => {
     lowestPhonemesData,
     surveyFeedback,
     isLoading,
-    error
+    error,
+    todayActivities: null
   }
 }
 
