@@ -1,4 +1,3 @@
-import { useState, useEffect } from 'react'
 import { Responsive, WidthProvider } from 'react-grid-layout'
 import {
   Chart as ChartJS,
@@ -16,7 +15,8 @@ import { ThumbsUp, ThumbsDown, Star, ArrowRight } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
-import useChart, { ChartData } from '../../hooks/useChart'
+import { ChartData } from '../../hooks/useChart'
+import useDashboard from '../../hooks/useDashboard'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend)
 
@@ -53,17 +53,12 @@ const chartOptions = (title: string) => ({
 
 export default function Dashboard() {
   const navigate = useNavigate()
-  const [layout, setLayout] = useState([
-    { i: 'today', x: 0, y: 0, w: 12, h: 1 },
-    { i: 'syllables', x: 0, y: 1, w: 6, h: 2 },
-    { i: 'phonemes', x: 6, y: 1, w: 6, h: 2 },
-    { i: 'letters', x: 0, y: 3, w: 6, h: 2 },
-    { i: 'lowestSyllables', x: 6, y: 3, w: 6, h: 2 },
-    { i: 'lowestPhonemes', x: 0, y: 5, w: 6, h: 2 },
-    { i: 'feedback', x: 6, y: 5, w: 6, h: 2 }
-  ])
-
   const {
+    layout,
+    setLayout,
+    currentDate,
+    chartTypes,
+    handleChartTypeChange,
     syllablesData,
     phonemesData,
     activitiesLettersData,
@@ -72,45 +67,15 @@ export default function Dashboard() {
     surveyFeedback,
     todayActivities,
     isLoading,
-    error
-  } = useChart()
-
-  const [currentDate, setCurrentDate] = useState('')
-  const [chartTypes, setChartTypes] = useState({
-    syllables: 'line',
-    phonemes: 'line',
-    letters: 'bar',
-    lowestSyllables: 'bar',
-    lowestPhonemes: 'bar'
-  })
-
-  useEffect(() => {
-    const today = new Date()
-    setCurrentDate(today.toLocaleDateString('es-ES', { year: 'numeric', month: 'long', day: 'numeric' }))
-  }, [])
+    error,
+    getChartTitle
+  } = useDashboard()
 
   const renderChart = (chartId: keyof typeof chartTypes, data: ChartData | null) => {
     if (!data) return <div>No data available</div>
     console.log({ data })
     const ChartComponent = chartTypes[chartId] === 'line' ? Line : Bar
     return <ChartComponent options={chartOptions(getChartTitle(chartId))} data={data} />
-  }
-
-  const getChartTitle = (chartId: string) => {
-    switch (chartId) {
-      case 'syllables':
-        return 'Progreso de Sílabas'
-      case 'phonemes':
-        return 'Progreso de Fonemas'
-      case 'letters':
-        return 'Precisión en Actividades de Letras'
-      case 'lowestSyllables':
-        return 'Sílabas con Menor Puntaje'
-      case 'lowestPhonemes':
-        return 'Fonemas con Menor Puntaje'
-      default:
-        return ''
-    }
   }
 
   const renderTodayActivities = () => {
@@ -135,10 +100,6 @@ export default function Dashboard() {
         </button>
       </div>
     )
-  }
-
-  const handleChartTypeChange = (chartId: string, type: 'line' | 'bar') => {
-    setChartTypes((prev) => ({ ...prev, [chartId]: type }))
   }
 
   if (isLoading) {
