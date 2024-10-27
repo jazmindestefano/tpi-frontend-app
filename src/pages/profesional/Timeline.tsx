@@ -40,9 +40,12 @@ export default function Timeline() {
                   className="flex justify-between items-center text-gray-600 hover:bg-gray-50 p-2 rounded-md transition-colors duration-200"
                 >
                   <span className="capitalize">{activity.name}s</span>
-                  <span className="font-medium bg-blue-100 text-blue-800 px-3 py-1 rounded-full">
-                    Jugó {activity.count} {activity.count === 1 ? 'vez' : 'veces'}
-                  </span>
+                  <div className="flex gap-4 items-center justify-center">
+                    <span className="font-medium px-3 py-1">
+                      Jugó {activity.count} {activity.count === 1 ? 'vez' : 'veces'}
+                    </span>
+                    <button className="bg-blue-100 text-blue-800 px-3 py-2 rounded-full">Ver detalle</button>
+                  </div>
                 </li>
               ))}
             </ul>
