@@ -36,7 +36,7 @@ const ThemeSelector = () => {
     <div className="flex-col-center xl:gap-10 pt-20 lg:pt-0">
       <div className="flex-center self-center gap-4">
         <h1 className="text-h1">Temáticas</h1>
-        <HearableButton variant={'secondary'} text={'Temáticas'} />
+        <HearableButton variant={'secondary'} text={'Elegí una temática'} />
       </div>
       {themes && themes.length > 0 ? (
         <ThemeCardsList themes={themes} onCardClick={onCardClick} />

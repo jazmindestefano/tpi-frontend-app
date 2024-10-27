@@ -10,7 +10,7 @@ const Profile: React.FC = () => {
     <div className="flex-col-center gap-4 mx-8 md:mx-52">
       <div className="flex-center gap-4">
         <h1 className="text-h1">Perfil</h1>
-        <HearableButton variant={'secondary'} text={'Perfil'} />
+        <HearableButton variant={'secondary'} text={'Este es tu perfil'} />
       </div>
       <div className="flex-col-center rounded-xl border shadow-lg py-8 bg-orange-50">
         <div className="flex flex-row justify-end items-end sm:mx-auto sm:w-full sm:max-w-lg">
