@@ -21,3 +21,8 @@ export const getRandomColor = () => {
   ]
   return colors[Math.floor(Math.random() * colors.length)]
 }
+
+export const getCardBgColor = (index: number) => {
+  const colors = ['bg-blue-500', 'bg-orange-400', 'bg-yellow-500']
+  return colors[index % colors.length]
+}
