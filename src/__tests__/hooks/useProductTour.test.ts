@@ -34,7 +34,7 @@ describe('useProductTour', () => {
     const { result } = renderHook(() => useProductTour({ steps }))
 
     act(() => {
-      result.current.handleJoyrideCallback({ action: 'next', index: 0, type: 'step:after' })
+      result.current.handleJoyrideCallback({ index: 0, type: 'step:after' })
     })
 
     expect(speakTextMock).toHaveBeenCalledWith('Step 1')
@@ -47,7 +47,7 @@ describe('useProductTour', () => {
     const { result } = renderHook(() => useProductTour({ steps: [{ target: '.step1', content: undefined }] }))
 
     act(() => {
-      result.current.handleJoyrideCallback({ action: 'next', index: 0, type: 'step:after' })
+      result.current.handleJoyrideCallback({ index: 0, type: 'step:after' })
     })
 
     expect(speakTextMock).not.toHaveBeenCalled()
