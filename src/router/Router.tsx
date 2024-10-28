@@ -13,6 +13,8 @@ import ProfesionalPageLayout from '../components/layout/profesionalPageLayout/Pr
 import Dashboard from '../pages/profesional/Dashboard.tsx'
 import PatientActivities from '../pages/profesional/PatientActivities.tsx'
 import ActivityResponses from '../pages/profesional/ActivityResponses.tsx'
+import TermsAndConditions from '../pages/TermsAndCondition.tsx'
+import PrivacyPolicy from '../pages/PrivacyPolicy.tsx'
 
 export const router = createBrowserRouter([
   {
@@ -49,6 +51,14 @@ export const router = createBrowserRouter([
       {
         path: '/logros',
         element: <AchievementsPage />
+      },
+      {
+        path: '/terminos-y-condiciones',
+        element: <TermsAndConditions />
+      },
+      {
+        path: '/politica-de-privacidad',
+        element: <PrivacyPolicy />
       }
     ]
   },
