@@ -9,33 +9,7 @@ import { GameOptionsList } from './GameOptionsList.tsx'
 import { GameHeader } from './GameHeader.tsx'
 import { useSpeakText } from '../../hooks/useSpeakText.ts'
 import ProgressBar from '../../components/progressBar/ProgressBar.tsx'
-
-export const prepareData = ({
-  patiendId,
-  activityId,
-  selectedOption
-}: {
-  patiendId: number
-  selectedOption: number
-  activityId: number
-}) => ({
-  patientId: patiendId,
-  activities: [{ activityId, selectedOption }]
-})
-
-export const validateTheme = (themeId: number, navigate: (path: string) => void) => {
-  if (themeId === -1) {
-    navigate('/error')
-  }
-}
-
-export const navigateToCongratulations = (
-  currentLevel: number,
-  totalLevels: number,
-  navigate: (path: string) => void
-) => {
-  if (currentLevel >= totalLevels - 1) navigate('/felicitaciones')
-}
+import { prepareData, validateTheme, navigateToCongratulations } from './gameHelper.ts'
 
 const AuditoryDiscriminationGame: React.FC = () => {
   const selectedTheme = useSelectedTheme()

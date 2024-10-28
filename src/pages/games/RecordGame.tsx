@@ -8,25 +8,7 @@ import { useSelectedTheme } from '../../hooks/selectors.ts'
 import ProgressBar from '../../components/progressBar/ProgressBar.tsx'
 import { GameHeader } from './GameHeader.tsx'
 import useCustomMediaQuery from '../../hooks/useMediaQuery.ts'
-
-export const validateThemeAndNavigate = (themeId: number, navigate: (path: string) => void) => {
-  if (themeId === -1) navigate('/error')
-}
-
-export const goToNextLevel = (
-  currentLevel: number,
-  levelsLength: number,
-  setCurrentLevel: (level: number) => void,
-  navigate: (path: string) => void
-) => {
-  if (currentLevel < levelsLength - 1) {
-    setCurrentLevel(currentLevel + 1)
-  } else {
-    navigate('/felicitaciones')
-  }
-}
-
-export const getContainerClass = (isDesktop: boolean) => (isDesktop ? 'w-9/10 flex-center' : 'flex-col-center gap-10')
+import { validateThemeAndNavigate, goToNextLevel, getContainerClass } from './gameHelper.ts'
 
 const RecordGame: React.FC = () => {
   const selectedTheme = useSelectedTheme()
