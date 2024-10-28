@@ -32,14 +32,12 @@ vi.mock('../../components/common/cards/HomeCard', () => ({
   default: () => <div>Home Card</div>
 }))
 
-// Ajuste del mock de VolumeButton
 vi.mock('../../components/common/buttons/VolumeButton', () => ({
   VolumeButton: ({ variant, onClick }: { variant: string; onClick: () => void }) => (
     <button onClick={onClick}>Volume Button - {variant}</button>
   )
 }))
 
-// Mock de useShowModalFeedback
 vi.mock('../../hooks/selectors', () => ({
   useShowModalFeedback: vi.fn()
 }))
@@ -124,7 +122,7 @@ describe('Home', () => {
   })
 
   it('renders feedback modal when showModalFeedBack is true', () => {
-    ;(useShowModalFeedback as jest.Mock).mockReturnValue(true) // Mockear el valor de retorno como true
+    ;(useShowModalFeedback as jest.Mock).mockReturnValue(true)
 
     render(
       <Provider store={store}>
