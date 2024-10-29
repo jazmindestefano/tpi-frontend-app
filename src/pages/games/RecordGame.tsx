@@ -1,30 +1,52 @@
 import SpinnerLoader from '../../components/common/SpinnerLoader'
 import { useNavigate } from 'react-router-dom'
-import useRecordGame from '../../hooks/useRecordGame'
 import { RecordButton } from '../../components/common/buttons/RecordButton.tsx'
 import Button from '../../components/common/buttons/Button.tsx'
 import { ArrowRightIcon } from '../../components/common/icons/Icons.tsx'
-import { useSelectedTheme } from '../../hooks/selectors.ts'
+import { useSelectedGame, useSelectedTheme, useUser } from '../../hooks/selectors.ts'
 import ProgressBar from '../../components/progressBar/ProgressBar.tsx'
 import { GameHeader } from './GameHeader.tsx'
-import useCustomMediaQuery from '../../hooks/useMediaQuery.ts'
+import { useGetGameLevels, usePostUserRecording } from '../../hooks/queries.ts'
+import { useAudioRecording } from '../../hooks/useAudioRecording.ts'
+import { useEffect, useState } from 'react'
+import { LevelOption } from '../../interfaces/interfaces.ts'
+import { shuffleArray } from '../../helpers/arrays.ts'
+import { useMediaQuery } from 'react-responsive'
 
 const RecordGame: React.FC = () => {
   const selectedTheme = useSelectedTheme()
   const navigate = useNavigate()
-  const { isLoading, levels, currentLevel, levelOptions, setCurrentLevel, isRecording, stopRecording, startRecording } =
-    useRecordGame(selectedTheme.id)
-  const { isDesktop } = useCustomMediaQuery()
+  const isDesktop = useMediaQuery({ minWidth: 768 })
+  const { levels, isLoading, error } = useGetGameLevels(selectedTheme.id)
+  const { isRecording, audio, startRecording, stopRecording } = useAudioRecording()
+  const { mutate } = usePostUserRecording()
+  const [currentLevel, setCurrentLevel] = useState<number>(0)
+  const [levelOptions, setLevelOptions] = useState<LevelOption[]>([])
+  const user = useUser()
+  const selectedGame = useSelectedGame()
 
-  // todo: save in LS to not redirect
-  if (selectedTheme.id === -1) {
-    navigate('/error')
-    return null
-  }
+  useEffect(() => {
+    if (levels && !isLoading && !error) {
+      const levelOptions = [...levels[currentLevel].options]
+      shuffleArray(levelOptions)
+      setLevelOptions(levelOptions)
+    }
+  }, [levels, isLoading, error, currentLevel])
+
+  useEffect(() => {
+    if (audio) {
+      mutate({
+        userId: user.id,
+        gameId: selectedGame.id,
+        activityId: 1, // todo: fix hardcoded value
+        userAudio: audio
+      })
+    }
+  }, [audio, currentLevel, levels, mutate, selectedGame, user])
 
   const handleNextPage = () => {
     setCurrentLevel((prevState) => prevState + 1)
-    if (currentLevel === levels!.length - 1) {
+    if (levels && currentLevel === levels.length - 1) {
       navigate('/felicitaciones')
     }
   }
@@ -36,7 +58,7 @@ const RecordGame: React.FC = () => {
       <div className="flex justify-between items-center w-full">
         <div className={isDesktop ? 'w-9/10 flex-center' : 'flex-col-center gap-10'}>
           <div className="lg:w-2/5">
-            <GameHeader level={levels![currentLevel]} headerTitle="¿Cómo dirías la palabra?"></GameHeader>
+            <GameHeader level={levels![currentLevel]} headerTitle="¿Cómo dirías la palabra?" />
           </div>
           <div className="w-2/5 flex-col-center">
             {levelOptions.map((option) => (

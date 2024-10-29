@@ -9,6 +9,7 @@ import {
 } from '../interfaces/interfaces.ts'
 import { unauthenticatedClient } from './clients.ts'
 import { convertBlobToAudioFile } from '../helpers/blobs.ts'
+import axios from 'axios'
 
 export const getThemesByGameId = async (gameId: number): Promise<Theme[] | null> => {
   // will change to an authenticated client probably
@@ -131,4 +132,15 @@ export const getSynthesizedAudio = async (text: string) => {
   )
 
   return new Blob([new Uint8Array(res.data)], { type: 'audio/mp3' })
+}
+
+export const getMe = async () => {
+  // todo: delete me.json and use a configured axios instance
+  const res = await axios.get('/db/me.json')
+
+  if (res.status === 200) {
+    return res.data
+  }
+
+  return null
 }

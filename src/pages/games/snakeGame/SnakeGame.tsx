@@ -31,12 +31,6 @@ const SnakeGame: React.FC<SnakeGameProps> = ({ items, cellSize = 50 }) => {
   const selectedGame = useSelectedGame()
 
   useEffect(() => {
-    if (user.id === -1) {
-      navigate('/')
-    }
-  }, [navigate, user])
-
-  useEffect(() => {
     if (audio && !isRecording) {
       mutate({
         userId: user.id,

@@ -12,6 +12,7 @@ export interface Game {
 
 export interface User {
   id: number
+  name: string
 }
 
 export interface GameLevel {

@@ -9,6 +9,7 @@ import {
   PostFeedbackData,
   PostUserRecordingData,
   Theme,
+  User,
   Word
 } from '../interfaces/interfaces.ts'
 
@@ -130,10 +131,10 @@ export const useRandomAchievement = (
   return { achievement: data, error, isLoading }
 }
 
-export const useAchievements = (
+export const useGetAchievements = (
   patientId: number
 ): {
-  achievement: Achievement[] | null | undefined
+  achievements: Achievement[] | null | undefined
   error: Error | null
   isLoading: boolean
 } => {
@@ -141,7 +142,7 @@ export const useAchievements = (
     queryKey: ['patientId', patientId],
     queryFn: async () => await ApiService.getAchievements(patientId)
   })
-  return { achievement: data, error, isLoading }
+  return { achievements: data, error, isLoading }
 }
 
 export const useTextToSpeech = (): {
@@ -155,4 +156,16 @@ export const useTextToSpeech = (): {
   })
 
   return { error, isSuccess, isPending, mutateAsync }
+}
+
+export const useGetMe = (): {
+  user: User | null | undefined
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['user', 'current'],
+    queryFn: async () => await ApiService.getMe()
+  })
+  return { user: data, error, isLoading }
 }

@@ -10,6 +10,7 @@ import { GameHeader } from './GameHeader.tsx'
 import { useSpeakText } from '../../hooks/useSpeakText.ts'
 import ProgressBar from '../../components/progressBar/ProgressBar.tsx'
 
+// todo: move this to helper
 const prepareData = ({
   patiendId,
   activityId,
@@ -35,7 +36,7 @@ const AuditoryDiscriminationGame: React.FC = () => {
   const selectedTheme = useSelectedTheme()
   const navigate = useNavigate()
   const user = useUser()
-  const { levels, isLoading, error: getLevelsError } = useGetGameLevels(selectedTheme!.id)
+  const { levels, isLoading, error: getLevelsError } = useGetGameLevels(selectedTheme.id)
   const [currentLevel, setCurrentLevel] = useState<number>(0)
   const [options, setOptions] = useState<LevelOption[]>([])
   // todo: all props need to be used
@@ -75,18 +76,6 @@ const AuditoryDiscriminationGame: React.FC = () => {
     }, 250)
     return () => clearTimeout(timeoutId)
   }, [currentLevel, levels, speakText])
-
-  // todo: save in LS to not redirect
-  if (selectedTheme.id === -1) {
-    navigate('/error', {
-      state: {
-        error: {
-          message: 'No se seleccionó ningún juego!'
-        }
-      }
-    })
-    return
-  }
 
   return !isLoading && !getLevelsError && levels && levels.length != 0 ? (
     <div className="w-full layout flex-col-center gap-4 px-10 md:px-40 pt-20">

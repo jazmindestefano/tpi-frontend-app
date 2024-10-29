@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { Game, Theme } from '../../interfaces/interfaces.ts'
+import { NOT_YET_ASSIGNED_NUM, NOT_YET_ASSIGNED_STR } from '../../config/constants.ts'
 
 interface GameState {
   selectedGame: Game
@@ -9,14 +10,14 @@ interface GameState {
 
 const initialState: GameState = {
   selectedGame: {
-    id: -1,
-    name: '',
-    image: ''
+    id: NOT_YET_ASSIGNED_NUM,
+    name: NOT_YET_ASSIGNED_STR,
+    image: NOT_YET_ASSIGNED_STR
   },
   selectedTheme: {
-    id: -1,
-    name: '',
-    image: ''
+    id: NOT_YET_ASSIGNED_NUM,
+    name: NOT_YET_ASSIGNED_STR,
+    image: NOT_YET_ASSIGNED_STR
   },
   showModalFeedback: false
 }
