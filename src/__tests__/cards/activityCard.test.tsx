@@ -12,7 +12,7 @@ describe('ActivityCard component', () => {
   it('renders activity name correctly', () => {
     render(
       <MemoryRouter>
-        <ActivityCard actividad={actividad} />
+        <ActivityCard activity={actividad} />
       </MemoryRouter>
     )
 
@@ -23,7 +23,7 @@ describe('ActivityCard component', () => {
   it('renders "Ver respuestas" button', () => {
     render(
       <MemoryRouter>
-        <ActivityCard actividad={actividad} />
+        <ActivityCard activity={actividad} />
       </MemoryRouter>
     )
 

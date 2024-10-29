@@ -1,4 +1,0 @@
-/* This CSS class subtracts the total gap between items to prevent overflow. It's dividing the gap evenly among the flex items, minus the last column. */
-.theme-card-basis {
-    flex-basis: calc(100% / 3 - theme(spacing.4) / 3 * (3 - 1));
-}

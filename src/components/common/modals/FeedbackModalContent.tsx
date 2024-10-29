@@ -1,7 +1,6 @@
 import { BaseModal } from './BaseModal.tsx'
 import { BadFeedbackIcon, GoodFeedbackIcon, MehFeedbackIcon } from '../icons/Icons.tsx'
 import Button from '../buttons/Button.tsx'
-import React from 'react'
 import classNames from 'classnames'
 import SpinnerLoader from '../SpinnerLoader.tsx'
 
