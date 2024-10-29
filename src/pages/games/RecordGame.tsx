@@ -5,7 +5,7 @@ import { RecordButton } from '../../components/common/buttons/RecordButton.tsx'
 import Button from '../../components/common/buttons/Button.tsx'
 import { ArrowRightIcon } from '../../components/common/icons/Icons.tsx'
 import { useSelectedTheme } from '../../hooks/selectors.ts'
-import ProgressBar from '../../components/progressBar/ProgressBar.tsx'
+import ProgressBar from '../../components/ProgressBar.tsx'
 import { GameHeader } from './GameHeader.tsx'
 import useCustomMediaQuery from '../../hooks/useMediaQuery.ts'
 

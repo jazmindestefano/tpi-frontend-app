@@ -1,6 +1,6 @@
+import ProductTour from '../../ProductTour'
 import Header from '../header/Header'
 import { Outlet } from 'react-router-dom'
-import ProductTour from '../../productTour/ProductTour'
 
 const PageLayout: React.FC = () => {
   return (

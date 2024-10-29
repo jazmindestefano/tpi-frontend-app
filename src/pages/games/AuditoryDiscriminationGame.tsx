@@ -8,7 +8,7 @@ import { shuffleArray } from '../../helpers/arrays.ts'
 import { GameOptionsList } from './GameOptionsList.tsx'
 import { GameHeader } from './GameHeader.tsx'
 import { useSpeakText } from '../../hooks/useSpeakText.ts'
-import ProgressBar from '../../components/progressBar/ProgressBar.tsx'
+import ProgressBar from '../../components/ProgressBar.tsx'
 
 const prepareData = ({
   patiendId,

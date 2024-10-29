@@ -35,7 +35,7 @@ const useTimeline = () => {
       const formattedActivities = Object.entries(groupedActivities)
         .map(([date, activities]) => ({
           date,
-          activities: Object.entries(activities).map(([name, count]) => ({ name, count }))
+          activities: Object.entries(activities as Record<string, number>).map(([name, count]) => ({ name, count }))
         }))
         .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 

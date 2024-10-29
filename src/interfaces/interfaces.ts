@@ -64,3 +64,19 @@ export interface Achievement {
   id: number
   image: string
 }
+
+export interface Data {
+  labels: string[]
+  datasets: {
+    label: string
+    data: number[]
+    borderColor: string
+    backgroundColor: string
+  }[]
+}
+
+export interface ChartData {
+  id: string
+  title: string
+  data: Data
+}
