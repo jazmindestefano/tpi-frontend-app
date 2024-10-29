@@ -1,2 +1,2 @@
 npm run lint:fix
-git add .
+git diff --name-only --cached --diff-filter=ACM | xargs git add

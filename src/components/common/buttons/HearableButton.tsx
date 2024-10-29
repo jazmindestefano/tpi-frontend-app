@@ -1,4 +1,3 @@
-import React from 'react'
 import { useTextToSpeech } from '../../../hooks/useTextToSpeech.ts'
 import Button from './Button.tsx'
 import { VolumeIcon } from '../icons/Icons.tsx'

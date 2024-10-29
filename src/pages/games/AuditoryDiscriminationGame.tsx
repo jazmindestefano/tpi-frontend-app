@@ -1,6 +1,6 @@
 import SpinnerLoader from '../../components/common/SpinnerLoader'
 import { LevelOption } from '../../interfaces/interfaces'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useGetGameLevels, usePostAuditoryDiscriminationAnswer } from '../../hooks/queries.ts'
 import { useNavigate } from 'react-router-dom'
 import { useSelectedTheme, useUser } from '../../hooks/selectors.ts'
@@ -31,7 +31,7 @@ const prepareData = ({
 }
 
 const AuditoryDiscriminationGame: React.FC = () => {
-  // todo: possible to lift up state to parent
+  // todo: possible to lift up state to parent (HOC)
   const selectedTheme = useSelectedTheme()
   const navigate = useNavigate()
   const user = useUser()

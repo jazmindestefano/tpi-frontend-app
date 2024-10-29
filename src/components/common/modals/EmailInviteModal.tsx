@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { BaseModal } from './BaseModal' // Asegúrate de que la ruta sea la correcta
 import { Overlay } from '../overlay/Overlay'
 import { Input } from '../inputs/Input'
