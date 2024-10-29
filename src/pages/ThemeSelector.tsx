@@ -5,27 +5,27 @@ import { Theme } from '../interfaces/interfaces'
 import { selectTheme } from '../redux/store/gameSlice'
 import ThemeCardsList from '../components/themeSelect/ThemeCardsList'
 import SpinnerLoader from '../components/common/SpinnerLoader.tsx'
-
-import { useSelectedGame } from '../hooks/selectors.ts'
 import { useEffect } from 'react'
 import { HearableButton } from '../components/common/buttons/HearableButton.tsx'
+import localStorageManager from '../localStorage/localStorageManager.js'
 
 const ThemeSelector = () => {
-  const selectedGame = useSelectedGame()
-  const { themes, isLoading, error } = useGetThemesByGameId(selectedGame.id)
+  const selectedGameId = localStorageManager.getItem('selectedGameId')
+  const { themes, isLoading, error } = useGetThemesByGameId(selectedGameId)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
   // todo: save in LS to not redirect
   useEffect(() => {
-    if (selectedGame.id === -1 || error) {
+    if (error) {
       navigate('/error')
     }
-  }, [selectedGame.id, navigate, error])
+  }, [navigate, error])
 
   const onCardClick = (theme: Theme) => {
     dispatch(selectTheme(theme))
-    navigate(`/actividad/${selectedGame.id}`)
+    localStorageManager.setItem('selectedThemeId', theme.id)
+    navigate(`/actividad/${selectedGameId}`)
   }
 
   if (isLoading) {
@@ -33,8 +33,8 @@ const ThemeSelector = () => {
   }
 
   return (
-    <div className="flex-col-center xl:gap-10 pt-20 lg:pt-0">
-      <div className="flex-center self-center gap-4">
+    <div className="flex flex-col justify-center items-center w-full xl:gap-10 pt-20 lg:pt-0">
+      <div className="flex justify-center items-center w-full self-center gap-4">
         <h1 className="text-h1">Temáticas</h1>
         <HearableButton variant={'secondary'} text={'Elegí una temática'} />
       </div>

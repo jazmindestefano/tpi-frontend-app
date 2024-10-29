@@ -3,6 +3,7 @@ import { PlusIcon } from 'lucide-react'
 import Button from '../buttons/Button'
 import { useNavigate } from 'react-router-dom'
 import AddPatientModal from '../modals/EmailInviteModal'
+import localStorageManager from '../../../localStorage/localStorageManager'
 
 interface Patient {
   id?: number
@@ -29,16 +30,20 @@ const HomeProfesionalCard: React.FC<HomeProfesionalCardProps> = ({ patient, isAd
     setIsModalOpen(false)
   }
 
-  const handleModalSubmit = (patientData: unknown) => {
-    console.log('New patient data:', patientData)
+  const handleModalSubmit = () => {
     setIsModalOpen(false)
+  }
+
+  const handleClick = (id: number) => {
+    localStorageManager.setItem('selectedPatientId', id)
+    navigate(`paciente/${id}`)
   }
 
   return (
     <>
       <div
-        className={`"max-w-96 flex-col-center rounded-3xl h-80 w-72 shadow-lg cursor-pointer transition-transform duration-300 bg-blue-100 " ${className}`}
-        onClick={isAddPatient ? handleAddPatientClick : undefined} // Solo para la tarjeta de agregar paciente
+        className={`"max-w-96 flex flex-col justify-center items-center rounded-3xl h-80 w-72 shadow-lg cursor-pointer transition-transform duration-300 bg-blue-100 " ${className}`}
+        onClick={isAddPatient ? handleAddPatientClick : undefined} // info: Solo para la tarjeta de agregar paciente
       >
         {isAddPatient ? (
           <div className="flex flex-col items-center justify-center p-4 gap-10">
@@ -49,15 +54,11 @@ const HomeProfesionalCard: React.FC<HomeProfesionalCardProps> = ({ patient, isAd
           </div>
         ) : (
           patient && (
-            <div className="flex-col-center p-4 gap-2">
+            <div className="flex flex-col justify-center items-center w-full p-4 gap-2">
               <img src={patient.imageUrl} alt={patient.name} width={64} height={64} className="rounded-full mb-2" />
               <h3 className="text-lg font-medium text-blue-800">{patient.name}</h3>
               <p className="text-blue-600">{patient.age} años</p>
-              <Button
-                variant="secondary"
-                className="mt-2 p-3 rounded-3xl"
-                onClick={() => navigate(`paciente/${patient.id}`)}
-              >
+              <Button variant="secondary" className="mt-2 p-3 rounded-3xl" onClick={() => handleClick(patient.id!)}>
                 <p className="text-center font-bold">Ver paciente</p>
               </Button>
             </div>

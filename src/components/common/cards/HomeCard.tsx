@@ -12,11 +12,11 @@ interface HomeCardProps {
 
 const HomeCard: React.FC<HomeCardProps> = ({ buttonVariant, backgroundColor, onClick, game }) => {
   return (
-    <BaseCard className={'flex-col-center gap-4 shadow-none'}>
+    <BaseCard className={'flex flex-col justify-center items-center w-full gap-4 shadow-none'}>
       <BaseContainer
         className={`gap-6 ${backgroundColor} rounded-3xl p-6 transition-transform duration-300 transform hover:scale-105`}
       >
-        <div onClick={onClick} className="flex-col-center">
+        <div onClick={onClick} className="flex flex-col justify-center items-center w-full">
           <img className="rounded-3xl object-cover size-96" src={game.image} alt={game.name} />
           <h1 className="text-h1" data-testid="home-card-name">
             {game.name.toUpperCase()}

@@ -17,6 +17,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ChartData } from '../../../interfaces/interfaces'
 import Chart from '../../../components/Chart'
+import localStorageManager from '../../../localStorage/localStorageManager'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend)
 
@@ -143,6 +144,7 @@ const getCurrentDate = () => {
 
 export default function Dashboard() {
   const navigate = useNavigate()
+  const selectedPatientId = localStorageManager.getItem('selectedPatientId')
   const [layouts, setLayouts] = useState<{ [key: string]: Layout[] }>({})
   const [chartTypes, setChartTypes] = useState<{ [key: string]: 'line' | 'bar' }>({})
 
@@ -192,6 +194,16 @@ export default function Dashboard() {
     )
   }
 
+  // to-do: fix because it doesnt always work
+  const handleClick = (event: React.DragEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    navigate(`/profesional/paciente/${selectedPatientId}/timeline`)
+  }
+
+  const handleDragStart = (event: React.DragEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+  }
+
   return (
     <div className="w-full mx-auto p-4">
       <div className="flex items-center mb-6">
@@ -205,7 +217,7 @@ export default function Dashboard() {
         rowHeight={200}
         isDraggable={true}
         isResizable={true}
-        onLayoutChange={(currentLayout, allLayouts) => setLayouts(allLayouts)}
+        onLayoutChange={(_currentLayout, allLayouts) => setLayouts(allLayouts)}
       >
         <div key="today" className="bg-white rounded-lg shadow-md overflow-hidden">
           <div className="p-4 h-full flex flex-col">
@@ -224,10 +236,12 @@ export default function Dashboard() {
               ))}
             </div>
             <button
-              onClick={() => navigate('/profesional/paciente/1/timeline')}
-              className="bg-blue-500 text-white px-4 py-2 rounded-full flex items-center justify-center w-full"
+              onClick={handleClick}
+              onDragStart={handleDragStart}
+              className="bg-blue-500 text-white px-4 py-2 rounded-full flex items-center justify-center w-full cursor-pointer"
             >
-              Ver más <ArrowRight className="ml-2" size={20} />
+              <p>Ver más</p>
+              <ArrowRight className="ml-2" size={20} />
             </button>
           </div>
         </div>
