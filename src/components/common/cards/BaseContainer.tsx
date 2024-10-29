@@ -7,5 +7,7 @@ interface BaseContainer {
 }
 
 export const BaseContainer: React.FC<BaseContainer> = ({ children, className = '' }) => {
-  return <div className={classNames('flex-col-center gap-4', className)}>{children}</div>
+  return (
+    <div className={classNames('flex flex-col justify-center items-center w-full gap-4', className)}>{children}</div>
+  )
 }

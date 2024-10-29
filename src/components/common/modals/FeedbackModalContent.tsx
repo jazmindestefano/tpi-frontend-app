@@ -25,7 +25,7 @@ export const FeedbackModalContent: React.FC<FeedbackModalProps> = ({
 
   return (
     <BaseModal
-      className={classNames('rounded-3xl flex-col-center gap-4', className)}
+      className={classNames('rounded-3xl flex flex-col justify-center items-center w-[50%] gap-4', className)}
       onClose={onModalClose}
       title={modalTitle}
     >

@@ -1,6 +1,4 @@
-import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { useSelectedGame } from '../hooks/selectors'
+import localStorageManager from '../localStorage/localStorageManager.js'
 import AuditoryDiscriminationGame from './games/AuditoryDiscriminationGame.tsx'
 import RecordGame from './games/RecordGame'
 import { SnakeGameWrapper } from './games/snakeGame/SnakeGameWrapper.tsx'
@@ -12,16 +10,8 @@ const gameMap: Record<number, React.FC> = {
 }
 
 const GameSelector: React.FC = () => {
-  const navigate = useNavigate()
-  const selectedGame = useSelectedGame()
-
-  useEffect(() => {
-    if (selectedGame.id === -1) {
-      navigate('/error')
-      return
-    }
-  })
-  const GameComponent = gameMap[selectedGame.id]
+  const selectedGameId = localStorageManager.getItem('selectedGameId')
+  const GameComponent = gameMap[selectedGameId]
   return <GameComponent />
 }
 

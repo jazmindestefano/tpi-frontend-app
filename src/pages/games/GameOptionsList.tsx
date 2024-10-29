@@ -13,10 +13,10 @@ export const GameOptionsList: React.FC<GameOptionsListProps> = ({ options, onOpt
       {options.map((option, index) => (
         <div
           key={option.id}
-          className={`flex-col-center cursor-pointer rounded-3xl shadow-lg p-4 h-auto gap-6 bg-orange-100 ${getJustifyClass(index)}`}
+          className={`flex flex-col justify-center items-center w-full cursor-pointer rounded-3xl shadow-lg p-4 h-auto gap-6 bg-orange-100 ${getJustifyClass(index)}`}
         >
           <div
-            className="p-4 w-full rounded-3xl h-80 flex-col-center bg-white"
+            className="p-4 w-full rounded-3xl h-80 flex flex-col justify-center items-center w-full bg-white"
             onClick={() => onOptionSelection(option)}
           >
             <img

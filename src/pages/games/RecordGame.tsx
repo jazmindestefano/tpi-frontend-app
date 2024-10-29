@@ -4,23 +4,34 @@ import useRecordGame from '../../hooks/useRecordGame'
 import { RecordButton } from '../../components/common/buttons/RecordButton.tsx'
 import Button from '../../components/common/buttons/Button.tsx'
 import { ArrowRightIcon } from '../../components/common/icons/Icons.tsx'
-import { useSelectedTheme } from '../../hooks/selectors.ts'
 import ProgressBar from '../../components/ProgressBar.tsx'
 import { GameHeader } from './GameHeader.tsx'
-import useCustomMediaQuery from '../../hooks/useMediaQuery.ts'
+import { useEffect } from 'react'
+import localStorageManager from '../../localStorage/localStorageManager.js'
+import { useMediaQuery } from 'react-responsive'
 
 const RecordGame: React.FC = () => {
-  const selectedTheme = useSelectedTheme()
+  // const selectedTheme = useSelectedTheme()
   const navigate = useNavigate()
-  const { isLoading, levels, currentLevel, levelOptions, setCurrentLevel, isRecording, stopRecording, startRecording } =
-    useRecordGame(selectedTheme.id)
-  const { isDesktop } = useCustomMediaQuery()
+  const selectedThemeId = localStorageManager.getItem('selectedThemeId')
+  const {
+    isLoading,
+    error,
+    levels,
+    currentLevel,
+    levelOptions,
+    setCurrentLevel,
+    isRecording,
+    stopRecording,
+    startRecording
+  } = useRecordGame(selectedThemeId)
+  const isDesktop = useMediaQuery({ minWidth: 768 })
 
-  // todo: save in LS to not redirect
-  if (selectedTheme.id === -1) {
-    navigate('/error')
-    return null
-  }
+  useEffect(() => {
+    if (error) {
+      navigate('/error')
+    }
+  }, [error, navigate])
 
   const handleNextPage = () => {
     setCurrentLevel((prevState) => prevState + 1)
@@ -30,15 +41,19 @@ const RecordGame: React.FC = () => {
   }
 
   return !isLoading ? (
-    <div className="flex-col-center lg:gap-20 px-32 gap-10 lg:pt-0 pt-16">
+    <div className="flex flex-col justify-center items-center w-full lg:gap-20 px-32 gap-10 lg:pt-0 pt-16">
       <ProgressBar currentActivity={currentLevel + 1} totalActivities={levels?.length} />
 
       <div className="flex justify-between items-center w-full">
-        <div className={isDesktop ? 'w-9/10 flex-center' : 'flex-col-center gap-10'}>
+        <div
+          className={
+            'lg:w-9/10 lg:flex justify-center items-center w-full flex flex-col justify-center items-center w-full gap-10'
+          }
+        >
           <div className="lg:w-2/5">
             <GameHeader level={levels![currentLevel]} headerTitle="¿Cómo dirías la palabra?"></GameHeader>
           </div>
-          <div className="w-2/5 flex-col-center">
+          <div className="w-2/5 flex flex-col justify-center items-center w-full">
             {levelOptions.map((option) => (
               <div
                 key={option.id}

@@ -16,7 +16,7 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({ activity, className 
 
   return (
     <div
-      className={`max-w-96 flex-col-center rounded-3xl h-80 w-72 shadow-lg cursor-pointer transition-transform duration-300 bg-blue-100 ${className}`}
+      className={`max-w-96 flex flex-col justify-center items-center w-full rounded-3xl h-80 w-72 shadow-lg cursor-pointer transition-transform duration-300 bg-blue-100 ${className}`}
     >
       <div className="flex flex-col items-center justify-around h-full p-4">
         <h3 className="text-3xl font-extrabold text-blue-800">{activity.name}</h3>

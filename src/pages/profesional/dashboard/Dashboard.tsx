@@ -15,127 +15,13 @@ import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { ChartData } from '../../../interfaces/interfaces'
 import Chart from '../../../components/Chart'
+import localStorageManager from '../../../localStorage/localStorageManager'
+import { staticChartData, staticSurveyFeedback } from '../../../testData/dashboardData'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend)
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
-
-// INFO: Will disappear when connect with BE
-const staticChartData: ChartData[] = [
-  {
-    id: 'syllables',
-    title: 'Sílabas',
-    data: {
-      labels: ['2024-10-01', '2024-10-02', '2024-10-03', '2024-10-04', '2024-10-05', '2024-10-06', '2024-10-07'],
-      datasets: [
-        {
-          label: 'BE',
-          data: [65, 59, 80, 81, 56, 55, 40],
-          borderColor: 'rgb(255, 99, 132)',
-          backgroundColor: 'rgba(255, 99, 132, 0.5)'
-        },
-        {
-          label: 'RA',
-          data: [28, 48, 40, 19, 86, 27, 90],
-          borderColor: 'rgb(53, 162, 235)',
-          backgroundColor: 'rgba(53, 162, 235, 0.5)'
-        }
-      ]
-    }
-  },
-  {
-    id: 'phonemes',
-    title: 'Fonemas',
-    data: {
-      labels: ['2024-10-01', '2024-10-02', '2024-10-03', '2024-10-04', '2024-10-05', '2024-10-06', '2024-10-07'],
-      datasets: [
-        {
-          label: 'R',
-          data: [65, 59, 80, 81, 56, 55, 40],
-          borderColor: 'rgb(255, 99, 132)',
-          backgroundColor: 'rgba(255, 99, 132, 0.5)'
-        },
-        {
-          label: 'K',
-          data: [28, 48, 40, 19, 86, 27, 90],
-          borderColor: 'rgb(53, 162, 235)',
-          backgroundColor: 'rgba(53, 162, 235, 0.5)'
-        }
-      ]
-    }
-  },
-  {
-    id: 'letters',
-    title: 'Letras',
-    data: {
-      labels: ['2024-10-01', '2024-10-02', '2024-10-03', '2024-10-04', '2024-10-05', '2024-10-06', '2024-10-07'],
-      datasets: [
-        {
-          label: 'A',
-          data: [65, 59, 80, 81, 56, 55, 40],
-          borderColor: 'rgb(255, 99, 132)',
-          backgroundColor: 'rgba(255, 99, 132, 0.5)'
-        },
-        {
-          label: 'M',
-          data: [28, 48, 40, 19, 86, 27, 90],
-          borderColor: 'rgb(53, 162, 235)',
-          backgroundColor: 'rgba(53, 162, 235, 0.5)'
-        }
-      ]
-    }
-  },
-  {
-    id: 'lowestSyllables',
-    title: 'Sílabas con menor puntaje',
-    data: {
-      labels: ['2024-10-01', '2024-10-02', '2024-10-03', '2024-10-04', '2024-10-05', '2024-10-06', '2024-10-07'],
-      datasets: [
-        {
-          label: 'BE',
-          data: [65, 59, 80, 81, 56, 55, 40],
-          borderColor: 'rgb(255, 99, 132)',
-          backgroundColor: 'rgba(255, 99, 132, 0.5)'
-        },
-        {
-          label: 'RA',
-          data: [28, 48, 40, 19, 86, 27, 90],
-          borderColor: 'rgb(53, 162, 235)',
-          backgroundColor: 'rgba(53, 162, 235, 0.5)'
-        }
-      ]
-    }
-  },
-  {
-    id: 'lowestPhonemes',
-    title: 'Fonemas con menor puntaje',
-    data: {
-      labels: ['2024-10-01', '2024-10-02', '2024-10-03', '2024-10-04', '2024-10-05', '2024-10-06', '2024-10-07'],
-      datasets: [
-        {
-          label: 'BE',
-          data: [65, 59, 80, 81, 56, 55, 40],
-          borderColor: 'rgb(255, 99, 132)',
-          backgroundColor: 'rgba(255, 99, 132, 0.5)'
-        },
-        {
-          label: 'RA',
-          data: [28, 48, 40, 19, 86, 27, 90],
-          borderColor: 'rgb(53, 162, 235)',
-          backgroundColor: 'rgba(53, 162, 235, 0.5)'
-        }
-      ]
-    }
-  }
-]
-
-// INFO: Will disappear when connect with BE
-const staticSurveyFeedback = {
-  most_liked_activity: { activity_name: 'Letras' },
-  least_liked_activity: { activity_name: 'La Viborita' }
-}
 
 const getCurrentDate = () => {
   return new Date().toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
@@ -143,6 +29,7 @@ const getCurrentDate = () => {
 
 export default function Dashboard() {
   const navigate = useNavigate()
+  const selectedPatientId = localStorageManager.getItem('selectedPatientId')
   const [layouts, setLayouts] = useState<{ [key: string]: Layout[] }>({})
   const [chartTypes, setChartTypes] = useState<{ [key: string]: 'line' | 'bar' }>({})
 
@@ -192,6 +79,16 @@ export default function Dashboard() {
     )
   }
 
+  // to-do: fix because it doesnt always work
+  const handleClick = (event: React.DragEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    navigate(`/profesional/paciente/${selectedPatientId}/timeline`)
+  }
+
+  const handleDragStart = (event: React.DragEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+  }
+
   return (
     <div className="w-full mx-auto p-4">
       <div className="flex items-center mb-6">
@@ -205,7 +102,7 @@ export default function Dashboard() {
         rowHeight={200}
         isDraggable={true}
         isResizable={true}
-        onLayoutChange={(currentLayout, allLayouts) => setLayouts(allLayouts)}
+        onLayoutChange={(_currentLayout, allLayouts) => setLayouts(allLayouts)}
       >
         <div key="today" className="bg-white rounded-lg shadow-md overflow-hidden">
           <div className="p-4 h-full flex flex-col">
@@ -224,10 +121,12 @@ export default function Dashboard() {
               ))}
             </div>
             <button
-              onClick={() => navigate('/profesional/paciente/1/timeline')}
-              className="bg-blue-500 text-white px-4 py-2 rounded-full flex items-center justify-center w-full"
+              onClick={handleClick}
+              onDragStart={handleDragStart}
+              className="bg-blue-500 text-white px-4 py-2 rounded-full flex items-center justify-center w-full cursor-pointer"
             >
-              Ver más <ArrowRight className="ml-2" size={20} />
+              <p>Ver más</p>
+              <ArrowRight className="ml-2" size={20} />
             </button>
           </div>
         </div>

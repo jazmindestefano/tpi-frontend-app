@@ -9,6 +9,7 @@ import { FeedbackModal } from '../components/common/modals/FeedbackModal.tsx'
 import { useShowModalFeedback } from '../hooks/selectors.ts'
 import { HearableButton } from '../components/common/buttons/HearableButton.tsx'
 import { getCardBgColor } from '../helpers/colors.ts'
+import localStorageManager from '../localStorage/localStorageManager.js'
 
 export default function Home() {
   const navigate = useNavigate()
@@ -16,6 +17,15 @@ export default function Home() {
   const { games, isLoading: gamesLoading, error } = useGetGames()
   const showModalFeedBack = useShowModalFeedback()
   const [showModal, setShowModal] = useState(showModalFeedBack)
+
+  // to-do: has to come from the backend
+  localStorageManager.setItem('patientId', 1)
+  localStorageManager.setItem('showProductTour', false)
+
+  const handleOnClick = (id: number) => {
+    navigate('/tematicas')
+    localStorageManager.setItem('selectedGameId', id)
+  }
 
   if (error) {
     return <h1>¡Ups! Parece que estamos teniendo un problema.</h1>
@@ -34,17 +44,21 @@ export default function Home() {
           dispatch(setModalFeedback(false))
         }}
       />
-      <div className="flex-col-center gap-6 layout">
-        <div className="flex-center gap-4">
+      <div className="flex flex-col justify-center items-center w-full gap-6 layout">
+        <div className="flex justify-center items-center w-full gap-4">
           <h1 className="text-h1">Juegos</h1>
           <HearableButton variant={'secondary'} text={'Elegí un juego'} className="volume-icon" />
         </div>
         <div className="w-full grid grid-cols-1 md:grid-cols-3 xl:px-20 gap-10 pb-10">
           {games.map((game) => (
-            <div key={game.id} className="flex-center" onClick={() => dispatch(selectGame(game))}>
+            <div
+              key={game.id}
+              className="flex justify-center items-center w-full"
+              onClick={() => dispatch(selectGame(game))}
+            >
               <HomeCard
                 buttonVariant="secondary"
-                onClick={() => navigate(`/tematicas`)}
+                onClick={() => handleOnClick(game.id)}
                 game={game}
                 backgroundColor={getCardBgColor(game.id)}
               />
