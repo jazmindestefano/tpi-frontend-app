@@ -29,6 +29,7 @@ const getCurrentDate = () => {
 
 export default function Dashboard() {
   const navigate = useNavigate()
+  // to-do: implement slicer redux
   const selectedPatientId = localStorageManager.getItem('selectedPatientId')
   const [layouts, setLayouts] = useState<{ [key: string]: Layout[] }>({})
   const [chartTypes, setChartTypes] = useState<{ [key: string]: 'line' | 'bar' }>({})

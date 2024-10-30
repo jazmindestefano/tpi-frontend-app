@@ -10,6 +10,7 @@ import { useShowModalFeedback } from '../hooks/selectors.ts'
 import { HearableButton } from '../components/common/buttons/HearableButton.tsx'
 import { getCardBgColor } from '../helpers/colors.ts'
 import localStorageManager from '../localStorage/localStorageManager.js'
+import { Game } from '../interfaces/interfaces.ts'
 
 export default function Home() {
   const navigate = useNavigate()
@@ -19,12 +20,11 @@ export default function Home() {
   const [showModal, setShowModal] = useState(showModalFeedBack)
 
   // to-do: has to come from the backend
-  localStorageManager.setItem('patientId', 1)
   localStorageManager.setItem('showProductTour', false)
 
-  const handleOnClick = (id: number) => {
+  const handleOnClick = (game: Game) => {
     navigate('/tematicas')
-    localStorageManager.setItem('selectedGameId', id)
+    dispatch(selectGame(game))
   }
 
   if (error) {
@@ -58,7 +58,7 @@ export default function Home() {
             >
               <HomeCard
                 buttonVariant="secondary"
-                onClick={() => handleOnClick(game.id)}
+                onClick={() => handleOnClick(game)}
                 game={game}
                 backgroundColor={getCardBgColor(game.id)}
               />

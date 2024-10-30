@@ -35,6 +35,7 @@ const HomeProfesionalCard: React.FC<HomeProfesionalCardProps> = ({ patient, isAd
   }
 
   const handleClick = (id: number) => {
+    // to-do: create slicer in redux
     localStorageManager.setItem('selectedPatientId', id)
     navigate(`paciente/${id}`)
   }

@@ -2,14 +2,14 @@ import SnakeGame from './SnakeGame.tsx'
 import { useGetWordsByUserId } from '../../../hooks/queries.ts'
 import { Navigate, useNavigate } from 'react-router-dom'
 import SpinnerLoader from '../../../components/common/SpinnerLoader.tsx'
-import localStorageManager from '../../../localStorage/localStorageManager.js'
+import { useSelectedTheme, useUser } from '../../../hooks/selectors.ts'
 
 const vowels = ['A', 'E', 'I', 'O', 'U']
 
 export const SnakeGameWrapper: React.FC = () => {
-  const selectedThemeId = localStorageManager.getItem('selectedThemeId')
-  const patientId = localStorageManager.getItem('patientId')
-  const { words, isLoading, error } = useGetWordsByUserId(patientId)
+  const selectedTheme = useSelectedTheme()
+  const user = useUser()
+  const { words, isLoading, error } = useGetWordsByUserId(user.id)
   const navigate = useNavigate()
 
   // todo: create private routes to avoid checking this every fucking time
@@ -22,6 +22,6 @@ export const SnakeGameWrapper: React.FC = () => {
   ) : error ? (
     <Navigate to={'/'} />
   ) : words && words.length != 0 ? (
-    <SnakeGame items={selectedThemeId === 10 ? vowels : words[0].syllables} />
+    <SnakeGame items={selectedTheme.id === 10 ? vowels : words[0].syllables} />
   ) : null
 }

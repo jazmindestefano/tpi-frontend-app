@@ -1,14 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { User } from '../../interfaces/interfaces.ts'
+import localStorageManager from '../../localStorage/localStorageManager.js'
 
 interface UserState {
   user: User
 }
 
+const userLoaded = (localStorageManager.getItem('user') as User) || { id: -1 }
+
 const initialState: UserState = {
-  user: {
-    id: 1
-  }
+  user: userLoaded
 }
 
 const userSlice = createSlice({
@@ -17,6 +18,7 @@ const userSlice = createSlice({
   reducers: {
     setUser: (state, action: PayloadAction<User>) => {
       state.user = action.payload
+      localStorageManager.setItem('user', action.payload)
     }
   }
 })
