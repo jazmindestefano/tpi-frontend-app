@@ -1,8 +1,8 @@
 import SnakeGame from './SnakeGame.tsx'
-import { useSelectedTheme, useUser } from '../../../hooks/selectors.ts'
 import { useGetWordsByUserId } from '../../../hooks/queries.ts'
 import { Navigate } from 'react-router-dom'
 import SpinnerLoader from '../../../components/common/SpinnerLoader.tsx'
+import { useSelectedTheme, useUser } from '../../../hooks/selectors.ts'
 
 const vowels = ['A', 'E', 'I', 'O', 'U']
 

@@ -4,14 +4,14 @@ import { RecordButton } from '../../components/common/buttons/RecordButton.tsx'
 import Button from '../../components/common/buttons/Button.tsx'
 import { ArrowRightIcon } from '../../components/common/icons/Icons.tsx'
 import { useSelectedGame, useSelectedTheme, useUser } from '../../hooks/selectors.ts'
-import ProgressBar from '../../components/progressBar/ProgressBar.tsx'
 import { GameHeader } from './GameHeader.tsx'
-import { useGetGameLevels, usePostUserRecording } from '../../hooks/queries.ts'
-import { useAudioRecording } from '../../hooks/useAudioRecording.ts'
+import ProgressBar from '../../components/ProgressBar.tsx'
 import { useEffect, useState } from 'react'
-import { LevelOption } from '../../interfaces/interfaces.ts'
 import { shuffleArray } from '../../helpers/arrays.ts'
 import { useMediaQuery } from 'react-responsive'
+import { useGetGameLevels, usePostUserRecording } from '../../hooks/queries.ts'
+import { LevelOption } from '../../interfaces/interfaces.ts'
+import { useAudioRecording } from '../../hooks/useAudioRecording.ts'
 
 const RecordGame: React.FC = () => {
   const selectedTheme = useSelectedTheme()
@@ -52,15 +52,19 @@ const RecordGame: React.FC = () => {
   }
 
   return !isLoading ? (
-    <div className="flex-col-center lg:gap-20 px-32 gap-10 lg:pt-0 pt-16">
+    <div className="flex flex-col justify-center items-center w-full lg:gap-20 px-32 gap-10 lg:pt-0 pt-16">
       <ProgressBar currentActivity={currentLevel + 1} totalActivities={levels?.length} />
 
       <div className="flex justify-between items-center w-full">
-        <div className={isDesktop ? 'w-9/10 flex-center' : 'flex-col-center gap-10'}>
+        <div
+          className={
+            'lg:w-9/10 lg:flex justify-center items-center w-full flex flex-col justify-center items-center w-full gap-10'
+          }
+        >
           <div className="lg:w-2/5">
             <GameHeader level={levels![currentLevel]} headerTitle="¿Cómo dirías la palabra?" />
           </div>
-          <div className="w-2/5 flex-col-center">
+          <div className="w-2/5 flex flex-col justify-center items-center w-full">
             {levelOptions.map((option) => (
               <div
                 key={option.id}

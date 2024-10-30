@@ -9,7 +9,6 @@ import CongratulationsPage from '../pages/Congratulations.tsx'
 import AchievementsPage from '../pages/achievement/Achievements.tsx'
 import HomeProfesional from '../pages/profesional/HomeProfesional.tsx'
 import ProfesionalPageLayout from '../components/layout/profesionalPageLayout/ProfesionalPageLayout.tsx'
-import Dashboard from '../pages/profesional/Dashboard.tsx'
 import PatientActivities from '../pages/profesional/PatientActivities.tsx'
 import ActivityResponses from '../pages/profesional/ActivityResponses.tsx'
 import Timeline from '../pages/profesional/Timeline.tsx'
@@ -19,6 +18,7 @@ import AuditoryDiscriminationGame from '../pages/games/AuditoryDiscriminationGam
 import RecordGame from '../pages/games/RecordGame.tsx'
 import { SnakeGameWrapper } from '../pages/games/snakeGame/SnakeGameWrapper.tsx'
 import { LoginPage } from '../pages/LoginPage.tsx'
+import Dashboard from '../pages/profesional/dashboard/Dashboard.tsx'
 
 export const router = createBrowserRouter([
   {

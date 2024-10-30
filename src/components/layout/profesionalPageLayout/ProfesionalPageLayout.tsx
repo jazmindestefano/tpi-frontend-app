@@ -4,7 +4,7 @@ import HeaderProfesional from '../header/HeaderProfesional'
 
 export default function Layout() {
   return (
-    <div className="flex h-screen bg-gray-100 font-comfortaa">
+    <div className="flex h-screen bg-gray-100 font-poppins">
       <AsideProfesional />
       <main className="flex-1 p-8 overflow-auto relative">
         <HeaderProfesional />

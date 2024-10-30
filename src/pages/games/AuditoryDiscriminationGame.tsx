@@ -8,7 +8,7 @@ import { shuffleArray } from '../../helpers/arrays.ts'
 import { GameOptionsList } from './GameOptionsList.tsx'
 import { GameHeader } from './GameHeader.tsx'
 import { useSpeakText } from '../../hooks/useSpeakText.ts'
-import ProgressBar from '../../components/progressBar/ProgressBar.tsx'
+import ProgressBar from '../../components/ProgressBar.tsx'
 
 // todo: move this to helper
 const prepareData = ({
@@ -39,8 +39,8 @@ const AuditoryDiscriminationGame: React.FC = () => {
   const { levels, isLoading, error: getLevelsError } = useGetGameLevels(selectedTheme.id)
   const [currentLevel, setCurrentLevel] = useState<number>(0)
   const [options, setOptions] = useState<LevelOption[]>([])
-  // todo: all props need to be used
-  const { mutate } = usePostAuditoryDiscriminationAnswer()
+
+  const { mutate, error } = usePostAuditoryDiscriminationAnswer()
   const speakText = useSpeakText()
 
   useEffect(() => {
@@ -76,6 +76,12 @@ const AuditoryDiscriminationGame: React.FC = () => {
     }, 250)
     return () => clearTimeout(timeoutId)
   }, [currentLevel, levels, speakText])
+
+  useEffect(() => {
+    if (error) {
+      navigate('/error')
+    }
+  }, [error, navigate])
 
   return !isLoading && !getLevelsError && levels && levels.length != 0 ? (
     <div className="w-full layout flex-col-center gap-4 px-10 md:px-40 pt-20">

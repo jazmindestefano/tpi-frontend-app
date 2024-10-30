@@ -22,7 +22,7 @@ export const ThemeCard: React.FC<ThemeCardProps> = ({ theme, onClick, bgColor, o
   }, [imageLoaded, onImageLoad])
 
   return (
-    <BaseCard className={`${bgColor} p-4 flex-col-center`}>
+    <BaseCard className={`${bgColor} p-4 flex flex-col justify-center items-center w-full`}>
       <BaseContainer className={'gap-6'}>
         <div onClick={onClick} className="w-full">
           <div className="relative w-full h-80">

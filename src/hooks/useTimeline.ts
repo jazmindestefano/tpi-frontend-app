@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { rawData } from '../testData/chartsData'
+import { staticChartData } from '../testData/dashboardData'
 
+// Definición de los tipos
 interface DailyActivity {
   date: string
   activities: {
@@ -15,33 +16,22 @@ const useTimeline = () => {
   const observerRef = useRef<IntersectionObserver | null>(null)
   const lastActivityRef = useRef<HTMLDivElement | null>(null)
 
+  // info: it is not how the info will come, but to let the mock working
   useEffect(() => {
-    if (rawData) {
-      const groupedActivities = rawData.reduce(
-        (acc, item) => {
-          const date = item.date
-          if (!acc[date]) {
-            acc[date] = {}
-          }
-          if (!acc[date][item.type]) {
-            acc[date][item.type] = 0
-          }
-          acc[date][item.type]++
-          return acc
-        },
-        {} as Record<string, Record<string, number>>
-      )
-
-      const formattedActivities = Object.entries(groupedActivities)
-        .map(([date, activities]) => ({
+    const formattedActivities = staticChartData
+      .flatMap((chart) => {
+        return chart.data.labels.map((date, index) => ({
           date,
-          activities: Object.entries(activities).map(([name, count]) => ({ name, count }))
+          activities: chart.data.datasets.map((dataset) => ({
+            name: dataset.label,
+            count: dataset.data[index]
+          }))
         }))
-        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      })
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 
-      setActivities(formattedActivities)
-      setVisibleActivities(formattedActivities.slice(0, 5))
-    }
+    setActivities(formattedActivities)
+    setVisibleActivities(formattedActivities.slice(0, 5))
   }, [])
 
   const loadMoreActivities = useCallback(() => {
@@ -73,7 +63,7 @@ const useTimeline = () => {
     activities,
     visibleActivities,
     lastActivityRef,
-    isLoading: !rawData,
+    isLoading: !staticChartData,
     error: null
   }
 }

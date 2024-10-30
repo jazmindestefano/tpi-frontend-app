@@ -1,6 +1,6 @@
 import Joyride from 'react-joyride'
-import useProductTour from '../../hooks/useProductTour'
-import { steps } from '../../helpers/productTourSteps'
+import useProductTour from '../hooks/useProductTour'
+import { steps } from '../helpers/productTourSteps'
 
 const ProductTour = () => {
   const { runTour, handleJoyrideCallback } = useProductTour({ steps })

@@ -72,7 +72,7 @@ const Congratulations = () => {
           <img src={achievement?.image} className="pin-animation" alt="Pin" />
         </div>
 
-        <div className="flex-center gap-4">
+        <div className="flex justify-center items-center w-full gap-4">
           <p className="text-4xl text-black font-black mb-8 text-center my-5">¡Completaste el desafío!</p>
           <HearableButton text={'¡Completaste el desafío!'} />
         </div>
