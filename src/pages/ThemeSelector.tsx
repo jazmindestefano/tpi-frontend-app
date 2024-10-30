@@ -7,11 +7,11 @@ import ThemeCardsList from '../components/themeSelect/ThemeCardsList'
 import SpinnerLoader from '../components/common/SpinnerLoader.tsx'
 import { useEffect } from 'react'
 import { HearableButton } from '../components/common/buttons/HearableButton.tsx'
-import localStorageManager from '../localStorage/localStorageManager.js'
+import { useSelectedGame } from '../hooks/selectors.ts'
 
 const ThemeSelector = () => {
-  const selectedGameId = localStorageManager.getItem('selectedGameId')
-  const { themes, isLoading, error } = useGetThemesByGameId(selectedGameId)
+  const selectedGameId = useSelectedGame()
+  const { themes, isLoading, error } = useGetThemesByGameId(selectedGameId!.id)
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
@@ -24,7 +24,6 @@ const ThemeSelector = () => {
 
   const onCardClick = (theme: Theme) => {
     dispatch(selectTheme(theme))
-    localStorageManager.setItem('selectedThemeId', theme.id)
     navigate(`/actividad/${selectedGameId}`)
   }
 

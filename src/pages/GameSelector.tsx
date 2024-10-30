@@ -1,4 +1,4 @@
-import localStorageManager from '../localStorage/localStorageManager.js'
+import { useSelectedGame } from '../hooks/selectors.ts'
 import AuditoryDiscriminationGame from './games/AuditoryDiscriminationGame.tsx'
 import RecordGame from './games/RecordGame'
 import { SnakeGameWrapper } from './games/snakeGame/SnakeGameWrapper.tsx'
@@ -10,8 +10,8 @@ const gameMap: Record<number, React.FC> = {
 }
 
 const GameSelector: React.FC = () => {
-  const selectedGameId = localStorageManager.getItem('selectedGameId')
-  const GameComponent = gameMap[selectedGameId]
+  const selectedGame = useSelectedGame()
+  const GameComponent = gameMap[selectedGame.id]
   return <GameComponent />
 }
 

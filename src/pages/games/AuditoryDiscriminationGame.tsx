@@ -8,7 +8,7 @@ import { GameOptionsList } from './GameOptionsList.tsx'
 import { GameHeader } from './GameHeader.tsx'
 import { useSpeakText } from '../../hooks/useSpeakText.ts'
 import ProgressBar from '../../components/ProgressBar.tsx'
-import localStorageManager from '../../localStorage/localStorageManager.js'
+import { useSelectedTheme, useUser } from '../../hooks/selectors.ts'
 
 const prepareData = ({
   patiendId,
@@ -33,10 +33,10 @@ const prepareData = ({
 const AuditoryDiscriminationGame: React.FC = () => {
   // todo: possible to lift up state to parent (HOC)
   const navigate = useNavigate()
-  const selectedThemeId = localStorageManager.getItem('selectedThemeId')
-  const patientId = localStorageManager.getItem('patientId')
+  const selectedTheme = useSelectedTheme()
+  const user = useUser()
 
-  const { levels, isLoading, error: getLevelsError } = useGetGameLevels(selectedThemeId)
+  const { levels, isLoading, error: getLevelsError } = useGetGameLevels(selectedTheme!.id)
   const [currentLevel, setCurrentLevel] = useState<number>(0)
   const [options, setOptions] = useState<LevelOption[]>([])
 
@@ -62,7 +62,7 @@ const AuditoryDiscriminationGame: React.FC = () => {
     mutate(
       prepareData({
         activityId: levels![currentLevel].id,
-        patiendId: patientId,
+        patiendId: user.id,
         selectedOption: selectedOption.id
       })
     )
@@ -84,8 +84,8 @@ const AuditoryDiscriminationGame: React.FC = () => {
     }
   }, [error, navigate])
 
-  return !isLoading && !getLevelsError && levels && levels.length != 0 && selectedThemeId ? (
-    <div className="w-full layout flex flex-col justify-center items-center w-full gap-4 px-10 md:px-40 pt-20">
+  return !isLoading && !getLevelsError && levels && levels.length != 0 && selectedTheme ? (
+    <div className="w-full layout flex flex-col justify-center items-center gap-4 px-10 md:px-40 pt-20">
       <ProgressBar currentActivity={currentLevel + 1} totalActivities={levels?.length} />
       <GameHeader level={levels[currentLevel]} headerTitle="Selecciona la imágen que empiece con la letra"></GameHeader>
       <GameOptionsList options={options} onOptionSelection={onOptionSelection} />
