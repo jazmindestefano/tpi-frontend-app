@@ -15,9 +15,9 @@ import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Chart from '../../../components/Chart'
-import localStorageManager from '../../../localStorage/localStorageManager'
-import { staticChartData, staticSurveyFeedback } from '../../../testData/dashboardData'
+import Chart from '../Chart'
+import localStorageManager from '../../localStorage/localStorageManager'
+import { staticChartData, staticSurveyFeedback } from '../../testData/dashboardData'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend)
 

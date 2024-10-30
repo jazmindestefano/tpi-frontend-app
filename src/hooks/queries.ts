@@ -5,6 +5,7 @@ import {
   Achievement,
   Game,
   GameLevel,
+  LetterActityRsponseDashboard,
   PostAuditoryDiscriminationRequest,
   PostFeedbackData,
   PostUserRecordingData,
@@ -155,4 +156,19 @@ export const useTextToSpeech = (): {
   })
 
   return { error, isSuccess, isPending, mutateAsync }
+}
+
+export const useActivityLetterResponsesForDashboard = (
+  patientId: number
+): {
+  data: LetterActityRsponseDashboard[]
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['patientId', patientId],
+    queryFn: async () => await ApiService.getActivityLetterResponsesForDashboard(patientId)
+  })
+
+  return { data, error, isLoading }
 }

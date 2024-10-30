@@ -1,11 +1,5 @@
 import HomeProfesionalCard from '../../components/common/cards/ProfesionalHomeCard'
-
-interface Patient {
-  id: number
-  name: string
-  imageUrl: string
-  age: number
-}
+import { Patient } from '../../interfaces/interfaces'
 
 const patients: Patient[] = [
   { id: 1, name: 'JUAN', imageUrl: '/avatar/horse-avatar.png', age: 7 },
