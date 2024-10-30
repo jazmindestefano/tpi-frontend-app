@@ -6,6 +6,13 @@
     "types": ["vite/client", "vitest/globals", "vitest/jsdom"],
     "module": "ESNext",
     "skipLibCheck": true,
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["*"],
+      "@components/*": ["components/*"],
+      "@hooks/*": ["hooks/*"],
+      "@pages/*": ["pages/*"]
+    },
 
     /* Bundler mode */
     "moduleResolution": "bundler",
@@ -23,5 +30,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src", "vite.config.ts"]
+  "include": ["src", "vite.config.ts"],
+  "exclude": ["node_modules"]
 }
