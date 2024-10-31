@@ -159,3 +159,12 @@ export const getSyllableDashboard = async (patientId: number) => {
   }
   return null
 }
+
+export const getPhonemeDashboard = async (patientId: number) => {
+  const res = await unauthenticatedClient.get(`/phoneme/${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}

@@ -23,3 +23,10 @@ export interface SyllableDashboard {
   value: string
   score: number
 }
+
+export interface PhonemeDashboard {
+  date: string
+  type: string
+  value: string
+  score: number
+}
