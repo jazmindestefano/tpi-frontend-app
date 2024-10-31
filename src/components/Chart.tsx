@@ -22,7 +22,7 @@ const chartOptions = (title: string) => ({
 })
 
 const Chart: React.FC<ChartProps> = ({ chartData, chartType, onChartTypeChange }) => {
-  const ChartComponent = chartType === 'bar' ? Bar : Line
+  const ChartComponent = chartType === 'line' ? Line : Bar
   return (
     <div className="h-full">
       <select

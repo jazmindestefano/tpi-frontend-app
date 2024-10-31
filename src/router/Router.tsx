@@ -13,7 +13,7 @@ import ProfesionalPageLayout from '../components/layout/profesionalPageLayout/Pr
 import PatientActivities from '../pages/profesional/PatientActivities.tsx'
 import ActivityResponses from '../pages/profesional/ActivityResponses.tsx'
 import Timeline from '../pages/profesional/Timeline.tsx'
-import Dashboard from '../pages/profesional/dashboard/Dashboard.tsx'
+import DashboardPage from '@/pages/DashboardPage.tsx'
 
 export const router = createBrowserRouter([
   {
@@ -62,7 +62,7 @@ export const router = createBrowserRouter([
       },
       {
         path: '/profesional/paciente/:patientId',
-        element: <Dashboard />
+        element: <DashboardPage />
       },
       {
         path: '/profesional/paciente/:patientId/timeline',

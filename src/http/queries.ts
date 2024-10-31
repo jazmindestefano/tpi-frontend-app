@@ -132,3 +132,30 @@ export const getSynthesizedAudio = async (text: string) => {
 
   return new Blob([new Uint8Array(res.data)], { type: 'audio/mp3' })
 }
+
+export const getActivityLetterResponsesForDashboard = async (patientId: number) => {
+  const res = await unauthenticatedClient.get(`/activityLetter/${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
+
+export const getSurveyFeedbackForDashboard = async (patientId: number) => {
+  const res = await unauthenticatedClient.get(`/surveyFeedback/${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
+
+export const getSyllableDashboard = async (patientId: number) => {
+  const res = await unauthenticatedClient.get(`/syllable/${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
