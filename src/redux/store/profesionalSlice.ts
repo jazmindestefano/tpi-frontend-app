@@ -1,6 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Patient } from '../../interfaces/interfaces'
 import localStorageManager from '../../localStorage/localStorageManager'
+
+// to-do: create a Patient interface and use it in the PatientState interface
+interface Patient {
+  id: number
+  name: string
+  imageUrl: string
+  age: number
+}
 
 interface PatientState {
   patient: Patient
