@@ -36,40 +36,13 @@ export default function Dashboard() {
 
   const { surveyFeedbackData, surveyFeedbackError, surveyFeedbackLoading, chartData } = useDashboard(selectedPatientId)
 
-  console.log({ chartData })
-
-  const generateLayout = useCallback(() => {
-    const breakpoints = { lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }
-    const newLayouts: { [key: string]: Layout[] } = {}
-
-    Object.keys(breakpoints).forEach((breakpoint) => {
-      const layout: Layout[] = [
-        { i: 'today', w: 6, h: 2, x: 0, y: 0 },
-        { i: 'feedback', w: 6, h: 2, x: 6, y: 0 },
-        ...(chartData
-          ? chartData.map((chart, index) => ({
-              i: chart.id,
-              w: 6,
-              h: 2,
-              x: index % 2 === 0 ? 0 : 6,
-              y: Math.floor(index / 2 + 1) * 2
-            }))
-          : [])
-      ]
-      newLayouts[breakpoint] = layout
-    })
-    setLayouts(newLayouts)
-  }, [chartData])
-
   useEffect(() => {
-    generateLayout()
-
     const initialChartTypes: { [key: string]: 'line' | 'bar' } = {}
     chartData?.forEach((chart) => {
-      initialChartTypes[chart.id] = 'line'
+      initialChartTypes[chart.id] = 'bar'
     })
     setChartTypes(initialChartTypes)
-  }, [chartData, generateLayout])
+  }, [chartData])
 
   const renderChart = (chartId: string) => {
     const chartDataRender = chartData?.find((item) => item.id === chartId)
@@ -85,6 +58,35 @@ export default function Dashboard() {
       />
     )
   }
+
+  const buildLayouts = useCallback(
+    (w: number): Layout[] => [
+      { i: 'today', w: 6, h: 2, x: 0, y: 0 },
+      { i: 'feedback', w: 6, h: 2, x: 6, y: 0 },
+      ...(chartData
+        ? chartData.map((chart, index) => ({
+            i: chart.id,
+            w,
+            h: 2,
+            x: 0,
+            y: index + 1
+          }))
+        : [])
+    ],
+    [chartData]
+  )
+
+  useEffect(() => {
+    const newLayouts: { [key: string]: Layout[] } = {
+      lg: buildLayouts(12),
+      md: buildLayouts(12),
+      sm: buildLayouts(12),
+      xs: buildLayouts(12),
+      xxs: buildLayouts(12)
+    }
+
+    setLayouts(newLayouts)
+  }, [buildLayouts])
 
   // to-do: fix because it doesnt always work
   const handleClick = (event: React.DragEvent<HTMLButtonElement>) => {
@@ -106,14 +108,14 @@ export default function Dashboard() {
         layouts={layouts}
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
         cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-        rowHeight={200}
+        rowHeight={250}
         isDraggable={true}
         isResizable={true}
         onLayoutChange={(_currentLayout, allLayouts) => setLayouts(allLayouts)}
       >
         <div key="today" className="bg-white rounded-lg shadow-md overflow-hidden">
           <div className="p-4 h-full flex flex-col">
-            <h2 className="text-2xl font-semibold mb-2">¿Qué pasó hoy?</h2>
+            <h2 className="text-2xl mb-2">¿Qué pasó hoy?</h2>
             <p className="text-gray-600 mb-2">{getCurrentDate()}</p>
             <div className="flex justify-between mb-4 flex-grow">
               {['Letras', 'Palabras', 'La Viborita'].map((activity, index) => (
@@ -121,9 +123,9 @@ export default function Dashboard() {
                   key={index}
                   className="bg-blue-100 rounded-lg p-2 w-[30%] text-center flex flex-col justify-center"
                 >
-                  <h3 className="font-semibold mb-1">{activity}</h3>
-                  <p className="text-xl font-bold">0</p>
-                  <p className="text-xs text-gray-600">veces jugadas</p>
+                  <h3 className="font-semibold mb-1 text-2xl">{activity}</h3>
+                  <p className="text-2xl font-bold">0</p>
+                  <p className="text-md text-gray-600">veces jugadas</p>
                 </div>
               ))}
             </div>
@@ -145,16 +147,16 @@ export default function Dashboard() {
         <div key="feedback" className="bg-white rounded-lg shadow-md overflow-hidden w-full">
           {!surveyFeedbackError && !surveyFeedbackLoading && surveyFeedbackData && (
             <>
-              <div className="p-2 border-b border-gray-200 w-full">
-                <h2 className="text-lg font-semibold">Feedback del Juego</h2>
+              <div className="p-4 border-b border-gray-200 w-full">
+                <h2 className="text-2xl">Feedback del Juego</h2>
               </div>
               <div className="h-[calc(100%-3rem)] flex flex-col justify-center">
                 <div className="flex justify-around items-center">
                   <div className="text-center" key={surveyFeedbackData.mostLikedActivity.gameId}>
-                    <h3 className="text-base font-semibold mb-1">Actividad Más Gustada</h3>
+                    <h3 className="text-2xl font-semibold mb-1">Actividad Más Gustada</h3>
                     <p className="text-xl">{surveyFeedbackData.mostLikedActivity.gameName}</p>
                     <div className="flex items-center justify-center mt-1">
-                      <ThumbsUp className="text-green-500 mr-1" size={16} />
+                      <ThumbsUp className="text-green-500 mr-1" size={24} />
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
@@ -163,16 +165,16 @@ export default function Dashboard() {
                               ? 'text-yellow-500'
                               : 'text-gray-300'
                           }
-                          size={16}
+                          size={20}
                         />
                       ))}
                     </div>
                   </div>
                   <div className="text-center" key={surveyFeedbackData.leastLikedActivity.gameId}>
-                    <h3 className="text-base font-semibold mb-1">Actividad Menos Gustada</h3>
+                    <h3 className="text-2xl font-semibold mb-1">Actividad Menos Gustada</h3>
                     <p className="text-xl">{surveyFeedbackData.leastLikedActivity.gameName}</p>
                     <div className="flex items-center justify-center mt-1">
-                      <ThumbsDown className="text-red-500 mr-1" size={16} />
+                      <ThumbsDown className="text-red-500 mr-1" size={24} />
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
@@ -181,7 +183,7 @@ export default function Dashboard() {
                               ? 'text-yellow-500'
                               : 'text-gray-300'
                           }
-                          size={16}
+                          size={20}
                         />
                       ))}
                     </div>

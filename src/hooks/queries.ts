@@ -5,14 +5,18 @@ import {
   Achievement,
   Game,
   GameLevel,
-  LetterActityRsponseDashboard,
   PostAuditoryDiscriminationRequest,
   PostFeedbackData,
   PostUserRecordingData,
   Theme,
   Word
 } from '../interfaces/interfaces.ts'
-import { SurveyFeedbackDashboard, SyllableDashboard } from '@/components/index.ts'
+import {
+  LetterActityRsponseDashboard,
+  PhonemeDashboard,
+  SurveyFeedbackDashboard,
+  SyllableDashboard
+} from '@/components/index.ts'
 
 export const useGetThemesByGameId = (
   gameId: number
@@ -199,6 +203,21 @@ export const useSyllableDashboard = (
   const { data, error, isLoading } = useQuery({
     queryKey: ['syllable', patientId],
     queryFn: async () => await ApiService.getSyllableDashboard(patientId)
+  })
+
+  return { data, error, isLoading }
+}
+
+export const usePhonemeDashboard = (
+  patientId: number
+): {
+  data: PhonemeDashboard[]
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['phoneme', patientId],
+    queryFn: async () => await ApiService.getPhonemeDashboard(patientId)
   })
 
   return { data, error, isLoading }

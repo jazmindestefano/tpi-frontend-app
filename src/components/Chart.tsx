@@ -16,7 +16,17 @@ const chartOptions = (title: string) => ({
     },
     title: {
       display: true,
-      text: title
+      text: title,
+      font: {
+        size: 28,
+        weight: 'normal' as const,
+        family: 'Poppins',
+        lineHeight: 1.5
+      },
+      padding: {
+        top: 20,
+        bottom: 30
+      }
     }
   }
 })

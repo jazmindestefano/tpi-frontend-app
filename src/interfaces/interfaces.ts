@@ -10,13 +10,6 @@ export interface Game {
   image: string
 }
 
-export interface Patient {
-  id: number
-  name: string
-  imageUrl: string
-  age: number
-}
-
 export interface User {
   id: number
 }
@@ -86,12 +79,4 @@ export interface ChartData {
   id: string
   title: string
   data: Data
-}
-
-export interface LetterActityRsponseDashboard {
-  activityId: number
-  activityName: string
-  totalAttempts: number
-  correctAttempts: number
-  accuracyRate: number
 }
