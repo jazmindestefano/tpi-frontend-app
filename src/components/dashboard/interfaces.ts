@@ -5,3 +5,21 @@ export interface LetterActityRsponseDashboard {
   correctAttempts: number
   accuracyRate: number
 }
+
+interface Feedback {
+  gameId: number
+  ranking: string
+  gameName: string
+}
+
+export interface SurveyFeedbackDashboard {
+  mostLikedActivity: Feedback
+  leastLikedActivity: Feedback
+}
+
+export interface SyllableDashboard {
+  date: string
+  type: string
+  value: string
+  score: number
+}

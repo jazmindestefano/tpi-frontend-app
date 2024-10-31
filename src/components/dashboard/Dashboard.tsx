@@ -13,11 +13,11 @@ import {
 import { ThumbsUp, ThumbsDown, Star, ArrowRight } from 'lucide-react'
 import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Chart from '../Chart'
 import localStorageManager from '../../localStorage/localStorageManager'
-import { staticChartData, staticSurveyFeedback } from '../../testData/dashboardData'
+import { useDashboard } from '@/hooks'
 
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, BarElement, Title, Tooltip, Legend)
 
@@ -34,7 +34,11 @@ export default function Dashboard() {
   const [layouts, setLayouts] = useState<{ [key: string]: Layout[] }>({})
   const [chartTypes, setChartTypes] = useState<{ [key: string]: 'line' | 'bar' }>({})
 
-  const generateLayout = () => {
+  const { surveyFeedbackData, surveyFeedbackError, surveyFeedbackLoading, chartData } = useDashboard(selectedPatientId)
+
+  console.log({ chartData })
+
+  const generateLayout = useCallback(() => {
     const breakpoints = { lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }
     const newLayouts: { [key: string]: Layout[] } = {}
 
@@ -42,38 +46,40 @@ export default function Dashboard() {
       const layout: Layout[] = [
         { i: 'today', w: 6, h: 2, x: 0, y: 0 },
         { i: 'feedback', w: 6, h: 2, x: 6, y: 0 },
-        ...staticChartData.map((chart, index) => ({
-          i: chart.id,
-          w: 6,
-          h: 2,
-          x: index % 2 === 0 ? 0 : 6,
-          y: Math.floor(index / 2 + 1) * 2
-        }))
+        ...(chartData
+          ? chartData.map((chart, index) => ({
+              i: chart.id,
+              w: 6,
+              h: 2,
+              x: index % 2 === 0 ? 0 : 6,
+              y: Math.floor(index / 2 + 1) * 2
+            }))
+          : [])
       ]
       newLayouts[breakpoint] = layout
     })
     setLayouts(newLayouts)
-  }
+  }, [chartData])
 
   useEffect(() => {
     generateLayout()
 
     const initialChartTypes: { [key: string]: 'line' | 'bar' } = {}
-    staticChartData.forEach((chart) => {
+    chartData?.forEach((chart) => {
       initialChartTypes[chart.id] = 'line'
     })
     setChartTypes(initialChartTypes)
-  }, [])
+  }, [chartData, generateLayout])
 
   const renderChart = (chartId: string) => {
-    const chartData = staticChartData.find((item) => item.id === chartId)
-    if (!chartData) return null
+    const chartDataRender = chartData?.find((item) => item.id === chartId)
+    if (!chartDataRender) return null
 
     const chartType = chartTypes[chartId] || 'line'
 
     return (
       <Chart
-        chartData={chartData}
+        chartData={chartDataRender}
         chartType={chartType}
         onChartTypeChange={(type) => setChartTypes({ ...chartTypes, [chartId]: type })}
       />
@@ -131,39 +137,59 @@ export default function Dashboard() {
             </button>
           </div>
         </div>
-        {staticChartData.map((chart) => (
+        {chartData?.map((chart) => (
           <div key={chart.id} className="bg-white rounded-lg shadow-md overflow-hidden p-6">
             {renderChart(chart.id)}
           </div>
         ))}
-        <div key="feedback" className="bg-white rounded-lg shadow-md overflow-hidden">
-          <div className="p-2 border-b border-gray-200">
-            <h2 className="text-lg font-semibold">Feedback del Juego</h2>
-          </div>
-          <div className="h-[calc(100%-3rem)] flex flex-col justify-center">
-            <div className="flex justify-around items-center">
-              <div className="text-center">
-                <h3 className="text-base font-semibold mb-1">Actividad Más Gustada</h3>
-                <p className="text-xl">{staticSurveyFeedback.most_liked_activity.activity_name}</p>
-                <div className="flex items-center justify-center mt-1">
-                  <ThumbsUp className="text-green-500 mr-1" size={16} />
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="text-yellow-500" size={16} />
-                  ))}
+        <div key="feedback" className="bg-white rounded-lg shadow-md overflow-hidden w-full">
+          {!surveyFeedbackError && !surveyFeedbackLoading && surveyFeedbackData && (
+            <>
+              <div className="p-2 border-b border-gray-200 w-full">
+                <h2 className="text-lg font-semibold">Feedback del Juego</h2>
+              </div>
+              <div className="h-[calc(100%-3rem)] flex flex-col justify-center">
+                <div className="flex justify-around items-center">
+                  <div className="text-center" key={surveyFeedbackData.mostLikedActivity.gameId}>
+                    <h3 className="text-base font-semibold mb-1">Actividad Más Gustada</h3>
+                    <p className="text-xl">{surveyFeedbackData.mostLikedActivity.gameName}</p>
+                    <div className="flex items-center justify-center mt-1">
+                      <ThumbsUp className="text-green-500 mr-1" size={16} />
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className={
+                            i < Number(surveyFeedbackData.mostLikedActivity.ranking)
+                              ? 'text-yellow-500'
+                              : 'text-gray-300'
+                          }
+                          size={16}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <div className="text-center" key={surveyFeedbackData.leastLikedActivity.gameId}>
+                    <h3 className="text-base font-semibold mb-1">Actividad Menos Gustada</h3>
+                    <p className="text-xl">{surveyFeedbackData.leastLikedActivity.gameName}</p>
+                    <div className="flex items-center justify-center mt-1">
+                      <ThumbsDown className="text-red-500 mr-1" size={16} />
+                      {[...Array(5)].map((_, i) => (
+                        <Star
+                          key={i}
+                          className={
+                            i < Number(surveyFeedbackData.leastLikedActivity.ranking)
+                              ? 'text-yellow-500'
+                              : 'text-gray-300'
+                          }
+                          size={16}
+                        />
+                      ))}
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div className="text-center">
-                <h3 className="text-base font-semibold mb-1">Actividad Menos Gustada</h3>
-                <p className="text-xl">{staticSurveyFeedback.least_liked_activity.activity_name}</p>
-                <div className="flex items-center justify-center mt-1">
-                  <ThumbsDown className="text-red-500 mr-1" size={16} />
-                  {[...Array(5)].map((_, i) => (
-                    <Star key={i} className={i < 2 ? 'text-yellow-500' : 'text-gray-300'} size={16} />
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
+            </>
+          )}
         </div>
       </ResponsiveGridLayout>
     </div>

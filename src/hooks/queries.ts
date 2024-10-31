@@ -12,6 +12,7 @@ import {
   Theme,
   Word
 } from '../interfaces/interfaces.ts'
+import { SurveyFeedbackDashboard, SyllableDashboard } from '@/components/index.ts'
 
 export const useGetThemesByGameId = (
   gameId: number
@@ -168,6 +169,36 @@ export const useActivityLetterResponsesForDashboard = (
   const { data, error, isLoading } = useQuery({
     queryKey: ['patientId', patientId],
     queryFn: async () => await ApiService.getActivityLetterResponsesForDashboard(patientId)
+  })
+
+  return { data, error, isLoading }
+}
+
+export const useSurveyFeedbackForDashboard = (
+  patientId: number
+): {
+  data: SurveyFeedbackDashboard
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['surveyFeedback', patientId],
+    queryFn: async () => await ApiService.getSurveyFeedbackForDashboard(patientId)
+  })
+
+  return { data, error, isLoading }
+}
+
+export const useSyllableDashboard = (
+  patientId: number
+): {
+  data: SyllableDashboard[]
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['syllable', patientId],
+    queryFn: async () => await ApiService.getSyllableDashboard(patientId)
   })
 
   return { data, error, isLoading }

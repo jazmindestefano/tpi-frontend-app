@@ -141,3 +141,21 @@ export const getActivityLetterResponsesForDashboard = async (patientId: number) 
   }
   return null
 }
+
+export const getSurveyFeedbackForDashboard = async (patientId: number) => {
+  const res = await unauthenticatedClient.get(`/surveyFeedback/${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
+
+export const getSyllableDashboard = async (patientId: number) => {
+  const res = await unauthenticatedClient.get(`/syllable/${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
