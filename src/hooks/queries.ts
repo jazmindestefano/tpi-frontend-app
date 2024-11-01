@@ -9,7 +9,8 @@ import {
   PostFeedbackData,
   PostUserRecordingData,
   Theme,
-  Word
+  Word,
+  TimelineData
 } from '../interfaces/interfaces.ts'
 import {
   LetterActityRsponseDashboard,
@@ -218,6 +219,18 @@ export const usePhonemeDashboard = (
   const { data, error, isLoading } = useQuery({
     queryKey: ['phoneme', patientId],
     queryFn: async () => await ApiService.getPhonemeDashboard(patientId)
+  })
+
+  return { data, error, isLoading }
+}
+
+export const useTimelineData = (patientId: number) => {
+  const { data, error, isLoading } = useQuery<TimelineData[]>({
+    queryKey: ['timeline', patientId],
+    queryFn: async () => {
+      const data = await ApiService.getTimelineData(patientId)
+      return data ? [data] : []
+    }
   })
 
   return { data, error, isLoading }

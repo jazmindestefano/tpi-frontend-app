@@ -80,3 +80,9 @@ export interface ChartData {
   title: string
   data: Data
 }
+
+export interface TimelineData {
+  date: string
+  gameDescription: string
+  playedTimes: number
+}

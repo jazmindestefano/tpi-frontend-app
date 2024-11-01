@@ -12,7 +12,7 @@ import HomeProfesional from '../pages/profesional/HomeProfesional.tsx'
 import ProfesionalPageLayout from '../components/layout/profesionalPageLayout/ProfesionalPageLayout.tsx'
 import PatientActivities from '../pages/profesional/PatientActivities.tsx'
 import ActivityResponses from '../pages/profesional/ActivityResponses.tsx'
-import Timeline from '../pages/profesional/Timeline.tsx'
+import Timeline from '../pages/profesional/TimelinePage.tsx'
 import DashboardPage from '@/pages/DashboardPage.tsx'
 
 export const router = createBrowserRouter([

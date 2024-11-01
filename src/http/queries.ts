@@ -5,7 +5,8 @@ import {
   PostUserRecordingData,
   PostAuditoryDiscriminationRequest,
   PostFeedbackData,
-  Word
+  Word,
+  TimelineData
 } from '../interfaces/interfaces.ts'
 import { unauthenticatedClient } from './clients.ts'
 import { convertBlobToAudioFile } from '../helpers/blobs.ts'
@@ -162,6 +163,15 @@ export const getSyllableDashboard = async (patientId: number) => {
 
 export const getPhonemeDashboard = async (patientId: number) => {
   const res = await unauthenticatedClient.get(`/phoneme/${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
+
+export const getTimelineData = async (patientId: number): Promise<TimelineData | null> => {
+  const res = await unauthenticatedClient.get(`/timeline/${patientId}`)
 
   if (res.status === 200) {
     return res.data
