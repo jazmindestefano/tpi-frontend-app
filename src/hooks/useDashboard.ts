@@ -1,5 +1,10 @@
 import { transformDashboardData } from '@/components/dashboard'
-import { usePhonemeDashboard, useSurveyFeedbackForDashboard, useSyllableDashboard } from '@/hooks/queries'
+import {
+  usePhonemeDashboard,
+  useSurveyFeedbackForDashboard,
+  useSyllableDashboard,
+  useWhatHappenedTodayDashboard
+} from '@/hooks/queries'
 import { ChartData } from '@/interfaces/interfaces'
 import { useEffect, useState } from 'react'
 
@@ -11,6 +16,11 @@ const useDashboard = (selectedPatientId: number) => {
   } = useSurveyFeedbackForDashboard(selectedPatientId)
   const { data: syllableData } = useSyllableDashboard(selectedPatientId)
   const { data: phonemeData } = usePhonemeDashboard(selectedPatientId)
+  const {
+    data: whatHappenedTodayData,
+    isLoading: whatHappenedTodayLoading,
+    error: whatHappenedTodayError
+  } = useWhatHappenedTodayDashboard(selectedPatientId)
   const [chartData, setChartData] = useState<ChartData[] | null>(null)
 
   useEffect(() => {
@@ -32,7 +42,10 @@ const useDashboard = (selectedPatientId: number) => {
     surveyFeedbackData,
     surveyFeedbackError,
     surveyFeedbackLoading,
-    chartData
+    chartData,
+    whatHappenedTodayData,
+    whatHappenedTodayLoading,
+    whatHappenedTodayError
   }
 }
 

@@ -15,7 +15,8 @@ import {
   LetterActityRsponseDashboard,
   PhonemeDashboard,
   SurveyFeedbackDashboard,
-  SyllableDashboard
+  SyllableDashboard,
+  WhatHappenedTodayDashboard
 } from '@/components/index.ts'
 
 export const useGetThemesByGameId = (
@@ -229,4 +230,19 @@ export const useTermsAndConditions = () => {
   })
 
   return { error, isSuccess, isPending, mutateAsync }
+}
+
+export const useWhatHappenedTodayDashboard = (
+  patientId: number
+): {
+  data: WhatHappenedTodayDashboard[]
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['today', patientId],
+    queryFn: async () => await ApiService.getWhatHappenedTodayDashboard(patientId)
+  })
+
+  return { data, error, isLoading }
 }

@@ -178,3 +178,12 @@ export const UpdatePatientTermsAndConditions = async (patientId: number) => {
 
   return null
 }
+
+export const getWhatHappenedTodayDashboard = async (patientId: number) => {
+  const res = await unauthenticatedClient.get(`/today/${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}

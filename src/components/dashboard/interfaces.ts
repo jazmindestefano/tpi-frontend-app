@@ -30,3 +30,9 @@ export interface PhonemeDashboard {
   value: string
   score: number
 }
+
+export interface WhatHappenedTodayDashboard {
+  date: string
+  gameDescription: string
+  playedTimes: number
+}
