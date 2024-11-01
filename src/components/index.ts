@@ -1,2 +1,2 @@
-export { default as Dashboard } from './dashboard/Dashboard'
-export * from './dashboard/interfaces'
+export * from './layout'
+export * from './dashboard'

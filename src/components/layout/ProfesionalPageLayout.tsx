@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router-dom'
-import AsideProfesional from '../aside/AsideProfesional'
-import HeaderProfesional from '../header/HeaderProfesional'
+import AsideProfesional from './AsideProfesional'
+import HeaderProfesional from './HeaderProfesional'
 
 export default function Layout() {
   return (

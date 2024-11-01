@@ -168,3 +168,13 @@ export const getPhonemeDashboard = async (patientId: number) => {
   }
   return null
 }
+
+export const UpdatePatientTermsAndConditions = async (patientId: number) => {
+  const res = await unauthenticatedClient.patch(`/${patientId}/accept-terms`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+
+  return null
+}
