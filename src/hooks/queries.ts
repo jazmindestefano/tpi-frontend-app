@@ -222,3 +222,11 @@ export const usePhonemeDashboard = (
 
   return { data, error, isLoading }
 }
+
+export const useTermsAndConditions = () => {
+  const { error, isSuccess, isPending, mutateAsync } = useMutation({
+    mutationFn: async (patientId: number) => await ApiService.UpdatePatientTermsAndConditions(patientId)
+  })
+
+  return { error, isSuccess, isPending, mutateAsync }
+}

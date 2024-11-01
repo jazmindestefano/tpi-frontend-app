@@ -1,6 +1,6 @@
 import { LucideIcon, Users } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-import Button from '../../common/buttons/Button'
+import Button from '../common/buttons/Button'
 
 interface SidebarItemProps {
   icon: LucideIcon

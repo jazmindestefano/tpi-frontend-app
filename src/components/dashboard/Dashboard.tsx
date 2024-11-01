@@ -15,7 +15,7 @@ import 'react-grid-layout/css/styles.css'
 import 'react-resizable/css/styles.css'
 import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Chart from '../Chart'
+import Chart from './Chart'
 import localStorageManager from '../../localStorage/localStorageManager'
 import { useDashboard } from '@/hooks'
 
