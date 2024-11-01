@@ -1,5 +1,5 @@
+import { ChartData } from '@/interfaces/interfaces'
 import { Line, Bar } from 'react-chartjs-2'
-import { ChartData } from '../interfaces/interfaces'
 
 interface ChartProps {
   chartData: ChartData
