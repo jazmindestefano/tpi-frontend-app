@@ -1,4 +1,4 @@
-export interface LetterActityRsponseDashboard {
+export interface LetterActityResponseDashboard {
   activityId: number
   activityName: string
   totalAttempts: number
@@ -35,4 +35,10 @@ export interface WhatHappenedTodayDashboard {
   date: string
   gameDescription: string
   playedTimes: number
+}
+
+export interface SyllableRankingDashboard {
+  syllableId: number
+  syllableName: string
+  average: number
 }

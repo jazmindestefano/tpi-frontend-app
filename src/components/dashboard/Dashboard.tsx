@@ -102,10 +102,6 @@ export default function Dashboard() {
     navigate(`/profesional/paciente/${selectedPatientId}/timeline`)
   }
 
-  const handleDragStart = (event: React.DragEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-  }
-
   return (
     <div className="w-full mx-auto p-4">
       <div className="flex items-center mb-6">
@@ -116,7 +112,7 @@ export default function Dashboard() {
         layouts={layouts}
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
         cols={{ lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 }}
-        rowHeight={250}
+        rowHeight={300}
         isDraggable={true}
         isResizable={true}
         onLayoutChange={(_currentLayout, allLayouts) => setLayouts(allLayouts)}
@@ -141,8 +137,7 @@ export default function Dashboard() {
                 ))}
             </div>
             <button
-              onClick={handleClick}
-              onDragStart={handleDragStart}
+              onMouseDown={handleClick}
               className="bg-blue-500 text-white px-4 py-2 rounded-full flex items-center justify-center w-full cursor-pointer"
             >
               <p>Ver más</p>
