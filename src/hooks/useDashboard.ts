@@ -14,8 +14,12 @@ const useDashboard = (selectedPatientId: number) => {
     error: surveyFeedbackError,
     isLoading: surveyFeedbackLoading
   } = useSurveyFeedbackForDashboard(selectedPatientId)
-  const { data: syllableData } = useSyllableDashboard(selectedPatientId)
-  const { data: phonemeData } = usePhonemeDashboard(selectedPatientId)
+  const {
+    data: syllableData,
+    error: syllableError,
+    isLoading: syllableLoading
+  } = useSyllableDashboard(selectedPatientId)
+  const { data: phonemeData, error: phonemeError, isLoading: phonemeLoading } = usePhonemeDashboard(selectedPatientId)
   const {
     data: whatHappenedTodayData,
     isLoading: whatHappenedTodayLoading,
@@ -24,6 +28,16 @@ const useDashboard = (selectedPatientId: number) => {
   const [chartData, setChartData] = useState<ChartData[] | null>(null)
 
   useEffect(() => {
+    if (syllableLoading || phonemeLoading) {
+      setChartData(null)
+      return
+    }
+
+    if (syllableError || phonemeError) {
+      console.error('Error loading syllable or phoneme data:', syllableError || phonemeError)
+      setChartData(null)
+      return
+    }
     const sources = [
       { data: syllableData, id: 'syllables', title: 'Sílabas' },
       { data: phonemeData, id: 'phonemes', title: 'Fonemas' }
@@ -36,7 +50,7 @@ const useDashboard = (selectedPatientId: number) => {
       )
 
     setChartData(transformedData.length > 0 ? transformedData : null)
-  }, [syllableData, phonemeData])
+  }, [syllableData, phonemeData, syllableLoading, phonemeLoading, syllableError, phonemeError])
 
   return {
     surveyFeedbackData,
