@@ -88,8 +88,7 @@ export default function Dashboard() {
     setLayouts(newLayouts)
   }, [buildLayouts])
 
-  // to-do: fix because it doesnt always work
-  const handleClick = (event: React.DragEvent<HTMLButtonElement>) => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
     navigate(`/profesional/paciente/${selectedPatientId}/timeline`)
   }
@@ -130,7 +129,7 @@ export default function Dashboard() {
               ))}
             </div>
             <button
-              onClick={handleClick}
+              onMouseDown={handleClick}
               onDragStart={handleDragStart}
               className="bg-blue-500 text-white px-4 py-2 rounded-full flex items-center justify-center w-full cursor-pointer"
             >
