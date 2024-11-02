@@ -1,15 +1,20 @@
+import { useState, useEffect } from 'react'
 import BackButton from '../../components/common/buttons/BackButton'
 import { useTimelineData } from '@/hooks/queries'
 import { useParams } from 'react-router-dom'
 
 export default function Timeline() {
   const { patientId } = useParams()
-  const { data, isLoading, error } = useTimelineData(Number(patientId))
+  const [readyToFetch, setReadyToFetch] = useState(false)
+  const { data, isLoading, error } = useTimelineData(readyToFetch ? Number(patientId) : 0)
 
-  console.log('id: ', patientId)
-  console.log('data: ', data)
+  useEffect(() => {
+    if (patientId) {
+      setReadyToFetch(true)
+    }
+  }, [patientId])
 
-  if (isLoading) {
+  if (!readyToFetch || isLoading) {
     return <div className="flex justify-center items-center h-screen">Cargando...</div>
   }
 
@@ -23,7 +28,7 @@ export default function Timeline() {
 
   return (
     <div className="container p-4 pb-40 min-h-screen">
-      <BackButton text="Volver al Dashboard" route="/profesional/paciente/1" />
+      <BackButton text="Volver al Dashboard" route={`/profesional/paciente/${patientId}`} />
       <h1 className="text-3xl font-bold mb-8 text-gray-800">Línea de Tiempo de Actividades</h1>
       <div className="relative space-y-6 pl-[9%]">
         <div className="absolute left-[5%] top-[24px] bottom-0 w-0.5 bg-blue-300"></div>
