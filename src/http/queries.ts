@@ -188,3 +188,39 @@ export const UpdatePatientTermsAndConditions = async (patientId: number) => {
 
   return null
 }
+
+export const getWhatHappenedTodayDashboard = async (patientId: number) => {
+  const res = await unauthenticatedClient.get(`/today/${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
+
+export const getWorstSyllableRankingDashboard = async (patientId: number) => {
+  const res = await unauthenticatedClient.get(`/syllableRanking/${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
+
+export const getWorstPhonemeRankingDashboard = async (patientId: number) => {
+  const res = await unauthenticatedClient.get(`/phonemeRanking/${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
+
+export const getActivityLetterProgressDashboard = async (patientId: number) => {
+  const res = await unauthenticatedClient.get(`/activityLetter/${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}

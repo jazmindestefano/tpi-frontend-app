@@ -1,38 +1,150 @@
-import { transformDashboardData } from '@/components/dashboard'
-import { usePhonemeDashboard, useSurveyFeedbackForDashboard, useSyllableDashboard } from '@/hooks/queries'
-import { ChartData } from '@/interfaces/interfaces'
+import { useParams } from 'react-router-dom'
+import {
+  useActivityLetterResponsesForDashboard,
+  usePhonemeDashboard,
+  useSyllableDashboard,
+  useWorstPhonemeRankingDashboard,
+  useWorstSyllableRankingDashboard
+} from './queries'
 import { useEffect, useState } from 'react'
+import { PhonemeDashboard, SyllableDashboard, SyllableRankingDashboard } from '@/components'
 
-const useDashboard = (selectedPatientId: number) => {
+interface PronunciationChartProps {
+  date: string
+  value: string
+  score: number
+  type: string
+}
+
+interface PronunciationChart {
+  type: string
+  data: PronunciationChartProps
+}
+
+interface AuditoryDiscriminationChartProps {
+  activityId: number
+  activityName: string
+  totalAttempts: number
+  correctAttempts: number
+  accuracyRate: number
+}
+
+interface RankingChartProps {
+  name: string
+  average: number
+}
+
+interface RankingProps {
+  type: string
+  chartData: RankingChartProps
+}
+
+const useDashboard = () => {
+  const { patientId } = useParams()
   const {
-    data: surveyFeedbackData,
-    error: surveyFeedbackError,
-    isLoading: surveyFeedbackLoading
-  } = useSurveyFeedbackForDashboard(selectedPatientId)
-  const { data: syllableData } = useSyllableDashboard(selectedPatientId)
-  const { data: phonemeData } = usePhonemeDashboard(selectedPatientId)
-  const [chartData, setChartData] = useState<ChartData[] | null>(null)
+    data: syllableData,
+    isLoading: syllableLoading,
+    error: syllableError
+  } = useSyllableDashboard(parseInt(patientId!))
+  const {
+    data: phonemeData,
+    isLoading: phonemeLoading,
+    error: phonemeError
+  } = usePhonemeDashboard(parseInt(patientId!))
+  const {
+    data: auditoryData,
+    isLoading: auditoryLoading,
+    error: auditoryError
+  } = useActivityLetterResponsesForDashboard(parseInt(patientId!))
+  const {
+    data: phonemeRanking,
+    error: phonemeRankingError,
+    isLoading: phonemeRankingLoading
+  } = useWorstPhonemeRankingDashboard(parseInt(patientId!))
+  const {
+    data: syllableRanking,
+    error: syllableRankingError,
+    isLoading: syllableRankingLoading
+  } = useWorstSyllableRankingDashboard(parseInt(patientId!))
+
+  const [pronunciationChart, setPronunciationChart] = useState<[PronunciationChart[], PronunciationChart[]]>([[], []])
+  const [auditoryChart, setAuditoryChart] = useState<AuditoryDiscriminationChartProps[]>([])
+  const [rankingChart, setRankingChart] = useState<[RankingProps[], RankingProps[]]>([[], []])
 
   useEffect(() => {
-    const sources = [
-      { data: syllableData, id: 'syllables', title: 'Sílabas' },
-      { data: phonemeData, id: 'phonemes', title: 'Fonemas' }
-    ]
+    if (!syllableError && !syllableLoading && syllableData && phonemeData && !phonemeError && !phonemeLoading) {
+      const pronunciationChartData: [PronunciationChart[], PronunciationChart[]] = [
+        syllableData.map((item: SyllableDashboard) => ({
+          type: 'syllable',
+          data: {
+            date: item.date,
+            value: item.value,
+            score: item.score,
+            type: 'syllable'
+          }
+        })),
+        phonemeData.map((item: PhonemeDashboard) => ({
+          type: 'phoneme',
+          data: {
+            date: item.date,
+            value: item.value,
+            score: item.score,
+            type: 'phoneme'
+          }
+        }))
+      ]
 
-    const transformedData = sources
-      .filter((source) => source.data)
-      .map((source) =>
-        transformDashboardData(source.data as { date: string; value: string; score: number }[], source.id, source.title)
-      )
+      setPronunciationChart(pronunciationChartData)
+    }
+  }, [syllableData, syllableError, syllableLoading, phonemeData, phonemeError, phonemeLoading])
 
-    setChartData(transformedData.length > 0 ? transformedData : null)
-  }, [syllableData, phonemeData])
+  useEffect(() => {
+    if (
+      !phonemeRankingError &&
+      !phonemeRankingLoading &&
+      phonemeRanking &&
+      syllableRanking &&
+      !syllableRankingError &&
+      !syllableRankingLoading
+    ) {
+      const rankingChartData: [RankingProps[], RankingProps[]] = [
+        phonemeRanking.map((item: SyllableRankingDashboard) => ({
+          type: 'phoneme',
+          chartData: {
+            name: item.syllableName,
+            average: item.average
+          }
+        })),
+        syllableRanking.map((item: SyllableRankingDashboard) => ({
+          type: 'syllable',
+          chartData: {
+            name: item.syllableName,
+            average: item.average
+          }
+        }))
+      ]
+
+      setRankingChart(rankingChartData)
+    }
+  }, [
+    phonemeRanking,
+    phonemeRankingError,
+    phonemeRankingLoading,
+    syllableRanking,
+    syllableRankingError,
+    syllableRankingLoading
+  ])
+
+  useEffect(() => {
+    if (!auditoryError && !auditoryLoading && auditoryData) {
+      setAuditoryChart(auditoryData)
+    }
+  }, [auditoryData, auditoryError, auditoryLoading])
 
   return {
-    surveyFeedbackData,
-    surveyFeedbackError,
-    surveyFeedbackLoading,
-    chartData
+    pronunciationChart,
+    auditoryChart,
+    rankingChart
   }
 }
 

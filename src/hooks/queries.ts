@@ -12,11 +12,14 @@ import {
   Word,
   TimelineData
 } from '../interfaces/interfaces.ts'
+
 import {
-  LetterActityRsponseDashboard,
+  LetterActityResponseDashboard,
   PhonemeDashboard,
   SurveyFeedbackDashboard,
-  SyllableDashboard
+  SyllableDashboard,
+  SyllableRankingDashboard,
+  WhatHappenedTodayDashboard
 } from '@/components/index.ts'
 
 export const useGetThemesByGameId = (
@@ -167,7 +170,7 @@ export const useTextToSpeech = (): {
 export const useActivityLetterResponsesForDashboard = (
   patientId: number
 ): {
-  data: LetterActityRsponseDashboard[]
+  data: LetterActityResponseDashboard[]
   error: Error | null
   isLoading: boolean
 } => {
@@ -242,4 +245,64 @@ export const useTermsAndConditions = () => {
   })
 
   return { error, isSuccess, isPending, mutateAsync }
+}
+
+export const useWhatHappenedTodayDashboard = (
+  patientId: number
+): {
+  data: WhatHappenedTodayDashboard[]
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['today', patientId],
+    queryFn: async () => await ApiService.getWhatHappenedTodayDashboard(patientId)
+  })
+
+  return { data, error, isLoading }
+}
+
+export const useWorstSyllableRankingDashboard = (
+  patientId: number
+): {
+  data: SyllableRankingDashboard[]
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['worstSyllableRanking', patientId],
+    queryFn: async () => await ApiService.getWorstSyllableRankingDashboard(patientId)
+  })
+
+  return { data, error, isLoading }
+}
+
+export const useWorstPhonemeRankingDashboard = (
+  patientId: number
+): {
+  data: SyllableRankingDashboard[]
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['worstPhonemeRanking', patientId],
+    queryFn: async () => await ApiService.getWorstPhonemeRankingDashboard(patientId)
+  })
+
+  return { data, error, isLoading }
+}
+
+export const useGetActivityLetterProgressDashboard = (
+  patientId: number
+): {
+  data: LetterActityResponseDashboard[]
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['activityLetterProgress', patientId],
+    queryFn: async () => await ApiService.getActivityLetterProgressDashboard(patientId)
+  })
+
+  return { data, error, isLoading }
 }

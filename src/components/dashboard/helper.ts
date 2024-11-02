@@ -1,4 +1,5 @@
 import { ChartData } from '@/interfaces/interfaces'
+import { LetterActityResponseDashboard, SyllableRankingDashboard } from './interfaces'
 
 export const transformDashboardData = <T extends { date: string; value: string; score: number }>(
   data: T[],
@@ -31,15 +32,15 @@ export const transformDashboardData = <T extends { date: string; value: string; 
   const datasets: ChartData['data']['datasets'] = []
 
   // Crear conjuntos de sílabas/fonemas
-  const syllables = new Set<string>()
+  const dataSets = new Set<string>()
   for (const dateKey in groupedData) {
     for (const syllable in groupedData[dateKey]) {
-      syllables.add(syllable)
+      dataSets.add(syllable)
     }
   }
 
   // Generar datasets
-  syllables.forEach((syllable) => {
+  dataSets.forEach((syllable) => {
     const dataPoints = labels.map((label) => {
       // Obtener los puntajes para la sílaba actual
       return groupedData[label][syllable] || [0] // Devolver 0 si no hay puntajes
@@ -59,6 +60,58 @@ export const transformDashboardData = <T extends { date: string; value: string; 
     data: {
       labels,
       datasets
+    }
+  }
+}
+
+export const transformRankingData = (data: SyllableRankingDashboard[], id: string, title: string): ChartData => {
+  // Agrupar datos únicos por nombre de sílaba/fonema
+  const labels = Array.from(new Set(data.map(({ syllableName }) => syllableName)))
+
+  // Crear datasets para cada sílaba/fonema con su promedio
+  const datasets: ChartData['data']['datasets'] = labels.map((syllableName) => {
+    const syllableData = data.filter((item) => item.syllableName === syllableName)
+    const averageScores = syllableData.map(({ average }) => average)
+
+    return {
+      label: syllableName.toUpperCase(),
+      data: averageScores, // Usar directamente el valor promedio `average`
+      borderColor: `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`,
+      backgroundColor: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.5)`
+    }
+  })
+
+  return {
+    id,
+    title,
+    data: {
+      labels,
+      datasets
+    }
+  }
+}
+
+export const transformEndpointData = (
+  endpointData: LetterActityResponseDashboard[],
+  id: string,
+  title: string
+): ChartData => {
+  const labels = endpointData.map((item) => item.activityName)
+  const data = endpointData.map((item) => item.accuracyRate)
+
+  return {
+    id,
+    title,
+    data: {
+      labels,
+      datasets: [
+        {
+          label: 'Accuracy Rate',
+          data,
+          borderColor: `rgb(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255})`,
+          backgroundColor: `rgba(${Math.random() * 255}, ${Math.random() * 255}, ${Math.random() * 255}, 0.5)`
+        }
+      ]
     }
   }
 }
