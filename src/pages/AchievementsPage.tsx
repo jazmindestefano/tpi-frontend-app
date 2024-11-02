@@ -1,5 +1,5 @@
-import SpinnerLoader from '../components/common/SpinnerLoader'
-import { useAchievements } from '../hooks/useAchievement'
+import SpinnerLoader from '../components/common/SpinnerLoader.tsx'
+import { useAchievements } from '../hooks/useAchievement.ts'
 import { HearableButton } from '../components/common/buttons/HearableButton.tsx'
 
 const AchievementsPage = () => {

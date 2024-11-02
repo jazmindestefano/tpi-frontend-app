@@ -1,6 +1,4 @@
-import React from 'react'
-
-const PrivacyPolicyPage: React.FC = () => {
+const PrivacyPolicyPage = () => {
   return (
     <div className="px-8 py-6 max-w-3xl mx-auto font-poppins">
       <h1 className="text-4xl font-bold mb-6">Política de Privacidad</h1>

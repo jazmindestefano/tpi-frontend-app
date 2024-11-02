@@ -1,15 +1,15 @@
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { useGetThemesByGameId } from '../hooks/queries'
-import { Theme } from '../interfaces/interfaces'
-import { selectTheme } from '../redux/store/gameSlice'
-import ThemeCardsList from '../components/themeSelect/ThemeCardsList'
+import { useGetThemesByGameId } from '../hooks/queries.ts'
+import { Theme } from '../interfaces/interfaces.ts'
+import { selectTheme } from '../redux/store/gameSlice.ts'
+import ThemeCardsList from '../components/themeSelect/ThemeCardsList.tsx'
 import SpinnerLoader from '../components/common/SpinnerLoader.tsx'
 import { useEffect } from 'react'
 import { HearableButton } from '../components/common/buttons/HearableButton.tsx'
 import { useSelectedGame } from '../hooks/selectors.ts'
 
-const ThemeSelector = () => {
+const ThemeSelectorPage = () => {
   const selectedGameId = useSelectedGame()
   const { themes, isLoading, error } = useGetThemesByGameId(selectedGameId!.id)
   const dispatch = useDispatch()
@@ -46,4 +46,4 @@ const ThemeSelector = () => {
   )
 }
 
-export default ThemeSelector
+export default ThemeSelectorPage

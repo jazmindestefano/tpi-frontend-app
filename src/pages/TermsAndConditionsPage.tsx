@@ -1,8 +1,7 @@
 import { useTermsAndConditions } from '@/hooks/queries'
 import { useUser } from '@/hooks/selectors'
-import React from 'react'
 
-const TermsAndConditionsPage: React.FC = () => {
+const TermsAndConditionsPage = () => {
   const { mutateAsync } = useTermsAndConditions()
   const { id } = useUser()
 

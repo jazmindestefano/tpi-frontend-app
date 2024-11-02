@@ -1,4 +1,4 @@
-import HomeProfesionalCard from '../../components/common/cards/ProfesionalHomeCard'
+import HomeProfesionalCard from "@/components/common/cards/ProfesionalHomeCard"
 
 interface Patient {
   id: number
@@ -15,7 +15,7 @@ const patients: Patient[] = [
   { id: 5, name: 'JORGE', imageUrl: '/avatar/rabbit-avatar.png', age: 7 }
 ]
 
-export default function HomeProfesional() {
+const HomeProfesionalPage = () => {
   return (
     <div className="flex flex-col items-start justify-start gap-4">
       <div className="flex justify-between items-center">
@@ -36,3 +36,5 @@ export default function HomeProfesional() {
     </div>
   )
 }
+
+export default HomeProfesionalPage

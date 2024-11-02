@@ -1,11 +1,12 @@
+import Button from '@/components/common/buttons/Button'
 import { CalendarIcon, PlayCircle } from 'lucide-react'
-import Button from '../../components/common/buttons/Button'
 
 interface WordResponse {
   word: string
   date: string
 }
 
+// todo: connect with be
 const wordResponses: WordResponse[] = [
   { word: 'MESA', date: '21/09/2024' },
   { word: 'OLLA', date: '21/09/2024' },
@@ -13,7 +14,7 @@ const wordResponses: WordResponse[] = [
   { word: 'ARBOL', date: '21/09/2024' }
 ]
 
-export default function ActivityResponses() {
+const ActivityResponsesPage = () => {
   return (
     <div className="flex flex-col gap-5 lg:pt-0 pt-20">
       <div className="flex justify-between items-center mb-6">
@@ -43,3 +44,5 @@ export default function ActivityResponses() {
     </div>
   )
 }
+
+export default ActivityResponsesPage
