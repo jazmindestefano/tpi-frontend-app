@@ -1,6 +1,6 @@
 import { UserRound, Download, FolderDot, LogOut } from 'lucide-react'
-import Button from '../../common/buttons/Button'
 import { useNavigate } from 'react-router-dom'
+import Button from '../common/buttons/Button'
 
 const HeaderProfesional = () => {
   const navigate = useNavigate()

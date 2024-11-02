@@ -1,12 +1,12 @@
 import { useDispatch } from 'react-redux'
-import localStorageManager from '../../../localStorage/localStorageManager'
-import ProductTour from '../../ProductTour'
-import Header from '../header/Header'
 import { Outlet } from 'react-router-dom'
 import { useEffect } from 'react'
-import { setUser } from '../../../redux/store/userSlice'
+import localStorageManager from '@/localStorage/localStorageManager'
+import { setUser } from '@/redux/store/userSlice'
+import Header from './Header'
+import ProductTour from '../ProductTour'
 
-const PageLayout: React.FC = () => {
+const PageLayout = () => {
   // to do: this has to come from backend
   const showProductTour = localStorageManager.getItem('showProductTour')
   const dispatch = useDispatch()

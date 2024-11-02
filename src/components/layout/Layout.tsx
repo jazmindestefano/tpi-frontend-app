@@ -1,6 +1,8 @@
 import { router } from '../../router/Router'
 import { RouterProvider } from 'react-router-dom'
 
-export const Layout = (): JSX.Element => {
+const Layout = () => {
   return <RouterProvider router={router} />
 }
+
+export default Layout

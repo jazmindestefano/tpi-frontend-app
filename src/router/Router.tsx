@@ -1,7 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom'
 import Home from '../pages/Home'
 import Profile from '../pages/Profile'
-import PageLayout from '../components/layout/pageLayout/PageLayout.tsx'
 import ThemeSelectorPage from '../pages/ThemeSelector.tsx'
 import ErrorPage from '../pages/Error.tsx'
 import GameSelectorPage from '../pages/GameSelector.tsx'
@@ -9,11 +8,12 @@ import NotFoundPage from '../pages/NotFound.tsx'
 import CongratulationsPage from '../pages/Congratulations.tsx'
 import AchievementsPage from '../pages/Achievements.tsx'
 import HomeProfesional from '../pages/profesional/HomeProfesional.tsx'
-import ProfesionalPageLayout from '../components/layout/profesionalPageLayout/ProfesionalPageLayout.tsx'
 import PatientActivities from '../pages/profesional/PatientActivities.tsx'
 import ActivityResponses from '../pages/profesional/ActivityResponses.tsx'
 import Timeline from '../pages/profesional/TimelinePage.tsx'
 import DashboardPage from '@/pages/DashboardPage.tsx'
+import { PrivacyPolicyPage, TermsAndConditionsPage } from '@/pages/index.ts'
+import { PageLayout, ProfesionalPageLayout } from '@/components/index.ts'
 
 export const router = createBrowserRouter([
   {
@@ -50,6 +50,14 @@ export const router = createBrowserRouter([
       {
         path: '/logros',
         element: <AchievementsPage />
+      },
+      {
+        path: '/terminos-y-condiciones',
+        element: <TermsAndConditionsPage />
+      },
+      {
+        path: '/politica-de-privacidad',
+        element: <PrivacyPolicyPage />
       }
     ]
   },

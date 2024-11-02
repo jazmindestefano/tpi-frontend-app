@@ -172,9 +172,19 @@ export const getPhonemeDashboard = async (patientId: number) => {
 
 export const getTimelineData = async (patientId: number): Promise<TimelineData | null> => {
   const res = await unauthenticatedClient.get(`/timeline/${patientId}`)
+  if (res.status === 200) {
+    return res.data
+  }
+
+  return null
+}
+
+export const UpdatePatientTermsAndConditions = async (patientId: number) => {
+  const res = await unauthenticatedClient.patch(`/${patientId}/accept-terms`)
 
   if (res.status === 200) {
     return res.data
   }
+
   return null
 }

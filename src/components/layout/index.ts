@@ -1,0 +1,5 @@
+export { default as PageLayout } from './PageLayout'
+export { default as ProfesionalPageLayout } from './ProfesionalPageLayout'
+export { default as Header } from './Header'
+export { default as HeaderProfesional } from './HeaderProfesional'
+export { default as AsideProfesional } from './AsideProfesional'
