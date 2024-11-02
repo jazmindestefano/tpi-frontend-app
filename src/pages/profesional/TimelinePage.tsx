@@ -1,7 +1,7 @@
-import { Timeline } from '../../components/timeline'
+import { Timeline } from '@/components/timeline'
 
-const DashboardPage = () => {
+const TimeLinePage = () => {
   return <Timeline />
 }
 
-export default DashboardPage
+export default TimeLinePage

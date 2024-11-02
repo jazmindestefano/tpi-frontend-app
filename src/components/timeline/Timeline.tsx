@@ -1,8 +1,13 @@
 import BackButton from '../../components/common/buttons/BackButton'
 import { useTimelineData } from '@/hooks/queries'
+import { useParams } from 'react-router-dom'
 
 export default function Timeline() {
-  const { data, isLoading, error } = useTimelineData(1)
+  const { patientId } = useParams()
+  const { data, isLoading, error } = useTimelineData(Number(patientId))
+
+  console.log('id: ', patientId)
+  console.log('data: ', data)
 
   if (isLoading) {
     return <div className="flex justify-center items-center h-screen">Cargando...</div>
@@ -16,35 +21,6 @@ export default function Timeline() {
     )
   }
 
-  //todo: remove this mock data
-  // data = [
-  //   {
-  //     date: '2024-11-01T08:30:00.000Z',
-  //     gameDescription: 'Juego de Memoria',
-  //     playedTimes: 3
-  //   },
-  //   {
-  //     date: '2024-11-02T14:45:00.000Z',
-  //     gameDescription: 'Juego de Palabras',
-  //     playedTimes: 5
-  //   },
-  //   {
-  //     date: '2024-11-03T10:00:00.000Z',
-  //     gameDescription: 'Juego de Matemáticas',
-  //     playedTimes: 2
-  //   },
-  //   {
-  //     date: '2024-11-04T12:15:00.000Z',
-  //     gameDescription: 'Juego de Ciencia',
-  //     playedTimes: 4
-  //   },
-  //   {
-  //     date: '2024-11-05T09:20:00.000Z',
-  //     gameDescription: 'Juego de Historia',
-  //     playedTimes: 1
-  //   }
-  // ]
-
   return (
     <div className="container p-4 pb-40 min-h-screen">
       <BackButton text="Volver al Dashboard" route="/profesional/paciente/1" />
@@ -52,9 +28,9 @@ export default function Timeline() {
       <div className="relative space-y-6 pl-[9%]">
         <div className="absolute left-[5%] top-[24px] bottom-0 w-0.5 bg-blue-300"></div>
 
-        {data.map((activity) => (
+        {data.flat().map((activity) => (
           <div
-            key={activity.date}
+            key={`${activity.date}-${activity.gameDescription}`}
             className="relative bg-white rounded-lg shadow-sm p-6 transition-all duration-300 ease-in-out transform hover:shadow-md hover:-translate-y-1"
           >
             <div className="absolute left-[-5%] top-6 w-6 h-6 bg-blue-500 rounded-full border-4 border-white z-10"></div>
