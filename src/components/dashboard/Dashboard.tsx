@@ -34,8 +34,17 @@ export default function Dashboard() {
   const [layouts, setLayouts] = useState<{ [key: string]: Layout[] }>({})
   const [chartTypes, setChartTypes] = useState<{ [key: string]: 'line' | 'bar' }>({})
 
-  const { surveyFeedbackData, surveyFeedbackError, surveyFeedbackLoading, chartData, whatHappenedTodayData } =
-    useDashboard(selectedPatientId)
+  const {
+    surveyFeedbackData,
+    surveyFeedbackError,
+    surveyFeedbackLoading,
+    chartData,
+    whatHappenedTodayData,
+    whatHappenedTodayError,
+    whatHappenedTodayLoading
+  } = useDashboard(selectedPatientId)
+
+  console.log({ whatHappenedTodayData })
 
   useEffect(() => {
     const initialChartTypes: { [key: string]: 'line' | 'bar' } = {}
@@ -119,25 +128,19 @@ export default function Dashboard() {
             <h2 className="text-2xl mb-2">¿Qué pasó hoy?</h2>
             <p className="text-gray-600 mb-2">{getCurrentDate()}</p>
             <div className="flex justify-between mb-4 flex-grow">
-              {(() => {
-                const activityCount = { Letras: 0, Palabras: 0, 'La Viborita': 0 }
-                whatHappenedTodayData?.forEach((activity) => {
-                  if (activity.gameDescription in activityCount) {
-                    activityCount[activity.gameDescription as keyof typeof activityCount] += activity.playedTimes
-                  }
-                })
-
-                return ['Letras', 'Palabras', 'La Viborita'].map((activity, index) => (
+              {!whatHappenedTodayError &&
+                !whatHappenedTodayLoading &&
+                whatHappenedTodayData.length > 0 &&
+                whatHappenedTodayData.map((activity, index) => (
                   <div
                     key={index}
                     className="bg-blue-100 rounded-lg p-2 w-[30%] text-center flex flex-col justify-center"
                   >
-                    <h3 className="font-semibold mb-1 text-2xl">{activity}</h3>
-                    <p className="text-2xl font-bold">{activityCount[activity as keyof typeof activityCount]}</p>
+                    <h3 className="font-semibold mb-1 text-2xl">{activity.gameDescription}</h3>
+                    <p className="text-2xl font-bold">{activity.playedTimes}</p>
                     <p className="text-md text-gray-600">veces jugadas</p>
                   </div>
-                ))
-              })()}
+                ))}
             </div>
             <button
               onClick={handleClick}
