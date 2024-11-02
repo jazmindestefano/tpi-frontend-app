@@ -44,8 +44,6 @@ export default function Dashboard() {
     whatHappenedTodayLoading
   } = useDashboard(selectedPatientId)
 
-  console.log({ whatHappenedTodayData })
-
   useEffect(() => {
     const initialChartTypes: { [key: string]: 'line' | 'bar' } = {}
     chartData?.forEach((chart) => {
@@ -138,7 +136,7 @@ export default function Dashboard() {
                   >
                     <h3 className="font-semibold mb-1 text-2xl">{activity.gameDescription}</h3>
                     <p className="text-2xl font-bold">{activity.playedTimes}</p>
-                    <p className="text-md text-gray-600">veces jugadas</p>
+                    <p className="text-md text-gray-600">actividades hechas</p>
                   </div>
                 ))}
             </div>
