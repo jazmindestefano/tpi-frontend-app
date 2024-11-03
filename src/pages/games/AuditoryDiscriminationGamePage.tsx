@@ -8,7 +8,7 @@ import { useSpeakText } from '../hooks/useSpeakText.ts'
 import ProgressBar from '../components/ProgressBar.tsx'
 import { useSelectedTheme, useUser } from '../hooks/selectors.ts'
 import { GameHeader } from '@/components/index.ts'
-import GameOptionsList from './GameOptionsListPage.tsx'
+import GameOptionsList from './games/GameOptionsListPage.tsx'
 
 const prepareData = ({
   patiendId,

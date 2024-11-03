@@ -1,7 +1,7 @@
-import SnakeGameWrapper from '../../wrappers/SnakeGameWrapper.tsx'
-import { useSelectedGame } from '../hooks/selectors.ts'
+import SnakeGameWrapper from '../../../wrappers/SnakeGameWrapper.tsx'
+import { useSelectedGame } from '../../hooks/selectors.ts'
 import AuditoryDiscriminationGame from './AuditoryDiscriminationGamePage.tsx'
-import RecordGame from './RecordGamePage.tsx'
+import RecordGame from '../RecordGamePage.tsx'
 
 const gameMap: Record<number, React.FC> = {
   1: AuditoryDiscriminationGame,

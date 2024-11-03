@@ -1,11 +1,7 @@
 import { useDashboard } from '@/hooks'
-import AuditoryDiscriminationChart from './AuditoryDiscriminationChart'
-import Feedback from './Feedback'
-import PronunciationChart from './PronunciationChart'
-import RankingChart from './RankingChart'
-import Today from './Today'
 import { Responsive, WidthProvider } from 'react-grid-layout'
 import 'react-grid-layout/css/styles.css'
+import { AuditoryDiscriminationChart, Feedback, PronunciationChart, RankingChart, Today } from './charts'
 
 const ResponsiveGridLayout = WidthProvider(Responsive)
 
