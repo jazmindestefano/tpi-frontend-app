@@ -2,18 +2,6 @@ import * as ApiService from '../http/queries.ts'
 import { useMutation, useQuery } from '@tanstack/react-query'
 
 import {
-  Achievement,
-  Game,
-  GameLevel,
-  PostAuditoryDiscriminationRequest,
-  PostFeedbackData,
-  PostUserRecordingData,
-  Theme,
-  Word,
-  TimelineData
-} from '../interfaces/interfaces.ts'
-
-import {
   LetterActityResponseDashboard,
   PhonemeDashboard,
   SurveyFeedbackDashboard,
@@ -21,6 +9,19 @@ import {
   SyllableRankingDashboard,
   WhatHappenedTodayDashboard
 } from '@/components/index.ts'
+
+import {
+  Theme,
+  Game,
+  GameLevel,
+  PostUserRecordingData,
+  PostFeedbackData,
+  PostAuditoryDiscriminationRequest,
+  Word,
+  Achievement,
+  TimelineData,
+  ProfesionalPatient
+} from '@/interfaces/interfaces.ts'
 
 export const useGetThemesByGameId = (
   gameId: number
@@ -305,4 +306,19 @@ export const useGetActivityLetterProgressDashboard = (
   })
 
   return { data, error, isLoading }
+}
+
+export const useGetProfessionalPatients = (
+  professionalId: number
+): {
+  patients: ProfesionalPatient[] | null | undefined
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['professionalPatients', professionalId],
+    queryFn: async () => await ApiService.getProfessionalPatients(professionalId)
+  })
+
+  return { patients: data, error, isLoading }
 }

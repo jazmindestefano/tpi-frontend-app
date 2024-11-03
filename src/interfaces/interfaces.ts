@@ -86,3 +86,10 @@ export interface TimelineData {
   gameDescription: string
   playedTimes: number
 }
+export interface ProfesionalPatient {
+  id: number
+  name: string
+  image: string
+  age: number
+  email: string
+}

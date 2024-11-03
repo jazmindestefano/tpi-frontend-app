@@ -1,10 +1,7 @@
+import { getCurrentDate } from '@/helpers'
 import { useWhatHappenedTodayDashboard } from '@/hooks/queries'
 import { ArrowRight } from 'lucide-react'
 import { useNavigate, useParams } from 'react-router-dom'
-
-const getCurrentDate = () => {
-  return new Date().toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })
-}
 
 const Today = () => {
   const { patientId } = useParams()

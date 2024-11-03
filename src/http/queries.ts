@@ -1,15 +1,17 @@
+import { unauthenticatedClient } from './clients.ts'
+import { convertBlobToAudioFile } from '../helpers/blobs.ts'
 import {
-  GameLevel,
-  Game,
   Theme,
+  Game,
+  GameLevel,
   PostUserRecordingData,
   PostAuditoryDiscriminationRequest,
   PostFeedbackData,
   Word,
-  TimelineData
-} from '../interfaces/interfaces.ts'
-import { unauthenticatedClient } from './clients.ts'
-import { convertBlobToAudioFile } from '../helpers/blobs.ts'
+  TimelineData,
+  ProfesionalPatient
+} from '@/interfaces/interfaces.ts'
+import { getCurrentAge } from '@/helpers/index.ts'
 
 export const getThemesByGameId = async (gameId: number): Promise<Theme[] | null> => {
   // will change to an authenticated client probably
@@ -223,4 +225,41 @@ export const getActivityLetterProgressDashboard = async (patientId: number) => {
     return res.data
   }
   return null
+}
+
+export const getProfessionalPatients = async (profesionalId: number): Promise<ProfesionalPatient[] | null> => {
+  //  const res = await unauthenticatedClient.get(`/professional/${profesionalId}/patients`)
+  const res = `http://localhost:8080/professional/${profesionalId}/patients`
+  console.log(res)
+
+  const mockedResponse = [
+    {
+      id: 1,
+      name: 'Candela',
+      email: 'cande.fdz12@gmail.com',
+      image: 'candelaPerfil',
+      birthDate: '2002-10-23T03:00:00.000Z'
+    },
+    {
+      id: 2,
+      name: 'Ailen',
+      email: 'ailenpereiravilches@gmail.com',
+      image: 'ailenPerfil',
+      birthDate: '2002-10-23T03:00:00.000Z'
+    }
+  ]
+
+  const newPatients: ProfesionalPatient[] = []
+
+  mockedResponse.forEach((patient) => {
+    newPatients.push({
+      id: patient.id,
+      name: patient.name,
+      image: patient.image,
+      email: patient.email,
+      age: getCurrentAge(patient.birthDate)
+    })
+  })
+
+  return newPatients
 }

@@ -1,14 +1,14 @@
-import SpinnerLoader from '../../components/common/SpinnerLoader'
-import { LevelOption } from '../../interfaces/interfaces'
+import SpinnerLoader from '../components/common/SpinnerLoader.tsx'
+import { LevelOption } from '../interfaces/interfaces.ts'
 import { useEffect, useState } from 'react'
-import { useGetGameLevels, usePostAuditoryDiscriminationAnswer } from '../../hooks/queries.ts'
+import { useGetGameLevels, usePostAuditoryDiscriminationAnswer } from '../hooks/queries.ts'
 import { useNavigate } from 'react-router-dom'
-import { shuffleArray } from '../../helpers/arrays.ts'
-import { GameOptionsList } from './GameOptionsList.tsx'
-import { GameHeader } from './GameHeader.tsx'
-import { useSpeakText } from '../../hooks/useSpeakText.ts'
-import ProgressBar from '../../components/ProgressBar.tsx'
-import { useSelectedTheme, useUser } from '../../hooks/selectors.ts'
+import { shuffleArray } from '../helpers/arrays.ts'
+import { useSpeakText } from '../hooks/useSpeakText.ts'
+import ProgressBar from '../components/ProgressBar.tsx'
+import { useSelectedTheme, useUser } from '../hooks/selectors.ts'
+import { GameHeader } from '@/components/index.ts'
+import GameOptionsList from './GameOptionsListPage.tsx'
 
 const prepareData = ({
   patiendId,
@@ -30,7 +30,7 @@ const prepareData = ({
   }
 }
 
-const AuditoryDiscriminationGame: React.FC = () => {
+const AuditoryDiscriminationGamePage = () => {
   // todo: possible to lift up state to parent (HOC)
   const navigate = useNavigate()
   const selectedTheme = useSelectedTheme()
@@ -95,4 +95,4 @@ const AuditoryDiscriminationGame: React.FC = () => {
   )
 }
 
-export default AuditoryDiscriminationGame
+export default AuditoryDiscriminationGamePage

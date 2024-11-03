@@ -1,19 +1,18 @@
-import SpinnerLoader from '../../components/common/SpinnerLoader'
+import SpinnerLoader from '../components/common/SpinnerLoader.tsx'
 import { useNavigate } from 'react-router-dom'
-import useRecordGame from '../../hooks/useRecordGame'
-import { RecordButton } from '../../components/common/buttons/RecordButton.tsx'
-import Button from '../../components/common/buttons/Button.tsx'
-import { ArrowRightIcon } from '../../components/common/icons/Icons.tsx'
-import ProgressBar from '../../components/ProgressBar.tsx'
-import { GameHeader } from './GameHeader.tsx'
+import useRecordGame from '../hooks/useRecordGame.ts'
+import { RecordButton } from '../components/common/buttons/RecordButton.tsx'
+import Button from '../components/common/buttons/Button.tsx'
+import { ArrowRightIcon } from '../components/common/icons/Icons.tsx'
+import ProgressBar from '../components/ProgressBar.tsx'
 import { useEffect } from 'react'
-import localStorageManager from '../../localStorage/localStorageManager.js'
 import { useMediaQuery } from 'react-responsive'
+import { GameHeader } from '@/components/index.ts'
+import { useSelectedTheme } from '@/hooks/selectors.ts'
 
-const RecordGame: React.FC = () => {
-  // const selectedTheme = useSelectedTheme()
+const RecordGamePage = () => {
+  const { id } = useSelectedTheme()
   const navigate = useNavigate()
-  const selectedThemeId = localStorageManager.getItem('selectedThemeId')
   const {
     isLoading,
     error,
@@ -24,7 +23,7 @@ const RecordGame: React.FC = () => {
     isRecording,
     stopRecording,
     startRecording
-  } = useRecordGame(selectedThemeId)
+  } = useRecordGame(id)
   const isDesktop = useMediaQuery({ minWidth: 768 })
 
   useEffect(() => {
@@ -45,15 +44,11 @@ const RecordGame: React.FC = () => {
       <ProgressBar currentActivity={currentLevel + 1} totalActivities={levels?.length} />
 
       <div className="flex justify-between items-center w-full">
-        <div
-          className={
-            'lg:w-9/10 lg:flex justify-center items-center w-full flex flex-col justify-center items-center w-full gap-10'
-          }
-        >
+        <div className={'lg:w-9/10 lg:flex flex flex-col justify-center items-center w-full gap-10'}>
           <div className="lg:w-2/5">
             <GameHeader level={levels![currentLevel]} headerTitle="¿Cómo dirías la palabra?"></GameHeader>
           </div>
-          <div className="w-2/5 flex flex-col justify-center items-center w-full">
+          <div className="w-2/5 flex flex-col justify-center items-center">
             {levelOptions.map((option) => (
               <div
                 key={option.id}
@@ -99,4 +94,4 @@ const RecordGame: React.FC = () => {
   )
 }
 
-export default RecordGame
+export default RecordGamePage

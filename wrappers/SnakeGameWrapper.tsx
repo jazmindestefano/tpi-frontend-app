@@ -1,12 +1,12 @@
-import SnakeGame from './SnakeGame.tsx'
-import { useGetWordsByUserId } from '../../../hooks/queries.ts'
-import { Navigate, useNavigate } from 'react-router-dom'
-import SpinnerLoader from '../../../components/common/SpinnerLoader.tsx'
-import { useSelectedTheme, useUser } from '../../../hooks/selectors.ts'
+import SpinnerLoader from '@/components/common/SpinnerLoader'
+import { useGetWordsByUserId } from '@/hooks/queries'
+import { useSelectedTheme, useUser } from '@/hooks/selectors'
+import { useNavigate, Navigate } from 'react-router-dom'
+import SnakeGame from '../src/pages/SnakeGamePage'
 
 const vowels = ['A', 'E', 'I', 'O', 'U']
 
-export const SnakeGameWrapper: React.FC = () => {
+const SnakeGameWrapper = () => {
   const selectedTheme = useSelectedTheme()
   const user = useUser()
   const { words, isLoading, error } = useGetWordsByUserId(user.id)
@@ -25,3 +25,5 @@ export const SnakeGameWrapper: React.FC = () => {
     <SnakeGame items={selectedTheme.id === 10 ? vowels : words[0].syllables} />
   ) : null
 }
+
+export default SnakeGameWrapper
