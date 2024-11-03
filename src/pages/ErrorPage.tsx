@@ -1,4 +1,4 @@
-const Error: React.FC = () => {
+const ErrorPage = () => {
   return (
     <div className="flex flex-col justify-center items-center w-full">
       <h1 className="text-h1">Error!</h1>
@@ -6,4 +6,4 @@ const Error: React.FC = () => {
   )
 }
 
-export default Error
+export default ErrorPage

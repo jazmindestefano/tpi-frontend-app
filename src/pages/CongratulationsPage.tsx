@@ -7,7 +7,7 @@ import { useSpeakText } from '../hooks/useSpeakText.ts'
 import { useRandomAchievement } from '../hooks/queries.ts'
 import { HearableButton } from '../components/common/buttons/HearableButton.tsx'
 
-const Congratulations = () => {
+const CongratulationsPage = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const speakText = useSpeakText()
@@ -90,4 +90,4 @@ const Congratulations = () => {
   )
 }
 
-export default Congratulations
+export default CongratulationsPage

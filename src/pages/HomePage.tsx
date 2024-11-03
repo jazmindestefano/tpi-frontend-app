@@ -12,7 +12,7 @@ import { getCardBgColor } from '../helpers/colors.ts'
 import localStorageManager from '../localStorage/localStorageManager.js'
 import { Game } from '../interfaces/interfaces.ts'
 
-export default function Home() {
+const Home = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { games, isLoading: gamesLoading, error } = useGetGames()
@@ -71,3 +71,5 @@ export default function Home() {
     <h1 className="text-h1">No hay juegos disponibles</h1>
   )
 }
+
+export default Home

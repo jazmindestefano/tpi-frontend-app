@@ -1,5 +1,5 @@
-import { Activity, ActivityCard } from '../../components/common/cards/ActivityCard'
-import BackButton from '../../components/common/buttons/BackButton'
+import BackButton from '@/components/common/buttons/BackButton'
+import { Activity, ActivityCard } from '@/components/common/cards/ActivityCard'
 
 const activities: Activity[] = [
   { id: 1, name: 'Palabras' },
@@ -7,7 +7,7 @@ const activities: Activity[] = [
   { id: 3, name: 'La viborita' }
 ]
 
-export default function PatientActivities() {
+const PatientActivitiesPage = () => {
   return (
     <div className="flex flex-col items-start justify-start gap-4 lg:p-4 pt-20">
       <div>
@@ -24,3 +24,5 @@ export default function PatientActivities() {
     </div>
   )
 }
+
+export default PatientActivitiesPage

@@ -1,19 +1,22 @@
 import { createBrowserRouter } from 'react-router-dom'
-import Home from '../pages/Home'
-import Profile from '../pages/Profile'
-import ThemeSelectorPage from '../pages/ThemeSelector.tsx'
-import ErrorPage from '../pages/Error.tsx'
-import GameSelectorPage from '../pages/GameSelector.tsx'
-import NotFoundPage from '../pages/NotFound.tsx'
-import CongratulationsPage from '../pages/Congratulations.tsx'
-import AchievementsPage from '../pages/Achievements.tsx'
-import HomeProfesional from '../pages/profesional/HomeProfesional.tsx'
-import PatientActivities from '../pages/profesional/PatientActivities.tsx'
-import ActivityResponses from '../pages/profesional/ActivityResponses.tsx'
-import Timeline from '../pages/profesional/TimelinePage.tsx'
-import DashboardPage from '@/pages/DashboardPage.tsx'
-import { PrivacyPolicyPage, TermsAndConditionsPage } from '@/pages/index.ts'
 import { PageLayout, ProfesionalPageLayout } from '@/components/index.ts'
+import {
+  AchievementsPage,
+  ActivityResponsesPage,
+  CongratulationsPage,
+  DashboardPage,
+  ErrorPage,
+  GameSelectorPage,
+  HomePage,
+  HomeProfesionalPage,
+  NotFoundPage,
+  PrivacyPolicyPage,
+  ProfilePage,
+  TermsAndConditionsPage,
+  ThemeSelectorPage,
+  TimelinePage
+} from '@/pages/index.ts'
+import PatientActivitiesPage from '@/pages/PatientActivitiesPage'
 
 export const router = createBrowserRouter([
   {
@@ -21,11 +24,11 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        element: <Home />
+        element: <HomePage />
       },
       {
         path: '/perfil',
-        element: <Profile />
+        element: <ProfilePage />
       },
       {
         path: '/tematicas',
@@ -66,7 +69,7 @@ export const router = createBrowserRouter([
     children: [
       {
         path: '/profesional',
-        element: <HomeProfesional />
+        element: <HomeProfesionalPage />
       },
       {
         path: '/profesional/paciente/:patientId',
@@ -74,15 +77,15 @@ export const router = createBrowserRouter([
       },
       {
         path: '/profesional/paciente/:patientId/timeline',
-        element: <Timeline />
+        element: <TimelinePage />
       },
       {
         path: '/profesional/paciente/:patientId/actividades',
-        element: <PatientActivities />
+        element: <PatientActivitiesPage />
       },
       {
         path: '/profesional/paciente/:patientId/actividades/:activityId',
-        element: <ActivityResponses />
+        element: <ActivityResponsesPage />
       }
     ]
   }

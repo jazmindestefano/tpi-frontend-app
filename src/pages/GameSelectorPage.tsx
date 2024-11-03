@@ -1,6 +1,6 @@
 import { useSelectedGame } from '../hooks/selectors.ts'
 import AuditoryDiscriminationGame from './games/AuditoryDiscriminationGame.tsx'
-import RecordGame from './games/RecordGame'
+import RecordGame from './games/RecordGame.tsx'
 import { SnakeGameWrapper } from './games/snakeGame/SnakeGameWrapper.tsx'
 
 const gameMap: Record<number, React.FC> = {
@@ -9,10 +9,10 @@ const gameMap: Record<number, React.FC> = {
   3: SnakeGameWrapper
 }
 
-const GameSelector: React.FC = () => {
+const GameSelectorPage = () => {
   const selectedGame = useSelectedGame()
   const GameComponent = gameMap[selectedGame.id]
   return <GameComponent />
 }
 
-export default GameSelector
+export default GameSelectorPage
