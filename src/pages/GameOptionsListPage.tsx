@@ -1,13 +1,13 @@
-import { getJustifyClass } from '../../helpers/styles.ts'
-import { LevelOption } from '../../interfaces/interfaces.ts'
-import { HearableButton } from '../../components/common/buttons/HearableButton.tsx'
+import { HearableButton } from '@/components/common/buttons/HearableButton'
+import { getJustifyClass } from '@/helpers'
+import { LevelOption } from '@/interfaces'
 
 interface GameOptionsListProps {
   options: LevelOption[]
   onOptionSelection: (option: LevelOption) => void
 }
 
-export const GameOptionsList: React.FC<GameOptionsListProps> = ({ options, onOptionSelection }) => {
+const GameOptionsListPage = ({ options, onOptionSelection }: GameOptionsListProps) => {
   return (
     <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 my-16 w-full`}>
       {options.map((option, index) => (
@@ -16,7 +16,7 @@ export const GameOptionsList: React.FC<GameOptionsListProps> = ({ options, onOpt
           className={`flex flex-col justify-center items-center w-full cursor-pointer rounded-3xl shadow-lg p-4 h-auto gap-6 bg-orange-100 ${getJustifyClass(index)}`}
         >
           <div
-            className="p-4 w-full rounded-3xl h-80 flex flex-col justify-center items-center w-full bg-white"
+            className="p-4 w-full rounded-3xl h-80 flex flex-col justify-center items-center bg-white"
             onClick={() => onOptionSelection(option)}
           >
             <img
@@ -31,3 +31,5 @@ export const GameOptionsList: React.FC<GameOptionsListProps> = ({ options, onOpt
     </div>
   )
 }
+
+export default GameOptionsListPage

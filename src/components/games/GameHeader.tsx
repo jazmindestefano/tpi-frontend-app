@@ -1,12 +1,12 @@
-import { GameLevel } from '../../interfaces/interfaces.ts'
-import { HearableButton } from '../../components/common/buttons/HearableButton.tsx'
+import { GameLevel } from '@/interfaces'
+import { HearableButton } from '../common/buttons/HearableButton'
 
 interface GameHeaderProps {
   level: GameLevel
   headerTitle: string
 }
 
-export const GameHeader: React.FC<GameHeaderProps> = ({ level, headerTitle }) => {
+export const GameHeader = ({ level, headerTitle }: GameHeaderProps) => {
   return (
     <div className="w-full flex flex-col justify-center items-center gap-4">
       <h2 className="text-h2 text-center">{headerTitle}</h2>
@@ -17,3 +17,5 @@ export const GameHeader: React.FC<GameHeaderProps> = ({ level, headerTitle }) =>
     </div>
   )
 }
+
+export default GameHeader

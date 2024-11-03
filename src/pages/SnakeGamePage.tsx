@@ -2,20 +2,20 @@ import { useState, useEffect, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-import Button from '../../../components/common/buttons/Button.tsx'
-import { ContinueIcon } from '../../../components/common/icons/Icons.tsx'
-import { RecordButton } from '../../../components/common/buttons/RecordButton.tsx'
-import { useAudioRecording } from '../../../hooks/useAudioRecording.ts'
-import { useSelectedGame, useUser } from '../../../hooks/selectors.ts'
-import { usePostUserRecording } from '../../../hooks/queries.ts'
-import { HearableButton } from '../../../components/common/buttons/HearableButton.tsx'
+import Button from '../components/common/buttons/Button.tsx'
+import { ContinueIcon } from '../components/common/icons/Icons.tsx'
+import { RecordButton } from '../components/common/buttons/RecordButton.tsx'
+import { useAudioRecording } from '../hooks/useAudioRecording.ts'
+import { useSelectedGame, useUser } from '../hooks/selectors.ts'
+import { usePostUserRecording } from '../hooks/queries.ts'
+import { HearableButton } from '../components/common/buttons/HearableButton.tsx'
 
 interface SnakeGameProps {
   items: string[]
   cellSize?: number
 }
 
-const SnakeGame: React.FC<SnakeGameProps> = ({ items, cellSize = 50 }) => {
+const SnakeGamePage = ({ items, cellSize = 50 }: SnakeGameProps) => {
   const [snake, setSnake] = useState([{ x: 7, y: 5 }])
   const [direction, setDirection] = useState({ x: 1, y: 0 })
   const [item, setItem] = useState({ char: items[0], x: 10, y: 4 })
@@ -285,4 +285,4 @@ const SnakeGame: React.FC<SnakeGameProps> = ({ items, cellSize = 50 }) => {
   )
 }
 
-export default SnakeGame
+export default SnakeGamePage
