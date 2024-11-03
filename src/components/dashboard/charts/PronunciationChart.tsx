@@ -1,6 +1,7 @@
 import { Line } from 'react-chartjs-2'
 import { CategoryScale, Chart, ChartData, ChartOptions, LinearScale, LineElement, PointElement } from 'chart.js'
 import { useState, useEffect } from 'react'
+import { getRandomColorDashboard } from '@/helpers'
 
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement)
 
@@ -64,7 +65,7 @@ const PronunciationChart = ({ chartData }: { chartData: PronunciationChart[] }) 
       label: item.label,
       data: item.data,
       fill: false,
-      borderColor: getRandomColor(),
+      borderColor: getRandomColorDashboard(),
       tension: 0.1
     }))
 
@@ -73,15 +74,6 @@ const PronunciationChart = ({ chartData }: { chartData: PronunciationChart[] }) 
   const data: ChartData<'line'> = {
     labels: allDates,
     datasets: datasets
-  }
-
-  function getRandomColor() {
-    const letters = '0123456789ABCDEF'
-    let color = '#'
-    for (let i = 0; i < 6; i++) {
-      color += letters[Math.floor(Math.random() * 16)]
-    }
-    return color
   }
 
   const handleChange = (value: string) => {

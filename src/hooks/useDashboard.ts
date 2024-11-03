@@ -7,37 +7,14 @@ import {
   useWorstSyllableRankingDashboard
 } from './queries'
 import { useEffect, useState } from 'react'
-import { PhonemeDashboard, SyllableDashboard, SyllableRankingDashboard } from '@/components'
-
-interface PronunciationChartProps {
-  date: string
-  value: string
-  score: number
-  type: string
-}
-
-interface PronunciationChart {
-  type: string
-  data: PronunciationChartProps
-}
-
-interface AuditoryDiscriminationChartProps {
-  activityId: number
-  activityName: string
-  totalAttempts: number
-  correctAttempts: number
-  accuracyRate: number
-}
-
-interface RankingChartProps {
-  name: string
-  average: number
-}
-
-interface RankingProps {
-  type: string
-  chartData: RankingChartProps
-}
+import {
+  AuditoryDiscriminationChartProps,
+  PhonemeDashboard,
+  PronunciationChart,
+  RankingProps,
+  SyllableDashboard,
+  SyllableRankingDashboard
+} from '@/components'
 
 const useDashboard = () => {
   const { patientId } = useParams()

@@ -1,7 +1,7 @@
-import Button from '../components/common/buttons/Button.tsx'
+import Button from '@/components/common/buttons/Button'
+import { HearableButton } from '@/components/common/buttons/HearableButton'
 import { Pencil, Save } from 'lucide-react'
 import { useState } from 'react'
-import { HearableButton } from '../components/common/buttons/HearableButton.tsx'
 
 const ProfilePage = () => {
   const [isEditing, setIsEditing] = useState(false)
