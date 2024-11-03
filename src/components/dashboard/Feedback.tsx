@@ -1,16 +1,11 @@
 import { useSurveyFeedbackForDashboard } from '@/hooks/queries'
 import { ThumbsUp, Star, ThumbsDown } from 'lucide-react'
-import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 const Feedback = () => {
   const { patientId } = useParams()
 
   const { data, error, isLoading } = useSurveyFeedbackForDashboard(parseInt(patientId!))
-
-  useEffect(() => {
-    console.log(data)
-  }, [data])
 
   return (
     <div key="feedback" className="bg-slate-50 p-10 rounded-3xl bg-opacity-65 h-80">
