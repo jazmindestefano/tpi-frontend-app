@@ -2,6 +2,7 @@ import { render, screen } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
 import HomeProfesionalCard from '../../components/common/cards/ProfesionalHomeCard'
 import { MemoryRouter } from 'react-router-dom'
+import { ProfesionalPatient } from '@/interfaces'
 
 describe('HomeProfesionalCard component', () => {
   it('renders "Agregar paciente" text when isAddPatient is true', () => {
@@ -16,11 +17,12 @@ describe('HomeProfesionalCard component', () => {
   })
 
   it('renders patient name and age correctly when isAddPatient is false', () => {
-    const patient = {
+    const patient: ProfesionalPatient = {
       id: 1,
       name: 'John Doe',
-      imageUrl: 'john_doe.png',
-      age: 30
+      image: 'john_doe.png',
+      age: 30,
+      email: ''
     }
 
     render(
