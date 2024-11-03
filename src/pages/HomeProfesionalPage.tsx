@@ -1,4 +1,4 @@
-import HomeProfesionalCard from "@/components/common/cards/ProfesionalHomeCard"
+import HomeProfesionalCard from '@/components/common/cards/ProfesionalHomeCard'
 
 interface Patient {
   id: number

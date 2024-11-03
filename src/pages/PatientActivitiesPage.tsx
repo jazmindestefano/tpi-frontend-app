@@ -1,5 +1,5 @@
-import BackButton from "@/components/common/buttons/BackButton"
-import { Activity, ActivityCard } from "@/components/common/cards/ActivityCard"
+import BackButton from '@/components/common/buttons/BackButton'
+import { Activity, ActivityCard } from '@/components/common/cards/ActivityCard'
 
 const activities: Activity[] = [
   { id: 1, name: 'Palabras' },
