@@ -1,14 +1,14 @@
-import SpinnerLoader from '../components/common/SpinnerLoader.tsx'
-import { LevelOption } from '../interfaces/interfaces.ts'
-import { useEffect, useState } from 'react'
-import { useGetGameLevels, usePostAuditoryDiscriminationAnswer } from '../hooks/queries.ts'
+import { GameHeader } from '@/components'
+import SpinnerLoader from '@/components/common/SpinnerLoader'
+import ProgressBar from '@/components/ProgressBar'
+import { shuffleArray } from '@/helpers'
+import { useGetGameLevels, usePostAuditoryDiscriminationAnswer } from '@/hooks/queries'
+import { useSelectedTheme, useUser } from '@/hooks/selectors'
+import { useSpeakText } from '@/hooks/useSpeakText'
+import { LevelOption } from '@/interfaces'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { shuffleArray } from '../helpers/arrays.ts'
-import { useSpeakText } from '../hooks/useSpeakText.ts'
-import ProgressBar from '../components/ProgressBar.tsx'
-import { useSelectedTheme, useUser } from '../hooks/selectors.ts'
-import { GameHeader } from '@/components/index.ts'
-import GameOptionsList from './games/GameOptionsListPage.tsx'
+import GameOptionsListPage from './GameOptionsListPage'
 
 const prepareData = ({
   patiendId,
@@ -88,7 +88,7 @@ const AuditoryDiscriminationGamePage = () => {
     <div className="w-full layout flex flex-col justify-center items-center gap-4 px-10 md:px-40 pt-20">
       <ProgressBar currentActivity={currentLevel + 1} totalActivities={levels?.length} />
       <GameHeader level={levels[currentLevel]} headerTitle="Selecciona la imágen que empiece con la letra"></GameHeader>
-      <GameOptionsList options={options} onOptionSelection={onOptionSelection} />
+      <GameOptionsListPage options={options} onOptionSelection={onOptionSelection} />
     </div>
   ) : (
     <SpinnerLoader />

@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom'
-import Button from '../components/common/buttons/Button.tsx'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { setModalFeedback } from '../redux/store/gameSlice.ts'
-import { useSpeakText } from '../hooks/useSpeakText.ts'
-import { useRandomAchievement } from '../hooks/queries.ts'
-import { HearableButton } from '../components/common/buttons/HearableButton.tsx'
+import { useSpeakText } from '@/hooks/useSpeakText'
+import Button from '@/components/common/buttons/Button'
+import { HearableButton } from '@/components/common/buttons/HearableButton'
+import { useRandomAchievement } from '@/hooks/queries'
+import { setModalFeedback } from '@/redux/store/gameSlice'
 
 const CongratulationsPage = () => {
   const dispatch = useDispatch()

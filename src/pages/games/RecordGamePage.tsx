@@ -1,14 +1,14 @@
-import SpinnerLoader from '../components/common/SpinnerLoader.tsx'
-import { useNavigate } from 'react-router-dom'
-import useRecordGame from '../hooks/useRecordGame.ts'
-import { RecordButton } from '../components/common/buttons/RecordButton.tsx'
-import Button from '../components/common/buttons/Button.tsx'
-import { ArrowRightIcon } from '../components/common/icons/Icons.tsx'
-import ProgressBar from '../components/ProgressBar.tsx'
+import { GameHeader } from '@/components'
+import Button from '@/components/common/buttons/Button'
+import { RecordButton } from '@/components/common/buttons/RecordButton'
+import SpinnerLoader from '@/components/common/SpinnerLoader'
+import ProgressBar from '@/components/ProgressBar'
+import { useSelectedTheme } from '@/hooks/selectors'
+import useRecordGame from '@/hooks/useRecordGame'
+import { ArrowRightIcon } from 'lucide-react'
 import { useEffect } from 'react'
 import { useMediaQuery } from 'react-responsive'
-import { GameHeader } from '@/components/index.ts'
-import { useSelectedTheme } from '@/hooks/selectors.ts'
+import { useNavigate } from 'react-router-dom'
 
 const RecordGamePage = () => {
   const { id } = useSelectedTheme()
