@@ -12,7 +12,7 @@ interface HomeProfesionalCardProps {
   className?: string
 }
 
-const HomeProfesionalCard: React.FC<HomeProfesionalCardProps> = ({ patient, isAddPatient = false, className = '' }) => {
+const HomeProfesionalCard = ({ patient, isAddPatient = false, className = '' }: HomeProfesionalCardProps) => {
   const navigate = useNavigate()
   const [isModalOpen, setIsModalOpen] = useState(false)
 
