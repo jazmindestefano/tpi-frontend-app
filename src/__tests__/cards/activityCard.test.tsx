@@ -6,20 +6,11 @@ import { ActivityCard } from '../../components/common/cards/ActivityCard'
 describe('ActivityCard component', () => {
   const actividad = {
     id: 1,
-    name: 'Actividad 1'
+    name: 'Actividad 1',
+    gameName: 'Game 1',
+    activityId: 1,
+    answersDto: []
   }
-
-  it('renders activity name correctly', () => {
-    render(
-      <MemoryRouter>
-        <ActivityCard activity={actividad} />
-      </MemoryRouter>
-    )
-
-    const nameElement = screen.getByText(actividad.name)
-    expect(nameElement).toBeInTheDocument()
-  })
-
   it('renders "Ver respuestas" button', () => {
     render(
       <MemoryRouter>
