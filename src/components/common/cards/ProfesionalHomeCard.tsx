@@ -4,21 +4,15 @@ import Button from '../buttons/Button'
 import { useNavigate } from 'react-router-dom'
 import AddPatientModal from '../modals/EmailInviteModal'
 import localStorageManager from '../../../localStorage/localStorageManager'
-
-interface Patient {
-  id?: number
-  name?: string
-  imageUrl?: string
-  age?: number
-}
+import { ProfesionalPatient } from '@/interfaces'
 
 interface HomeProfesionalCardProps {
-  patient?: Patient
+  patient?: ProfesionalPatient
   isAddPatient?: boolean
   className?: string
 }
 
-const HomeProfesionalCard: React.FC<HomeProfesionalCardProps> = ({ patient, isAddPatient = false, className = '' }) => {
+const HomeProfesionalCard = ({ patient, isAddPatient = false, className = '' }: HomeProfesionalCardProps) => {
   const navigate = useNavigate()
   const [isModalOpen, setIsModalOpen] = useState(false)
 
@@ -35,6 +29,7 @@ const HomeProfesionalCard: React.FC<HomeProfesionalCardProps> = ({ patient, isAd
   }
 
   const handleClick = (id: number) => {
+    // to-do: create slicer in redux
     localStorageManager.setItem('selectedPatientId', id)
     navigate(`paciente/${id}`)
   }
@@ -55,7 +50,7 @@ const HomeProfesionalCard: React.FC<HomeProfesionalCardProps> = ({ patient, isAd
         ) : (
           patient && (
             <div className="flex flex-col justify-center items-center w-full p-4 gap-2">
-              <img src={patient.imageUrl} alt={patient.name} width={64} height={64} className="rounded-full mb-2" />
+              <img src={patient.image} alt={patient.name} width={64} height={64} className="rounded-full mb-2" />
               <h3 className="text-lg font-medium text-blue-800">{patient.name}</h3>
               <p className="text-blue-600">{patient.age} años</p>
               <Button variant="secondary" className="mt-2 p-3 rounded-3xl" onClick={() => handleClick(patient.id!)}>

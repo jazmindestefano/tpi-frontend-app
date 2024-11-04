@@ -81,3 +81,16 @@ export interface ChartData {
   title: string
   data: Data
 }
+
+export interface TimelineData {
+  date: string
+  gameDescription: string
+  playedTimes: number
+}
+export interface ProfesionalPatient {
+  id: number
+  name: string
+  image: string
+  age: number
+  email: string
+}

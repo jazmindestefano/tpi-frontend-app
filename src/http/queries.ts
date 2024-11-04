@@ -1,14 +1,17 @@
+import { unauthenticatedClient } from './clients.ts'
+import { convertBlobToAudioFile } from '@/helpers'
 import {
-  GameLevel,
-  Game,
   Theme,
+  Game,
+  GameLevel,
   PostUserRecordingData,
   PostAuditoryDiscriminationRequest,
   PostFeedbackData,
-  Word
-} from '../interfaces/interfaces.ts'
-import { unauthenticatedClient } from './clients.ts'
-import { convertBlobToAudioFile } from '../helpers/blobs.ts'
+  Word,
+  TimelineData,
+  ProfesionalPatient
+} from '@/interfaces/interfaces.ts'
+import { getCurrentAge } from '@/helpers'
 import axios from 'axios'
 
 export const getThemesByGameId = async (gameId: number): Promise<Theme[] | null> => {
@@ -143,4 +146,132 @@ export const getMe = async () => {
   }
 
   return null
+}
+
+export const getActivityLetterResponsesForDashboard = async (patientId: number) => {
+  const res = await unauthenticatedClient.get(`/activityLetter/${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
+
+export const getSurveyFeedbackForDashboard = async (patientId: number) => {
+  const res = await unauthenticatedClient.get(`/surveyFeedback/${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
+
+export const getSyllableDashboard = async (patientId: number) => {
+  const res = await unauthenticatedClient.get(`/syllable/${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
+
+export const getPhonemeDashboard = async (patientId: number) => {
+  const res = await unauthenticatedClient.get(`/phoneme/${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
+
+export const getTimelineData = async (patientId: number): Promise<TimelineData | null> => {
+  const res = await unauthenticatedClient.get(`/timeline/${patientId}`)
+  if (res.status === 200) {
+    return res.data
+  }
+
+  return null
+}
+
+export const UpdatePatientTermsAndConditions = async (patientId: number) => {
+  const res = await unauthenticatedClient.patch(`/${patientId}/accept-terms`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+
+  return null
+}
+
+export const getWhatHappenedTodayDashboard = async (patientId: number) => {
+  const res = await unauthenticatedClient.get(`/today/${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
+
+export const getWorstSyllableRankingDashboard = async (patientId: number) => {
+  const res = await unauthenticatedClient.get(`/syllableRanking/${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
+
+export const getWorstPhonemeRankingDashboard = async (patientId: number) => {
+  const res = await unauthenticatedClient.get(`/phonemeRanking/${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
+
+export const getActivityLetterProgressDashboard = async (patientId: number) => {
+  const res = await unauthenticatedClient.get(`/activityLetter/${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
+
+export const getProfessionalPatients = async (profesionalId: number): Promise<ProfesionalPatient[] | null> => {
+  //  const res = await unauthenticatedClient.get(`/professional/${profesionalId}/patients`)
+  const res = `http://localhost:8080/professional/${profesionalId}/patients`
+  console.log(res)
+
+  const mockedResponse = [
+    {
+      id: 1,
+      name: 'Candela',
+      email: 'cande.fdz12@gmail.com',
+      image: 'candelaPerfil',
+      birthDate: '2002-10-23T03:00:00.000Z'
+    },
+    {
+      id: 2,
+      name: 'Ailen',
+      email: 'ailenpereiravilches@gmail.com',
+      image: 'ailenPerfil',
+      birthDate: '2002-10-23T03:00:00.000Z'
+    }
+  ]
+
+  const newPatients: ProfesionalPatient[] = []
+
+  mockedResponse.forEach((patient) => {
+    newPatients.push({
+      id: patient.id,
+      name: patient.name,
+      image: patient.image,
+      email: patient.email,
+      age: getCurrentAge(patient.birthDate)
+    })
+  })
+
+  return newPatients
 }

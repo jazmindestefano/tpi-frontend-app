@@ -2,16 +2,27 @@ import * as ApiService from '../http/queries.ts'
 import { useMutation, useQuery } from '@tanstack/react-query'
 
 import {
-  Achievement,
+  LetterActityResponseDashboard,
+  PhonemeDashboard,
+  SurveyFeedbackDashboard,
+  SyllableDashboard,
+  SyllableRankingDashboard,
+  WhatHappenedTodayDashboard
+} from '@/components/index.ts'
+
+import {
+  Theme,
   Game,
   GameLevel,
-  PostAuditoryDiscriminationRequest,
-  PostFeedbackData,
   PostUserRecordingData,
-  Theme,
-  User,
-  Word
-} from '../interfaces/interfaces.ts'
+  PostFeedbackData,
+  PostAuditoryDiscriminationRequest,
+  Word,
+  Achievement,
+  TimelineData,
+  ProfesionalPatient,
+  User
+} from '@/interfaces/interfaces.ts'
 
 export const useGetThemesByGameId = (
   gameId: number
@@ -168,4 +179,159 @@ export const useGetMe = (): {
     queryFn: async () => await ApiService.getMe()
   })
   return { user: data, error, isLoading }
+}
+
+export const useActivityLetterResponsesForDashboard = (
+  patientId: number
+): {
+  data: LetterActityResponseDashboard[]
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['patientId', patientId],
+    queryFn: async () => await ApiService.getActivityLetterResponsesForDashboard(patientId)
+  })
+
+  return { data, error, isLoading }
+}
+
+export const useSurveyFeedbackForDashboard = (
+  patientId: number
+): {
+  data: SurveyFeedbackDashboard
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['surveyFeedback', patientId],
+    queryFn: async () => await ApiService.getSurveyFeedbackForDashboard(patientId)
+  })
+
+  return { data, error, isLoading }
+}
+
+export const useSyllableDashboard = (
+  patientId: number
+): {
+  data: SyllableDashboard[]
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['syllable', patientId],
+    queryFn: async () => await ApiService.getSyllableDashboard(patientId)
+  })
+
+  return { data, error, isLoading }
+}
+
+export const usePhonemeDashboard = (
+  patientId: number
+): {
+  data: PhonemeDashboard[]
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['phoneme', patientId],
+    queryFn: async () => await ApiService.getPhonemeDashboard(patientId)
+  })
+
+  return { data, error, isLoading }
+}
+
+export const useTimelineData = (patientId: number) => {
+  const { data, error, isLoading } = useQuery<TimelineData[]>({
+    queryKey: ['timeline', patientId],
+    queryFn: async () => {
+      const data = await ApiService.getTimelineData(patientId)
+      return data ? [data] : []
+    }
+  })
+
+  return { data, error, isLoading }
+}
+
+export const useTermsAndConditions = () => {
+  const { error, isSuccess, isPending, mutateAsync } = useMutation({
+    mutationFn: async (patientId: number) => await ApiService.UpdatePatientTermsAndConditions(patientId)
+  })
+
+  return { error, isSuccess, isPending, mutateAsync }
+}
+
+export const useWhatHappenedTodayDashboard = (
+  patientId: number
+): {
+  data: WhatHappenedTodayDashboard[]
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['today', patientId],
+    queryFn: async () => await ApiService.getWhatHappenedTodayDashboard(patientId)
+  })
+
+  return { data, error, isLoading }
+}
+
+export const useWorstSyllableRankingDashboard = (
+  patientId: number
+): {
+  data: SyllableRankingDashboard[]
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['worstSyllableRanking', patientId],
+    queryFn: async () => await ApiService.getWorstSyllableRankingDashboard(patientId)
+  })
+
+  return { data, error, isLoading }
+}
+
+export const useWorstPhonemeRankingDashboard = (
+  patientId: number
+): {
+  data: SyllableRankingDashboard[]
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['worstPhonemeRanking', patientId],
+    queryFn: async () => await ApiService.getWorstPhonemeRankingDashboard(patientId)
+  })
+
+  return { data, error, isLoading }
+}
+
+export const useGetActivityLetterProgressDashboard = (
+  patientId: number
+): {
+  data: LetterActityResponseDashboard[]
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['activityLetterProgress', patientId],
+    queryFn: async () => await ApiService.getActivityLetterProgressDashboard(patientId)
+  })
+
+  return { data, error, isLoading }
+}
+
+export const useGetProfessionalPatients = (
+  professionalId: number
+): {
+  patients: ProfesionalPatient[] | null | undefined
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['professionalPatients', professionalId],
+    queryFn: async () => await ApiService.getProfessionalPatients(professionalId)
+  })
+
+  return { patients: data, error, isLoading }
 }

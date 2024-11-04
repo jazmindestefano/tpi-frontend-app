@@ -1,24 +1,27 @@
 import { createBrowserRouter } from 'react-router-dom'
-import Home from '../pages/Home'
-import Profile from '../pages/Profile'
-import PageLayout from '../components/layout/pageLayout/PageLayout.tsx'
-import ThemeSelectorPage from '../pages/ThemeSelector.tsx'
-import ErrorPage from '../pages/Error.tsx'
-import NotFoundPage from '../pages/NotFound.tsx'
-import CongratulationsPage from '../pages/Congratulations.tsx'
-import AchievementsPage from '../pages/achievement/Achievements.tsx'
-import HomeProfesional from '../pages/profesional/HomeProfesional.tsx'
-import ProfesionalPageLayout from '../components/layout/profesionalPageLayout/ProfesionalPageLayout.tsx'
-import PatientActivities from '../pages/profesional/PatientActivities.tsx'
-import ActivityResponses from '../pages/profesional/ActivityResponses.tsx'
-import Timeline from '../pages/profesional/Timeline.tsx'
-import PrivateRoute from './PrivateRoute.tsx'
-import { ValidGameWrapper } from './ValidGameWrapper.tsx'
-import AuditoryDiscriminationGame from '../pages/games/AuditoryDiscriminationGame.tsx'
-import RecordGame from '../pages/games/RecordGame.tsx'
-import { SnakeGameWrapper } from '../pages/games/snakeGame/SnakeGameWrapper.tsx'
-import { LoginPage } from '../pages/LoginPage.tsx'
-import Dashboard from '../pages/profesional/dashboard/Dashboard.tsx'
+import { LoginPage } from '@pages/LoginPage.tsx'
+import PrivateRoute from '@/router/PrivateRoute.tsx'
+import {
+  AchievementsPage,
+  ActivityResponsesPage,
+  AuditoryDiscriminationGamePage,
+  CongratulationsPage,
+  DashboardPage,
+  ErrorPage,
+  HomeProfesionalPage,
+  NotFoundPage,
+  PrivacyPolicyPage,
+  ProfilePage,
+  RecordGamePage,
+  TermsAndConditionsPage,
+  ThemeSelectorPage,
+  TimelinePage
+} from '@/pages'
+import { PageLayout, ProfesionalPageLayout } from '@/components'
+import Home from '@pages/HomePage.tsx'
+import { ValidGameWrapper } from '@/router/ValidGameWrapper.tsx'
+import { SnakeGameWrapper } from '../../wrappers'
+import PatientActivitiesPage from '@pages/PatientActivitiesPage.tsx'
 
 export const router = createBrowserRouter([
   {
@@ -42,7 +45,7 @@ export const router = createBrowserRouter([
           },
           {
             path: '/perfil',
-            element: <Profile />
+            element: <ProfilePage />
           },
           {
             path: '/tematicas',
@@ -54,11 +57,11 @@ export const router = createBrowserRouter([
             children: [
               {
                 path: 'audicion',
-                element: <AuditoryDiscriminationGame />
+                element: <AuditoryDiscriminationGamePage />
               },
               {
                 path: 'habla',
-                element: <RecordGame />
+                element: <RecordGamePage />
               },
               {
                 path: 'viborita',
@@ -75,6 +78,14 @@ export const router = createBrowserRouter([
             element: <AchievementsPage />
           },
           {
+            path: '/terminos-y-condiciones',
+            element: <TermsAndConditionsPage />
+          },
+          {
+            path: '/politica-de-privacidad',
+            element: <PrivacyPolicyPage />
+          },
+          {
             path: '*',
             element: <NotFoundPage />
           }
@@ -86,23 +97,23 @@ export const router = createBrowserRouter([
         children: [
           {
             path: '',
-            element: <HomeProfesional />
+            element: <HomeProfesionalPage />
           },
           {
             path: 'paciente/:patientId',
-            element: <Dashboard />
+            element: <DashboardPage />
           },
           {
             path: 'paciente/:patientId/timeline',
-            element: <Timeline />
+            element: <TimelinePage />
           },
           {
             path: 'paciente/:patientId/actividades',
-            element: <PatientActivities />
+            element: <PatientActivitiesPage />
           },
           {
             path: 'paciente/:patientId/actividades/:activityId',
-            element: <ActivityResponses />
+            element: <ActivityResponsesPage />
           }
         ]
       }
