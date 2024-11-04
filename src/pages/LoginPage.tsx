@@ -3,9 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import { Input } from '@components/common/inputs/Input.tsx'
 import Button from '@components/common/buttons/Button.tsx'
 import { useLogin } from '@hooks/queries.ts'
-import { useDispatch } from 'react-redux'
-import { setUser } from '@redux/slices'
-import { getMe } from '../http/queries.ts'
 
 interface LoginFormData {
   username: string
@@ -16,7 +13,6 @@ const LoginPage: FC = () => {
   const [formData, setFormData] = useState<LoginFormData>({ password: '', username: '' })
   const { mutateAsync } = useLogin()
   const navigate = useNavigate()
-  const dispatch = useDispatch()
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -25,12 +21,10 @@ const LoginPage: FC = () => {
 
   const handleLogin = () => {
     mutateAsync(formData)
-      .then(async (res) => {
+      .then((res) => {
         if (res) {
-          const me = await getMe()
           localStorage.setItem('token', res)
-          dispatch(setUser(me))
-          setTimeout(() => navigate('/'), 1000)
+          navigate('/')
         }
       })
       .catch((e) => {
