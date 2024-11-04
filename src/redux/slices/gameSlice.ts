@@ -1,11 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Game, Theme } from '../../interfaces/interfaces.ts'
-import { NOT_YET_ASSIGNED_NUM, NOT_YET_ASSIGNED_STR } from '../../config/constants.ts'
+import { Game, Theme } from '@/interfaces'
+import { NOT_YET_ASSIGNED_NUM, NOT_YET_ASSIGNED_STR } from '@/config/constants.ts'
 
 interface GameState {
   selectedGame: Game
   selectedTheme: Theme
-  showModalFeedback: boolean
 }
 
 const initialState: GameState = {
@@ -18,8 +17,7 @@ const initialState: GameState = {
     id: NOT_YET_ASSIGNED_NUM,
     name: NOT_YET_ASSIGNED_STR,
     image: NOT_YET_ASSIGNED_STR
-  },
-  showModalFeedback: false
+  }
 }
 
 const gameSlice = createSlice({
@@ -32,9 +30,6 @@ const gameSlice = createSlice({
     selectTheme(state, action: PayloadAction<Theme>) {
       state.selectedTheme = action.payload
     },
-    setModalFeedback(state, action: PayloadAction<boolean>) {
-      state.showModalFeedback = action.payload
-    },
     resetGame(state) {
       state.selectedGame = initialState.selectedGame
       state.selectedTheme = initialState.selectedTheme
@@ -42,5 +37,7 @@ const gameSlice = createSlice({
   }
 })
 
-export const { selectGame, selectTheme, resetGame, setModalFeedback } = gameSlice.actions
-export default gameSlice.reducer
+const { selectGame, selectTheme, resetGame } = gameSlice.actions
+const gameReducer = gameSlice.reducer
+
+export { selectGame, selectTheme, resetGame, gameReducer }

@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { User } from '../../interfaces/interfaces.ts'
-import { NOT_YET_ASSIGNED_NUM, NOT_YET_ASSIGNED_STR } from '../../config/constants.ts'
+import { User } from '@/interfaces'
+import { NOT_YET_ASSIGNED_NUM, NOT_YET_ASSIGNED_STR } from '@/config/constants.ts'
 
 interface UserState {
   user: User
@@ -23,5 +23,7 @@ const userSlice = createSlice({
   }
 })
 
-export const { setUser } = userSlice.actions
-export default userSlice.reducer
+const { setUser } = userSlice.actions
+const userReducer = userSlice.reducer
+
+export { setUser, userReducer }

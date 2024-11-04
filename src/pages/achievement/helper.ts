@@ -1,5 +1,5 @@
-import { Achievement } from '../../interfaces/interfaces.ts'
-import { getRandomColor } from '../../helpers/colors.ts'
+import { Achievement } from '@interfaces'
+import { getRandomColor } from '@helpers'
 
 export type AchievementCount = {
   [key: string]: number

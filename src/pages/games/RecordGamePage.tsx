@@ -10,21 +10,12 @@ import Button from '@components/common/buttons/Button.tsx'
 import { ArrowRightIcon } from 'lucide-react'
 import SpinnerLoader from '@components/common/SpinnerLoader.tsx'
 import ProgressBar from '@components/ProgressBar.tsx'
+import { useAudioRecording } from '@hooks/useAudioRecording.ts'
+import { LevelOption } from '@interfaces'
 
 const RecordGamePage = () => {
-  const { id } = useSelectedTheme()
+  const selectedTheme = useSelectedTheme()
   const navigate = useNavigate()
-  const {
-    isLoading,
-    error,
-    levels,
-    currentLevel,
-    levelOptions,
-    setCurrentLevel,
-    isRecording,
-    stopRecording,
-    startRecording
-  } = useRecordGame(id)
   const isDesktop = useMediaQuery({ minWidth: 768 })
   const { levels, isLoading, error } = useGetGameLevels(selectedTheme.id)
   const { isRecording, audio, startRecording, stopRecording } = useAudioRecording()

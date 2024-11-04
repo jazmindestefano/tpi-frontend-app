@@ -1,10 +1,10 @@
 import { Overlay } from '../overlay/Overlay.tsx'
 import { FeedbackModalContent } from './FeedbackModalContent.tsx'
-import { usePostFeedback } from '../../../hooks/queries.ts'
-import { useSelectedGame, useUser } from '../../../hooks/selectors.ts'
+import { usePostFeedback } from '@hooks/queries.ts'
+import { useSelectedGame, useUser } from '@hooks/selectors.ts'
 import { useEffect } from 'react'
-import { resetGame } from '../../../redux/store/gameSlice.ts'
 import { useDispatch } from 'react-redux'
+import { resetGame } from '@redux/slices'
 
 interface FeedbackModalProps {
   show: boolean

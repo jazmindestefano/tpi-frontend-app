@@ -27,5 +27,7 @@ const recordGameSlice = createSlice({
   }
 })
 
-export const { addResponse, clearResponse } = recordGameSlice.actions
-export default recordGameSlice.reducer
+const { addResponse, clearResponse } = recordGameSlice.actions
+const recordGameReducer = recordGameSlice.reducer
+
+export { addResponse, clearResponse, recordGameReducer }

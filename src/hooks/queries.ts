@@ -335,3 +335,20 @@ export const useGetProfessionalPatients = (
 
   return { patients: data, error, isLoading }
 }
+
+interface LoginProps {
+  username: string
+  password: string
+}
+
+export const useLogin = (): {
+  mutateAsync: (args: LoginProps) => Promise<string | null>
+  error: Error | null
+  isPending: boolean
+} => {
+  const { error, isPending, mutateAsync } = useMutation({
+    mutationFn: async ({ username, password }: LoginProps) => await ApiService.login(username, password)
+  })
+
+  return { error, isPending, mutateAsync }
+}

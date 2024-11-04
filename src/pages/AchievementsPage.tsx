@@ -1,9 +1,9 @@
 import { useUser } from '@hooks/selectors.ts'
 import { useGetAchievements } from '@hooks/queries.ts'
 import { useEffect, useState } from 'react'
-import { getUniqueAchievements, UniqueAchievements } from '@pages/achievement/helper.ts'
 import SpinnerLoader from '@components/common/SpinnerLoader.tsx'
 import { HearableButton } from '@components/common/buttons/HearableButton.tsx'
+import { getUniqueAchievements, UniqueAchievements } from './achievement/helper'
 
 const AchievementsPage = () => {
   const user = useUser()

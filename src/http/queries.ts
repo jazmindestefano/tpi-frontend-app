@@ -1,4 +1,4 @@
-import { unauthenticatedClient } from './clients.ts'
+import { authenticatedClient, unauthenticatedClient } from './clients.ts'
 import { convertBlobToAudioFile } from '@/helpers'
 import {
   Theme,
@@ -12,7 +12,6 @@ import {
   ProfesionalPatient
 } from '@/interfaces/interfaces.ts'
 import { getCurrentAge } from '@/helpers'
-import axios from 'axios'
 
 export const getThemesByGameId = async (gameId: number): Promise<Theme[] | null> => {
   // will change to an authenticated client probably
@@ -138,8 +137,7 @@ export const getSynthesizedAudio = async (text: string) => {
 }
 
 export const getMe = async () => {
-  // todo: delete me.json and use a configured axios instance
-  const res = await axios.get('/db/me.json')
+  const res = await authenticatedClient.get('/api/users/me')
 
   if (res.status === 200) {
     return res.data
@@ -274,4 +272,17 @@ export const getProfessionalPatients = async (profesionalId: number): Promise<Pr
   })
 
   return newPatients
+}
+
+export const login = async (username: string, password: string): Promise<string | null> => {
+  const res = await unauthenticatedClient.post('/api/login', {
+    username,
+    password
+  })
+
+  if (res.status === 200) {
+    return res.data.token
+  }
+
+  return null
 }

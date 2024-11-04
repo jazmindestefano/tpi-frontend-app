@@ -1,5 +1,4 @@
 import { createBrowserRouter } from 'react-router-dom'
-import { LoginPage } from '@pages/LoginPage.tsx'
 import PrivateRoute from '@/router/PrivateRoute.tsx'
 import {
   AchievementsPage,
@@ -15,13 +14,14 @@ import {
   RecordGamePage,
   TermsAndConditionsPage,
   ThemeSelectorPage,
-  TimelinePage
+  TimelinePage,
+  LoginPage,
+  HomePage,
+  PatientActivitiesPage
 } from '@/pages'
 import { PageLayout, ProfesionalPageLayout } from '@/components'
-import Home from '@pages/HomePage.tsx'
 import { ValidGameWrapper } from '@/router/ValidGameWrapper.tsx'
 import { SnakeGameWrapper } from '../../wrappers'
-import PatientActivitiesPage from '@pages/PatientActivitiesPage.tsx'
 
 export const router = createBrowserRouter([
   {
@@ -41,7 +41,7 @@ export const router = createBrowserRouter([
         children: [
           {
             path: '/',
-            element: <Home />
+            element: <HomePage />
           },
           {
             path: '/perfil',
