@@ -263,3 +263,14 @@ export const getProfessionalPatients = async (profesionalId: number): Promise<Pr
 
   return newPatients
 }
+
+export const exportPdf = async (patientId: number) => {
+  const res = await unauthenticatedClient.get(`/export-today-games-and-timeline?patientId=${patientId}`)
+
+  console.log(res)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
