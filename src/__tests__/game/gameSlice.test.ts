@@ -12,8 +12,7 @@ describe('gameSlice', () => {
       id: -1,
       name: '',
       image: ''
-    },
-    showModalFeedback: false
+    }
   }
 
   it('should handle initial state', () => {
