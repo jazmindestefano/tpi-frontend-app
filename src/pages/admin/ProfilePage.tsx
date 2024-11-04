@@ -1,10 +1,38 @@
 import Button from '@/components/common/buttons/Button'
 import { HearableButton } from '@/components/common/buttons/HearableButton'
 import { Pencil, Save } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useGetProfileData, useUpdateProfileData } from '@/hooks/queries'
+import { useUser } from '@/hooks/selectors'
 
 const ProfilePage = () => {
+  const user = useUser()
+  const { data, error, isLoading } = useGetProfileData(user.id, user.Role.toLowerCase())
+  const { mutate: updateProfile } = useUpdateProfileData()
+
   const [isEditing, setIsEditing] = useState(false)
+  const [name, setName] = useState('')
+  const [surname, setSurname] = useState('')
+  const [email, setEmail] = useState('')
+  const [image, setImage] = useState('')
+
+  useEffect(() => {
+    if (data) {
+      setName(data.name || '')
+      setSurname(data.surname || '')
+      setEmail(data.email || '')
+      setImage(data.image || '')
+    }
+  }, [data])
+
+  if (isLoading) return <p>Loading...</p>
+  if (error) return <p>Error loading profile data.</p>
+
+  const handleSave = () => {
+    const profileData = { name, surname, email, image }
+    updateProfile({ id: user.id, role: user.Role.toLowerCase(), data: profileData })
+    setIsEditing(false)
+  }
 
   return (
     <div className="flex flex-col justify-center items-center w-full gap-4 mx-8 md:mx-52">
@@ -14,12 +42,12 @@ const ProfilePage = () => {
       </div>
       <div className="flex flex-col justify-center items-center w-full rounded-xl border shadow-lg py-8 bg-orange-50">
         <div className="flex flex-row justify-end items-end sm:mx-auto sm:w-full sm:max-w-lg">
-          <img className="mx-auto h-40 w-auto" src="/avatar/lion-avatar.png" alt="Avatar" />
+          <img className="mx-auto h-40 w-auto" src={image} alt="Avatar" />
         </div>
 
         <div className="mt-3 sm:mx-auto sm:w-full sm:max-w-lg p-3 rounded-md">
           {isEditing ? (
-            <form className="space-y-6" action="#" method="POST">
+            <form className="space-y-6">
               <div>
                 <label htmlFor="nombre" className="block text-sm font-medium leading-6 text-gray-900">
                   Nombre
@@ -27,9 +55,8 @@ const ProfilePage = () => {
                 <input
                   id="nombre"
                   name="nombre"
-                  type="nombre"
-                  autoComplete="nombre"
-                  required
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   className="mt-2 block w-full py-2 text-gray-900 sm:text-sm sm:leading-6 rounded-full border shadow-md px-6"
                 />
               </div>
@@ -41,9 +68,8 @@ const ProfilePage = () => {
                 <input
                   id="apellido"
                   name="apellido"
-                  type="text"
-                  autoComplete="apellido"
-                  required
+                  value={surname}
+                  onChange={(e) => setSurname(e.target.value)}
                   className="mt-2 block w-full py-2 text-gray-900 sm:text-sm sm:leading-6 rounded-full border shadow-md px-6"
                 />
               </div>
@@ -56,14 +82,14 @@ const ProfilePage = () => {
                   id="email"
                   name="email"
                   type="email"
-                  autoComplete="email"
-                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   className="mt-2 block w-full py-2 text-gray-900 sm:text-sm sm:leading-6 rounded-full border shadow-md px-6"
                 />
               </div>
 
               <div className="flex items-end justify-end">
-                <Button size={'circle'} shape={'circle'} variant={'secondary'} onClick={() => setIsEditing(false)}>
+                <Button size={'circle'} shape={'circle'} variant={'secondary'} onClick={handleSave}>
                   <Save className="text-white" />
                 </Button>
               </div>
@@ -73,21 +99,21 @@ const ProfilePage = () => {
               <div>
                 <label className="block text-sm font-medium leading-6 text-gray-900">Nombre</label>
                 <div className="mt-2 rounded-full border shadow-md px-6">
-                  <p className="block w-full py-2 text-gray-900 sm:text-sm sm:leading-6">John</p>
+                  <p className="block w-full py-2 text-gray-900 sm:text-sm sm:leading-6">{data?.name || 'N/A'}</p>
                 </div>
               </div>
 
               <div>
                 <label className="block text-sm font-medium leading-6 text-gray-900">Apellido</label>
                 <div className="mt-2 rounded-full border shadow-md px-6">
-                  <p className="block w-full py-2 text-gray-900 sm:text-sm sm:leading-6">Doe</p>
+                  <p className="block w-full py-2 text-gray-900 sm:text-sm sm:leading-6">{data?.surname || 'N/A'}</p>
                 </div>
               </div>
 
               <div>
                 <label className="block text-sm font-medium leading-6 text-gray-900">Email</label>
                 <div className="mt-2 rounded-full border shadow-md px-6">
-                  <p className="block w-full py-2 text-gray-900 sm:text-sm sm:leading-6">john.doe@example.com</p>
+                  <p className="block w-full py-2 text-gray-900 sm:text-sm sm:leading-6">{data?.email || 'N/A'}</p>
                 </div>
               </div>
 

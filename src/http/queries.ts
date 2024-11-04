@@ -9,7 +9,8 @@ import {
   PostFeedbackData,
   Word,
   TimelineData,
-  ProfesionalPatient
+  ProfesionalPatient,
+  ProfileData
 } from '@/interfaces/interfaces.ts'
 import { getCurrentAge } from '@/helpers/index.ts'
 
@@ -223,6 +224,36 @@ export const getActivityLetterProgressDashboard = async (patientId: number) => {
 
   if (res.status === 200) {
     return res.data
+  }
+  return null
+}
+
+export const getProfileData = async (id: number, role: string): Promise<ProfileData | null> => {
+  const endpoint = role === 'patient' ? `/patients/${id}` : `/professional/${id}`
+  console.log('endpoint: ', endpoint)
+  try {
+    const res = await unauthenticatedClient.get<ProfileData>(endpoint)
+
+    if (res.status === 200) {
+      return res.data
+    }
+  } catch (error) {
+    console.error('Error fetching profile data:', error)
+  }
+
+  return null
+}
+
+export const updateProfileData = async (id: number, role: string, data: ProfileData) => {
+  const endpoint = role === 'Patient' ? `/patients/${id}` : `/professional/${id}`
+
+  try {
+    const res = await unauthenticatedClient.patch(endpoint, data)
+    if (res.status === 200) {
+      return res.data
+    }
+  } catch (error) {
+    console.error('Error updating profile data:', error)
   }
   return null
 }
