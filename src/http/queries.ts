@@ -9,7 +9,8 @@ import {
   PostFeedbackData,
   Word,
   TimelineData,
-  ProfesionalPatient
+  ProfesionalPatient,
+  GetPatientData
 } from '@/interfaces/interfaces.ts'
 import { getCurrentAge } from '@/helpers/index.ts'
 
@@ -228,38 +229,30 @@ export const getActivityLetterProgressDashboard = async (patientId: number) => {
 }
 
 export const getProfessionalPatients = async (profesionalId: number): Promise<ProfesionalPatient[] | null> => {
-  //  const res = await unauthenticatedClient.get(`/professional/${profesionalId}/patients`)
-  const res = `http://localhost:8080/professional/${profesionalId}/patients`
-  console.log(res)
-
-  const mockedResponse = [
-    {
-      id: 1,
-      name: 'Candela',
-      email: 'cande.fdz12@gmail.com',
-      image: 'candelaPerfil',
-      birthDate: '2002-10-23T03:00:00.000Z'
-    },
-    {
-      id: 2,
-      name: 'Ailen',
-      email: 'ailenpereiravilches@gmail.com',
-      image: 'ailenPerfil',
-      birthDate: '2002-10-23T03:00:00.000Z'
-    }
-  ]
+  const res = await unauthenticatedClient.get(`/professional/${profesionalId}/patients`)
 
   const newPatients: ProfesionalPatient[] = []
 
-  mockedResponse.forEach((patient) => {
-    newPatients.push({
-      id: patient.id,
-      name: patient.name,
-      image: patient.image,
-      email: patient.email,
-      age: getCurrentAge(patient.birthDate)
+  if (res.status === 200) {
+    res.data.forEach((patient: GetPatientData) => {
+      newPatients.push({
+        id: patient.id,
+        name: patient.name,
+        image: patient.image,
+        email: patient.email,
+        age: getCurrentAge(patient.birthDate)
+      })
     })
-  })
+  }
 
   return newPatients
+}
+
+export const getPatientActivityAnswers = async (patientId: number) => {
+  const res = await unauthenticatedClient.get(`/answers/${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
 }

@@ -93,3 +93,25 @@ export interface ProfesionalPatient {
   age: number
   email: string
 }
+
+export interface GetPatientData {
+  id: number
+  name: string
+  image: string
+  email: string
+  birthDate: Date
+}
+
+export interface Answer {
+  id: number
+  answerType: string
+  answerDate: string
+  optionValue: string
+  userAnswer: string
+}
+
+export interface PatientActivityAnswers {
+  gameName: string
+  activityId: number
+  answersDto: Answer[]
+}
