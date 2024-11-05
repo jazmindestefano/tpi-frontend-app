@@ -12,6 +12,7 @@ export interface Game {
 
 export interface User {
   id: number
+  Role: string
 }
 
 export interface GameLevel {
@@ -86,6 +87,14 @@ export interface TimelineData {
   gameDescription: string
   playedTimes: number
 }
+
+export interface ProfileData {
+  email: string
+  name: string
+  surname: string
+  image: string
+}
+
 export interface ProfesionalPatient {
   id: number
   name: string

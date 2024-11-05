@@ -33,7 +33,11 @@ const AsideProfesional = () => {
       <nav className="flex-1 flex flex-col items-center justify-center space-y-4">
         <SidebarItem icon={Users} href="/profesional" />
       </nav>
-      <Button variant={'tertiary'} className="mt-auto p-4 hover:bg-blue-500 rounded-lg transition-colors">
+      <Button
+        variant={'tertiary'}
+        className="mt-auto p-4 hover:bg-blue-500 rounded-lg transition-colors"
+        onClick={() => navigate('/profesional/perfil')}
+      >
         <img src="/avatar/lion-avatar.png" alt="Avatar" className="object-cover h-10" />
       </Button>
     </aside>

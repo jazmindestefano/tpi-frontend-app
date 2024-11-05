@@ -72,6 +72,10 @@ export const router = createBrowserRouter([
         element: <HomeProfesionalPage />
       },
       {
+        path: '/profesional/perfil/',
+        element: <ProfilePage />
+      },
+      {
         path: '/profesional/paciente/:patientId',
         element: <DashboardPage />
       },

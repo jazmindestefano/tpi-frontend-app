@@ -14,10 +14,12 @@ const unauthenticatedClient = axios.create({
   baseURL: env.apiUrl
 })
 
-authenticatedClient.interceptors.request.use(
+unauthenticatedClient.interceptors.request.use(
   async (req: InternalAxiosRequestConfig): Promise<InternalAxiosRequestConfig> => {
     req.headers = {
-      Authorization: 'Bearer ' + 'implementFunctionToGetToken'
+      Authorization:
+        'Bearer ' +
+        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaWxlbnBlcmVpcmF2aWxjaGVzQGdtYWlsLmNvbSIsImlhdCI6MTczMDc2NzUzNywiZXhwIjoxNzMwNzcxMTM3fQ.mec7K4HXrPrk1ilXybOhD0XtUfsWuoIOFgSnrXr9Bh0'
     } as AxiosRequestHeaders
 
     return req

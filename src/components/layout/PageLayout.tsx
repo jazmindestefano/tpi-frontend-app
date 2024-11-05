@@ -12,7 +12,7 @@ const PageLayout = () => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    dispatch(setUser({ id: 1 }))
+    dispatch(setUser({ id: 1, Role: 'Patient' }))
   }, [dispatch])
 
   return (
