@@ -139,6 +139,7 @@ export const getSynthesizedAudio = async (text: string) => {
 export const getMe = async () => {
   const res = await authenticatedClient.get('/api/users/me')
 
+  console.log('http', res)
   if (res.status === 200) {
     return res.data
   }

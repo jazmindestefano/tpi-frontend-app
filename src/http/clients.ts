@@ -5,6 +5,11 @@ import axios, {
   type InternalAxiosRequestConfig
 } from 'axios'
 import env from '../config/env.ts'
+import { loadState } from '@redux/local.ts'
+
+const state = loadState()
+
+console.log({ state })
 
 const authenticatedClient = axios.create({
   baseURL: env.apiUrl
@@ -17,7 +22,7 @@ const unauthenticatedClient = axios.create({
 authenticatedClient.interceptors.request.use(
   async (req: InternalAxiosRequestConfig): Promise<InternalAxiosRequestConfig> => {
     req.headers = {
-      Authorization: 'Bearer ' + localStorage.getItem('token')
+      Authorization: 'Bearer ' + state.user.token
     } as AxiosRequestHeaders
 
     return req

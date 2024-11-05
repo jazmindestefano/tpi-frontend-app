@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { Input } from '@components/common/inputs/Input.tsx'
 import Button from '@components/common/buttons/Button.tsx'
 import { useLogin } from '@hooks/queries.ts'
+import { useDispatch } from 'react-redux'
+import { setToken } from '@redux/slices'
 
 interface LoginFormData {
   username: string
@@ -13,6 +15,7 @@ const LoginPage: FC = () => {
   const [formData, setFormData] = useState<LoginFormData>({ password: '', username: '' })
   const { mutateAsync } = useLogin()
   const navigate = useNavigate()
+  const dispatch = useDispatch()
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -23,7 +26,7 @@ const LoginPage: FC = () => {
     mutateAsync(formData)
       .then((res) => {
         if (res) {
-          localStorage.setItem('token', res)
+          dispatch(setToken(res))
           navigate('/')
         }
       })

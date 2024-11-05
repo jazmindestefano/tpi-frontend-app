@@ -8,6 +8,8 @@ export const useSelectedGame = (): Game => useSelector((state: RootState) => sta
 
 export const useUser = (): User => useSelector((state: RootState) => state.user.user)
 
+export const useToken = (): string => useSelector((state: RootState) => state.user.token)
+
 export const useShowModalFeedback = (): boolean => useSelector((state: RootState) => state.ui.ui.showModalFeedback)
 
 export const useShowProductTour = (): boolean => useSelector((state: RootState) => state.ui.ui.showProductTour)

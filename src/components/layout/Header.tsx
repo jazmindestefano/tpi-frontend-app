@@ -56,6 +56,9 @@ const Header = () => {
                 variant={'primary'}
                 onMouseEnter={() => speakText('Salir de la Aplicación')}
                 className="logout-button"
+                onClick={() => {
+                  navigate('/login')
+                }}
               >
                 <LogOut className="text-white" />
               </Button>

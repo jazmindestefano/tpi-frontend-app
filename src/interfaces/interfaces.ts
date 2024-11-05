@@ -12,7 +12,8 @@ export interface Game {
 
 export interface User {
   id: number
-  name: string
+  username: string
+  role: string
 }
 
 export interface GameLevel {

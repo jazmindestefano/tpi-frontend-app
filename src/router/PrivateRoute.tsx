@@ -1,41 +1,32 @@
 import { FC, useEffect, useState } from 'react'
-import { Navigate, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import PrivateRouteWrapper from './PrivateRouteWrapper'
+import { useGetMe } from '../hooks/queries'
 import { useDispatch } from 'react-redux'
-import PrivateRouteWrapper from './PrivateRouteWrapper.tsx'
-import { useGetMe } from '../hooks/queries.ts'
-import { NOT_YET_ASSIGNED_NUM } from '../config/constants.ts'
-import { setUser } from '@/redux/slices'
+import { setUser } from '@redux/slices'
+import { useToken } from '@hooks/selectors'
 
 const PrivateRoute: FC = () => {
   const [isAuthorized, setIsAuthorized] = useState<boolean>(false)
+  const { user, isLoading, error } = useGetMe()
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const token = useToken()
 
-  const { user, isLoading, error } = useGetMe()
-
-  console.log(user, isLoading, error)
-
-  useEffect(() => {
-    if (error) {
-      setIsAuthorized(false)
-      navigate('/login')
-    }
-  }, [error, navigate])
+  console.log({ user, isAuthorized, token, isLoading, error })
 
   useEffect(() => {
-    if (user && user.id !== NOT_YET_ASSIGNED_NUM) {
-      dispatch(setUser(user))
+    if (!isLoading && user && token) {
       setIsAuthorized(true)
-    } else if (!user) {
-      setIsAuthorized(false)
+      dispatch(setUser(user))
     }
-  }, [user, navigate, dispatch])
+  }, [user, isLoading, token, dispatch, navigate])
 
-  return user && user.id === NOT_YET_ASSIGNED_NUM ? (
-    <Navigate to="/login" />
-  ) : (
-    <PrivateRouteWrapper isLoading={isLoading} isAuthorized={isAuthorized} />
-  )
+  if (isLoading) {
+    return <PrivateRouteWrapper isLoading={true} isAuthorized={false} />
+  }
+
+  return <PrivateRouteWrapper isLoading={false} isAuthorized={true} />
 }
 
 export default PrivateRoute
