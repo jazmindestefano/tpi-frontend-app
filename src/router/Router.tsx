@@ -84,7 +84,7 @@ export const router = createBrowserRouter([
         element: <PatientActivitiesPage />
       },
       {
-        path: '/profesional/paciente/:patientId/actividades/:activityId',
+        path: '/profesional/paciente/:patientId/actividades/:gameId',
         element: <ActivityResponsesPage />
       }
     ]

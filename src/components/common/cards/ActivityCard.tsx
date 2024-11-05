@@ -13,7 +13,7 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({ activity, className 
 
   return (
     <div
-      key={activity.activityId}
+      key={activity.gameid}
       className={`max-w-96 flex flex-col justify-center items-center rounded-3xl h-80 w-72 shadow-lg cursor-pointer transition-transform duration-300 bg-blue-100 ${className}`}
     >
       <div className="flex flex-col items-center justify-around h-full p-4">
@@ -21,7 +21,7 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({ activity, className 
         <Button
           variant="secondary"
           className="mt-2 p-3 rounded-3xl"
-          onClick={() => navigate(`/profesional/paciente/${patientId}/actividades/${activity.activityId}`)}
+          onClick={() => navigate(`/profesional/paciente/${patientId}/actividades/${activity.gameid}`)}
           ariaLabel="Ver respuestas"
         >
           <p className="text-center font-bold">Ver respuestas</p>

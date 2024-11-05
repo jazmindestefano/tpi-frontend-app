@@ -1,3 +1,4 @@
+import BackButton from '@/components/common/buttons/BackButton'
 import Button from '@/components/common/buttons/Button'
 import { useGetPatientActivityAnswers } from '@/hooks/queries'
 import { PatientActivityAnswers } from '@/interfaces'
@@ -11,14 +12,14 @@ function playAudio(userAnswer: string) {
 }
 
 const ActivityResponsesPage = () => {
-  const { patientId, activityId } = useParams()
+  const { patientId, gameId } = useParams()
   const { data, error, isLoading } = useGetPatientActivityAnswers(parseInt(patientId!))
   const [filteredData, setFilteredData] = useState<PatientActivityAnswers[]>([])
   const [selectedDate, setSelectedDate] = useState<string>('')
 
   useEffect(() => {
-    if (data && !error && !isLoading && activityId) {
-      const filteredByActivity = data.filter((item) => item.activityId === parseInt(activityId!))
+    if (data && !error && !isLoading && gameId) {
+      const filteredByActivity = data.filter((item) => item.gameid === parseInt(gameId!))
 
       const finalFilteredData = selectedDate
         ? filteredByActivity.filter((item) =>
@@ -28,27 +29,32 @@ const ActivityResponsesPage = () => {
 
       setFilteredData(finalFilteredData)
     }
-  }, [data, error, isLoading, activityId, selectedDate])
+  }, [data, error, isLoading, gameId, selectedDate])
 
   return (
     <div className="flex flex-col items-start justify-start gap-5 lg:pt-0 pt-32">
-      <div className="mb-4 self-end pt-10">
-        <label htmlFor="dateFilter" className="mr-4 font-bold">
-          Filtrar por fecha:
-        </label>
-        <input
-          type="date"
-          id="dateFilter"
-          value={selectedDate}
-          onChange={(e) => setSelectedDate(e.target.value)}
-          className="p-2 border rounded-lg"
-        />
+      <div className="w-full flex justify-between items-center pt-10">
+        <div>
+          <BackButton text="Volver atrás" route={`/profesional/paciente/${patientId}/actividades`} />
+        </div>
+        <div className="mb-4 self-end">
+          <label htmlFor="dateFilter" className="mr-4 font-bold">
+            Filtrar por fecha:
+          </label>
+          <input
+            type="date"
+            id="dateFilter"
+            value={selectedDate}
+            onChange={(e) => setSelectedDate(e.target.value)}
+            className="p-2 border rounded-lg"
+          />
+        </div>
       </div>
 
       {!error && !isLoading && filteredData.length > 0 ? (
         <div className="w-full">
           {filteredData.map((activity) => (
-            <div key={activity.activityId} className="w-full">
+            <div key={activity.gameid} className="w-full">
               <div className="w-full">
                 <h1 className="text-2xl font-bold">Respuestas {activity.gameName}</h1>
               </div>

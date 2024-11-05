@@ -112,6 +112,6 @@ export interface Answer {
 
 export interface PatientActivityAnswers {
   gameName: string
-  activityId: number
+  gameid: number
   answersDto: Answer[]
 }
