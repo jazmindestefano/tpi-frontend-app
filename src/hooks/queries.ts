@@ -21,7 +21,8 @@ import {
   Achievement,
   TimelineData,
   ProfesionalPatient,
-  User
+  PatientActivityAnswers,
+  ProfileData
 } from '@/interfaces/interfaces.ts'
 
 export const useGetThemesByGameId = (
@@ -321,6 +322,41 @@ export const useGetActivityLetterProgressDashboard = (
   return { data, error, isLoading }
 }
 
+export const useGetProfileData = (
+  id: number,
+  role: string
+): {
+  data: ProfileData | null | undefined
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['profileData', id, role],
+    queryFn: async () => await ApiService.getProfileData(id, role)
+  })
+
+  return { data, error, isLoading }
+}
+
+export const useUpdateProfileData = (): {
+  mutate: (args: { id: number; role: string; data: ProfileData }) => void
+  reset: () => void
+  error: Error | null
+  isPending: boolean
+  isSuccess: boolean
+} => {
+  const { mutate, reset, error, isPending, isSuccess } = useMutation({
+    mutationFn: async ({ id, role, data }: { id: number; role: string; data: ProfileData }) =>
+      await ApiService.updateProfileData(id, role, data),
+    onSuccess: () => {
+      window.history.pushState({}, '', '/perfil')
+      window.location.reload()
+    }
+  })
+
+  return { mutate, reset, error, isPending, isSuccess }
+}
+
 export const useGetProfessionalPatients = (
   professionalId: number
 ): {
@@ -351,4 +387,34 @@ export const useLogin = (): {
   })
 
   return { error, isPending, mutateAsync }
+}
+
+export const useGetPatientActivityAnswers = (
+  patientId: number
+): {
+  data: PatientActivityAnswers[]
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['patientData', patientId],
+    queryFn: async () => await ApiService.getPatientActivityAnswers(patientId)
+  })
+
+  return { data, error, isLoading }
+}
+
+export const useExportPdf = (
+  patientId: number
+): {
+  pdf: Blob | null | undefined
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['exportPdf', patientId],
+    queryFn: async () => await ApiService.exportPdf(patientId)
+  })
+
+  return { pdf: data, error, isLoading }
 }

@@ -9,7 +9,9 @@ import {
   PostFeedbackData,
   Word,
   TimelineData,
-  ProfesionalPatient
+  ProfesionalPatient,
+  GetPatientData,
+  ProfileData
 } from '@/interfaces/interfaces.ts'
 import { getCurrentAge } from '@/helpers'
 
@@ -237,41 +239,70 @@ export const getActivityLetterProgressDashboard = async (patientId: number) => {
   return null
 }
 
-export const getProfessionalPatients = async (profesionalId: number): Promise<ProfesionalPatient[] | null> => {
-  //  const res = await authenticatedClient.get(`/professional/${profesionalId}/patients`)
-  const res = `http://localhost:8080/professional/${profesionalId}/patients`
-  console.log(res)
+export const getProfileData = async (id: number, role: string): Promise<ProfileData | null> => {
+  const endpoint = role === 'patient' ? `/patients/${id}` : `/professional/${id}`
+  try {
+    const res = await unauthenticatedClient.get<ProfileData>(endpoint)
 
-  const mockedResponse = [
-    {
-      id: 1,
-      name: 'Candela',
-      email: 'cande.fdz12@gmail.com',
-      image: 'candelaPerfil',
-      birthDate: '2002-10-23T03:00:00.000Z'
-    },
-    {
-      id: 2,
-      name: 'Ailen',
-      email: 'ailenpereiravilches@gmail.com',
-      image: 'ailenPerfil',
-      birthDate: '2002-10-23T03:00:00.000Z'
+    if (res.status === 200) {
+      return res.data
     }
-  ]
+  } catch (error) {
+    console.error('Error fetching profile data:', error)
+  }
+
+  return null
+}
+
+export const updateProfileData = async (id: number, role: string, data: ProfileData) => {
+  const endpoint = role === 'Patient' ? `/patients/${id}` : `/professional/${id}`
+  try {
+    const res = await unauthenticatedClient.patch(endpoint, data)
+    if (res.status === 200) {
+      return res.data
+    }
+  } catch (error) {
+    console.error('Error updating profile data:', error)
+  }
+  return null
+}
+
+export const getProfessionalPatients = async (profesionalId: number): Promise<ProfesionalPatient[] | null> => {
+  const res = await authenticatedClient.get(`/professional/${profesionalId}/patients`)
 
   const newPatients: ProfesionalPatient[] = []
 
-  mockedResponse.forEach((patient) => {
-    newPatients.push({
-      id: patient.id,
-      name: patient.name,
-      image: patient.image,
-      email: patient.email,
-      age: getCurrentAge(patient.birthDate)
+  if (res.status === 200) {
+    res.data.forEach((patient: GetPatientData) => {
+      newPatients.push({
+        id: patient.id,
+        name: patient.name,
+        image: patient.image,
+        email: patient.email,
+        age: getCurrentAge(patient.birthDate)
+      })
     })
-  })
+  }
 
   return newPatients
+}
+
+export const getPatientActivityAnswers = async (patientId: number) => {
+  const res = await authenticatedClient.get(`/answers/${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
+
+export const exportPdf = async (patientId: number) => {
+  const res = await authenticatedClient.get(`/export-today-games-and-timeline?patientId=${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
 }
 
 export const login = async (username: string, password: string): Promise<string | null> => {

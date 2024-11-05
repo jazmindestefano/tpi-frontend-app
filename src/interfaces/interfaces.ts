@@ -88,10 +88,40 @@ export interface TimelineData {
   gameDescription: string
   playedTimes: number
 }
+
+export interface ProfileData {
+  email: string
+  name: string
+  surname: string
+  image: string
+}
+
 export interface ProfesionalPatient {
   id: number
   name: string
   image: string
   age: number
   email: string
+}
+
+export interface GetPatientData {
+  id: number
+  name: string
+  image: string
+  email: string
+  birthDate: Date
+}
+
+export interface Answer {
+  id: number
+  answerType: string
+  answerDate: string
+  optionValue: string
+  userAnswer: string
+}
+
+export interface PatientActivityAnswers {
+  gameName: string
+  gameid: number
+  answersDto: Answer[]
 }

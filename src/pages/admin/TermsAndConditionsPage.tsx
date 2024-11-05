@@ -9,7 +9,7 @@ const TermsAndConditionsPage = () => {
     if (event.target.checked) {
       try {
         const result = await mutateAsync(id)
-        console.log('Updated successfully:', result)
+        console.log('Updated successfully:', result ? 'Yes' : 'No')
       } catch (error) {
         console.error('Error updating terms:', error)
       }
