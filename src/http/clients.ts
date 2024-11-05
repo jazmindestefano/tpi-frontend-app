@@ -19,7 +19,7 @@ unauthenticatedClient.interceptors.request.use(
     req.headers = {
       Authorization:
         'Bearer ' +
-        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaWxlbnBlcmVpcmF2aWxjaGVzQGdtYWlsLmNvbSIsImlhdCI6MTczMDY4MTk0MSwiZXhwIjoxNzMwNjg1NTQxfQ.Ew_v2HgHCcSnYAQ8xX2MXmbpAQ9hDuupmtAczuLOnis'
+        'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhaWxlbnBlcmVpcmF2aWxjaGVzQGdtYWlsLmNvbSIsImlhdCI6MTczMDc2NzUzNywiZXhwIjoxNzMwNzcxMTM3fQ.mec7K4HXrPrk1ilXybOhD0XtUfsWuoIOFgSnrXr9Bh0'
     } as AxiosRequestHeaders
 
     return req

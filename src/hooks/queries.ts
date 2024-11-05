@@ -334,7 +334,11 @@ export const useUpdateProfileData = (): {
 } => {
   const { mutate, reset, error, isPending, isSuccess } = useMutation({
     mutationFn: async ({ id, role, data }: { id: number; role: string; data: ProfileData }) =>
-      await ApiService.updateProfileData(id, role, data)
+      await ApiService.updateProfileData(id, role, data),
+    onSuccess: () => {
+      window.history.pushState({}, '', '/perfil')
+      window.location.reload()
+    }
   })
 
   return { mutate, reset, error, isPending, isSuccess }

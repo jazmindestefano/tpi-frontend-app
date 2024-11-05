@@ -4,6 +4,7 @@ import { Pencil, Save } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { useGetProfileData, useUpdateProfileData } from '@/hooks/queries'
 import { useUser } from '@/hooks/selectors'
+import { ProfileData } from '@/interfaces/interfaces'
 
 const ProfilePage = () => {
   const user = useUser()
@@ -29,9 +30,13 @@ const ProfilePage = () => {
   if (error) return <p>Error loading profile data.</p>
 
   const handleSave = () => {
-    const profileData = { name, surname, email, image }
-    updateProfile({ id: user.id, role: user.Role.toLowerCase(), data: profileData })
-    setIsEditing(false)
+    const profileData: ProfileData = {
+      email,
+      name,
+      surname,
+      image
+    }
+    updateProfile({ id: user.id, role: user.Role, data: profileData })
   }
 
   return (
@@ -83,7 +88,7 @@ const ProfilePage = () => {
                   name="email"
                   type="email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  disabled
                   className="mt-2 block w-full py-2 text-gray-900 sm:text-sm sm:leading-6 rounded-full border shadow-md px-6"
                 />
               </div>

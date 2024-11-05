@@ -230,7 +230,6 @@ export const getActivityLetterProgressDashboard = async (patientId: number) => {
 
 export const getProfileData = async (id: number, role: string): Promise<ProfileData | null> => {
   const endpoint = role === 'patient' ? `/patients/${id}` : `/professional/${id}`
-  console.log('endpoint: ', endpoint)
   try {
     const res = await unauthenticatedClient.get<ProfileData>(endpoint)
 
@@ -246,7 +245,6 @@ export const getProfileData = async (id: number, role: string): Promise<ProfileD
 
 export const updateProfileData = async (id: number, role: string, data: ProfileData) => {
   const endpoint = role === 'Patient' ? `/patients/${id}` : `/professional/${id}`
-
   try {
     const res = await unauthenticatedClient.patch(endpoint, data)
     if (res.status === 200) {
