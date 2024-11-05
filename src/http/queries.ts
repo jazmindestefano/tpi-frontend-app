@@ -256,3 +256,12 @@ export const getPatientActivityAnswers = async (patientId: number) => {
   }
   return null
 }
+
+export const exportPdf = async (patientId: number) => {
+  const res = await unauthenticatedClient.get(`/export-today-games-and-timeline?patientId=${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}

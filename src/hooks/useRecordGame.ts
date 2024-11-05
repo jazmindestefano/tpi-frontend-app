@@ -26,7 +26,7 @@ const useRecordGame = (selectedThemeId: number) => {
       mutate({
         userId: user.id,
         gameId: selectedGame.id,
-        activityId: 1, // todo: fix hardcoded value
+        activityId: levels![currentLevel].id,
         userAudio: audio
       })
     }

@@ -338,3 +338,18 @@ export const useGetPatientActivityAnswers = (
 
   return { data, error, isLoading }
 }
+
+export const useExportPdf = (
+  patientId: number
+): {
+  pdf: Blob | null | undefined
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['exportPdf', patientId],
+    queryFn: async () => await ApiService.exportPdf(patientId)
+  })
+
+  return { pdf: data, error, isLoading }
+}
