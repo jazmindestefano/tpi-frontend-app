@@ -22,6 +22,8 @@ import {
 import { PageLayout, ProfesionalPageLayout } from '@/components'
 import { ValidGameWrapper } from '@/router/ValidGameWrapper.tsx'
 import { SnakeGameWrapper } from '../../wrappers'
+import ValidateRoleProfessional from './ValidateRoleProfessional.tsx'
+import ValidateRolePatient from './ValidateRolePatient.tsx'
 
 export const router = createBrowserRouter([
   {
@@ -40,54 +42,51 @@ export const router = createBrowserRouter([
         element: <PageLayout />,
         children: [
           {
-            path: '/',
-            element: <HomePage />
-          },
-          {
-            path: '/perfil',
-            element: <ProfilePage />
-          },
-          {
-            path: '/tematicas',
-            element: <ThemeSelectorPage />
-          },
-          {
-            element: <ValidGameWrapper />,
-            path: '/actividad',
+            element: <ValidateRoleProfessional />,
             children: [
               {
-                path: 'audicion',
-                element: <AuditoryDiscriminationGamePage />
+                path: '/',
+                element: <HomePage />
               },
               {
-                path: 'habla',
-                element: <RecordGamePage />
+                path: '/tematicas',
+                element: <ThemeSelectorPage />
               },
               {
-                path: 'viborita',
-                element: <SnakeGameWrapper />
+                element: <ValidGameWrapper />,
+                path: '/actividad',
+                children: [
+                  {
+                    path: 'letras',
+                    element: <AuditoryDiscriminationGamePage />
+                  },
+                  {
+                    path: 'palabras',
+                    element: <RecordGamePage />
+                  },
+                  {
+                    path: 'la-viborita',
+                    element: <SnakeGameWrapper />
+                  }
+                ]
+              },
+              {
+                path: '/felicitaciones',
+                element: <CongratulationsPage />
+              },
+              {
+                path: '/logros',
+                element: <AchievementsPage />
+              },
+              {
+                path: '/terminos-y-condiciones',
+                element: <TermsAndConditionsPage />
+              },
+              {
+                path: '/politica-de-privacidad',
+                element: <PrivacyPolicyPage />
               }
             ]
-          },
-          {
-            path: '/felicitaciones',
-            element: <CongratulationsPage />
-          },
-          {
-            path: '/logros',
-            element: <AchievementsPage />
-          },
-          {
-            path: '/terminos-y-condiciones',
-            element: <TermsAndConditionsPage />
-          },
-          {
-            path: '/politica-de-privacidad',
-            element: <PrivacyPolicyPage />
-          },
-          {
-            path: '*',
-            element: <NotFoundPage />
           }
         ]
       },
@@ -96,27 +95,40 @@ export const router = createBrowserRouter([
         path: '/profesional',
         children: [
           {
-            path: '',
-            element: <HomeProfesionalPage />
-          },
-          {
-            path: 'paciente/:patientId',
-            element: <DashboardPage />
-          },
-          {
-            path: 'paciente/:patientId/timeline',
-            element: <TimelinePage />
-          },
-          {
-            path: 'paciente/:patientId/actividades',
-            element: <PatientActivitiesPage />
-          },
-          {
-            path: 'paciente/:patientId/actividades/:activityId',
-            element: <ActivityResponsesPage />
+            element: <ValidateRolePatient />,
+            children: [
+              {
+                path: '',
+                element: <HomeProfesionalPage />
+              },
+              {
+                path: 'paciente/:patientId',
+                element: <DashboardPage />
+              },
+              {
+                path: 'paciente/:patientId/timeline',
+                element: <TimelinePage />
+              },
+              {
+                path: 'paciente/:patientId/actividades',
+                element: <PatientActivitiesPage />
+              },
+              {
+                path: 'paciente/:patientId/actividades/:activityId',
+                element: <ActivityResponsesPage />
+              }
+            ]
           }
         ]
+      },
+      {
+        path: '/perfil',
+        element: <ProfilePage />
       }
     ]
+  },
+  {
+    path: '*',
+    element: <NotFoundPage />
   }
 ])

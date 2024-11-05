@@ -1,37 +1,26 @@
-import { FC, useEffect, useState } from 'react'
-import PrivateRouteWrapper from './PrivateRouteWrapper'
-import { useNavigate } from 'react-router-dom'
+import { FC, useEffect } from 'react'
+import { Navigate, Outlet } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { useGetMe } from '@hooks/queries.ts'
 import { setUser } from '@redux/slices'
+import SpinnerLoader from '@components/common/SpinnerLoader.tsx'
+import { useToken } from '@hooks/selectors.ts'
 
 const PrivateRoute: FC = () => {
-  const [isAuthorized, setIsAuthorized] = useState<boolean>(false)
-  const navigate = useNavigate()
   const dispatch = useDispatch()
-
   const { user: data, isLoading, error } = useGetMe()
-  // ?, true
-  // {...}, false
-  console.log('(PrivateRoute) 1', data)
-
+  const token = useToken()
+  // Check if the user is authorized based on the presence of `data`
+  const isAuthorized = Boolean(data && token)
   useEffect(() => {
-    if (error) {
-      setIsAuthorized(false)
-      console.error(error)
-    }
-  }, [error, navigate])
-
-  useEffect(() => {
-    if (data) {
-      setIsAuthorized(true)
+    if (isAuthorized) {
       dispatch(setUser(data))
-      console.log('pasa 1')
-      // console.log(isAuthorized)
+    } else if (error) {
+      console.error('Authorization error:', error)
     }
-  }, [data, navigate, dispatch])
-  console.log('(PrivateRoute) 2', { isAuthorized })
-  return <PrivateRouteWrapper isLoading={isLoading} isAuthorized={isAuthorized} />
+  }, [isAuthorized, error, dispatch, data])
+
+  return isLoading ? <SpinnerLoader /> : isAuthorized ? <Outlet /> : <Navigate to="/login" replace />
 }
 
 export default PrivateRoute

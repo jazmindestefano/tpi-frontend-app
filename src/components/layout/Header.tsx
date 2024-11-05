@@ -57,6 +57,7 @@ const Header = () => {
                 onMouseEnter={() => speakText('Salir de la Aplicación')}
                 className="logout-button"
                 onClick={() => {
+                  localStorage.clear()
                   navigate('/login')
                 }}
               >

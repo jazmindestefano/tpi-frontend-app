@@ -10,6 +10,10 @@ interface HomeCardProps {
   game: Game
 }
 
+function replaceHyphensWithSpaces(input: string): string {
+  return input.replace(/-/g, ' ')
+}
+
 const HomeCard: React.FC<HomeCardProps> = ({ buttonVariant, backgroundColor, onClick, game }) => {
   return (
     <BaseCard className={'flex flex-col justify-center items-center w-full gap-4 shadow-none'}>
@@ -19,7 +23,7 @@ const HomeCard: React.FC<HomeCardProps> = ({ buttonVariant, backgroundColor, onC
         <div onClick={onClick} className="flex flex-col justify-center items-center w-full">
           <img className="rounded-3xl object-cover size-96" src={game.image} alt={game.name} />
           <h1 className="text-h1" data-testid="home-card-name">
-            {game.name.toUpperCase()}
+            {replaceHyphensWithSpaces(game.name.toUpperCase())}
           </h1>
         </div>
       </BaseContainer>

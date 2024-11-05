@@ -36,12 +36,17 @@ const LoginPage: FC = () => {
   }
 
   return (
-    <div>
-      <h1>Iniciar sesión</h1>
-      <div className={'flex flex-col gap-4 w-1/2'}>
-        <Input name={'username'} label={'Nombre de usuario'} onChange={handleChange} value={formData.username} />
-        <Input name={'password'} label={'Contraseña'} onChange={handleChange} value={formData.password} />
-        <Button onClick={handleLogin}>Iniciar sesión</Button>
+    <div className="min-h-screen flex flex-col justify-center items-center font-comfortaa bg-orange-100">
+      <div className={'mb-6'}>
+        <img src={'/clara-logo.svg'} alt="Logo" className="h-16 cursor-pointer" />
+      </div>
+      <div>
+        <h1 className={'text-center font-bold text-2xl mb-4'}>Iniciar sesión</h1>
+        <div className={'flex flex-col gap-4'}>
+          <Input name={'username'} label={'Nombre de usuario'} onChange={handleChange} value={formData.username} />
+          <Input name={'password'} label={'Contraseña'} onChange={handleChange} value={formData.password} />
+          <Button onClick={handleLogin}>Iniciar sesión</Button>
+        </div>
       </div>
     </div>
   )
