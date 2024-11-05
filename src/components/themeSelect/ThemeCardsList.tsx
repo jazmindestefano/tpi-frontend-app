@@ -6,6 +6,7 @@ import { ArrowLeftIcon, ArrowRightIcon } from '../common/icons/Icons'
 import { useScroll } from '../../hooks/useScroll'
 import { useImageSkeleton } from '../../hooks/useImageSkeleton'
 
+// todo: change this
 const bgColors = [
   'bg-orange-300',
   'bg-blue-300',

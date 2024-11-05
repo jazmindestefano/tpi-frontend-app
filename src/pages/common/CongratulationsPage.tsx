@@ -5,7 +5,7 @@ import { useSpeakText } from '@/hooks/useSpeakText'
 import Button from '@/components/common/buttons/Button'
 import { HearableButton } from '@/components/common/buttons/HearableButton'
 import { useRandomAchievement } from '@/hooks/queries'
-import { setModalFeedback } from '@/redux/store/gameSlice'
+import { setModalFeedback } from '@redux/slices'
 
 const CongratulationsPage = () => {
   const dispatch = useDispatch()

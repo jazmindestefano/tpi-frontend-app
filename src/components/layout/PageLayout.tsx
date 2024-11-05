@@ -1,19 +1,10 @@
-import { useDispatch } from 'react-redux'
 import { Outlet } from 'react-router-dom'
-import { useEffect } from 'react'
-import localStorageManager from '@/localStorage/localStorageManager'
-import { setUser } from '@/redux/store/userSlice'
 import Header from './Header'
 import ProductTour from '../ProductTour'
+import { useShowProductTour } from '@hooks/selectors.ts'
 
 const PageLayout = () => {
-  // to do: this has to come from backend
-  const showProductTour = localStorageManager.getItem('showProductTour')
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(setUser({ id: 1, Role: 'Patient' }))
-  }, [dispatch])
+  const showProductTour = useShowProductTour()
 
   return (
     <div className="flex flex-col min-h-screen font-comfortaa">

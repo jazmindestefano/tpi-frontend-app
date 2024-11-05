@@ -1,5 +1,5 @@
-import { unauthenticatedClient } from './clients.ts'
-import { convertBlobToAudioFile } from '../helpers/blobs.ts'
+import { authenticatedClient, unauthenticatedClient } from './clients.ts'
+import { convertBlobToAudioFile } from '@/helpers'
 import {
   Theme,
   Game,
@@ -13,11 +13,11 @@ import {
   GetPatientData,
   ProfileData
 } from '@/interfaces/interfaces.ts'
-import { getCurrentAge } from '@/helpers/index.ts'
+import { getCurrentAge } from '@/helpers'
 
 export const getThemesByGameId = async (gameId: number): Promise<Theme[] | null> => {
   // will change to an authenticated client probably
-  const res = await unauthenticatedClient.get(`/games/${gameId}/themes`)
+  const res = await authenticatedClient.get(`/games/${gameId}/themes`)
   if (res.status === 200) {
     return res.data
   }
@@ -25,7 +25,7 @@ export const getThemesByGameId = async (gameId: number): Promise<Theme[] | null>
 }
 
 export const getGames = async (): Promise<Game[] | null> => {
-  const res = await unauthenticatedClient.get(`/games`)
+  const res = await authenticatedClient.get(`/games`)
   if (res.status === 200) {
     return res.data
   }
@@ -33,7 +33,7 @@ export const getGames = async (): Promise<Game[] | null> => {
 }
 
 export const getGameLevels = async (themeId: number): Promise<GameLevel[] | null> => {
-  const res = await unauthenticatedClient.get(`/themes/${themeId}/activities`)
+  const res = await authenticatedClient.get(`/themes/${themeId}/activities`)
   if (res.status === 200) {
     return res.data
   }
@@ -52,7 +52,7 @@ export const postUserRecording = async ({ userId, activityId, gameId, userAudio 
   formData.append('data', new Blob([data], { type: 'application/json' }))
   formData.append('user_audio_file', convertBlobToAudioFile(userAudio, 'user_audio'))
 
-  const res = await unauthenticatedClient.post(`/answers/audio`, formData, {
+  const res = await authenticatedClient.post(`/answers/audio`, formData, {
     headers: {
       'Content-Type': 'multipart/form-data'
     }
@@ -73,7 +73,7 @@ export const postAuditoryDiscriminationAnswer = async ({
     activities: activities
   }
 
-  const res = await unauthenticatedClient.post(`/answers/text`, payload, {
+  const res = await authenticatedClient.post(`/answers/text`, payload, {
     headers: {
       'Content-Type': 'application/json'
     }
@@ -86,7 +86,7 @@ export const postAuditoryDiscriminationAnswer = async ({
 }
 
 export const postFeedback = async ({ ranking, gameId, patientId }: PostFeedbackData) => {
-  const res = await unauthenticatedClient.post(`/games/feedback`, {
+  const res = await authenticatedClient.post(`/games/feedback`, {
     ranking,
     gameId,
     patientId
@@ -99,7 +99,7 @@ export const postFeedback = async ({ ranking, gameId, patientId }: PostFeedbackD
 }
 
 export const getWordsByUserId = async (userId: number): Promise<Word[] | null> => {
-  const res = await unauthenticatedClient.get<Word[]>(`/words/${userId}`)
+  const res = await authenticatedClient.get<Word[]>(`/words/${userId}`)
 
   if (res.status === 200) {
     return res.data
@@ -109,7 +109,7 @@ export const getWordsByUserId = async (userId: number): Promise<Word[] | null> =
 }
 
 export const getRandomAchievement = async (patientId: number) => {
-  const res = await unauthenticatedClient.get(`/randomAchievement/${patientId}`)
+  const res = await authenticatedClient.get(`/randomAchievement/${patientId}`)
 
   if (res.status === 200) {
     return res.data
@@ -118,7 +118,7 @@ export const getRandomAchievement = async (patientId: number) => {
 }
 
 export const getAchievements = async (patientId: number) => {
-  const res = await unauthenticatedClient.get(`/achivements/${patientId}`)
+  const res = await authenticatedClient.get(`/achivements/${patientId}`)
 
   if (res.status === 200) {
     return res.data
@@ -127,7 +127,7 @@ export const getAchievements = async (patientId: number) => {
 }
 
 export const getSynthesizedAudio = async (text: string) => {
-  const res = await unauthenticatedClient.post(
+  const res = await authenticatedClient.post(
     `/text-to-speech`,
     {
       text
@@ -138,8 +138,18 @@ export const getSynthesizedAudio = async (text: string) => {
   return new Blob([new Uint8Array(res.data)], { type: 'audio/mp3' })
 }
 
+export const getMe = async () => {
+  const res = await authenticatedClient.get('/api/users/me')
+
+  if (res.status === 200) {
+    return res.data
+  }
+
+  return null
+}
+
 export const getActivityLetterResponsesForDashboard = async (patientId: number) => {
-  const res = await unauthenticatedClient.get(`/activityLetter/${patientId}`)
+  const res = await authenticatedClient.get(`/activityLetter/${patientId}`)
 
   if (res.status === 200) {
     return res.data
@@ -148,7 +158,7 @@ export const getActivityLetterResponsesForDashboard = async (patientId: number) 
 }
 
 export const getSurveyFeedbackForDashboard = async (patientId: number) => {
-  const res = await unauthenticatedClient.get(`/surveyFeedback/${patientId}`)
+  const res = await authenticatedClient.get(`/surveyFeedback/${patientId}`)
 
   if (res.status === 200) {
     return res.data
@@ -157,7 +167,7 @@ export const getSurveyFeedbackForDashboard = async (patientId: number) => {
 }
 
 export const getSyllableDashboard = async (patientId: number) => {
-  const res = await unauthenticatedClient.get(`/syllable/${patientId}`)
+  const res = await authenticatedClient.get(`/syllable/${patientId}`)
 
   if (res.status === 200) {
     return res.data
@@ -166,7 +176,7 @@ export const getSyllableDashboard = async (patientId: number) => {
 }
 
 export const getPhonemeDashboard = async (patientId: number) => {
-  const res = await unauthenticatedClient.get(`/phoneme/${patientId}`)
+  const res = await authenticatedClient.get(`/phoneme/${patientId}`)
 
   if (res.status === 200) {
     return res.data
@@ -175,7 +185,7 @@ export const getPhonemeDashboard = async (patientId: number) => {
 }
 
 export const getTimelineData = async (patientId: number): Promise<TimelineData | null> => {
-  const res = await unauthenticatedClient.get(`/timeline/${patientId}`)
+  const res = await authenticatedClient.get(`/timeline/${patientId}`)
   if (res.status === 200) {
     return res.data
   }
@@ -184,7 +194,7 @@ export const getTimelineData = async (patientId: number): Promise<TimelineData |
 }
 
 export const UpdatePatientTermsAndConditions = async (patientId: number) => {
-  const res = await unauthenticatedClient.patch(`/${patientId}/accept-terms`)
+  const res = await authenticatedClient.patch(`/${patientId}/accept-terms`)
 
   if (res.status === 200) {
     return res.data
@@ -194,7 +204,7 @@ export const UpdatePatientTermsAndConditions = async (patientId: number) => {
 }
 
 export const getWhatHappenedTodayDashboard = async (patientId: number) => {
-  const res = await unauthenticatedClient.get(`/today/${patientId}`)
+  const res = await authenticatedClient.get(`/today/${patientId}`)
 
   if (res.status === 200) {
     return res.data
@@ -203,7 +213,7 @@ export const getWhatHappenedTodayDashboard = async (patientId: number) => {
 }
 
 export const getWorstSyllableRankingDashboard = async (patientId: number) => {
-  const res = await unauthenticatedClient.get(`/syllableRanking/${patientId}`)
+  const res = await authenticatedClient.get(`/syllableRanking/${patientId}`)
 
   if (res.status === 200) {
     return res.data
@@ -212,7 +222,7 @@ export const getWorstSyllableRankingDashboard = async (patientId: number) => {
 }
 
 export const getWorstPhonemeRankingDashboard = async (patientId: number) => {
-  const res = await unauthenticatedClient.get(`/phonemeRanking/${patientId}`)
+  const res = await authenticatedClient.get(`/phonemeRanking/${patientId}`)
 
   if (res.status === 200) {
     return res.data
@@ -221,7 +231,7 @@ export const getWorstPhonemeRankingDashboard = async (patientId: number) => {
 }
 
 export const getActivityLetterProgressDashboard = async (patientId: number) => {
-  const res = await unauthenticatedClient.get(`/activityLetter/${patientId}`)
+  const res = await authenticatedClient.get(`/activityLetter/${patientId}`)
 
   if (res.status === 200) {
     return res.data
@@ -258,7 +268,7 @@ export const updateProfileData = async (id: number, role: string, data: ProfileD
 }
 
 export const getProfessionalPatients = async (profesionalId: number): Promise<ProfesionalPatient[] | null> => {
-  const res = await unauthenticatedClient.get(`/professional/${profesionalId}/patients`)
+  const res = await authenticatedClient.get(`/professional/${profesionalId}/patients`)
 
   const newPatients: ProfesionalPatient[] = []
 
@@ -278,7 +288,7 @@ export const getProfessionalPatients = async (profesionalId: number): Promise<Pr
 }
 
 export const getPatientActivityAnswers = async (patientId: number) => {
-  const res = await unauthenticatedClient.get(`/answers/${patientId}`)
+  const res = await authenticatedClient.get(`/answers/${patientId}`)
 
   if (res.status === 200) {
     return res.data
@@ -287,10 +297,23 @@ export const getPatientActivityAnswers = async (patientId: number) => {
 }
 
 export const exportPdf = async (patientId: number) => {
-  const res = await unauthenticatedClient.get(`/export-today-games-and-timeline?patientId=${patientId}`)
+  const res = await authenticatedClient.get(`/export-today-games-and-timeline?patientId=${patientId}`)
 
   if (res.status === 200) {
     return res.data
   }
+  return null
+}
+
+export const login = async (username: string, password: string): Promise<string | null> => {
+  const res = await unauthenticatedClient.post('/api/login', {
+    username,
+    password
+  })
+
+  if (res.status === 200) {
+    return res.data.token
+  }
+
   return null
 }

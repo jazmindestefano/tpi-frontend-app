@@ -13,8 +13,27 @@ export default defineConfig({
     setupFiles: './src/__tests__/setupTests.ts'
   },
   resolve: {
-    alias: {
-      '@': path.resolve(__dirname, 'src')
-    }
+    alias: [
+      {
+        find: '@',
+        replacement: path.resolve(path.join(__dirname, '/src'))
+      },
+      {
+        find: '@redux',
+        replacement: path.resolve(path.join(__dirname, '/src/redux'))
+      },
+      {
+        find: '@hooks',
+        replacement: path.resolve(path.join(__dirname, '/src/hooks'))
+      },
+      {
+        find: '@components',
+        replacement: path.resolve(path.join(__dirname, '/src/components'))
+      },
+      {
+        find: '@helpers',
+        replacement: path.resolve(path.join(__dirname, '/src/helpers'))
+      }
+    ]
   }
 })

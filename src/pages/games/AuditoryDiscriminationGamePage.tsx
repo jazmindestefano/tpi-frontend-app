@@ -1,15 +1,16 @@
 import { GameHeader } from '@/components'
 import SpinnerLoader from '@/components/common/SpinnerLoader'
-import ProgressBar from '@/components/ProgressBar'
-import { shuffleArray } from '@/helpers'
 import { useGetGameLevels, usePostAuditoryDiscriminationAnswer } from '@/hooks/queries'
-import { useSelectedTheme, useUser } from '@/hooks/selectors'
-import { useSpeakText } from '@/hooks/useSpeakText'
 import { LevelOption } from '@/interfaces'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import GameOptionsListPage from './GameOptionsListPage'
+import { useSelectedTheme, useUser } from '@hooks/selectors.ts'
+import { useSpeakText } from '@hooks/useSpeakText.ts'
+import { shuffleArray } from '@/helpers'
+import ProgressBar from '@components/ProgressBar.tsx'
+import { GameOptionsListPage } from '@/pages'
 
+// todo: move this to helper
 const prepareData = ({
   patiendId,
   activityId,
@@ -35,12 +36,10 @@ const AuditoryDiscriminationGamePage = () => {
   const navigate = useNavigate()
   const selectedTheme = useSelectedTheme()
   const user = useUser()
-
-  const { levels, isLoading, error: getLevelsError } = useGetGameLevels(selectedTheme!.id)
+  const { levels, isLoading, error: getLevelsError } = useGetGameLevels(selectedTheme.id)
   const [currentLevel, setCurrentLevel] = useState<number>(0)
   const [options, setOptions] = useState<LevelOption[]>([])
 
-  // todo: all props need to be used
   const { mutate, error } = usePostAuditoryDiscriminationAnswer()
   const speakText = useSpeakText()
 
@@ -85,7 +84,7 @@ const AuditoryDiscriminationGamePage = () => {
   }, [error, navigate])
 
   return !isLoading && !getLevelsError && levels && levels.length != 0 && selectedTheme ? (
-    <div className="w-full layout flex flex-col justify-center items-center gap-4 px-10 md:px-40 pt-20">
+    <div className="w-full layout flex-col-center gap-4 px-10 md:px-40 pt-20">
       <ProgressBar currentActivity={currentLevel + 1} totalActivities={levels?.length} />
       <GameHeader level={levels[currentLevel]} headerTitle="Selecciona la imágen que empiece con la letra"></GameHeader>
       <GameOptionsListPage options={options} onOptionSelection={onOptionSelection} />

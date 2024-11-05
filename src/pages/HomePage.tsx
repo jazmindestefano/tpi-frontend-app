@@ -1,16 +1,15 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useGetGames } from '../hooks/queries.ts'
 import HomeCard from '../components/common/cards/HomeCard.tsx'
 import SpinnerLoader from '../components/common/SpinnerLoader.tsx'
 import { useDispatch } from 'react-redux'
-import { selectGame, setModalFeedback } from '../redux/store/gameSlice.ts'
 import { FeedbackModal } from '../components/common/modals/FeedbackModal.tsx'
 import { useShowModalFeedback } from '../hooks/selectors.ts'
 import { HearableButton } from '../components/common/buttons/HearableButton.tsx'
-import { getCardBgColor } from '../helpers/colors.ts'
-import localStorageManager from '../localStorage/localStorageManager.js'
-import { Game } from '../interfaces/interfaces.ts'
+import { getCardBgColor } from '@/helpers'
+import { Game } from '@/interfaces'
+import { selectGame, setModalFeedback, setShowProductTour } from '@redux/slices'
 
 const Home = () => {
   const navigate = useNavigate()
@@ -19,8 +18,9 @@ const Home = () => {
   const showModalFeedBack = useShowModalFeedback()
   const [showModal, setShowModal] = useState(showModalFeedBack)
 
-  // to-do: has to come from the backend
-  localStorageManager.setItem('showProductTour', false)
+  useEffect(() => {
+    dispatch(setShowProductTour(false))
+  }, [dispatch])
 
   const handleOnClick = (game: Game) => {
     navigate('/tematicas')

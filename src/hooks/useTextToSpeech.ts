@@ -5,7 +5,7 @@ import * as ApiService from '../http/queries.ts'
 interface UseAudioPlayerHookProps {
   text: string
 }
-
+// todo: we need to somehow merge these two useTextToSpeech - useSpeakText
 export const useTextToSpeech = ({ text }: UseAudioPlayerHookProps) => {
   const [isPlaying, setIsPlaying] = useState(false)
 

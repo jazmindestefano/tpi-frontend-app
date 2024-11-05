@@ -1,96 +1,134 @@
 import { createBrowserRouter } from 'react-router-dom'
-import { PageLayout, ProfesionalPageLayout } from '@/components/index.ts'
+import PrivateRoute from '@/router/PrivateRoute.tsx'
 import {
   AchievementsPage,
   ActivityResponsesPage,
+  AuditoryDiscriminationGamePage,
   CongratulationsPage,
   DashboardPage,
   ErrorPage,
-  GameSelectorPage,
-  HomePage,
   HomeProfesionalPage,
   NotFoundPage,
   PrivacyPolicyPage,
   ProfilePage,
+  RecordGamePage,
   TermsAndConditionsPage,
   ThemeSelectorPage,
-  TimelinePage
-} from '@/pages/index.ts'
-import PatientActivitiesPage from '@/pages/PatientActivitiesPage'
+  TimelinePage,
+  LoginPage,
+  HomePage,
+  PatientActivitiesPage
+} from '@/pages'
+import { PageLayout, ProfesionalPageLayout } from '@/components'
+import { ValidGameWrapper } from '@/router/ValidGameWrapper.tsx'
+import { SnakeGameWrapper } from '../../wrappers'
+import ValidateRoleProfessional from './ValidateRoleProfessional.tsx'
+import ValidateRolePatient from './ValidateRolePatient.tsx'
 
 export const router = createBrowserRouter([
   {
-    element: <PageLayout />,
+    path: '/login',
+    element: <LoginPage />
+  },
+  {
+    path: '/registro',
+    element: <div>Registro</div>
+  },
+  {
+    element: <PrivateRoute />,
+    errorElement: <ErrorPage />,
     children: [
       {
-        path: '/',
-        element: <HomePage />
+        element: <PageLayout />,
+        children: [
+          {
+            element: <ValidateRoleProfessional />,
+            children: [
+              {
+                path: '/',
+                element: <HomePage />
+              },
+              {
+                path: '/tematicas',
+                element: <ThemeSelectorPage />
+              },
+              {
+                element: <ValidGameWrapper />,
+                path: '/actividad',
+                children: [
+                  {
+                    path: 'letras',
+                    element: <AuditoryDiscriminationGamePage />
+                  },
+                  {
+                    path: 'palabras',
+                    element: <RecordGamePage />
+                  },
+                  {
+                    path: 'la-viborita',
+                    element: <SnakeGameWrapper />
+                  }
+                ]
+              },
+              {
+                path: '/felicitaciones',
+                element: <CongratulationsPage />
+              },
+              {
+                path: '/logros',
+                element: <AchievementsPage />
+              },
+              {
+                path: '/terminos-y-condiciones',
+                element: <TermsAndConditionsPage />
+              },
+              {
+                path: '/politica-de-privacidad',
+                element: <PrivacyPolicyPage />
+              }
+            ]
+          }
+        ]
+      },
+      {
+        element: <ProfesionalPageLayout />,
+        path: '/profesional',
+        children: [
+          {
+            element: <ValidateRolePatient />,
+            children: [
+              {
+                path: '',
+                element: <HomeProfesionalPage />
+              },
+              {
+                path: 'paciente/:patientId',
+                element: <DashboardPage />
+              },
+              {
+                path: 'paciente/:patientId/timeline',
+                element: <TimelinePage />
+              },
+              {
+                path: 'paciente/:patientId/actividades',
+                element: <PatientActivitiesPage />
+              },
+              {
+                path: 'paciente/:patientId/actividades/:activityId',
+                element: <ActivityResponsesPage />
+              }
+            ]
+          }
+        ]
       },
       {
         path: '/perfil',
         element: <ProfilePage />
-      },
-      {
-        path: '/tematicas',
-        element: <ThemeSelectorPage />
-      },
-      {
-        path: '/actividad/:gameId',
-        element: <GameSelectorPage />
-      },
-      {
-        path: '/felicitaciones',
-        element: <CongratulationsPage />
-      },
-      {
-        path: '/error',
-        element: <ErrorPage />
-      },
-      {
-        path: '*',
-        element: <NotFoundPage />
-      },
-      {
-        path: '/logros',
-        element: <AchievementsPage />
-      },
-      {
-        path: '/terminos-y-condiciones',
-        element: <TermsAndConditionsPage />
-      },
-      {
-        path: '/politica-de-privacidad',
-        element: <PrivacyPolicyPage />
       }
     ]
   },
   {
-    element: <ProfesionalPageLayout />,
-    children: [
-      {
-        path: '/profesional',
-        element: <HomeProfesionalPage />
-      },
-      {
-        path: '/profesional/perfil/',
-        element: <ProfilePage />
-      },
-      {
-        path: '/profesional/paciente/:patientId',
-        element: <DashboardPage />
-      },
-      {
-        path: '/profesional/paciente/:patientId/timeline',
-        element: <TimelinePage />
-      },
-      {
-        path: '/profesional/paciente/:patientId/actividades',
-        element: <PatientActivitiesPage />
-      },
-      {
-        path: '/profesional/paciente/:patientId/actividades/:gameId',
-        element: <ActivityResponsesPage />
-      }
-    ]
+    path: '*',
+    element: <NotFoundPage />
   }
 ])

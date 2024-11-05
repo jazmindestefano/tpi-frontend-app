@@ -1,6 +1,7 @@
 import { useCallback, useRef } from 'react'
 import { useTextToSpeech } from './queries.ts'
 
+// todo: we need to somehow merge these two useTextToSpeech - useSpeakText
 export const useSpeakText = () => {
   const { mutateAsync: tts } = useTextToSpeech()
   const audioRef = useRef<HTMLAudioElement | null>(null)

@@ -1,40 +1,52 @@
-import { GameHeader } from '@/components'
-import Button from '@/components/common/buttons/Button'
-import { RecordButton } from '@/components/common/buttons/RecordButton'
-import SpinnerLoader from '@/components/common/SpinnerLoader'
-import ProgressBar from '@/components/ProgressBar'
-import { useSelectedTheme } from '@/hooks/selectors'
-import useRecordGame from '@/hooks/useRecordGame'
-import { ArrowRightIcon } from 'lucide-react'
-import { useEffect } from 'react'
-import { useMediaQuery } from 'react-responsive'
+import { useSelectedGame, useSelectedTheme, useUser } from '@hooks/selectors.ts'
 import { useNavigate } from 'react-router-dom'
+import { useMediaQuery } from 'react-responsive'
+import { useGetGameLevels, usePostUserRecording } from '@hooks/queries.ts'
+import { useEffect, useState } from 'react'
+import { shuffleArray } from '@/helpers'
+import { GameHeader } from '@/components'
+import { RecordButton } from '@components/common/buttons/RecordButton.tsx'
+import Button from '@components/common/buttons/Button.tsx'
+import { ArrowRightIcon } from 'lucide-react'
+import SpinnerLoader from '@components/common/SpinnerLoader.tsx'
+import ProgressBar from '@components/ProgressBar.tsx'
+import { useAudioRecording } from '@hooks/useAudioRecording.ts'
+import { LevelOption } from '@interfaces'
 
 const RecordGamePage = () => {
-  const { id } = useSelectedTheme()
+  const selectedTheme = useSelectedTheme()
   const navigate = useNavigate()
-  const {
-    isLoading,
-    error,
-    levels,
-    currentLevel,
-    levelOptions,
-    setCurrentLevel,
-    isRecording,
-    stopRecording,
-    startRecording
-  } = useRecordGame(id)
   const isDesktop = useMediaQuery({ minWidth: 768 })
+  const { levels, isLoading, error } = useGetGameLevels(selectedTheme.id)
+  const { isRecording, audio, startRecording, stopRecording } = useAudioRecording()
+  const { mutate } = usePostUserRecording()
+  const [currentLevel, setCurrentLevel] = useState<number>(0)
+  const [levelOptions, setLevelOptions] = useState<LevelOption[]>([])
+  const user = useUser()
+  const selectedGame = useSelectedGame()
 
   useEffect(() => {
-    if (error) {
-      navigate('/error')
+    if (levels && !isLoading && !error) {
+      const levelOptions = [...levels[currentLevel].options]
+      shuffleArray(levelOptions)
+      setLevelOptions(levelOptions)
     }
-  }, [error, navigate])
+  }, [levels, isLoading, error, currentLevel])
+
+  useEffect(() => {
+    if (audio) {
+      mutate({
+        userId: user.id,
+        gameId: selectedGame.id,
+        activityId: 1, // todo: fix hardcoded value
+        userAudio: audio
+      })
+    }
+  }, [audio, currentLevel, levels, mutate, selectedGame, user])
 
   const handleNextPage = () => {
     setCurrentLevel((prevState) => prevState + 1)
-    if (currentLevel === levels!.length - 1) {
+    if (levels && currentLevel === levels.length - 1) {
       navigate('/felicitaciones')
     }
   }
@@ -46,7 +58,7 @@ const RecordGamePage = () => {
       <div className="flex justify-between items-center w-full">
         <div className={'lg:w-9/10 lg:flex flex flex-col justify-center items-center w-full gap-10'}>
           <div className="lg:w-2/5">
-            <GameHeader level={levels![currentLevel]} headerTitle="¿Cómo dirías la palabra?"></GameHeader>
+            <GameHeader level={levels![currentLevel]} headerTitle="¿Cómo dirías la palabra?" />
           </div>
           <div className="w-2/5 flex flex-col justify-center items-center">
             {levelOptions.map((option) => (

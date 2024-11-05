@@ -1,9 +1,20 @@
-import SpinnerLoader from '../components/common/SpinnerLoader.tsx'
-import { useAchievements } from '../hooks/useAchievement.ts'
-import { HearableButton } from '../components/common/buttons/HearableButton.tsx'
+import { useUser } from '@hooks/selectors.ts'
+import { useGetAchievements } from '@hooks/queries.ts'
+import { useEffect, useState } from 'react'
+import SpinnerLoader from '@components/common/SpinnerLoader.tsx'
+import { HearableButton } from '@components/common/buttons/HearableButton.tsx'
+import { getUniqueAchievements, UniqueAchievements } from './achievement/helper'
 
 const AchievementsPage = () => {
-  const { uniqueAchievements, error, isLoading } = useAchievements()
+  const user = useUser()
+  const { achievements, error, isLoading } = useGetAchievements(user.id)
+  const [uniqueAchievements, setUniqueAchievements] = useState<UniqueAchievements[]>([])
+
+  useEffect(() => {
+    if (achievements) {
+      setUniqueAchievements(getUniqueAchievements([...achievements]))
+    }
+  }, [achievements])
 
   if (isLoading) return <SpinnerLoader />
   if (error) return <div>Error al cargar los logros</div>

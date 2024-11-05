@@ -31,12 +31,6 @@ const SnakeGamePage = ({ items, cellSize = 50 }: SnakeGameProps) => {
   const selectedGame = useSelectedGame()
 
   useEffect(() => {
-    if (user.id === -1) {
-      navigate('/')
-    }
-  }, [navigate, user])
-
-  useEffect(() => {
     if (audio && !isRecording) {
       mutate({
         userId: user.id,

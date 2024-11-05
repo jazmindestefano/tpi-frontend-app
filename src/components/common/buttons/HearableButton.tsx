@@ -5,13 +5,14 @@ import type { VariantProps } from 'class-variance-authority'
 import { buttonVariants } from './buttonVariants.ts'
 import { LoaderCircle } from 'lucide-react'
 import classNames from 'classnames'
+import { FC } from 'react'
 
 interface HearableButtonProps extends Omit<VariantProps<typeof buttonVariants>, 'size' | 'shape'> {
   text: string
   className?: string
 }
 
-export const HearableButton: React.FC<HearableButtonProps> = ({ text, variant, className }) => {
+export const HearableButton: FC<HearableButtonProps> = ({ text, variant, className }) => {
   const { isLoading, playAudio } = useTextToSpeech({ text })
 
   const handleClick = () => {
