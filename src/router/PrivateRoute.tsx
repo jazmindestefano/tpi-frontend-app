@@ -1,32 +1,37 @@
 import { FC, useEffect, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import PrivateRouteWrapper from './PrivateRouteWrapper'
-import { useGetMe } from '../hooks/queries'
+import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import { useGetMe } from '@hooks/queries.ts'
 import { setUser } from '@redux/slices'
-import { useToken } from '@hooks/selectors'
 
 const PrivateRoute: FC = () => {
   const [isAuthorized, setIsAuthorized] = useState<boolean>(false)
-  const { user, isLoading, error } = useGetMe()
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const token = useToken()
 
-  console.log({ user, isAuthorized, token, isLoading, error })
+  const { user: data, isLoading, error } = useGetMe()
+  // ?, true
+  // {...}, false
+  console.log('(PrivateRoute) 1', data)
 
   useEffect(() => {
-    if (!isLoading && user && token) {
-      setIsAuthorized(true)
-      dispatch(setUser(user))
+    if (error) {
+      setIsAuthorized(false)
+      console.error(error)
     }
-  }, [user, isLoading, token, dispatch, navigate])
+  }, [error, navigate])
 
-  if (isLoading) {
-    return <PrivateRouteWrapper isLoading={true} isAuthorized={false} />
-  }
-
-  return <PrivateRouteWrapper isLoading={false} isAuthorized={true} />
+  useEffect(() => {
+    if (data) {
+      setIsAuthorized(true)
+      dispatch(setUser(data))
+      console.log('pasa 1')
+      // console.log(isAuthorized)
+    }
+  }, [data, navigate, dispatch])
+  console.log('(PrivateRoute) 2', { isAuthorized })
+  return <PrivateRouteWrapper isLoading={isLoading} isAuthorized={isAuthorized} />
 }
 
 export default PrivateRoute

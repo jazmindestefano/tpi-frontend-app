@@ -24,9 +24,9 @@ const LoginPage: FC = () => {
 
   const handleLogin = () => {
     mutateAsync(formData)
-      .then((res) => {
-        if (res) {
-          dispatch(setToken(res))
+      .then((token) => {
+        if (token) {
+          dispatch(setToken(token))
           navigate('/')
         }
       })
