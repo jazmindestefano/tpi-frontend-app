@@ -9,6 +9,7 @@ describe('ActivityCard component', () => {
     name: 'Actividad 1',
     gameName: 'Game 1',
     activityId: 1,
+    gameid: 1,
     answersDto: []
   }
   it('renders "Ver respuestas" button', () => {
