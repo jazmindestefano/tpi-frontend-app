@@ -20,7 +20,8 @@ import {
   Word,
   Achievement,
   TimelineData,
-  ProfesionalPatient
+  ProfesionalPatient,
+  ProfileData
 } from '@/interfaces/interfaces.ts'
 
 export const useGetThemesByGameId = (
@@ -306,6 +307,41 @@ export const useGetActivityLetterProgressDashboard = (
   })
 
   return { data, error, isLoading }
+}
+
+export const useGetProfileData = (
+  id: number,
+  role: string
+): {
+  data: ProfileData | null | undefined
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['profileData', id, role],
+    queryFn: async () => await ApiService.getProfileData(id, role)
+  })
+
+  return { data, error, isLoading }
+}
+
+export const useUpdateProfileData = (): {
+  mutate: (args: { id: number; role: string; data: ProfileData }) => void
+  reset: () => void
+  error: Error | null
+  isPending: boolean
+  isSuccess: boolean
+} => {
+  const { mutate, reset, error, isPending, isSuccess } = useMutation({
+    mutationFn: async ({ id, role, data }: { id: number; role: string; data: ProfileData }) =>
+      await ApiService.updateProfileData(id, role, data),
+    onSuccess: () => {
+      window.history.pushState({}, '', '/perfil')
+      window.location.reload()
+    }
+  })
+
+  return { mutate, reset, error, isPending, isSuccess }
 }
 
 export const useGetProfessionalPatients = (

@@ -6,7 +6,7 @@ interface UserState {
   user: User
 }
 
-const userLoaded = (localStorageManager.getItem('user') as User) || { id: -1 }
+const userLoaded = (localStorageManager.getItem('user') as User) || { id: 1, Role: 'Patient' }
 
 const initialState: UserState = {
   user: userLoaded
