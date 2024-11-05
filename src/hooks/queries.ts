@@ -22,7 +22,8 @@ import {
   TimelineData,
   ProfesionalPatient,
   PatientActivityAnswers,
-  ProfileData
+  ProfileData,
+  User
 } from '@/interfaces/interfaces.ts'
 
 export const useGetThemesByGameId = (

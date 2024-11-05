@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import { House, LogOut, UserRound } from 'lucide-react'
+import { House, LogOut } from 'lucide-react'
 import Button from '../common/buttons/Button'
 import { useSpeakText } from '@/hooks/useSpeakText'
 
@@ -21,15 +21,6 @@ const Header = () => {
       {!location.pathname.includes('terminos-y-condiciones') &&
         !location.pathname.includes('politica-de-privacidad') && (
           <div className={`flex flex-row gap-4 ${location.pathname.includes('actividad') ? 'ml-auto' : ''}`}>
-            {/* Resto de los botones */}
-            <Button
-              size={'square'}
-              variant={'fourth'}
-              onClick={() => navigate('/profesional')}
-              onMouseEnter={() => speakText('Ir al Perfil Profesional')}
-            >
-              <UserRound color="white" />
-            </Button>
             <Button
               size={'square'}
               variant={'secondary'}

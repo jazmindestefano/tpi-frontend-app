@@ -8,7 +8,7 @@ import { ProfileData } from '@/interfaces/interfaces'
 
 const ProfilePage = () => {
   const user = useUser()
-  const { data, error, isLoading } = useGetProfileData(user.id, user.Role.toLowerCase())
+  const { data, error, isLoading } = useGetProfileData(user.id, user.role.toLowerCase())
   const { mutate: updateProfile } = useUpdateProfileData()
 
   const [isEditing, setIsEditing] = useState(false)
@@ -36,7 +36,7 @@ const ProfilePage = () => {
       surname,
       image
     }
-    updateProfile({ id: user.id, role: user.Role, data: profileData })
+    updateProfile({ id: user.id, role: user.role, data: profileData })
   }
 
   return (

@@ -1,4 +1,4 @@
-import { UserRound, Download, FolderDot, LogOut } from 'lucide-react'
+import { Download, FolderDot, LogOut } from 'lucide-react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Button from '../common/buttons/Button'
 import { useExportPdf } from '@/hooks/queries'
@@ -27,16 +27,20 @@ const HeaderProfesional = () => {
 
   return (
     <header className="top-4 right-4 flex gap-4 fixed z-50">
-      <Button size={'square'} variant={'fourth'} onClick={() => navigate('/')}>
-        <UserRound color="white" />
-      </Button>
       <Button size={'square'} variant={'tertiary'} onClick={handleDownload}>
         <Download className="text-white" />
       </Button>
       <Button size={'square'} variant={'secondary'} onClick={() => navigate('/profesional/paciente/1/actividades')}>
         <FolderDot className="text-white" />
       </Button>
-      <Button size={'square'} variant={'primary'} onClick={() => navigate('/logout')}>
+      <Button
+        size={'square'}
+        variant={'primary'}
+        onClick={() => {
+          localStorage.clear()
+          navigate('/login')
+        }}
+      >
         <LogOut className="text-white" />
       </Button>
     </header>

@@ -44,7 +44,13 @@ const LoginPage: FC = () => {
         <h1 className={'text-center font-bold text-2xl mb-4'}>Iniciar sesión</h1>
         <div className={'flex flex-col gap-4'}>
           <Input name={'username'} label={'Nombre de usuario'} onChange={handleChange} value={formData.username} />
-          <Input name={'password'} label={'Contraseña'} onChange={handleChange} value={formData.password} />
+          <Input
+            name={'password'}
+            label={'Contraseña'}
+            type={'password'}
+            onChange={handleChange}
+            value={formData.password}
+          />
           <Button onClick={handleLogin}>Iniciar sesión</Button>
         </div>
       </div>

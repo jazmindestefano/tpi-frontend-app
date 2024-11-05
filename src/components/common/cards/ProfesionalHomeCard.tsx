@@ -3,7 +3,6 @@ import { PlusIcon } from 'lucide-react'
 import Button from '../buttons/Button'
 import { useNavigate } from 'react-router-dom'
 import AddPatientModal from '../modals/EmailInviteModal'
-import localStorageManager from '../../../localStorage/localStorageManager'
 import { ProfesionalPatient } from '@/interfaces'
 
 interface HomeProfesionalCardProps {
@@ -30,7 +29,6 @@ const HomeProfesionalCard = ({ patient, isAddPatient = false, className = '' }: 
 
   const handleClick = (id: number) => {
     // to-do: create slicer in redux
-    localStorageManager.setItem('selectedPatientId', id)
     navigate(`paciente/${id}`)
   }
 
