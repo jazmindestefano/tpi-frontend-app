@@ -1,27 +1,38 @@
 import BackButton from '@/components/common/buttons/BackButton'
-import { Activity, ActivityCard } from '@/components/common/cards/ActivityCard'
-
-const activities: Activity[] = [
-  { id: 1, name: 'Palabras' },
-  { id: 2, name: 'Letras' },
-  { id: 3, name: 'La viborita' }
-]
+import { ActivityCard } from '@/components/common/cards/ActivityCard'
+import { useGetPatientActivityAnswers } from '@/hooks/queries'
+import { useParams } from 'react-router-dom'
 
 const PatientActivitiesPage = () => {
+  const { patientId } = useParams()
+  const { data, error, isLoading } = useGetPatientActivityAnswers(parseInt(patientId!))
+
+  if (error) {
+    return <p>Ups! Ha ocurrido un error</p>
+  }
+
   return (
-    <div className="flex flex-col items-start justify-start gap-4 lg:p-4 pt-20">
-      <div>
-        <BackButton text="Volver al Dashboard" route="/profesional/paciente/1" />
-        <h2 className="text-2xl font-extrabold mb-4">Actividades</h2>
-        <div className="flex flex-wrap gap-10 lg:px-10 lg:py-6">
-          {activities.length > 0 ? (
-            activities.map((actividad) => <ActivityCard key={actividad.id} activity={actividad} />)
-          ) : (
-            <p className="text-blue-500 font-bold">No hay actividades disponibles</p>
-          )}
+    <>
+      {!error && !isLoading && data ? (
+        <div className="flex flex-col items-start justify-start gap-4 lg:p-4 pt-20">
+          <div>
+            <BackButton text="Volver al Dashboard" route="/profesional/paciente/1" />
+            <h2 className="text-2xl font-extrabold mb-4">Actividades</h2>
+            <div className="flex w-full gap-10 lg:px-10 lg:py-6">
+              {data.length > 0 ? (
+                data.map((actividad) => <ActivityCard key={actividad.gameid} activity={actividad} />)
+              ) : (
+                <p className="text-blue-500 font-bold">No hay actividades disponibles</p>
+              )}
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      ) : (
+        <div className="flex flex-col items-center justify-center w-full h-full">
+          <p className="text-2xl font-bold">No hay actividades disponibles</p>
+        </div>
+      )}
+    </>
   )
 }
 

@@ -21,6 +21,7 @@ import {
   Achievement,
   TimelineData,
   ProfesionalPatient,
+  PatientActivityAnswers,
   ProfileData
 } from '@/interfaces/interfaces.ts'
 
@@ -357,6 +358,21 @@ export const useGetProfessionalPatients = (
   })
 
   return { patients: data, error, isLoading }
+}
+
+export const useGetPatientActivityAnswers = (
+  patientId: number
+): {
+  data: PatientActivityAnswers[]
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['patientData', patientId],
+    queryFn: async () => await ApiService.getPatientActivityAnswers(patientId)
+  })
+
+  return { data, error, isLoading }
 }
 
 export const useExportPdf = (
