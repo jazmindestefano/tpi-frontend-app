@@ -40,12 +40,12 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center w-3/4 mt-16">
+    <div className="flex flex-col justify-center items-center w-3/4 lg:mt-0 mt-16">
       <div className="flex justify-center items-center w-full gap-4 mb-6">
         <h1 className="text-h1">Perfil</h1>
         <HearableButton variant={'secondary'} text={'Este es tu perfil'} />
       </div>
-      <div className="flex flex-col justify-center items-center w-full rounded-xl border shadow-lg py-8 bg-orange-50">
+      <div className="flex flex-col justify-center items-center w-[75%] rounded-xl border shadow-lg py-8 bg-slate-50">
         <div className="flex flex-row justify-end items-end sm:mx-auto sm:w-full sm:max-w-lg">
           <img className="mx-auto h-40 w-auto" src={'avatar/lion-avatar.png'} alt="Avatar" />
         </div>
