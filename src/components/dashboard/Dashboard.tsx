@@ -21,7 +21,7 @@ const Dashboard = () => {
   return (
     <div className="w-full p-4 h-[calc(100vh-100px)] overflow-y-auto">
       <div>
-        <h1>Progreso del Paciente</h1>
+        <h1 className="text-2xl">Progreso del Paciente</h1>
       </div>
       <div className="flex flex-wrap">
         <div className="w-full md:w-[50%] p-4">
