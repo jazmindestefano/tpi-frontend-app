@@ -1,10 +1,10 @@
 import HomeProfesionalCard from '@/components/common/cards/ProfesionalHomeCard'
 import { useGetProfessionalPatients } from '@/hooks/queries'
-import { useParams } from 'react-router-dom'
+import { useUser } from '@hooks/selectors.ts'
 
 const HomeProfesionalPage = () => {
-  const { profesionalId } = useParams()
-  const { patients, error, isLoading } = useGetProfessionalPatients(parseInt(profesionalId!))
+  const user = useUser()
+  const { patients, error, isLoading } = useGetProfessionalPatients(user.id)
 
   return !error && !isLoading && patients ? (
     <div className="flex flex-col items-start justify-start gap-4">

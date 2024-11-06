@@ -4,6 +4,7 @@ import Button from '../buttons/Button'
 import { useNavigate } from 'react-router-dom'
 import AddPatientModal from '../modals/EmailInviteModal'
 import { ProfesionalPatient } from '@/interfaces'
+import { getCurrentAge } from '@helpers'
 
 interface HomeProfesionalCardProps {
   patient?: ProfesionalPatient
@@ -50,7 +51,7 @@ const HomeProfesionalCard = ({ patient, isAddPatient = false, className = '' }: 
             <div className="flex flex-col justify-center items-center w-full p-4 gap-2">
               <img src={patient.image} alt={patient.name} width={64} height={64} className="rounded-full mb-2" />
               <h3 className="text-lg font-medium text-blue-800">{patient.name}</h3>
-              <p className="text-blue-600">{patient.age} años</p>
+              <p className="text-blue-600">{getCurrentAge(patient.birthDate)} años</p>
               <Button variant="secondary" className="mt-2 p-3 rounded-3xl" onClick={() => handleClick(patient.id!)}>
                 <p className="text-center font-bold">Ver paciente</p>
               </Button>
