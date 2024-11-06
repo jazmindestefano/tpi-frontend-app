@@ -419,3 +419,29 @@ export const useExportPdf = (
 
   return { pdf: data, error, isLoading }
 }
+
+export const usePostPatient = (): {
+  mutate: (args: { name: string; surname: string; email: string; birthDate: string; professionalId: number }) => void
+  reset: () => void
+  error: Error | null
+  isPending: boolean
+  isSuccess: boolean
+} => {
+  const { mutate, reset, error, isPending, isSuccess } = useMutation({
+    mutationFn: async ({
+      name,
+      surname,
+      email,
+      birthDate,
+      professionalId
+    }: {
+      name: string
+      surname: string
+      email: string
+      birthDate: string
+      professionalId: number
+    }) => await ApiService.createPatient(name, surname, email, birthDate, professionalId)
+  })
+
+  return { mutate, reset, error, isPending, isSuccess }
+}
