@@ -31,10 +31,6 @@ export const router = createBrowserRouter([
     element: <LoginPage />
   },
   {
-    path: '/registro',
-    element: <div>Registro</div>
-  },
-  {
     element: <PrivateRoute />,
     errorElement: <ErrorPage />,
     children: [
@@ -85,6 +81,10 @@ export const router = createBrowserRouter([
               {
                 path: '/politica-de-privacidad',
                 element: <PrivacyPolicyPage />
+              },
+              {
+                path: '/perfil',
+                element: <ProfilePage />
               }
             ]
           }
@@ -116,14 +116,14 @@ export const router = createBrowserRouter([
               {
                 path: 'paciente/:patientId/actividades/:activityId',
                 element: <ActivityResponsesPage />
+              },
+              {
+                path: 'perfil',
+                element: <ProfilePage />
               }
             ]
           }
         ]
-      },
-      {
-        path: '/perfil',
-        element: <ProfilePage />
       }
     ]
   },

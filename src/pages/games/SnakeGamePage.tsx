@@ -35,11 +35,12 @@ const SnakeGamePage = ({ items, cellSize = 50 }: SnakeGameProps) => {
       mutate({
         userId: user.id,
         gameId: selectedGame.id,
-        activityId: 1, // todo: fix hardcoded value
-        userAudio: audio
+        activityId: 0,
+        userAudio: audio,
+        text: items[eatenItems.length - 1] ?? ''
       })
     }
-  }, [audio, selectedGame, isRecording, mutate, user])
+  }, [audio, selectedGame, isRecording, mutate, user, eatenItems.length, items])
 
   const togglePause = useCallback(() => {
     if (!showBigItem) {

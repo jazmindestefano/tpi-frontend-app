@@ -4,6 +4,7 @@ import { BaseCard } from '../BaseCard'
 import { BaseContainer } from '../BaseContainer'
 import { useImageSkeleton } from '../../../../hooks/useImageSkeleton'
 import { HearableButton } from '../../buttons/HearableButton.tsx'
+import SpinnerLoader from '@components/common/SpinnerLoader.tsx'
 
 interface ThemeCardProps {
   theme: Theme
@@ -22,21 +23,16 @@ export const ThemeCard: React.FC<ThemeCardProps> = ({ theme, onClick, bgColor, o
   }, [imageLoaded, onImageLoad])
 
   return (
-    <BaseCard className={`${bgColor} p-4 flex flex-col justify-center items-center w-full`}>
-      <BaseContainer className={'gap-6'}>
+    <BaseCard className={`${imageLoaded && bgColor} p-4 flex flex-col justify-center items-center w-full`}>
+      {!imageLoaded && <SpinnerLoader />}
+      <BaseContainer className={`gap-6 ${!imageLoaded ? 'opacity-0' : 'opacity-100'}`}>
         <div onClick={onClick} className="w-full">
           <div className="relative w-full h-80">
-            {!imageLoaded && (
-              <div className="animate-pulse absolute inset-0">
-                <div className="rounded-3xl bg-gray-300 w-full h-full" />
-              </div>
-            )}
             <img
-              className={`rounded-3xl bg-white object-contain p-4 transition-opacity duration-500 size-80 ${imageLoaded ? 'opacity-100' : 'opacity-0'}`}
+              className={`rounded-3xl bg-white object-contain p-4 transition-opacity duration-500 size-80`}
               src={theme.image}
               alt={theme.name}
               onLoad={handleImageLoad}
-              style={{ display: imageLoaded ? 'block' : 'none' }}
             />
           </div>
         </div>

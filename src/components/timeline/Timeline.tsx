@@ -1,21 +1,59 @@
 import { useState, useEffect } from 'react'
 import BackButton from '../../components/common/buttons/BackButton'
-import { useTimelineData } from '@/hooks/queries'
-import { useParams } from 'react-router-dom'
+import { useGetPatientActivityAnswers, useTimelineData } from '@/hooks/queries'
+import { useNavigate, useParams } from 'react-router-dom'
+import { PatientActivityAnswers } from '@interfaces'
+import SpinnerLoader from '@components/common/SpinnerLoader'
+
+interface Game {
+  gameId: number
+  gameName: string
+}
+
+const createActivitiesDto = (data: PatientActivityAnswers[]) => {
+  return data.map((activity) => ({
+    gameId: activity.gameid,
+    gameName: activity.gameName
+  }))
+}
+
+const findByGameName = (name: string, activities: Game[]) => {
+  return activities.find((activity) => activity.gameName === name)
+}
 
 export default function Timeline() {
   const { patientId } = useParams()
   const [readyToFetch, setReadyToFetch] = useState(false)
   const { data, isLoading, error } = useTimelineData(readyToFetch ? Number(patientId) : 0)
+  const {
+    data: acts,
+    error: actsErr,
+    isLoading: actsLoading
+  } = useGetPatientActivityAnswers(readyToFetch ? Number(patientId) : 0)
+  const navigate = useNavigate()
+  const [activities, setActivities] = useState<Game[]>([])
+  const [gameId, setGameId] = useState<number>(0)
 
   useEffect(() => {
     if (patientId) {
       setReadyToFetch(true)
+      if (acts && !actsErr && !actsLoading) {
+        setActivities(createActivitiesDto(acts || []))
+      }
     }
-  }, [patientId])
+  }, [patientId, acts, actsErr, actsLoading])
+
+  useEffect(() => {
+    if (activities) {
+      const game = findByGameName('La Viborita', activities)
+      if (game) {
+        setGameId(game.gameId)
+      }
+    }
+  }, [activities])
 
   if (!readyToFetch || isLoading) {
-    return <div className="flex justify-center items-center h-screen">Cargando...</div>
+    return <SpinnerLoader />
   }
 
   if (error || !data) {
@@ -27,7 +65,7 @@ export default function Timeline() {
   }
 
   return (
-    <div className="container p-4 pb-40 min-h-screen">
+    <div className="container p-4 pb-40 h-[calc(100vh-100px)] overflow-y-auto w-full">
       <BackButton text="Volver al Dashboard" route={`/profesional/paciente/${patientId}`} />
       <h1 className="text-3xl font-bold mb-8 text-gray-800">Línea de Tiempo de Actividades</h1>
       <div className="relative space-y-6 pl-[9%]">
@@ -54,7 +92,15 @@ export default function Timeline() {
                   <span className="font-medium px-3 py-1">
                     Jugó {activity.playedTimes} {activity.playedTimes === 1 ? 'vez' : 'veces'}
                   </span>
-                  <button className="bg-blue-100 text-blue-800 px-3 py-2 rounded-full">Ver detalle</button>
+                  <button
+                    className="bg-blue-100 text-blue-800 px-3 py-2 rounded-full"
+                    onClick={() => {
+                      navigate(`/profesional/paciente/${patientId}/actividades/${gameId}`)
+                      localStorage.setItem('selectedDate', activity.date)
+                    }}
+                  >
+                    Ver detalle
+                  </button>
                 </div>
               </li>
             </ul>

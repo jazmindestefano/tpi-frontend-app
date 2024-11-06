@@ -1,11 +1,10 @@
 import { useNavigate } from 'react-router-dom'
 import { House, LogOut } from 'lucide-react'
 import Button from '../common/buttons/Button'
-import { useSpeakText } from '@/hooks/useSpeakText'
+import { Tooltip } from 'react-tooltip'
 
 const Header = () => {
   const navigate = useNavigate()
-  const speakText = useSpeakText()
 
   if (location.pathname === '/felicitaciones') {
     return null
@@ -21,48 +20,56 @@ const Header = () => {
       {!location.pathname.includes('terminos-y-condiciones') &&
         !location.pathname.includes('politica-de-privacidad') && (
           <div className={`flex flex-row gap-4 ${location.pathname.includes('actividad') ? 'ml-auto' : ''}`}>
-            <Button
-              size={'square'}
-              variant={'secondary'}
-              onClick={() => navigate('/logros')}
-              onMouseEnter={() => speakText('Ir a Mis Logros')}
-              className="achievements-button"
-            >
-              <img src="/pines/medalla.png" alt="Avatar" className="object-cover h-10" />
-            </Button>
+            <div data-tooltip-id="logros">
+              <Button
+                size={'square'}
+                variant={'secondary'}
+                onClick={() => navigate('/logros')}
+                className="achievements-button"
+                data-tip="Ir a Mis Logros"
+              >
+                <img src="/pines/medalla.png" alt="Medalla" className="object-cover h-10" />
+              </Button>
+              <Tooltip id="logros" content="Ir a mis Logros" variant="dark" place="bottom" />
+            </div>
             {location.pathname !== '/perfil' && (
-              <Button
-                size={'square'}
-                variant={'tertiary'}
-                onClick={() => navigate(location.pathname !== '/perfil' ? '/perfil' : '/')}
-                onMouseEnter={() => speakText('Ir a Mi Perfil')}
-                className="profile-button"
-              >
-                <img src="/avatar/lion-avatar.png" alt="Avatar" className="object-cover h-10" />
-              </Button>
+              <div data-tooltip-id="perfil">
+                <Button
+                  size={'square'}
+                  variant={'tertiary'}
+                  onClick={() => navigate(location.pathname !== '/perfil' ? '/perfil' : '/')}
+                  className="profile-button"
+                  data-tip="Ir a Mi Perfil"
+                >
+                  <img src="/avatar/lion-avatar.png" alt="Avatar" className="object-cover h-10" />
+                </Button>
+                <Tooltip id="perfil" content="Ir a mi Perfil" variant="dark" place="bottom" />
+              </div>
             )}
-            {location.pathname === '/' ? (
-              <Button
-                size={'square'}
-                variant={'primary'}
-                onMouseEnter={() => speakText('Salir de la Aplicación')}
-                className="logout-button"
-                onClick={() => {
-                  localStorage.clear()
-                  navigate('/login')
-                }}
-              >
-                <LogOut className="text-white" />
-              </Button>
-            ) : (
-              <Button
-                size={'square'}
-                variant={'tertiary'}
-                onClick={() => navigate('/')}
-                onMouseEnter={() => speakText('Ir a Mi Inicio')}
-              >
-                <House />
-              </Button>
+            {location.pathname === '/' && (
+              <div data-tooltip-id="logout">
+                <Button
+                  size={'square'}
+                  variant={'primary'}
+                  className="logout-button"
+                  onClick={() => {
+                    localStorage.clear()
+                    navigate('/login')
+                  }}
+                  data-tip="Salir de la aplicación"
+                >
+                  <LogOut className="text-white" />
+                </Button>
+                <Tooltip id="logout" content="Salir de la aplicación" variant="dark" place="bottom" />
+              </div>
+            )}
+            {location.pathname === '/perfil' && (
+              <div data-tooltip-id="house">
+                <Button size={'square'} variant={'tertiary'} onClick={() => navigate('/')} data-tip="Ir a Mi Inicio">
+                  <House />
+                </Button>
+                <Tooltip id="house" content="Ir a Mi Inicio" variant="dark" place="bottom" />
+              </div>
             )}
           </div>
         )}

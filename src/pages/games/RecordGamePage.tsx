@@ -38,7 +38,7 @@ const RecordGamePage = () => {
       mutate({
         userId: user.id,
         gameId: selectedGame.id,
-        activityId: 1, // todo: fix hardcoded value
+        activityId: levels![currentLevel].id,
         userAudio: audio
       })
     }
@@ -56,7 +56,7 @@ const RecordGamePage = () => {
       <ProgressBar currentActivity={currentLevel + 1} totalActivities={levels?.length} />
 
       <div className="flex justify-between items-center w-full">
-        <div className={'lg:w-9/10 lg:flex flex flex-col justify-center items-center w-full gap-10'}>
+        <div className={'lg:w-9/10 lg:flex flex justify-center items-center w-full gap-10'}>
           <div className="lg:w-2/5">
             <GameHeader level={levels![currentLevel]} headerTitle="¿Cómo dirías la palabra?" />
           </div>

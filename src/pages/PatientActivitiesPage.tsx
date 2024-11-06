@@ -1,11 +1,19 @@
 import BackButton from '@/components/common/buttons/BackButton'
 import { ActivityCard } from '@/components/common/cards/ActivityCard'
 import { useGetPatientActivityAnswers } from '@/hooks/queries'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 const PatientActivitiesPage = () => {
   const { patientId } = useParams()
-  const { data, error, isLoading } = useGetPatientActivityAnswers(parseInt(patientId!))
+  const [readyToFetch, setReadyToFetch] = useState(false)
+  const { data, error, isLoading } = useGetPatientActivityAnswers(readyToFetch ? Number(patientId) : 0)
+
+  useEffect(() => {
+    if (patientId) {
+      setReadyToFetch(true)
+    }
+  }, [patientId])
 
   if (error) {
     return <p>Ups! Ha ocurrido un error</p>

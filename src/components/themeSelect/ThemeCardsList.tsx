@@ -5,6 +5,7 @@ import Button from '../common/buttons/Button'
 import { ArrowLeftIcon, ArrowRightIcon } from '../common/icons/Icons'
 import { useScroll } from '../../hooks/useScroll'
 import { useImageSkeleton } from '../../hooks/useImageSkeleton'
+import SpinnerLoader from '@components/common/SpinnerLoader'
 
 // todo: change this
 const bgColors = [
@@ -40,6 +41,10 @@ export default function ThemeCardsList({ themes, onCardClick }: ThemeCardsListPr
       checkScrollButtons()
     }
   }, [checkScrollButtons, loadedImages, themes.length])
+
+  if (!themes) {
+    return <SpinnerLoader />
+  }
 
   return (
     <div className="relative pb-10 px-5 lg:px-32">

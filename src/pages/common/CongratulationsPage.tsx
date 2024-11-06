@@ -6,12 +6,15 @@ import Button from '@/components/common/buttons/Button'
 import { HearableButton } from '@/components/common/buttons/HearableButton'
 import { useRandomAchievement } from '@/hooks/queries'
 import { setModalFeedback } from '@redux/slices'
+import { useUser } from '@hooks/selectors'
+import ConfettiAnimation from '@components/common/celebrationAnimation/ConfettiAnimation'
 
 const CongratulationsPage = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const speakText = useSpeakText()
-  const { achievement } = useRandomAchievement(1)
+  const user = useUser()
+  const { achievement } = useRandomAchievement(user.id)
 
   useEffect(() => {
     dispatch(setModalFeedback(true))
@@ -60,7 +63,7 @@ const CongratulationsPage = () => {
 
           /* Aplicamos la animación al pin */
           .pin-animation {
-            width: 300px; /* Ajusta el tamaño del pin según prefieras */
+            width: 250px; /* Ajusta el tamaño del pin según prefieras */
             animation: drop-in 1s ease-in-out, bounce 2s infinite ease-in-out;
           }
         `}
@@ -68,6 +71,7 @@ const CongratulationsPage = () => {
 
       <div className="flex flex-col w-full items-center justify-center h-full relative container-animation">
         {/* Contenedor del pin con la animación */}
+        <ConfettiAnimation isActive={true} />
         <div className="h-96 pin-container">
           <img src={achievement?.image} className="pin-animation" alt="Pin" />
         </div>

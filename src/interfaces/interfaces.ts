@@ -35,6 +35,7 @@ export interface PostUserRecordingData {
   gameId: number
   activityId: number
   userAudio: Blob
+  text?: string
 }
 
 export interface PostFeedbackData {
@@ -100,16 +101,8 @@ export interface ProfesionalPatient {
   id: number
   name: string
   image: string
-  age: number
+  birthDate: string
   email: string
-}
-
-export interface GetPatientData {
-  id: number
-  name: string
-  image: string
-  email: string
-  birthDate: Date
 }
 
 export interface Answer {

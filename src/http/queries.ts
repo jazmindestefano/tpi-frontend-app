@@ -10,10 +10,8 @@ import {
   Word,
   TimelineData,
   ProfesionalPatient,
-  GetPatientData,
   ProfileData
 } from '@/interfaces/interfaces.ts'
-import { getCurrentAge } from '@/helpers'
 
 export const getThemesByGameId = async (gameId: number): Promise<Theme[] | null> => {
   // will change to an authenticated client probably
@@ -40,13 +38,14 @@ export const getGameLevels = async (themeId: number): Promise<GameLevel[] | null
   return null
 }
 
-export const postUserRecording = async ({ userId, activityId, gameId, userAudio }: PostUserRecordingData) => {
+export const postUserRecording = async ({ userId, activityId, gameId, userAudio, text }: PostUserRecordingData) => {
   const formData = new FormData()
 
   const data = JSON.stringify({
     userId: userId,
     activityId: activityId,
-    gameId: gameId
+    gameId: gameId,
+    text: text ?? ''
   })
 
   formData.append('data', new Blob([data], { type: 'application/json' }))
@@ -159,8 +158,8 @@ export const getActivityLetterResponsesForDashboard = async (patientId: number) 
 
 export const getSurveyFeedbackForDashboard = async (patientId: number) => {
   const res = await authenticatedClient.get(`/surveyFeedback/${patientId}`)
-
-  if (res.status === 200) {
+  console.log(res)
+  if (res.status === 200 && res.data.statusCode !== '404') {
     return res.data
   }
   return null
@@ -242,7 +241,7 @@ export const getActivityLetterProgressDashboard = async (patientId: number) => {
 export const getProfileData = async (id: number, role: string): Promise<ProfileData | null> => {
   const endpoint = role === 'patient' ? `/patients/${id}` : `/professional/${id}`
   try {
-    const res = await unauthenticatedClient.get<ProfileData>(endpoint)
+    const res = await authenticatedClient.get<ProfileData>(endpoint)
 
     if (res.status === 200) {
       return res.data
@@ -257,7 +256,7 @@ export const getProfileData = async (id: number, role: string): Promise<ProfileD
 export const updateProfileData = async (id: number, role: string, data: ProfileData) => {
   const endpoint = role === 'Patient' ? `/patients/${id}` : `/professional/${id}`
   try {
-    const res = await unauthenticatedClient.patch(endpoint, data)
+    const res = await authenticatedClient.patch(endpoint, data)
     if (res.status === 200) {
       return res.data
     }
@@ -268,23 +267,12 @@ export const updateProfileData = async (id: number, role: string, data: ProfileD
 }
 
 export const getProfessionalPatients = async (profesionalId: number): Promise<ProfesionalPatient[] | null> => {
-  const res = await authenticatedClient.get(`/professional/${profesionalId}/patients`)
-
-  const newPatients: ProfesionalPatient[] = []
+  const res = await authenticatedClient.get<ProfesionalPatient[]>(`/professional/${profesionalId}/patients`)
 
   if (res.status === 200) {
-    res.data.forEach((patient: GetPatientData) => {
-      newPatients.push({
-        id: patient.id,
-        name: patient.name,
-        image: patient.image,
-        email: patient.email,
-        age: getCurrentAge(patient.birthDate)
-      })
-    })
+    return res.data
   }
-
-  return newPatients
+  return null
 }
 
 export const getPatientActivityAnswers = async (patientId: number) => {
@@ -315,5 +303,26 @@ export const login = async (username: string, password: string): Promise<string 
     return res.data.token
   }
 
+  return null
+}
+
+export const createPatient = async (
+  name: string,
+  surname: string,
+  email: string,
+  birthDate: string,
+  professionalId: number
+) => {
+  console.log('(createPatient)', new Date(birthDate).toISOString())
+  const res = await authenticatedClient.post(`/patients/${professionalId}`, {
+    name,
+    surname,
+    email,
+    birthDate: new Date(birthDate)
+  })
+
+  if (res.status === 201) {
+    return res.data
+  }
   return null
 }

@@ -2,6 +2,8 @@ import { useState } from 'react'
 import { BaseModal } from './BaseModal' // Asegúrate de que la ruta sea la correcta
 import { Overlay } from '../overlay/Overlay'
 import { Input } from '../inputs/Input'
+import { usePostPatient } from '@hooks/queries.ts'
+import { useUser } from '@hooks/selectors.ts'
 
 interface AddPatientModalProps {
   isOpen: boolean
@@ -11,18 +13,20 @@ interface AddPatientModalProps {
 
 interface PatientData {
   childName: string
-  guardianName: string
   guardianEmail: string
-  childAge: string
+  childBirthDate: string
+  childSurname: string
 }
 
 export default function AddPatientModal({ isOpen, onClose, onSubmit }: AddPatientModalProps) {
   const [patientData, setPatientData] = useState<PatientData>({
     childName: '',
-    guardianName: '',
     guardianEmail: '',
-    childAge: ''
+    childBirthDate: '',
+    childSurname: ''
   })
+  const { mutate } = usePostPatient()
+  const user = useUser()
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -32,6 +36,13 @@ export default function AddPatientModal({ isOpen, onClose, onSubmit }: AddPatien
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     onSubmit(patientData)
+    mutate({
+      name: patientData.childName,
+      surname: patientData.childSurname,
+      email: patientData.guardianEmail,
+      birthDate: patientData.childBirthDate,
+      professionalId: user.id
+    })
     onClose()
   }
 
@@ -39,11 +50,11 @@ export default function AddPatientModal({ isOpen, onClose, onSubmit }: AddPatien
 
   return (
     <Overlay show={isOpen} onClose={onClose}>
-      <BaseModal title="Agregar Paciente" onClose={onClose} className="gap-10 p-16 rounded-3xl">
-        <form onSubmit={handleSubmit} className="space-y-6 flex flex-col">
+      <BaseModal title="Agregar Paciente" onClose={onClose} className="gap-10 rounded-3xl bg-white" hearable={false}>
+        <form onSubmit={handleSubmit} className="space-y-6 flex flex-col w-96">
           <div>
             <label htmlFor="childName" className="block text-sm font-medium text-gray-700">
-              Nombre y apellido del niño/a *
+              Nombre del niño/a *
             </label>
             <Input
               name={'childName'}
@@ -51,20 +62,20 @@ export default function AddPatientModal({ isOpen, onClose, onSubmit }: AddPatien
               id="childName"
               value={patientData.childName}
               required={true}
-              className="w-full"
+              className="w-full bg-slate-200"
             />
           </div>
           <div>
-            <label htmlFor="guardianName" className="block text-sm font-medium text-gray-700">
-              Nombre y apellido del tutor *
+            <label htmlFor="childSurname" className="block text-sm font-medium text-gray-700">
+              Apellido del niño/a *
             </label>
             <Input
-              name={'guardianName'}
+              name={'childSurname'}
               onChange={handleChange}
-              id="guardianName"
-              value={patientData.guardianName}
+              id="childSurname"
+              value={patientData.childSurname}
               required={true}
-              className="w-full"
+              className="w-full bg-slate-200"
             />
           </div>
           <div>
@@ -78,21 +89,21 @@ export default function AddPatientModal({ isOpen, onClose, onSubmit }: AddPatien
               id="guardianEmail"
               value={patientData.guardianEmail}
               required={true}
-              className="w-full"
+              className="w-full bg-slate-200"
             />
           </div>
           <div>
-            <label htmlFor="childAge" className="block text-sm font-medium text-gray-700">
-              Edad del niño/a *
+            <label htmlFor="childBirthDate" className="block text-sm font-medium text-gray-700">
+              Fecha de nacimiento del niño/a *
             </label>
             <Input
-              name={'childAge'}
-              type="number"
+              name={'childBirthDate'}
+              type="date"
               onChange={handleChange}
-              id="childAge"
-              value={patientData.childAge}
+              id="childBirthDate"
+              value={patientData.childBirthDate}
               required={true}
-              className="w-full"
+              className="w-full bg-slate-200"
             />
           </div>
           <button

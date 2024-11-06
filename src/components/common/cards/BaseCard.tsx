@@ -7,5 +7,5 @@ interface BaseCardProps {
 }
 
 export const BaseCard: React.FC<BaseCardProps> = ({ children, className = '' }) => {
-  return <div className={classNames('max-w-96 rounded-3xl shadow-lg cursor-pointer', className)}>{children}</div>
+  return <div className={classNames('max-w-96 rounded-3xl cursor-pointer', className)}>{children}</div>
 }
