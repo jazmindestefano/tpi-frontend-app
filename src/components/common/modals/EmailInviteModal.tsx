@@ -39,8 +39,8 @@ export default function AddPatientModal({ isOpen, onClose, onSubmit }: AddPatien
 
   return (
     <Overlay show={isOpen} onClose={onClose}>
-      <BaseModal title="Agregar Paciente" onClose={onClose} className="gap-10 p-16 rounded-3xl">
-        <form onSubmit={handleSubmit} className="space-y-6 flex flex-col">
+      <BaseModal title="Agregar Paciente" onClose={onClose} className="gap-10 rounded-3xl bg-white" hearable={false}>
+        <form onSubmit={handleSubmit} className="space-y-6 flex flex-col w-96">
           <div>
             <label htmlFor="childName" className="block text-sm font-medium text-gray-700">
               Nombre y apellido del niño/a *
@@ -51,7 +51,7 @@ export default function AddPatientModal({ isOpen, onClose, onSubmit }: AddPatien
               id="childName"
               value={patientData.childName}
               required={true}
-              className="w-full"
+              className="w-full bg-slate-200"
             />
           </div>
           <div>
@@ -64,7 +64,7 @@ export default function AddPatientModal({ isOpen, onClose, onSubmit }: AddPatien
               id="guardianName"
               value={patientData.guardianName}
               required={true}
-              className="w-full"
+              className="w-full bg-slate-200"
             />
           </div>
           <div>
@@ -78,7 +78,7 @@ export default function AddPatientModal({ isOpen, onClose, onSubmit }: AddPatien
               id="guardianEmail"
               value={patientData.guardianEmail}
               required={true}
-              className="w-full"
+              className="w-full bg-slate-200"
             />
           </div>
           <div>
@@ -92,7 +92,7 @@ export default function AddPatientModal({ isOpen, onClose, onSubmit }: AddPatien
               id="childAge"
               value={patientData.childAge}
               required={true}
-              className="w-full"
+              className="w-full bg-slate-200"
             />
           </div>
           <button

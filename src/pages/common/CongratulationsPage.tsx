@@ -7,6 +7,7 @@ import { HearableButton } from '@/components/common/buttons/HearableButton'
 import { useRandomAchievement } from '@/hooks/queries'
 import { setModalFeedback } from '@redux/slices'
 import { useUser } from '@hooks/selectors'
+import ConfettiAnimation from '@components/common/celebrationAnimation/ConfettiAnimation'
 
 const CongratulationsPage = () => {
   const dispatch = useDispatch()
@@ -70,6 +71,7 @@ const CongratulationsPage = () => {
 
       <div className="flex flex-col w-full items-center justify-center h-full relative container-animation">
         {/* Contenedor del pin con la animación */}
+        <ConfettiAnimation isActive={true} />
         <div className="h-96 pin-container">
           <img src={achievement?.image} className="pin-animation" alt="Pin" />
         </div>

@@ -12,6 +12,12 @@ interface HomeProfesionalCardProps {
   className?: string
 }
 
+const getRandomImage = () => {
+  const images = ['avatar/horse-avatar.png', 'avatar/lion-avatar.png', 'avatar/rabbit-avatar.png']
+  const randomIndex = Math.floor(Math.random() * images.length)
+  return images[randomIndex]
+}
+
 const HomeProfesionalCard = ({ patient, isAddPatient = false, className = '' }: HomeProfesionalCardProps) => {
   const navigate = useNavigate()
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -49,7 +55,7 @@ const HomeProfesionalCard = ({ patient, isAddPatient = false, className = '' }: 
         ) : (
           patient && (
             <div className="flex flex-col justify-center items-center w-full p-4 gap-2">
-              <img src={patient.image} alt={patient.name} width={64} height={64} className="rounded-full mb-2" />
+              <img src={getRandomImage()} alt={patient.name} width={64} height={64} className="rounded-full mb-2" />
               <h3 className="text-lg font-medium text-blue-800">{patient.name}</h3>
               <p className="text-blue-600">{getCurrentAge(patient.birthDate)} años</p>
               <Button variant="secondary" className="mt-2 p-3 rounded-3xl" onClick={() => handleClick(patient.id!)}>
