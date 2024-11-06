@@ -3,6 +3,7 @@ import BackButton from '../../components/common/buttons/BackButton'
 import { useGetPatientActivityAnswers, useTimelineData } from '@/hooks/queries'
 import { useNavigate, useParams } from 'react-router-dom'
 import { PatientActivityAnswers } from '@interfaces'
+import SpinnerLoader from '@components/common/SpinnerLoader'
 
 interface Game {
   gameId: number
@@ -52,7 +53,7 @@ export default function Timeline() {
   }, [activities])
 
   if (!readyToFetch || isLoading) {
-    return <div className="flex justify-center items-center h-screen">Cargando...</div>
+    return <SpinnerLoader />
   }
 
   if (error || !data) {

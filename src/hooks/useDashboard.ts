@@ -18,35 +18,42 @@ import {
 
 const useDashboard = () => {
   const { patientId } = useParams()
+  const [readyToFetch, setReadyToFetch] = useState(false)
   const {
     data: syllableData,
     isLoading: syllableLoading,
     error: syllableError
-  } = useSyllableDashboard(parseInt(patientId!))
+  } = useSyllableDashboard(readyToFetch ? Number(patientId) : 0)
   const {
     data: phonemeData,
     isLoading: phonemeLoading,
     error: phonemeError
-  } = usePhonemeDashboard(parseInt(patientId!))
+  } = usePhonemeDashboard(readyToFetch ? Number(patientId) : 0)
   const {
     data: auditoryData,
     isLoading: auditoryLoading,
     error: auditoryError
-  } = useActivityLetterResponsesForDashboard(parseInt(patientId!))
+  } = useActivityLetterResponsesForDashboard(readyToFetch ? Number(patientId) : 0)
   const {
     data: phonemeRanking,
     error: phonemeRankingError,
     isLoading: phonemeRankingLoading
-  } = useWorstPhonemeRankingDashboard(parseInt(patientId!))
+  } = useWorstPhonemeRankingDashboard(readyToFetch ? Number(patientId) : 0)
   const {
     data: syllableRanking,
     error: syllableRankingError,
     isLoading: syllableRankingLoading
-  } = useWorstSyllableRankingDashboard(parseInt(patientId!))
+  } = useWorstSyllableRankingDashboard(readyToFetch ? Number(patientId) : 0)
 
   const [pronunciationChart, setPronunciationChart] = useState<[PronunciationChart[], PronunciationChart[]]>([[], []])
   const [auditoryChart, setAuditoryChart] = useState<AuditoryDiscriminationChartProps[]>([])
   const [rankingChart, setRankingChart] = useState<[RankingProps[], RankingProps[]]>([[], []])
+
+  useEffect(() => {
+    if (patientId) {
+      setReadyToFetch(true)
+    }
+  }, [patientId])
 
   useEffect(() => {
     if (!syllableError && !syllableLoading && syllableData && phonemeData && !phonemeError && !phonemeLoading) {
@@ -121,7 +128,12 @@ const useDashboard = () => {
   return {
     pronunciationChart,
     auditoryChart,
-    rankingChart
+    rankingChart,
+    syllableLoading,
+    phonemeLoading,
+    auditoryLoading,
+    phonemeRankingLoading,
+    syllableRankingLoading
   }
 }
 

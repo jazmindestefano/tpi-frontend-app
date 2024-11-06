@@ -1,16 +1,29 @@
 import { getCurrentDate } from '@/helpers'
 import { useWhatHappenedTodayDashboard } from '@/hooks/queries'
+import SpinnerLoader from '@components/common/SpinnerLoader'
 import { ArrowRight } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 const Today = () => {
   const { patientId } = useParams()
+  const [readyToFetch, setReadyToFetch] = useState(false)
   const navigate = useNavigate()
-  const { data, isLoading, error } = useWhatHappenedTodayDashboard(parseInt(patientId!))
+  const { data, isLoading, error } = useWhatHappenedTodayDashboard(readyToFetch ? Number(patientId) : 0)
+
+  useEffect(() => {
+    if (patientId) {
+      setReadyToFetch(true)
+    }
+  }, [patientId])
 
   const handleClick = (event: React.DragEvent<HTMLButtonElement>) => {
     event.preventDefault()
     navigate(`/profesional/paciente/${patientId}/timeline`)
+  }
+
+  if (isLoading) {
+    return <SpinnerLoader />
   }
 
   return (
