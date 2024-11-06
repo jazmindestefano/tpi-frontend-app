@@ -35,7 +35,7 @@ const HeaderProfesional = () => {
 
   return (
     <header className="top-4 right-4 flex gap-4 fixed z-50">
-      <Button size={'square'} variant={'tertiary'} onClick={handleDownload}>
+      <Button size={'square'} variant={'tertiary'} onClick={handleDownload} className={'hidden'}>
         <Download className="text-white" />
       </Button>
       <Button size={'square'} variant={'secondary'} onClick={() => navigate('/profesional/paciente/1/actividades')}>

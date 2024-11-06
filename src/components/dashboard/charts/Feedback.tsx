@@ -20,6 +20,8 @@ const Feedback = () => {
     return <SpinnerLoader />
   }
 
+  console.log(data)
+
   return (
     <div key="feedback" className="bg-slate-50 p-10 rounded-3xl bg-opacity-65 h-80">
       {!error && !isLoading && data && (
