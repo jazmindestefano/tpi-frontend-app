@@ -75,8 +75,8 @@ export const usePostUserRecording = (): {
   isSuccess: boolean
 } => {
   const { mutate, reset, error, isPending, isSuccess } = useMutation({
-    mutationFn: async ({ userId, gameId, activityId, userAudio }: PostUserRecordingData) => {
-      return await ApiService.postUserRecording({ userId, gameId, activityId, userAudio })
+    mutationFn: async ({ userId, gameId, activityId, userAudio, text }: PostUserRecordingData) => {
+      return await ApiService.postUserRecording({ userId, gameId, activityId, userAudio, text })
     }
   })
   return { mutate, reset, error, isPending, isSuccess }
@@ -152,7 +152,7 @@ export const useGetAchievements = (
   isLoading: boolean
 } => {
   const { data, error, isLoading } = useQuery({
-    queryKey: ['patientId', patientId],
+    queryKey: ['achievements', patientId],
     queryFn: async () => await ApiService.getAchievements(patientId)
   })
   return { achievements: data, error, isLoading }

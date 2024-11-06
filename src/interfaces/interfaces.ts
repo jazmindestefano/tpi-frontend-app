@@ -35,6 +35,7 @@ export interface PostUserRecordingData {
   gameId: number
   activityId: number
   userAudio: Blob
+  text?: string
 }
 
 export interface PostFeedbackData {

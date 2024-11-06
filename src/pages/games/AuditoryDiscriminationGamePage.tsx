@@ -84,9 +84,9 @@ const AuditoryDiscriminationGamePage = () => {
   }, [error, navigate])
 
   return !isLoading && !getLevelsError && levels && levels.length != 0 && selectedTheme ? (
-    <div className="w-full layout flex-col-center gap-4 px-10 md:px-40 pt-20">
+    <div className="w-full layout flex flex-col justify-center items-center gap-4 px-10 md:px-40 pt-20">
       <ProgressBar currentActivity={currentLevel + 1} totalActivities={levels?.length} />
-      <GameHeader level={levels[currentLevel]} headerTitle="Selecciona la imágen que empiece con la letra"></GameHeader>
+      <GameHeader level={levels[currentLevel]} headerTitle="Selecciona la imagen que empiece con la letra"></GameHeader>
       <GameOptionsListPage options={options} onOptionSelection={onOptionSelection} />
     </div>
   ) : (

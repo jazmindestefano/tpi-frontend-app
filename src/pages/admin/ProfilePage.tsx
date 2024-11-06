@@ -47,7 +47,7 @@ const ProfilePage = () => {
       </div>
       <div className="flex flex-col justify-center items-center w-full rounded-xl border shadow-lg py-8 bg-orange-50">
         <div className="flex flex-row justify-end items-end sm:mx-auto sm:w-full sm:max-w-lg">
-          <img className="mx-auto h-40 w-auto" src={image} alt="Avatar" />
+          <img className="mx-auto h-40 w-auto" src={'avatar/lion-avatar.png'} alt="Avatar" />
         </div>
 
         <div className="mt-3 sm:mx-auto sm:w-full sm:max-w-lg p-3 rounded-md">

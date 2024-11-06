@@ -16,7 +16,12 @@ const ThemeSelectorPage = () => {
 
   const onCardClick = (theme: Theme) => {
     dispatch(selectTheme(theme))
-    navigate(`/actividad/${selectedGame.name}`)
+    // to-do: fix this shit
+    if (selectedGame.name === 'La Viborita') {
+      navigate('/actividad/la-viborita')
+    } else {
+      navigate(`/actividad/${selectedGame.name}`)
+    }
   }
 
   if (isLoading) {

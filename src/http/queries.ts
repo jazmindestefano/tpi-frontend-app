@@ -40,13 +40,14 @@ export const getGameLevels = async (themeId: number): Promise<GameLevel[] | null
   return null
 }
 
-export const postUserRecording = async ({ userId, activityId, gameId, userAudio }: PostUserRecordingData) => {
+export const postUserRecording = async ({ userId, activityId, gameId, userAudio, text }: PostUserRecordingData) => {
   const formData = new FormData()
 
   const data = JSON.stringify({
     userId: userId,
     activityId: activityId,
-    gameId: gameId
+    gameId: gameId,
+    text: text ?? ''
   })
 
   formData.append('data', new Blob([data], { type: 'application/json' }))

@@ -7,7 +7,7 @@ const PageLayout = () => {
   const showProductTour = useShowProductTour()
 
   return (
-    <div className="flex flex-col min-h-screen font-comfortaa">
+    <div className="flex flex-col min-h-screen font-comfortaa bg-[url('/fondo_clara.png')] bg-cover bg-center">
       <Header />
       <main className="flex flex-grow justify-center items-center">
         <Outlet />

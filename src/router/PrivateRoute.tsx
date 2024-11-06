@@ -13,7 +13,7 @@ const PrivateRoute: FC = () => {
   // Check if the user is authorized based on the presence of `data`
   const isAuthorized = Boolean(data && token)
   useEffect(() => {
-    if (isAuthorized) {
+    if (isAuthorized && data) {
       dispatch(setUser(data))
     } else if (error) {
       console.error('Authorization error:', error)

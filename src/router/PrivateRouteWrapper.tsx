@@ -10,7 +10,6 @@ const PrivateRouteWrapper: React.FC<PrivateRouteWrapperProps> = ({
   isLoading,
   isAuthorized
 }: PrivateRouteWrapperProps): JSX.Element => {
-  console.log('(PrivateRouteWrapper)', { isLoading, isAuthorized })
   return isLoading ? <SpinnerLoader /> : isAuthorized ? <Outlet /> : <Navigate to="/login" replace />
 }
 
