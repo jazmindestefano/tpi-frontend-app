@@ -5,6 +5,7 @@ import Button from '@components/common/buttons/Button.tsx'
 import { useLogin } from '@hooks/queries.ts'
 import { useDispatch } from 'react-redux'
 import { setToken } from '@redux/slices'
+import { getMe } from '../http/queries.ts'
 
 interface LoginFormData {
   username: string
@@ -27,7 +28,16 @@ const LoginPage: FC = () => {
       .then((token) => {
         if (token) {
           dispatch(setToken(token))
-          navigate('/')
+        }
+      })
+      .then(async () => {
+        const user = await getMe()
+        if (user) {
+          if (user.role === 'PROFESSIONAL') {
+            navigate('/profesional')
+          } else {
+            navigate('/')
+          }
         }
       })
       .catch((e) => {
