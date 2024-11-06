@@ -10,10 +10,8 @@ import {
   Word,
   TimelineData,
   ProfesionalPatient,
-  GetPatientData,
   ProfileData
 } from '@/interfaces/interfaces.ts'
-import { getCurrentAge } from '@/helpers'
 
 export const getThemesByGameId = async (gameId: number): Promise<Theme[] | null> => {
   // will change to an authenticated client probably
@@ -269,23 +267,12 @@ export const updateProfileData = async (id: number, role: string, data: ProfileD
 }
 
 export const getProfessionalPatients = async (profesionalId: number): Promise<ProfesionalPatient[] | null> => {
-  const res = await authenticatedClient.get(`/professional/${profesionalId}/patients`)
-
-  const newPatients: ProfesionalPatient[] = []
+  const res = await authenticatedClient.get<ProfesionalPatient[]>(`/professional/${profesionalId}/patients`)
 
   if (res.status === 200) {
-    res.data.forEach((patient: GetPatientData) => {
-      newPatients.push({
-        id: patient.id,
-        name: patient.name,
-        image: patient.image,
-        email: patient.email,
-        age: getCurrentAge(patient.birthDate)
-      })
-    })
+    return res.data
   }
-
-  return newPatients
+  return null
 }
 
 export const getPatientActivityAnswers = async (patientId: number) => {

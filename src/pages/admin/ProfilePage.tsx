@@ -40,8 +40,8 @@ const ProfilePage = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center w-full gap-4 mx-8 md:mx-52">
-      <div className="flex justify-center items-center w-full gap-4">
+    <div className="flex flex-col justify-center items-center w-3/4 mt-16">
+      <div className="flex justify-center items-center w-full gap-4 mb-6">
         <h1 className="text-h1">Perfil</h1>
         <HearableButton variant={'secondary'} text={'Este es tu perfil'} />
       </div>
