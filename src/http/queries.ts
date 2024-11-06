@@ -305,3 +305,24 @@ export const login = async (username: string, password: string): Promise<string 
 
   return null
 }
+
+export const createPatient = async (
+  name: string,
+  surname: string,
+  email: string,
+  birthDate: string,
+  professionalId: number
+) => {
+  console.log('(createPatient)', new Date(birthDate).toISOString())
+  const res = await authenticatedClient.post(`/patients/${professionalId}`, {
+    name,
+    surname,
+    email,
+    birthDate: new Date(birthDate)
+  })
+
+  if (res.status === 201) {
+    return res.data
+  }
+  return null
+}
