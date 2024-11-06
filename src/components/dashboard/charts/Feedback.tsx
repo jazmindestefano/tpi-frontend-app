@@ -1,11 +1,26 @@
 import { useSurveyFeedbackForDashboard } from '@/hooks/queries'
+import SpinnerLoader from '@components/common/SpinnerLoader'
 import { ThumbsUp, Star, ThumbsDown } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 const Feedback = () => {
   const { patientId } = useParams()
+  const [readyToFetch, setReadyToFetch] = useState(false)
 
-  const { data, error, isLoading } = useSurveyFeedbackForDashboard(parseInt(patientId!))
+  const { data, error, isLoading } = useSurveyFeedbackForDashboard(readyToFetch ? Number(patientId) : 0)
+
+  useEffect(() => {
+    if (patientId) {
+      setReadyToFetch(true)
+    }
+  }, [patientId])
+
+  if (isLoading) {
+    return <SpinnerLoader />
+  }
+
+  console.log(data)
 
   return (
     <div key="feedback" className="bg-slate-50 p-10 rounded-3xl bg-opacity-65 h-80">

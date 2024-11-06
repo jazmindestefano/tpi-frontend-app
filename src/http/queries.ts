@@ -158,8 +158,8 @@ export const getActivityLetterResponsesForDashboard = async (patientId: number) 
 
 export const getSurveyFeedbackForDashboard = async (patientId: number) => {
   const res = await authenticatedClient.get(`/surveyFeedback/${patientId}`)
-
-  if (res.status === 200) {
+  console.log(res)
+  if (res.status === 200 && res.data.statusCode !== '404') {
     return res.data
   }
   return null

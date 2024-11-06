@@ -2,11 +2,19 @@ import { Download, FolderDot, LogOut } from 'lucide-react'
 import { useNavigate, useParams } from 'react-router-dom'
 import Button from '../common/buttons/Button'
 import { useExportPdf } from '@/hooks/queries'
+import { useEffect, useState } from 'react'
 
 const HeaderProfesional = () => {
   const { patientId } = useParams()
-  const { pdf, error, isLoading } = useExportPdf(parseInt(patientId!))
+  const [readyToFetch, setReadyToFetch] = useState(false)
+  const { pdf, error, isLoading } = useExportPdf(readyToFetch ? Number(patientId) : 0)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (patientId) {
+      setReadyToFetch(true)
+    }
+  }, [patientId])
 
   // to-do: move to custom hook
   const handleDownload = () => {
@@ -27,7 +35,7 @@ const HeaderProfesional = () => {
 
   return (
     <header className="top-4 right-4 flex gap-4 fixed z-50">
-      <Button size={'square'} variant={'tertiary'} onClick={handleDownload}>
+      <Button size={'square'} variant={'tertiary'} onClick={handleDownload} className={'hidden'}>
         <Download className="text-white" />
       </Button>
       <Button size={'square'} variant={'secondary'} onClick={() => navigate('/profesional/paciente/1/actividades')}>

@@ -16,9 +16,16 @@ const dateLocalStorage = localStorage.getItem('selectedDate')
 
 const ActivityResponsesPage = () => {
   const { patientId, activityId } = useParams()
-  const { data, error, isLoading } = useGetPatientActivityAnswers(parseInt(patientId!))
+  const [readyToFetch, setReadyToFetch] = useState(false)
+  const { data, error, isLoading } = useGetPatientActivityAnswers(readyToFetch ? Number(patientId) : 0)
   const [filteredData, setFilteredData] = useState<PatientActivityAnswers[]>([])
   const [selectedDate, setSelectedDate] = useState<string>('')
+
+  useEffect(() => {
+    if (patientId) {
+      setReadyToFetch(true)
+    }
+  }, [patientId])
 
   useEffect(() => {
     if (dateLocalStorage) {
