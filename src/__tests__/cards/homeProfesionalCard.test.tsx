@@ -21,7 +21,7 @@ describe('HomeProfesionalCard component', () => {
       id: 1,
       name: 'John Doe',
       image: 'john_doe.png',
-      age: 30,
+      birthDate: '1994-03-23T01:23:45.678',
       email: ''
     }
 
