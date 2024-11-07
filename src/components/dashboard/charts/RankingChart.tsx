@@ -7,29 +7,19 @@ ChartJS.register(CategoryScale, LinearScale, BarElement)
 
 const options: ChartOptions<'bar'> = {
   responsive: true,
-  scales: {
-    y: {
-      beginAtZero: true,
-      max: 100,
-      grid: {
-        color: 'rgba(0, 0, 0, 0.1)'
-      },
-      ticks: {
-        stepSize: 10
-      }
-    },
-    x: {
-      grid: {
-        display: false
-      }
-    }
-  },
   plugins: {
     legend: {
       display: false
-    },
-    title: {
-      display: true
+    }
+  },
+  elements: {
+    bar: {
+      borderRadius: 10
+    }
+  },
+  scales: {
+    x: {
+      beginAtZero: true
     }
   }
 }

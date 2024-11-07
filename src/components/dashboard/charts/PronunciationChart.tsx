@@ -13,6 +13,11 @@ const options: ChartOptions<'line'> = {
     legend: {
       display: false
     }
+  },
+  scales: {
+    x: {
+      beginAtZero: true
+    }
   }
 }
 

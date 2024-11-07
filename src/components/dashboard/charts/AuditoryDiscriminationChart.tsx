@@ -21,6 +21,16 @@ const options: ChartOptions<'bar'> = {
     legend: {
       display: false
     }
+  },
+  elements: {
+    bar: {
+      borderRadius: 10
+    }
+  },
+  scales: {
+    x: {
+      beginAtZero: true
+    }
   }
 }
 
