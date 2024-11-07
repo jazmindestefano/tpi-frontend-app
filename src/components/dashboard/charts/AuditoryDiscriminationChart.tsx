@@ -81,7 +81,7 @@ const AuditoryDiscriminationChart = ({ chartData }: { chartData: AuditoryDiscrim
   }))
 
   return (
-    <div className="bg-slate-50 p-10 rounded-3xl bg-opacity-65">
+    <div className="bg-slate-50 py-5 px-10 rounded-3xl bg-opacity-65">
       <div className="mb-4 flex flex-wrap items-center gap-6">
         <h1 className="text-2xl w-full text-center">Discriminación Auditiva de Letras</h1>
         <h3 className="mb-2">Filtros:</h3>
