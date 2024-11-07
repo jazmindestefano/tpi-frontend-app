@@ -4,7 +4,7 @@ import { Bar } from 'react-chartjs-2'
 import { AuditoryDiscriminationChartProps } from '../interfaces/AuditoryChartInterfaces'
 import { barOptions } from '../chartOptions'
 import { SelectOption } from '../interfaces/Common'
-import useAuditoryDiscriminationChart from '@hooks/charts/useAuditoryDiscriminationChart'
+import { useAuditoryDiscriminationChart } from '@hooks'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 

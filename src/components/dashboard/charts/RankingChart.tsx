@@ -3,7 +3,7 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement } from 'chart.
 import Filter from '@components/common/filter/Filter'
 import { barOptions } from '../chartOptions'
 import { RankingProps } from '../interfaces'
-import useRankingChart from '@hooks/charts/useRankingChart'
+import { useRankingChart } from '@hooks'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement)
 

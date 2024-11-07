@@ -4,7 +4,7 @@ import Select, { MultiValue } from 'react-select'
 import { lineOptions } from '../chartOptions'
 import { SelectOption, PronunciationChartProps } from '../interfaces'
 import DateFilter from '@components/common/filter/DateFilter'
-import usePronunciationChart from '@hooks/charts/usePronunciationChart'
+import { usePronunciationChart } from '@hooks'
 
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement)
 

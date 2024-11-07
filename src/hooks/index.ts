@@ -1,2 +1,5 @@
 export * as queries from './queries'
 export { default as useDashboard } from './dashboard/useDashboard'
+export { default as useAuditoryDiscriminationChart } from './charts/useAuditoryDiscriminationChart'
+export { default as usePronunciationChart } from './charts/usePronunciationChart'
+export { default as useRankingChart } from './charts/useRankingChart'
