@@ -1,3 +1,8 @@
+export interface SelectOption {
+  value: string
+  label: string
+}
+
 export interface LetterActityResponseDashboard {
   activityId: number
   activityName: string
@@ -41,34 +46,4 @@ export interface SyllableRankingDashboard {
   syllableId: number
   syllableName: string
   average: number
-}
-
-export interface PronunciationChartProps {
-  date: string
-  value: string
-  score: number
-  type: string
-}
-
-export interface PronunciationChart {
-  type: string
-  data: PronunciationChartProps
-}
-
-export interface AuditoryDiscriminationChartProps {
-  activityId: number
-  activityName: string
-  totalAttempts: number
-  correctAttempts: number
-  accuracyRate: number
-}
-
-export interface RankingChartProps {
-  name: string
-  average: number
-}
-
-export interface RankingProps {
-  type: string
-  chartData: RankingChartProps
 }

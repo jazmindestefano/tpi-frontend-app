@@ -1,2 +1,2 @@
 export * as queries from './queries'
-export { default as useDashboard } from './useDashboard'
+export { default as useDashboard } from './dashboard/useDashboard'

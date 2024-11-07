@@ -5,12 +5,12 @@ import {
   useSyllableDashboard,
   useWorstPhonemeRankingDashboard,
   useWorstSyllableRankingDashboard
-} from './queries'
+} from '../queries'
 import { useEffect, useState } from 'react'
 import {
   AuditoryDiscriminationChartProps,
   PhonemeDashboard,
-  PronunciationChart,
+  PronunciationChartProps,
   RankingProps,
   SyllableDashboard,
   SyllableRankingDashboard
@@ -50,8 +50,8 @@ const useDashboard = () => {
     isLoading: syllableRankingLoading
   } = useWorstSyllableRankingDashboard(readyToFetch ? Number(patientId) : 0)
 
-  const [phonemePronunciationChart, setPhonemePronunciationChart] = useState<PronunciationChart[]>([])
-  const [syllablePronunciationChart, setSyllablePronunciationChart] = useState<PronunciationChart[]>([])
+  const [phonemePronunciationChart, setPhonemePronunciationChart] = useState<PronunciationChartProps[]>([])
+  const [syllablePronunciationChart, setSyllablePronunciationChart] = useState<PronunciationChartProps[]>([])
   const [auditoryDiscriminationChart, setAuditoryDiscriminationChart] = useState<AuditoryDiscriminationChartProps[]>([])
   const [syllableRankingChart, setSyllableRankingChart] = useState<RankingProps[]>([])
   const [phonemeRankingChart, setPhonemeRankingChart] = useState<RankingProps[]>([])
@@ -64,7 +64,7 @@ const useDashboard = () => {
 
   useEffect(() => {
     if (!syllableError && !syllableLoading && syllableData) {
-      const syllableChartData: PronunciationChart[] = syllableData.map((item: SyllableDashboard) => ({
+      const syllableChartData: PronunciationChartProps[] = syllableData.map((item: SyllableDashboard) => ({
         type: 'syllable',
         data: {
           date: item.date,
@@ -77,7 +77,7 @@ const useDashboard = () => {
     }
 
     if (!phonemeError && !phonemeLoading && phonemeData) {
-      const phonemeChartData: PronunciationChart[] = phonemeData.map((item: PhonemeDashboard) => ({
+      const phonemeChartData: PronunciationChartProps[] = phonemeData.map((item: PhonemeDashboard) => ({
         type: 'phoneme',
         data: {
           date: item.date,

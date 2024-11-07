@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from '@testing-library/react'
 import { describe, it, expect, vi, MockedFunction } from 'vitest'
-import useDashboard from '@/hooks/useDashboard'
+import useDashboard from '@hooks/dashboard/useDashboard'
 import {
   useSyllableDashboard,
   usePhonemeDashboard,
@@ -31,9 +31,11 @@ describe('useDashboard', () => {
     const { result } = renderHook(() => useDashboard())
 
     await waitFor(() => {
-      expect(result.current.pronunciationChart).not.toBeNull()
-      expect(result.current.auditoryChart).not.toBeNull()
-      expect(result.current.rankingChart).not.toBeNull()
+      expect(result.current.syllablePronunciationChart).not.toBeNull()
+      expect(result.current.phonemePronunciationChart).not.toBeNull()
+      expect(result.current.auditoryDiscriminationChart).not.toBeNull()
+      expect(result.current.phonemeRankingChart).not.toBeNull()
+      expect(result.current.syllableRankingChart).not.toBeNull()
     })
   })
 })
