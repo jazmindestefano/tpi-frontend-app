@@ -19,35 +19,42 @@ import {
 const useDashboard = () => {
   const { patientId } = useParams()
   const [readyToFetch, setReadyToFetch] = useState(false)
+
   const {
     data: syllableData,
     isLoading: syllableLoading,
     error: syllableError
   } = useSyllableDashboard(readyToFetch ? Number(patientId) : 0)
+
   const {
     data: phonemeData,
     isLoading: phonemeLoading,
     error: phonemeError
   } = usePhonemeDashboard(readyToFetch ? Number(patientId) : 0)
+
   const {
     data: auditoryData,
     isLoading: auditoryLoading,
     error: auditoryError
   } = useActivityLetterResponsesForDashboard(readyToFetch ? Number(patientId) : 0)
+
   const {
     data: phonemeRanking,
     error: phonemeRankingError,
     isLoading: phonemeRankingLoading
   } = useWorstPhonemeRankingDashboard(readyToFetch ? Number(patientId) : 0)
+
   const {
     data: syllableRanking,
     error: syllableRankingError,
     isLoading: syllableRankingLoading
   } = useWorstSyllableRankingDashboard(readyToFetch ? Number(patientId) : 0)
 
-  const [pronunciationChart, setPronunciationChart] = useState<[PronunciationChart[], PronunciationChart[]]>([[], []])
-  const [auditoryChart, setAuditoryChart] = useState<AuditoryDiscriminationChartProps[]>([])
-  const [rankingChart, setRankingChart] = useState<[RankingProps[], RankingProps[]]>([[], []])
+  const [phonemePronunciationChart, setPhonemePronunciationChart] = useState<PronunciationChart[]>([])
+  const [syllablePronunciationChart, setSyllablePronunciationChart] = useState<PronunciationChart[]>([])
+  const [auditoryDiscriminationChart, setAuditoryDiscriminationChart] = useState<AuditoryDiscriminationChartProps[]>([])
+  const [syllableRankingChart, setSyllableRankingChart] = useState<RankingProps[]>([])
+  const [phonemeRankingChart, setPhonemeRankingChart] = useState<RankingProps[]>([])
 
   useEffect(() => {
     if (patientId) {
@@ -56,59 +63,54 @@ const useDashboard = () => {
   }, [patientId])
 
   useEffect(() => {
-    if (!syllableError && !syllableLoading && syllableData && phonemeData && !phonemeError && !phonemeLoading) {
-      const pronunciationChartData: [PronunciationChart[], PronunciationChart[]] = [
-        syllableData.map((item: SyllableDashboard) => ({
-          type: 'syllable',
-          data: {
-            date: item.date,
-            value: item.value,
-            score: item.score,
-            type: 'syllable'
-          }
-        })),
-        phonemeData.map((item: PhonemeDashboard) => ({
-          type: 'phoneme',
-          data: {
-            date: item.date,
-            value: item.value,
-            score: item.score,
-            type: 'phoneme'
-          }
-        }))
-      ]
+    if (!syllableError && !syllableLoading && syllableData) {
+      const syllableChartData: PronunciationChart[] = syllableData.map((item: SyllableDashboard) => ({
+        type: 'syllable',
+        data: {
+          date: item.date,
+          value: item.value,
+          score: item.score,
+          type: 'syllable'
+        }
+      }))
+      setSyllablePronunciationChart(syllableChartData)
+    }
 
-      setPronunciationChart(pronunciationChartData)
+    if (!phonemeError && !phonemeLoading && phonemeData) {
+      const phonemeChartData: PronunciationChart[] = phonemeData.map((item: PhonemeDashboard) => ({
+        type: 'phoneme',
+        data: {
+          date: item.date,
+          value: item.value,
+          score: item.score,
+          type: 'phoneme'
+        }
+      }))
+      setPhonemePronunciationChart(phonemeChartData)
     }
   }, [syllableData, syllableError, syllableLoading, phonemeData, phonemeError, phonemeLoading])
 
   useEffect(() => {
-    if (
-      !phonemeRankingError &&
-      !phonemeRankingLoading &&
-      phonemeRanking &&
-      syllableRanking &&
-      !syllableRankingError &&
-      !syllableRankingLoading
-    ) {
-      const rankingChartData: [RankingProps[], RankingProps[]] = [
-        phonemeRanking.map((item: SyllableRankingDashboard) => ({
-          type: 'phoneme',
-          chartData: {
-            name: item.syllableName,
-            average: item.average
-          }
-        })),
-        syllableRanking.map((item: SyllableRankingDashboard) => ({
-          type: 'syllable',
-          chartData: {
-            name: item.syllableName,
-            average: item.average
-          }
-        }))
-      ]
+    if (!phonemeRankingError && !phonemeRankingLoading && phonemeRanking) {
+      const phonemeRankingData: RankingProps[] = phonemeRanking.map((item: SyllableRankingDashboard) => ({
+        type: 'phoneme',
+        chartData: {
+          name: item.syllableName,
+          average: item.average
+        }
+      }))
+      setPhonemeRankingChart(phonemeRankingData)
+    }
 
-      setRankingChart(rankingChartData)
+    if (!syllableRankingError && !syllableRankingLoading && syllableRanking) {
+      const syllableRankingData: RankingProps[] = syllableRanking.map((item: SyllableRankingDashboard) => ({
+        type: 'syllable',
+        chartData: {
+          name: item.syllableName,
+          average: item.average
+        }
+      }))
+      setSyllableRankingChart(syllableRankingData)
     }
   }, [
     phonemeRanking,
@@ -121,14 +123,16 @@ const useDashboard = () => {
 
   useEffect(() => {
     if (!auditoryError && !auditoryLoading && auditoryData) {
-      setAuditoryChart(auditoryData)
+      setAuditoryDiscriminationChart(auditoryData)
     }
   }, [auditoryData, auditoryError, auditoryLoading])
 
   return {
-    pronunciationChart,
-    auditoryChart,
-    rankingChart,
+    phonemePronunciationChart,
+    syllablePronunciationChart,
+    auditoryDiscriminationChart,
+    syllableRankingChart,
+    phonemeRankingChart,
     syllableLoading,
     phonemeLoading,
     auditoryLoading,

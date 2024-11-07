@@ -27,10 +27,10 @@ const Today = () => {
   }
 
   return (
-    <div className="bg-slate-50 p-10 rounded-3xl bg-opacity-65 h-90">
+    <div className="bg-slate-50 p-10 rounded-3xl bg-opacity-65 h-96 w-full">
       <h2 className="text-2xl mb-2">¿Qué pasó hoy?</h2>
-      <p className="text-gray-600 mb-2">{getCurrentDate()}</p>
-      <div className="flex justify-between mb-4 flex-grow">
+      <p className="text-gray-600 my-5">{getCurrentDate()}</p>
+      <div className="flex justify-between mb-10 flex-grow">
         {!error &&
           !isLoading &&
           data.length > 0 &&

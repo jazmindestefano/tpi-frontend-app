@@ -11,6 +11,7 @@ import {
 } from 'chart.js'
 import { useEffect, useState } from 'react'
 import { Bar } from 'react-chartjs-2'
+import Select, { MultiValue } from 'react-select'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
@@ -31,7 +32,12 @@ interface AuditoryDiscriminationChartProps {
   accuracyRate: number
 }
 
-const getRandomColor = () => {
+interface SelectOption {
+  value: string
+  label: string
+}
+
+const getRandomColor = (): string => {
   const letters = '0123456789ABCDEF'
   let color = '#'
   for (let i = 0; i < 6; i++) {
@@ -64,27 +70,29 @@ const AuditoryDiscriminationChart = ({ chartData }: { chartData: AuditoryDiscrim
     })
   }, [chartData, selectedValues])
 
-  const handleChange = (value: string) => {
-    setSelectedValues((prev) => (prev.includes(value) ? prev.filter((v) => v !== value) : [...prev, value]))
+  const handleSelectChange = (newValue: MultiValue<SelectOption>) => {
+    const values = newValue ? newValue.map((option) => option.value) : []
+    setSelectedValues(values)
   }
+
+  const selectOptions: SelectOption[] = chartData.map(({ activityName }) => ({
+    value: activityName,
+    label: activityName
+  }))
 
   return (
     <div className="bg-slate-50 p-10 rounded-3xl bg-opacity-65">
       <div className="mb-4 flex flex-wrap items-center gap-6">
         <h1 className="text-2xl w-full text-center">Discriminación Auditiva de Letras</h1>
         <h3 className="mb-2">Filtros:</h3>
-        <div className="flex flex-wrap gap-2">
-          {chartData.map(({ activityId, activityName }) => (
-            <button
-              key={activityId}
-              onMouseDown={() => handleChange(activityName)}
-              className={`px-3 py-1 rounded-full text-sm ${
-                selectedValues.includes(activityName) ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
-              }`}
-            >
-              {activityName}
-            </button>
-          ))}
+        <div className="w-full">
+          <Select
+            isMulti
+            options={selectOptions}
+            value={selectOptions.filter((option) => selectedValues.includes(option.value))}
+            onChange={handleSelectChange}
+            placeholder="Seleccionar actividades"
+          />
         </div>
       </div>
       <Bar data={data} options={options} className="flex-grow" />

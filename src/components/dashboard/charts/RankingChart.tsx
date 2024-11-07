@@ -1,6 +1,7 @@
 import { Bar } from 'react-chartjs-2'
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, ChartOptions, ChartData } from 'chart.js'
 import { useEffect, useState } from 'react'
+import Select, { MultiValue } from 'react-select'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement)
 
@@ -66,7 +67,7 @@ export default function RankingChart({ chartData }: { chartData: RankingProps[] 
         newGroupedData[name] = []
       }
       newGroupedData[name].push({ name, average })
-      setTitle(item.type === 'syllable' ? 'Ranking Sílabas mas Difíciles' : 'Ranking Fonemas mas Difíciles')
+      setTitle(item.type === 'syllable' ? 'Ranking Sílabas más Difíciles' : 'Ranking Fonemas más Difíciles')
     })
 
     setGroupedData(newGroupedData)
@@ -77,34 +78,37 @@ export default function RankingChart({ chartData }: { chartData: RankingProps[] 
     labels: selectedValues,
     datasets: selectedValues.map((label) => ({
       label,
-      data: selectedValues.map((currentLabel) => (currentLabel === label ? groupedData[label][0]?.average || 0 : 0)),
+      data: selectedValues.map((currentLabel) =>
+        currentLabel === label ? (groupedData[label] ? groupedData[label][0]?.average || 0 : 0) : 0
+      ),
       backgroundColor: getRandomColor()
     }))
   }
+
+  const handleSelectChange = (newValue: MultiValue<{ value: string; label: string }>) => {
+    setSelectedValues(newValue ? newValue.map((option) => option.value) : [])
+  }
+
+  const selectOptions = Object.keys(groupedData).map((name) => ({
+    value: name,
+    label: name
+  }))
 
   return (
     <div className="bg-slate-50 p-6 rounded-3xl bg-opacity-65">
       <div className="mb-4 flex flex-wrap items-center gap-6">
         <h1 className="text-2xl w-full text-center">{title}</h1>
-        <div className="flex flex-wrap items-center gap-3">
+        <div className="relative flex flex-wrap items-center gap-3">
           <h3 className="text-sm font-medium text-gray-700">Filtros:</h3>
-          <div className="flex flex-wrap gap-2">
-            {Object.keys(groupedData).map((name) => (
-              <button
-                key={name}
-                onMouseDown={() => {
-                  setSelectedValues((prev) => (prev.includes(name) ? prev.filter((v) => v !== name) : [...prev, name]))
-                }}
-                className={`px-4 py-1.5 rounded-full text-sm transition-colors
-                                    ${
-                                      selectedValues.includes(name)
-                                        ? 'bg-blue-500 text-white hover:bg-blue-600'
-                                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                                    }`}
-              >
-                {name}
-              </button>
-            ))}
+
+          <div className="w-full">
+            <Select
+              isMulti
+              options={selectOptions}
+              value={selectOptions.filter((option) => selectedValues.includes(option.value))}
+              onChange={handleSelectChange}
+              placeholder="Seleccionar opciones"
+            />
           </div>
         </div>
       </div>
