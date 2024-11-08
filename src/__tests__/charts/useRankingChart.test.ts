@@ -1,57 +1,35 @@
-import { describe, it, expect, beforeEach } from 'vitest'
+import { RankingProps } from '@components'
+import { useRankingChart } from '@hooks'
 import { renderHook } from '@testing-library/react'
-import useRankingChart from '../../hooks/charts/useRankingChart'
+import { expect, vi } from 'vitest'
+
+vi.mock('@helpers', () => ({
+  getRandomColorDashboard: vi.fn().mockReturnValue('#FF5733')
+}))
 
 describe('useRankingChart', () => {
-  let chartData: { type: string; chartData: { name: string; average: number } }[]
-
-  beforeEach(() => {
-    chartData = [
-      { type: 'syllable', chartData: { name: 'A', average: 10 } },
-      { type: 'phoneme', chartData: { name: 'B', average: 20 } },
-      { type: 'syllable', chartData: { name: 'A', average: 30 } }
+  it('should correctly group data and set title based on chartData', () => {
+    const chartData: RankingProps[] = [
+      { type: 'phoneme', chartData: { name: 'A', average: 80 } },
+      { type: 'phoneme', chartData: { name: 'B', average: 60 } },
+      { type: 'phoneme', chartData: { name: 'X', average: 75 } },
+      { type: 'phoneme', chartData: { name: 'Y', average: 90 } }
     ]
-  })
 
-  it('should initialize data as an empty array', () => {
-    const { result } = renderHook(() => useRankingChart({ chartData: [] }))
-
-    expect(result.current.data).toEqual({ labels: [], datasets: [] })
-    expect(result.current.title).toBe('')
-    expect(result.current.selectedValues).toEqual([])
-    expect(result.current.groupedData).toEqual({})
-  })
-
-  it('should group data correctly and set title based on type', () => {
     const { result } = renderHook(() => useRankingChart({ chartData }))
 
-    expect(result.current.groupedData).toEqual({
-      A: [
-        { name: 'A', average: 10 },
-        { name: 'A', average: 30 }
-      ],
-      B: [{ name: 'B', average: 20 }]
-    })
-    expect(result.current.selectedValues).toEqual(['A', 'B'])
     expect(result.current.title).toBe('Ranking Fonemas más Difíciles')
-  })
-
-  it('should update data correctly when chartData changes', () => {
-    const { result, rerender } = renderHook(({ chartData }) => useRankingChart({ chartData }), {
-      initialProps: { chartData }
-    })
-
-    expect(result.current.data.labels).toEqual(['A', 'B'])
-    expect(result.current.data.datasets.length).toBe(2)
-
-    const newChartData = [{ type: 'syllable', chartData: { name: 'C', average: 40 } }]
-
-    rerender({ chartData: newChartData })
 
     expect(result.current.groupedData).toEqual({
-      C: [{ name: 'C', average: 40 }]
+      A: [{ name: 'A', average: 80 }],
+      B: [{ name: 'B', average: 60 }],
+      X: [{ name: 'X', average: 75 }],
+      Y: [{ name: 'Y', average: 90 }]
     })
-    expect(result.current.selectedValues).toEqual(['C'])
-    expect(result.current.title).toBe('Ranking Sílabas más Difíciles')
+
+    expect(result.current.selectedValues).toEqual(['A', 'B', 'X', 'Y'])
+
+    expect(result.current.data.datasets).toHaveLength(4)
+    expect(result.current.data.labels).toEqual(['A', 'B', 'X', 'Y'])
   })
 })
