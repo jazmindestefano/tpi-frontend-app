@@ -5,7 +5,7 @@ import Button from '@components/common/buttons/Button.tsx'
 import { useLogin } from '@hooks/queries.ts'
 import { useDispatch } from 'react-redux'
 import { setToken } from '@redux/slices'
-import { getMe } from '../http/queries.ts'
+import { getMe } from '../../http/queries.ts'
 
 interface LoginFormData {
   username: string

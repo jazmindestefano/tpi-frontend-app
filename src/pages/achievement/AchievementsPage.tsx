@@ -3,7 +3,7 @@ import { useGetAchievements } from '@hooks/queries.ts'
 import { useEffect, useState } from 'react'
 import SpinnerLoader from '@components/common/SpinnerLoader.tsx'
 import { HearableButton } from '@components/common/buttons/HearableButton.tsx'
-import { getUniqueAchievements, UniqueAchievements } from './achievement/helper'
+import { getUniqueAchievements, UniqueAchievements } from './helper'
 
 const AchievementsPage = () => {
   const user = useUser()
