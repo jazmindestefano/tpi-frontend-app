@@ -118,6 +118,10 @@ export const router = createBrowserRouter([
                 element: <ActivityResponsesPage />
               },
               {
+                path: 'paciente/:patientId/actividades/:activityId/:date',
+                element: <ActivityResponsesPage />
+              },
+              {
                 path: 'perfil',
                 element: <ProfilePage />
               }

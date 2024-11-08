@@ -12,10 +12,8 @@ function playAudio(userAnswer: string) {
   audio.play()
 }
 
-const dateLocalStorage = localStorage.getItem('selectedDate')
-
 const ActivityResponsesPage = () => {
-  const { patientId, activityId } = useParams()
+  const { patientId, activityId, date } = useParams()
   const [readyToFetch, setReadyToFetch] = useState(false)
   const { data, error, isLoading } = useGetPatientActivityAnswers(readyToFetch ? Number(patientId) : 0)
   const [filteredData, setFilteredData] = useState<PatientActivityAnswers[]>([])
@@ -28,10 +26,10 @@ const ActivityResponsesPage = () => {
   }, [patientId])
 
   useEffect(() => {
-    if (dateLocalStorage) {
-      setSelectedDate(dateLocalStorage)
+    if (date) {
+      setSelectedDate(date)
     }
-  }, [])
+  }, [date])
 
   useEffect(() => {
     if (data) {
