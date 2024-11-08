@@ -243,6 +243,21 @@ export const usePhonemeDashboard = (
   return { data, error, isLoading }
 }
 
+export const useGetPatientNameById = (
+  patientId: number
+): {
+  data: string | null | undefined
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['patientName', patientId],
+    queryFn: async () => await ApiService.getPatientNameById(patientId)
+  })
+
+  return { data, error, isLoading }
+}
+
 export const useTimelineData = (patientId: number) => {
   const { data, error, isLoading } = useQuery<TimelineData[]>({
     queryKey: ['timeline', patientId],
