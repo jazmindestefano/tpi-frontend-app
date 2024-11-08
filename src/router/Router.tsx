@@ -17,7 +17,10 @@ import {
   TimelinePage,
   LoginPage,
   HomePage,
-  PatientActivitiesPage
+  PatientActivitiesPage,
+  RegisterPage,
+  EmailVerification,
+  ProfesionalCredentialVerification
 } from '@/pages'
 import { PageLayout, ProfesionalPageLayout } from '@/components'
 import { ValidGameWrapper } from '@/router/ValidGameWrapper.tsx'
@@ -29,6 +32,18 @@ export const router = createBrowserRouter([
   {
     path: '/login',
     element: <LoginPage />
+  },
+  {
+    path: '/register',
+    element: <RegisterPage />
+  },
+  {
+    path: '/email-verification/:email',
+    element: <EmailVerification />
+  },
+  {
+    path: '/professional-credential-verification',
+    element: <ProfesionalCredentialVerification />
   },
   {
     element: <PrivateRoute />,
