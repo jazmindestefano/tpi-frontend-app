@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useGetGames } from '../hooks/queries.ts'
-import HomeCard from '../components/common/cards/HomeCard.tsx'
-import SpinnerLoader from '../components/common/SpinnerLoader.tsx'
 import { useDispatch } from 'react-redux'
-import { FeedbackModal } from '../components/common/modals/FeedbackModal.tsx'
-import { useShowModalFeedback } from '../hooks/selectors.ts'
-import { HearableButton } from '../components/common/buttons/HearableButton.tsx'
 import { getCardBgColor } from '@/helpers'
 import { Game } from '@/interfaces'
 import { selectGame, setModalFeedback, setShowProductTour } from '@redux/slices'
+import { HearableButton } from '@components/common/buttons/HearableButton'
+import HomeCard from '@components/common/cards/HomeCard'
+import { FeedbackModal } from '@components/common/modals/FeedbackModal'
+import SpinnerLoader from '@components/common/SpinnerLoader'
+import { useGetGames } from '@hooks/queries'
+import { useShowModalFeedback } from '@hooks/selectors'
 
 const Home = () => {
   const navigate = useNavigate()
