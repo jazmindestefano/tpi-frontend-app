@@ -22,11 +22,11 @@ const PatientActivitiesPage = () => {
   return (
     <>
       {!error && !isLoading && data ? (
-        <div className="flex flex-col items-start justify-start gap-4 lg:p-4 pt-20">
+        <div className="flex flex-col items-start justify-start gap-4">
           <div>
             <BackButton text="Volver al Dashboard" route="/profesional/paciente/1" />
             <h2 className="text-2xl font-extrabold mb-4">Actividades</h2>
-            <div className="flex w-full gap-10 lg:px-10 lg:py-6">
+            <div className="flex w-full gap-10 pt-5">
               {data.length > 0 ? (
                 data.map((actividad) => <ActivityCard key={actividad.gameid} activity={actividad} />)
               ) : (

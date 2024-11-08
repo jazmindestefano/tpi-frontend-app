@@ -1,12 +1,15 @@
 import { useDashboard } from '@/hooks'
 import { AuditoryDiscriminationChart, Feedback, PronunciationChart, RankingChart, Today } from './charts'
 import SpinnerLoader from '@components/common/SpinnerLoader'
+import { useState } from 'react'
 
 const Dashboard = () => {
   const {
-    pronunciationChart,
-    auditoryChart,
-    rankingChart,
+    phonemePronunciationChart,
+    syllablePronunciationChart,
+    auditoryDiscriminationChart,
+    phonemeRankingChart,
+    syllableRankingChart,
     auditoryLoading,
     phonemeLoading,
     phonemeRankingLoading,
@@ -14,39 +17,79 @@ const Dashboard = () => {
     syllableRankingLoading
   } = useDashboard()
 
+  const [activeTab, setActiveTab] = useState<string>('today')
+
   if (auditoryLoading || phonemeLoading || phonemeRankingLoading || syllableLoading || syllableRankingLoading) {
     return <SpinnerLoader />
   }
 
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case 'today':
+        return (
+          <div className="flex items-center justify-around w-full gap-10">
+            <Today />
+            <Feedback />
+          </div>
+        )
+      case 'auditory':
+        return (
+          <div className="flex items-center justify-around w-full gap-10">
+            <AuditoryDiscriminationChart chartData={auditoryDiscriminationChart} />
+          </div>
+        )
+      case 'pronunciation':
+        return (
+          <div className="flex items-center justify-around w-full gap-10">
+            <PronunciationChart chartData={syllablePronunciationChart} />
+            <PronunciationChart chartData={phonemePronunciationChart} />
+          </div>
+        )
+      case 'ranking':
+        return (
+          <div className="flex items-center justify-around w-full gap-10">
+            <RankingChart chartData={syllableRankingChart} />
+            <RankingChart chartData={phonemeRankingChart} />
+          </div>
+        )
+      default:
+        return null
+    }
+  }
+
   return (
-    <div className="w-full p-4 h-[calc(100vh-100px)] overflow-y-auto">
+    <div className="w-full p-4">
       <div>
         <h1 className="text-2xl">Progreso del Paciente</h1>
       </div>
-      <div className="flex flex-wrap">
-        <div className="w-full md:w-[50%] p-4">
-          <Today />
-        </div>
-        <div className="w-full md:w-[50%] p-4">
-          <Feedback />
-        </div>
-
-        <div className="w-[50%] p-4">
-          <AuditoryDiscriminationChart chartData={auditoryChart} />
-        </div>
-
-        {pronunciationChart.map((data, index) => (
-          <div key={`pronunciationChart-${index}`} className="w-full md:w-[50%] p-4">
-            <PronunciationChart chartData={data} />
-          </div>
-        ))}
-
-        {rankingChart.map((data, index) => (
-          <div key={`rankingChart-${index}`} className="w-full md:w-[50%] p-4">
-            <RankingChart chartData={data} />
-          </div>
-        ))}
+      <div className="mb-4 flex space-x-4">
+        <button
+          className={`px-4 py-2 rounded-lg ${activeTab === 'today' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+          onClick={() => setActiveTab('today')}
+        >
+          ¿Que pasó hoy? + Feedback
+        </button>
+        <button
+          className={`px-4 py-2 rounded-lg ${activeTab === 'pronunciation' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+          onClick={() => setActiveTab('pronunciation')}
+        >
+          Pronunciación de Sílabas y Fonemas
+        </button>
+        <button
+          className={`px-4 py-2 rounded-lg ${activeTab === 'ranking' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+          onClick={() => setActiveTab('ranking')}
+        >
+          Rankings más Difíciles
+        </button>
+        <button
+          className={`px-4 py-2 rounded-lg ${activeTab === 'auditory' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+          onClick={() => setActiveTab('auditory')}
+        >
+          Discriminación Auditiva de Letras
+        </button>
       </div>
+
+      <div className="flex w-full pt-10">{renderTabContent()}</div>
     </div>
   )
 }

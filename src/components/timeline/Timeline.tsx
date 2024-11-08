@@ -65,7 +65,7 @@ export default function Timeline() {
   }
 
   return (
-    <div className="container p-4 pb-40 h-[calc(100vh-100px)] overflow-y-auto w-full">
+    <div className="container pb-10 w-full">
       <BackButton text="Volver al Dashboard" route={`/profesional/paciente/${patientId}`} />
       <h1 className="text-3xl font-bold mb-8 text-gray-800">Línea de Tiempo de Actividades</h1>
       <div className="relative space-y-6 pl-[9%]">

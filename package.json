@@ -19,6 +19,7 @@
     "chart.js": "^4.4.5",
     "class-variance-authority": "^0.7.0",
     "classnames": "^2.5.1",
+    "date-fns": "^4.1.0",
     "framer-motion": "^11.11.1",
     "lucide-react": "^0.447.0",
     "react": "^18.3.1",
@@ -31,6 +32,7 @@
     "react-resizable": "^3.0.5",
     "react-responsive": "^10.0.0",
     "react-router-dom": "^6.26.2",
+    "react-select": "^5.8.2",
     "react-tooltip": "^5.28.0",
     "react-use": "^17.5.1",
     "use-sound": "^4.0.3"

@@ -63,7 +63,7 @@ const Header = () => {
                 <Tooltip id="logout" content="Salir de la aplicación" variant="dark" place="bottom" />
               </div>
             )}
-            {location.pathname === '/perfil' && (
+            {location.pathname !== '/' && (
               <div data-tooltip-id="house">
                 <Button size={'square'} variant={'tertiary'} onClick={() => navigate('/')} data-tip="Ir a Mi Inicio">
                   <House />
