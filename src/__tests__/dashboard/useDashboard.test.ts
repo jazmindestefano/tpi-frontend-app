@@ -15,7 +15,6 @@ import {
   syllableRankingMockedData
 } from './mockedData'
 
-// Mock de los hooks
 vi.mock('@/hooks/queries', () => ({
   useSyllableDashboard: vi.fn(),
   usePhonemeDashboard: vi.fn(),
