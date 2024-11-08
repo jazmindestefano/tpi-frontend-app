@@ -11,6 +11,7 @@ interface InputProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
   value?: string
   required?: boolean
+  multiple?: boolean
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -22,12 +23,14 @@ export const Input: React.FC<InputProps> = ({
   className,
   onChange,
   value,
-  required
+  required,
+  multiple = false
 }) => {
   return (
     <>
       {label ? <Label text={label} htmlFor={name} /> : null}
       <input
+        multiple={multiple}
         className={classNames('border border-gray-50 rounded-3xl p-2 bg-gray-50 outline-0', className)}
         name={name}
         type={type}
