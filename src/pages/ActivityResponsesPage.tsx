@@ -48,10 +48,10 @@ const ActivityResponsesPage = () => {
 
   return (
     <div className="flex flex-col items-start justify-start gap-5 lg:pt-0 w-full">
-      <div className="w-full flex justify-between items-center pt-16">
-        <div>
-          <BackButton text="Volver atrás" route={`/profesional/paciente/${patientId}/actividades`} />
-        </div>
+      <div className="w-full flex justify-between items-center">
+        <BackButton text="Volver atrás" route={`/profesional/paciente/${patientId}/actividades`} />
+      </div>
+      <div className="w-full flex justify-end items-center">
         <div className="mb-4 self-end">
           <label htmlFor="dateFilter" className="mr-4 font-bold">
             Filtrar por fecha:
