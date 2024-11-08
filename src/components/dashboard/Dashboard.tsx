@@ -2,6 +2,9 @@ import { useDashboard } from '@/hooks'
 import { AuditoryDiscriminationChart, Feedback, PronunciationChart, RankingChart, Today } from './charts'
 import SpinnerLoader from '@components/common/SpinnerLoader'
 import { useState } from 'react'
+import { useGetPatientNameById } from '@hooks/queries'
+import { useParams } from 'react-router-dom'
+import BackButton from '@components/common/buttons/BackButton'
 
 const Dashboard = () => {
   const {
@@ -16,7 +19,8 @@ const Dashboard = () => {
     syllableLoading,
     syllableRankingLoading
   } = useDashboard()
-
+  const { patientId } = useParams()
+  const { data, isLoading, error } = useGetPatientNameById(Number(patientId))
   const [activeTab, setActiveTab] = useState<string>('today')
 
   if (auditoryLoading || phonemeLoading || phonemeRankingLoading || syllableLoading || syllableRankingLoading) {
@@ -60,7 +64,8 @@ const Dashboard = () => {
   return (
     <div className="w-full p-4">
       <div>
-        <h1 className="text-2xl">Progreso del Paciente</h1>
+        <BackButton route="/profesional" text={'Volver al Inicio'} />
+        <h1 className="text-2xl">Progreso del Paciente {!isLoading && !error ? data : ''}</h1>
       </div>
       <div className="mb-4 flex space-x-4">
         <button

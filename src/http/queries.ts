@@ -253,6 +253,16 @@ export const getProfileData = async (id: number, role: string): Promise<ProfileD
   return null
 }
 
+export const getPatientNameById = async (id: number): Promise<string | null> => {
+  const res = await authenticatedClient.get(`/patients/${id}`)
+  const { name } = res.data
+
+  if (res.status === 200) {
+    return name
+  }
+  return null
+}
+
 export const updateProfileData = async (id: number, role: string, data: ProfileData) => {
   const endpoint = role === 'Patient' ? `/patients/${id}` : `/professional/${id}`
   try {
