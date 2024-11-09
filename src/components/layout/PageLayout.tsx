@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom'
-import Header from './Header'
 import ProductTour from '../ProductTour'
 import { useShowProductTour } from '@hooks/selectors.ts'
+import { Header } from '@components'
 
 const PageLayout = () => {
   const showProductTour = useShowProductTour()

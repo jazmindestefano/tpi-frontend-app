@@ -1,6 +1,5 @@
+import { AsideProfesional, HeaderProfesional } from '@components'
 import { Outlet } from 'react-router-dom'
-import AsideProfesional from './AsideProfesional'
-import HeaderProfesional from './HeaderProfesional'
 
 export default function Layout() {
   return (
