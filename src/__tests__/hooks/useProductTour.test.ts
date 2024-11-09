@@ -2,7 +2,7 @@ import { renderHook, act } from '@testing-library/react'
 import useProductTour from '../../hooks/common/useProductTour'
 import { Step } from 'react-joyride'
 import { vi } from 'vitest'
-import { useSpeakText } from '../../hooks/useSpeakText'
+import { useSpeakText } from '@hooks'
 
 vi.mock('../../hooks/useSpeakText', () => ({
   useSpeakText: vi.fn(() => vi.fn())
