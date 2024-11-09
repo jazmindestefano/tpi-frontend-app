@@ -10,7 +10,7 @@ import Button from '@components/common/buttons/Button.tsx'
 import { ArrowRightIcon } from 'lucide-react'
 import SpinnerLoader from '@components/common/SpinnerLoader.tsx'
 import ProgressBar from '@components/ProgressBar.tsx'
-import { useAudioRecording } from '@hooks/useAudioRecording.ts'
+import { useAudioRecording } from '@hooks/common/useAudioRecording'
 import { LevelOption } from '@interfaces'
 
 const RecordGamePage = () => {

@@ -8,7 +8,7 @@ import { RecordButton } from '@/components/common/buttons/RecordButton'
 import { ContinueIcon } from '@/components/common/icons/Icons'
 import { usePostUserRecording } from '@/hooks/queries'
 import { useUser, useSelectedGame } from '@/hooks/selectors'
-import { useAudioRecording } from '@/hooks/useAudioRecording'
+import { useAudioRecording } from '@hooks'
 
 interface SnakeGameProps {
   items: string[]

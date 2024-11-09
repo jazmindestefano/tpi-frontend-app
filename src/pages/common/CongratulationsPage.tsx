@@ -1,13 +1,13 @@
 import { useNavigate } from 'react-router-dom'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { useSpeakText } from '@/hooks/useSpeakText'
 import Button from '@/components/common/buttons/Button'
 import { HearableButton } from '@/components/common/buttons/HearableButton'
 import { useRandomAchievement } from '@/hooks/queries'
 import { setModalFeedback } from '@redux/slices'
 import { useUser } from '@hooks/selectors'
 import ConfettiAnimation from '@components/common/celebrationAnimation/ConfettiAnimation'
+import { useSpeakText } from '@hooks'
 
 const CongratulationsPage = () => {
   const dispatch = useDispatch()

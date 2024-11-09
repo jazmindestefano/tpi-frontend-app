@@ -1,5 +1,5 @@
 import { renderHook, act } from '@testing-library/react'
-import useProductTour from '../../hooks/useProductTour'
+import useProductTour from '../../hooks/common/useProductTour'
 import { Step } from 'react-joyride'
 import { vi } from 'vitest'
 import { useSpeakText } from '../../hooks/useSpeakText'

@@ -6,6 +6,7 @@ import { useLogin } from '@hooks/queries.ts'
 import { useDispatch } from 'react-redux'
 import { setToken } from '@redux/slices'
 import { getMe } from '../../http/queries.ts'
+import { usePasswordVisbility } from '@hooks'
 
 interface LoginFormData {
   username: string
@@ -17,11 +18,7 @@ const LoginPage: FC = () => {
   const { mutateAsync } = useLogin()
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const [showPassword, setShowPassword] = useState(false)
-
-  const togglePasswordVisibility = () => {
-    setShowPassword((prev) => !prev)
-  }
+  const { showPassword, togglePasswordVisibility } = usePasswordVisbility()
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target

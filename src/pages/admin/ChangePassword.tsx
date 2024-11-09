@@ -1,16 +1,13 @@
 import Button from '@components/common/buttons/Button'
 import { Input } from '@components/common/inputs/Input'
+import { usePasswordVisbility } from '@hooks'
 import { useState, ChangeEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const ChangePassword = () => {
   const [formData, setFormData] = useState<{ password: string }>({ password: '' })
   const navigate = useNavigate()
-  const [showPassword, setShowPassword] = useState(false)
-
-  const togglePasswordVisibility = () => {
-    setShowPassword((prev) => !prev)
-  }
+  const { showPassword, togglePasswordVisibility } = usePasswordVisbility()
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target

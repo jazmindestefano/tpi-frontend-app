@@ -1,9 +1,9 @@
+import { shuffleArray } from '@helpers'
+import { useAudioRecording } from '@hooks'
+import { useGetGameLevels, usePostUserRecording } from '@hooks/queries'
+import { useUser, useSelectedGame } from '@hooks/selectors'
+import { LevelOption } from '@interfaces'
 import { useState, useEffect } from 'react'
-import { shuffleArray } from '../helpers/arrays'
-import { useGetGameLevels, usePostUserRecording } from './queries.ts'
-import { useSelectedGame, useUser } from './selectors.ts'
-import { useAudioRecording } from './useAudioRecording.ts'
-import { LevelOption } from '../interfaces/interfaces'
 
 const useRecordGame = (selectedThemeId: number) => {
   const { levels, isLoading, error } = useGetGameLevels(selectedThemeId)

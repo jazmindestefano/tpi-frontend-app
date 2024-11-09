@@ -1,6 +1,6 @@
 import { useRef, useState, useEffect, useCallback } from 'react'
 
-export const useScroll = () => {
+const useScroll = () => {
   const scrollRef = useRef<HTMLDivElement>(null)
   const [showScrollButtons, setShowScrollButtons] = useState(false)
 
@@ -40,3 +40,5 @@ export const useScroll = () => {
 
   return { scrollRef, showScrollButtons, scroll, checkScrollButtons }
 }
+
+export default useScroll

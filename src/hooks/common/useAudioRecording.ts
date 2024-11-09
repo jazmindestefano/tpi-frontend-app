@@ -11,7 +11,7 @@ interface UseAudioRecordingProps {
  *
  * It returns the error string in case of error and the audio blob once the recording has stopped.
  */
-export const useAudioRecording = (props?: UseAudioRecordingProps) => {
+const useAudioRecording = (props?: UseAudioRecordingProps) => {
   const { audioMimeType = 'audio/wav' } = props || {}
   const [isRecording, setIsRecording] = useState<boolean>(false)
   const [error, setError] = useState<string | null>(null)
@@ -90,3 +90,5 @@ export const useAudioRecording = (props?: UseAudioRecordingProps) => {
     stopRecording
   }
 }
+
+export default useAudioRecording

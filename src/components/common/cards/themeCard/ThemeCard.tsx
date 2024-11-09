@@ -2,9 +2,9 @@ import { useEffect } from 'react'
 import { Theme } from '../../../../interfaces/interfaces'
 import { BaseCard } from '../BaseCard'
 import { BaseContainer } from '../BaseContainer'
-import { useImageSkeleton } from '../../../../hooks/useImageSkeleton'
 import { HearableButton } from '../../buttons/HearableButton.tsx'
 import SpinnerLoader from '@components/common/SpinnerLoader.tsx'
+import { useImageSkeleton } from '@hooks'
 
 interface ThemeCardProps {
   theme: Theme
