@@ -6,7 +6,7 @@ import { useLogin } from '@hooks/queries.ts'
 import { useDispatch } from 'react-redux'
 import { setToken } from '@redux/slices'
 import { usePasswordVisbility } from '@hooks'
-import { getMe } from '@http/queries'
+import { getMe } from '../../hooks/http/queries'
 
 interface LoginFormData {
   username: string
