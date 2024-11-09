@@ -4,7 +4,7 @@ import axios, {
   type AxiosResponse,
   type InternalAxiosRequestConfig
 } from 'axios'
-import env from '../config/env.ts'
+import env from '../../config/env'
 import { loadState } from '@redux/local.ts'
 
 const authenticatedClient = axios.create({

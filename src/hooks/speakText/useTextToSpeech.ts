@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import * as ApiService from '../../http/queries'
+import * as ApiService from '../http/queries'
 
 interface UseAudioPlayerHookProps {
   text: string
