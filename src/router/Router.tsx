@@ -20,7 +20,8 @@ import {
   PatientActivitiesPage,
   RegisterPage,
   EmailVerification,
-  ProfesionalCredentialVerification
+  ProfesionalCredentialVerification,
+  ChangePassword
 } from '@/pages'
 import { PageLayout, ProfesionalPageLayout } from '@/components'
 import { ValidGameWrapper } from '@/router/ValidGameWrapper.tsx'
@@ -44,6 +45,10 @@ export const router = createBrowserRouter([
   {
     path: '/professional-credential-verification',
     element: <ProfesionalCredentialVerification />
+  },
+  {
+    path: '/change-one-time-password',
+    element: <ChangePassword />
   },
   {
     element: <PrivateRoute />,

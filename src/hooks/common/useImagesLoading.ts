@@ -1,11 +1,11 @@
 import { useState, useCallback } from 'react'
 
-interface UseImageSkeletonProps {
+interface useImagesLoadingProps {
   totalImages: number
   onAllImagesLoaded?: () => void
 }
 
-export const useImageSkeleton = ({ totalImages, onAllImagesLoaded }: UseImageSkeletonProps) => {
+const useImagesLoading = ({ totalImages, onAllImagesLoaded }: useImagesLoadingProps) => {
   const [loadedImages, setLoadedImages] = useState(0)
   const [imageLoaded, setImageLoaded] = useState(false)
 
@@ -22,3 +22,5 @@ export const useImageSkeleton = ({ totalImages, onAllImagesLoaded }: UseImageSke
 
   return { imageLoaded, handleImageLoad, loadedImages }
 }
+
+export default useImagesLoading

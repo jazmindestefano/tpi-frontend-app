@@ -1,12 +1,12 @@
 import { useCallback, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import * as ApiService from '../http/queries.ts'
+import * as ApiService from '../../http/queries'
 
 interface UseAudioPlayerHookProps {
   text: string
 }
 // todo: we need to somehow merge these two useTextToSpeech - useSpeakText
-export const useTextToSpeech = ({ text }: UseAudioPlayerHookProps) => {
+const useTextToSpeech = ({ text }: UseAudioPlayerHookProps) => {
   const [isPlaying, setIsPlaying] = useState(false)
 
   const {
@@ -57,3 +57,5 @@ export const useTextToSpeech = ({ text }: UseAudioPlayerHookProps) => {
     pauseAudio
   }
 }
+
+export default useTextToSpeech

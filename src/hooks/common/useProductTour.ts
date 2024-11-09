@@ -1,6 +1,6 @@
+import { useSpeakText } from '@hooks'
 import { useEffect, useState } from 'react'
 import { Step } from 'react-joyride'
-import { useSpeakText } from './useSpeakText'
 
 const useProductTour = ({ steps }: { steps: Step[] }) => {
   const [runTour, setRunTour] = useState(false)
