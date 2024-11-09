@@ -17,6 +17,11 @@ const LoginPage: FC = () => {
   const { mutateAsync } = useLogin()
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const [showPassword, setShowPassword] = useState(false)
+
+  const togglePasswordVisibility = () => {
+    setShowPassword((prev) => !prev)
+  }
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -63,11 +68,14 @@ const LoginPage: FC = () => {
             />
             <Input
               name={'password'}
-              label={'Contraseña'}
-              type={'password'}
+              label={'Nueva Contraseña'}
+              type={showPassword ? 'text' : 'password'}
               onChange={handleChange}
               value={formData.password}
               className="w-80"
+              showToggle
+              onToggleClick={togglePasswordVisibility}
+              toggleState={showPassword}
             />
           </div>
           <Button onClick={handleLogin} className="h-10 w-52">

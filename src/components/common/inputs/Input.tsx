@@ -1,5 +1,6 @@
 import classNames from 'classnames'
 import { Label } from '../labels/Label'
+import { Eye, EyeOff } from 'lucide-react'
 
 interface InputProps {
   name: string
@@ -12,6 +13,9 @@ interface InputProps {
   value?: string
   required?: boolean
   multiple?: boolean
+  showToggle?: boolean
+  onToggleClick?: () => void
+  toggleState?: boolean
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -24,14 +28,17 @@ export const Input: React.FC<InputProps> = ({
   onChange,
   value,
   required,
-  multiple = false
+  multiple = false,
+  showToggle = false,
+  onToggleClick,
+  toggleState = false
 }) => {
   return (
-    <>
-      {label ? <Label text={label} htmlFor={name} /> : null}
+    <div className="relative w-full space-y-4">
+      {label ? <Label text={label} htmlFor={name} className="flex justify-center items-center w-full" /> : null}
       <input
         multiple={multiple}
-        className={classNames('border border-gray-50 rounded-3xl p-2 bg-gray-50 outline-0', className)}
+        className={classNames('border border-gray-50 rounded-3xl p-2 pr-10 bg-gray-50 outline-0 w-full', className)}
         name={name}
         type={type}
         id={id}
@@ -40,6 +47,13 @@ export const Input: React.FC<InputProps> = ({
         required={required}
         placeholder={placeholder}
       />
-    </>
+      {showToggle && onToggleClick && (
+        <div className="absolute inset-y-9 right-0 flex items-center pr-3 cursor-pointer place-content-center">
+          <button onClick={onToggleClick} className="focus:outline-none">
+            {toggleState ? <Eye /> : <EyeOff />}
+          </button>
+        </div>
+      )}
+    </div>
   )
 }
