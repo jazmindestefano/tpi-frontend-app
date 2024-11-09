@@ -29,7 +29,7 @@ const ThemeSelectorPage = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center w-full xl:gap-10 pt-20 lg:pt-0">
+    <div className="flex flex-col justify-center items-center w-full xl:gap-10 pt-20">
       <div className="flex justify-center items-center w-full self-center gap-4">
         <h1 className="text-h1">Temáticas</h1>
         <HearableButton variant={'secondary'} text={'Elegí una temática'} />

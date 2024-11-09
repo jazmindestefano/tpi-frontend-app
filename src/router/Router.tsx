@@ -23,11 +23,11 @@ import {
   ProfesionalCredentialVerification,
   ChangePassword
 } from '@/pages'
-import { PageLayout, ProfesionalPageLayout } from '@/components'
 import { ValidGameWrapper } from '@/router/ValidGameWrapper.tsx'
 import { SnakeGameWrapper } from '../../wrappers'
 import ValidateRoleProfessional from './ValidateRoleProfessional.tsx'
 import ValidateRolePatient from './ValidateRolePatient.tsx'
+import { LayoutPatient, LayoutProfesional } from '@components/index.ts'
 
 export const router = createBrowserRouter([
   {
@@ -55,7 +55,7 @@ export const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       {
-        element: <PageLayout />,
+        element: <LayoutPatient />,
         children: [
           {
             element: <ValidateRoleProfessional />,
@@ -111,7 +111,7 @@ export const router = createBrowserRouter([
         ]
       },
       {
-        element: <ProfesionalPageLayout />,
+        element: <LayoutProfesional />,
         path: '/profesional',
         children: [
           {

@@ -60,7 +60,7 @@ const ActivityResponsesPage = () => {
   ).map((value) => ({ value, label: value }))
 
   return (
-    <div className="flex flex-col items-start justify-start gap-5 lg:pt-0 w-full">
+    <div className="flex flex-col items-start justify-start gap-5 pt-10 px-10 w-full">
       <div className="w-full flex justify-between items-center">
         <BackButton text="Volver atrás" route={`/profesional/paciente/${patientId}/actividades`} />
       </div>

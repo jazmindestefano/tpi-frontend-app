@@ -1,10 +1,36 @@
+import { House, LogOut, Download, FolderDot } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-import { House, LogOut } from 'lucide-react'
 import Button from '../common/buttons/Button'
 import { Tooltip } from 'react-tooltip'
+import { useExportPdf } from '@/hooks/queries'
+import { useEffect, useState } from 'react'
 
-const Header = () => {
+const Header = ({ isProfessional = false, patientId }: { isProfessional: boolean; patientId?: string }) => {
+  const [readyToFetch, setReadyToFetch] = useState(false)
   const navigate = useNavigate()
+  const { pdf, error, isLoading } = useExportPdf(readyToFetch ? Number(patientId) : 0)
+
+  useEffect(() => {
+    if (patientId) {
+      setReadyToFetch(true)
+    }
+  }, [patientId])
+
+  const handleDownload = () => {
+    if (pdf && !error && !isLoading) {
+      const blob = pdf instanceof Blob ? pdf : new Blob([pdf], { type: 'application/pdf' })
+      const url = URL.createObjectURL(blob)
+
+      const a = document.createElement('a')
+      a.href = url
+      a.download = 'reporte.pdf'
+      document.body.appendChild(a)
+      a.click()
+      document.body.removeChild(a)
+
+      setTimeout(() => URL.revokeObjectURL(url), 100)
+    }
+  }
 
   if (location.pathname === '/felicitaciones') {
     return null
@@ -12,28 +38,31 @@ const Header = () => {
 
   return (
     <header className="flex justify-between items-start p-4 bg-gradient-to-b from-orange-100 to-transparent fixed w-full">
-      {!location.pathname.includes('actividad') && (
+      {!location.pathname.includes('actividad') && !isProfessional && (
         <div className="flex flex-col justify-center items-start gap-4" onClick={() => navigate('/')}>
           <img src={'/clara-logo.svg'} alt="Logo" className="h-16 cursor-pointer" />
         </div>
       )}
+
       {!location.pathname.includes('terminos-y-condiciones') &&
         !location.pathname.includes('politica-de-privacidad') && (
           <div className={`flex flex-row gap-4 ${location.pathname.includes('actividad') ? 'ml-auto' : ''}`}>
-            <div data-tooltip-id="logros">
-              <Button
-                dataTestId="logros-button"
-                size={'square'}
-                variant={'secondary'}
-                onClick={() => navigate('/logros')}
-                className="achievements-button"
-                data-tip="Ir a Mis Logros"
-              >
-                <img src="/pines/medalla.png" alt="Medalla" className="object-cover h-10" />
-              </Button>
-              <Tooltip id="logros" content="Ir a mis Logros" variant="dark" place="bottom" />
-            </div>
-            {location.pathname !== '/perfil' && (
+            {!isProfessional && (
+              <div data-tooltip-id="logros">
+                <Button
+                  dataTestId="logros-button"
+                  size={'square'}
+                  variant={'secondary'}
+                  onClick={() => navigate('/logros')}
+                  className="achievements-button"
+                  data-tip="Ir a Mis Logros"
+                >
+                  <img src="/pines/medalla.png" alt="Medalla" className="object-cover h-10" />
+                </Button>
+                <Tooltip id="logros" content="Ir a mis Logros" variant="dark" place="bottom" />
+              </div>
+            )}
+            {!isProfessional && location.pathname !== '/perfil' && (
               <div data-tooltip-id="perfil">
                 <Button
                   dataTestId="perfil-button"
@@ -48,7 +77,7 @@ const Header = () => {
                 <Tooltip id="perfil" content="Ir a mi Perfil" variant="dark" place="bottom" />
               </div>
             )}
-            {location.pathname === '/' && (
+            {!isProfessional && location.pathname === '/' && (
               <div data-tooltip-id="logout">
                 <Button
                   dataTestId="logout-button"
@@ -66,7 +95,7 @@ const Header = () => {
                 <Tooltip id="logout" content="Salir de la aplicación" variant="dark" place="bottom" />
               </div>
             )}
-            {location.pathname !== '/' && (
+            {location.pathname !== '/' && !isProfessional && (
               <div data-tooltip-id="house">
                 <Button
                   dataTestId="home-button"
@@ -82,6 +111,42 @@ const Header = () => {
             )}
           </div>
         )}
+
+      {isProfessional && (
+        <div className="top-4 right-4 flex gap-4 fixed z-50">
+          <div data-tooltip-id="pdf">
+            <Button size={'square'} variant={'fourth'} onClick={handleDownload} dataTestId="download-button">
+              <Download className="text-white" />
+            </Button>
+            <Tooltip id="pdf" content="Generar reporte de gráficos" variant="dark" place="bottom" />
+          </div>
+          <div data-tooltip-id="actividades">
+            <Button
+              dataTestId="folder-button"
+              size={'square'}
+              variant={'secondary'}
+              onClick={() => navigate(`/profesional/paciente/${patientId}/actividades`)}
+            >
+              <FolderDot className="text-white" />
+            </Button>
+            <Tooltip id="actividades" content="Ir a respuestas de actividades" variant="dark" place="bottom" />
+          </div>
+          <div data-tooltip-id="logout">
+            <Button
+              dataTestId="professional-logout-button"
+              size={'square'}
+              variant={'primary'}
+              onClick={() => {
+                localStorage.clear()
+                navigate('/login')
+              }}
+            >
+              <LogOut className="text-white" />
+            </Button>
+            <Tooltip id="logout" content="Salir de la aplicación" variant="dark" place="bottom" />
+          </div>
+        </div>
+      )}
     </header>
   )
 }

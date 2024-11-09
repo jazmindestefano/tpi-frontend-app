@@ -22,7 +22,7 @@ const PatientActivitiesPage = () => {
   return (
     <>
       {!error && !isLoading && data ? (
-        <div className="flex flex-col items-start justify-start gap-4">
+        <div className="flex flex-col items-start justify-start gap-4 pt-10 px-10">
           <div>
             <BackButton text="Volver al Dashboard" route="/profesional/paciente/1" />
             <h2 className="text-2xl font-extrabold mb-4">Actividades</h2>

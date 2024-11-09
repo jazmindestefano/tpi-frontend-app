@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { describe, it, expect, vi } from 'vitest'
-import PageLayout from '@components/layout/PageLayout'
+import PageLayout from '@components/layout/LayoutPatient'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 vi.mock('@hooks/selectors.ts', () => ({
