@@ -22,6 +22,7 @@ const Header = () => {
           <div className={`flex flex-row gap-4 ${location.pathname.includes('actividad') ? 'ml-auto' : ''}`}>
             <div data-tooltip-id="logros">
               <Button
+                dataTestId="logros-button"
                 size={'square'}
                 variant={'secondary'}
                 onClick={() => navigate('/logros')}
@@ -35,6 +36,7 @@ const Header = () => {
             {location.pathname !== '/perfil' && (
               <div data-tooltip-id="perfil">
                 <Button
+                  dataTestId="perfil-button"
                   size={'square'}
                   variant={'tertiary'}
                   onClick={() => navigate(location.pathname !== '/perfil' ? '/perfil' : '/')}
@@ -49,6 +51,7 @@ const Header = () => {
             {location.pathname === '/' && (
               <div data-tooltip-id="logout">
                 <Button
+                  dataTestId="logout-button"
                   size={'square'}
                   variant={'primary'}
                   className="logout-button"
@@ -65,7 +68,13 @@ const Header = () => {
             )}
             {location.pathname !== '/' && (
               <div data-tooltip-id="house">
-                <Button size={'square'} variant={'tertiary'} onClick={() => navigate('/')} data-tip="Ir a Mi Inicio">
+                <Button
+                  dataTestId="home-button"
+                  size={'square'}
+                  variant={'tertiary'}
+                  onClick={() => navigate('/')}
+                  data-tip="Ir a Mi Inicio"
+                >
                   <House />
                 </Button>
                 <Tooltip id="house" content="Ir a Mi Inicio" variant="dark" place="bottom" />

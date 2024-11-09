@@ -8,6 +8,7 @@ export interface ButtonProps extends VariantProps<typeof buttonVariants> {
   children?: React.ReactNode
   className?: string
   ariaLabel?: string
+  dataTestId?: string
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -18,11 +19,13 @@ const Button: React.FC<ButtonProps> = ({
   onMouseEnter,
   children,
   className = '',
-  ariaLabel = 'button'
+  ariaLabel = 'button',
+  dataTestId = ''
 }) => {
   const basicClass = buttonVariants({ size, variant, shape })
   return (
     <button
+      data-testid={dataTestId}
       className={classNames(basicClass, className)}
       onClick={onClick}
       onMouseEnter={onMouseEnter}

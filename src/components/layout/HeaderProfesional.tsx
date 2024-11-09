@@ -37,19 +37,25 @@ const HeaderProfesional = () => {
   return (
     <header className="top-4 right-4 flex gap-4 fixed z-50">
       <div data-tooltip-id="pdf">
-        <Button size={'square'} variant={'fourth'} onClick={handleDownload}>
+        <Button size={'square'} variant={'fourth'} onClick={handleDownload} dataTestId="download-button">
           <Download className="text-white" />
         </Button>
         <Tooltip id="pdf" content="Generar reporte de gráficos" variant="dark" place="bottom" />
       </div>
       <div data-tooltip-id="actividades">
-        <Button size={'square'} variant={'secondary'} onClick={() => navigate('/profesional/paciente/1/actividades')}>
+        <Button
+          dataTestId="folder-button"
+          size={'square'}
+          variant={'secondary'}
+          onClick={() => navigate('/profesional/paciente/1/actividades')}
+        >
           <FolderDot className="text-white" />
         </Button>
         <Tooltip id="actividades" content="Ir a respuestas de actividades" variant="dark" place="bottom" />
       </div>
       <div data-tooltip-id="logout">
         <Button
+          dataTestId="professional-logout-button"
           size={'square'}
           variant={'primary'}
           onClick={() => {
