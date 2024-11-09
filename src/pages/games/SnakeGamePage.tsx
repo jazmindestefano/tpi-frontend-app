@@ -9,13 +9,15 @@ import { ContinueIcon } from '@/components/common/icons/Icons'
 import { usePostUserRecording } from '@/hooks/queries'
 import { useUser, useSelectedGame } from '@/hooks/selectors'
 import { useAudioRecording } from '@/hooks/useAudioRecording'
+import { useSelector } from 'react-redux'
+import { useTextToSpeech } from '@/hooks/useTextToSpeech'
 
 interface SnakeGameProps {
   items: string[]
   cellSize?: number
 }
 
-const SnakeGamePage = ({ items, cellSize = 50 }: SnakeGameProps) => {
+const SnakeGamePage = ({ items, cellSize = 65 }: SnakeGameProps) => {
   const [snake, setSnake] = useState([{ x: 7, y: 5 }])
   const [direction, setDirection] = useState({ x: 1, y: 0 })
   const [item, setItem] = useState({ char: items[0], x: 10, y: 4 })
@@ -24,10 +26,15 @@ const SnakeGamePage = ({ items, cellSize = 50 }: SnakeGameProps) => {
   const [isPaused, setIsPaused] = useState(false)
   const [gridSize, setGridSize] = useState({ width: 30, height: 9 })
   const [isGameFinished, setIsGameFinished] = useState<boolean>(false)
-  const navigate = useNavigate()
-  const user = useUser()
+  const { isLoading, playAudio } = useTextToSpeech({ text: item.char })
   const { isRecording, audio, startRecording, stopRecording } = useAudioRecording()
   const { mutate } = usePostUserRecording()
+  const selectedTheme = useSelector(
+    (state: { game: { selectedTheme: { id: number | string } } }) => state.game.selectedTheme
+  )
+  const displayText = selectedTheme.id === 10 || selectedTheme.id === 'Vocales' ? 'Vocales comidas' : 'Sílabas comidas'
+  const user = useUser()
+  const navigate = useNavigate()
   const selectedGame = useSelectedGame()
 
   useEffect(() => {
@@ -106,6 +113,7 @@ const SnakeGamePage = ({ items, cellSize = 50 }: SnakeGameProps) => {
           setShowBigItem(true)
           setIsPaused(true)
 
+          if (!isLoading) playAudio()
           const remainingItems = items.filter((v) => !updatedEatenItems.includes(v))
 
           if (remainingItems.length > 0) {
@@ -123,7 +131,7 @@ const SnakeGamePage = ({ items, cellSize = 50 }: SnakeGameProps) => {
     }, 500)
 
     return () => clearInterval(gameLoop)
-  }, [snake, direction, item, isPaused, gridSize, eatenItems, items])
+  }, [isLoading, playAudio, snake, direction, item, isPaused, gridSize, eatenItems, items])
 
   useEffect(() => {
     if (isGameFinished) {
@@ -150,8 +158,23 @@ const SnakeGamePage = ({ items, cellSize = 50 }: SnakeGameProps) => {
     return () => window.removeEventListener('resize', updateGridSize)
   }, [])
 
+  useEffect(() => {
+    if (showBigItem) {
+      const timer = setTimeout(() => {
+        setShowBigItem(false)
+        setIsPaused(false)
+      }, 5000)
+
+      return () => clearTimeout(timer)
+    }
+  }, [showBigItem])
+
   return (
     <div className="flex flex-col items-center justify-center h-full mt-6">
+      <div className="mt-4 text-2xl font-bold text-purple-800">
+        {displayText}: {eatenItems.join(', ')}
+      </div>
+      <div className="mt-2 mb-4 text-sm text-purple-600">Presiona espacio para pausar/reanudar</div>
       <div
         className="relative rounded-lg shadow-lg overflow-hidden"
         style={{
@@ -202,7 +225,7 @@ const SnakeGamePage = ({ items, cellSize = 50 }: SnakeGameProps) => {
         </motion.div>
         {isPaused && !showBigItem && (
           <div className="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-            <div className="text-white text-4xl font-bold">PAUSED</div>
+            <div className="text-white text-4xl font-bold">PAUSADO</div>
           </div>
         )}
       </div>
@@ -235,8 +258,7 @@ const SnakeGamePage = ({ items, cellSize = 50 }: SnakeGameProps) => {
           {isPaused ? <Play /> : <Pause />}
         </Button>
       </div>
-      <div className="mt-4 text-2xl font-bold text-purple-800">Vocales comidas: {eatenItems.join(', ')}</div>
-      <div className="mt-2 text-sm text-purple-600">Presiona espacio para pausar/reanudar</div>
+
       <AnimatePresence>
         {showBigItem && (
           <motion.div

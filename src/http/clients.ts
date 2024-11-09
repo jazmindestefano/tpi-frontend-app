@@ -18,7 +18,6 @@ const unauthenticatedClient = axios.create({
 authenticatedClient.interceptors.request.use(
   async (req: InternalAxiosRequestConfig): Promise<InternalAxiosRequestConfig> => {
     const state = loadState()
-    console.log('(authenticatedClient.interceptors)', state)
     req.headers = {
       Authorization: 'Bearer ' + state.user.token
     } as AxiosRequestHeaders
