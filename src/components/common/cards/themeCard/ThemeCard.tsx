@@ -4,7 +4,7 @@ import { BaseCard } from '../BaseCard'
 import { BaseContainer } from '../BaseContainer'
 import { HearableButton } from '../../buttons/HearableButton.tsx'
 import SpinnerLoader from '@components/common/SpinnerLoader.tsx'
-import { useImageSkeleton } from '@hooks'
+import { useImagesLoading } from '@hooks'
 
 interface ThemeCardProps {
   theme: Theme
@@ -14,7 +14,7 @@ interface ThemeCardProps {
 }
 
 export const ThemeCard: React.FC<ThemeCardProps> = ({ theme, onClick, bgColor, onImageLoad }) => {
-  const { imageLoaded, handleImageLoad } = useImageSkeleton({ totalImages: 1 })
+  const { imageLoaded, handleImageLoad } = useImagesLoading({ totalImages: 1 })
 
   useEffect(() => {
     if (imageLoaded) {
