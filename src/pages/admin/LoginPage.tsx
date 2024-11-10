@@ -35,6 +35,7 @@ const LoginPage: FC = () => {
       })
       .then(async () => {
         const user = await getMe()
+        console.log({ user })
         if (user) {
           if (user.role === 'PROFESSIONAL') {
             navigate('/profesional')

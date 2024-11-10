@@ -336,7 +336,7 @@ export const createPatient = async (
 }
 
 export const getProfessionals = async (stateId: number | null) => {
-  const res = await unauthenticatedClient.get(`admin/getProfessionals/${stateId == null ? '' : `?idState=${stateId}`}`)
+  const res = await authenticatedClient.get(`admin/getProfessionals/${stateId == null ? '' : `?idState=${stateId}`}`)
 
   if (res.status === 200) {
     return res.data
@@ -345,10 +345,10 @@ export const getProfessionals = async (stateId: number | null) => {
 }
 
 export const updateProfessionalState = async (professionalId: number, stateId: number, comment: string | null) => {
-  const res = await unauthenticatedClient.patch(
+  const res = await authenticatedClient.patch(
     `admin/${professionalId}?idState=${stateId}${comment != null ? `&comment=${comment}` : ''}`
   )
-
+  console.log({ res })
   if (res.status === 200) {
     return res.data
   }
