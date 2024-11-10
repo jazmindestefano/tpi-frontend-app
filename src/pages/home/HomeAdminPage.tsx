@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import { LogOut, Search, X } from 'lucide-react'
-import { useGetProfessionals } from '@hooks/queries'
+import { CircleCheck, CircleX, LogOut, Search, X } from 'lucide-react'
+import { useGetProfessionals, useUpdateProfessioanlStateId } from '@hooks/queries'
 import SpinnerLoader from '@components/common/SpinnerLoader'
 import Button from '@components/common/buttons/Button'
 import { useNavigate } from 'react-router-dom'
@@ -25,9 +25,18 @@ const HomeAdminPage = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
   const [stateIdFilter, setStateIdFilter] = useState<number | null>(null)
   const { data: professionals, isLoading, error } = useGetProfessionals(stateIdFilter)
+  const { mutateAsync: updateProfessionalState, isPending } = useUpdateProfessioanlStateId()
 
   const handleStateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setStateIdFilter(Number(e.target.value) || null)
+  }
+
+  const handleApprove = async (professionalId: number) => {
+    await updateProfessionalState({ professionalId, stateId: 4, comment: 'Aprobado' })
+  }
+
+  const handleReject = async (professionalId: number) => {
+    await updateProfessionalState({ professionalId, stateId: 3, comment: 'Rechazado' })
   }
 
   const filteredProfessionals = professionals?.filter((prof) =>
@@ -92,10 +101,13 @@ const HomeAdminPage = () => {
                   Email
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Estado
+                  Estado Actual
                 </th>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                   Imagen
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Update
                 </th>
               </tr>
             </thead>
@@ -120,6 +132,26 @@ const HomeAdminPage = () => {
                       className="h-10 w-10 rounded-full cursor-pointer"
                       onClick={() => setSelectedImage(professional.image)}
                     />
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    {professional.stateId === 2 && (
+                      <div className="flex space-x-2 mt-2">
+                        <button
+                          onClick={() => handleApprove(professional.id)}
+                          disabled={isPending}
+                          className="px-3 py-1 rounded-md"
+                        >
+                          <CircleCheck color="green" />
+                        </button>
+                        <button
+                          onClick={() => handleReject(professional.id)}
+                          disabled={isPending}
+                          className="px-3 py-1 rounded-md"
+                        >
+                          <CircleX color="red" />
+                        </button>
+                      </div>
+                    )}
                   </td>
                 </tr>
               ))}
