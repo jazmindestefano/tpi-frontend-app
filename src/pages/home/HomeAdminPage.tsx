@@ -1,7 +1,9 @@
 import { useState } from 'react'
-import { Search, X } from 'lucide-react'
+import { LogOut, Search, X } from 'lucide-react'
 import { useGetProfessionals } from '@hooks/queries'
 import SpinnerLoader from '@components/common/SpinnerLoader'
+import Button from '@components/common/buttons/Button'
+import { useNavigate } from 'react-router-dom'
 
 type Statuses = {
   [key: number]: { text: string; color: string }
@@ -18,6 +20,7 @@ const getVerificationStatus = (id: number) => {
 }
 
 const HomeAdminPage = () => {
+  const navigate = useNavigate()
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
   const [stateIdFilter, setStateIdFilter] = useState<number | null>(null)
@@ -28,11 +31,22 @@ const HomeAdminPage = () => {
   }
 
   const filteredProfessionals = professionals?.filter((prof) =>
-    prof.name.toLowerCase().includes(searchTerm.toLowerCase())
+    prof.email.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
   return (
     <div className="p-6 w-full flex justify-center items-center flex-col">
+      <Button
+        size={'square'}
+        variant={'primary'}
+        className="logout-button self-end"
+        onClick={() => {
+          localStorage.clear()
+          navigate('/login')
+        }}
+      >
+        <LogOut className="text-white" />
+      </Button>
       <h1 className="text-2xl font-bold mb-6">Clara Admin</h1>
 
       <div className="mb-4 w-[50%]">
