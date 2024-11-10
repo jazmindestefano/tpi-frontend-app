@@ -52,18 +52,18 @@ export const router = createBrowserRouter([
     element: <ChangePassword />
   },
   {
-    element: <LayoutAdmin />,
-    children: [
-      {
-        path: '/admin',
-        element: <HomeAdminPage />
-      }
-    ]
-  },
-  {
     element: <PrivateRoute />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        element: <LayoutAdmin />,
+        children: [
+          {
+            path: '/admin',
+            element: <HomeAdminPage />
+          }
+        ]
+      },
       {
         element: <LayoutPatient />,
         children: [
