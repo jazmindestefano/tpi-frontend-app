@@ -490,7 +490,10 @@ export const useUpdateProfessioanlStateId = (): {
 } => {
   const { error, isPending, mutateAsync } = useMutation({
     mutationFn: async ({ professionalId, stateId, comment }: UpdateProfessionalStateIdProps) =>
-      await ApiService.updateProfessionalState(professionalId, stateId, comment)
+      await ApiService.updateProfessionalState(professionalId, stateId, comment),
+    onSuccess: () => {
+      window.location.reload()
+    }
   })
 
   return { error, isPending, mutateAsync }
