@@ -158,7 +158,6 @@ export const getActivityLetterResponsesForDashboard = async (patientId: number) 
 
 export const getSurveyFeedbackForDashboard = async (patientId: number) => {
   const res = await authenticatedClient.get(`/surveyFeedback/${patientId}`)
-  console.log(res)
   if (res.status === 200 && res.data.statusCode !== '404') {
     return res.data
   }
@@ -323,7 +322,6 @@ export const createPatient = async (
   birthDate: string,
   professionalId: number
 ) => {
-  console.log('(createPatient)', new Date(birthDate).toISOString())
   const res = await authenticatedClient.post(`/patients/${professionalId}`, {
     name,
     surname,
