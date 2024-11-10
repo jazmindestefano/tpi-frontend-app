@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const usePasswordVisbility = () => {
+const usePasswordVisibility = () => {
   const [showPassword, setShowPassword] = useState(false)
 
   const togglePasswordVisibility = () => {
@@ -13,4 +13,4 @@ const usePasswordVisbility = () => {
   }
 }
 
-export default usePasswordVisbility
+export default usePasswordVisibility
