@@ -1,12 +1,34 @@
-import { useGetProfessionals } from '@hooks/queries'
-import HomeAdminPage from '../../pages/home/HomeAdminPage'
-import { render, screen, waitFor } from '@testing-library/react'
+import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { vi } from 'vitest'
+import '@testing-library/jest-dom'
+import { useNavigate } from 'react-router-dom'
+import { useGetProfessionals } from '../../hooks/queries.ts'
+import { HomeAdminPage } from '../../pages'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-// Mockeamos el hook `useGetProfessionals`
-vi.mock('@hooks/queries', () => ({
-  useGetProfessionals: vi.fn()
-}))
+vi.mock('../../hooks/queries.ts', async () => {
+  const actual = await vi.importActual('../../hooks/queries.ts')
+  return {
+    ...actual,
+    useGetProfessionals: vi.fn(() => ({
+      data: [{ id: 1, name: 'Profesional 1', stateId: 2 }],
+      isLoading: false,
+      error: null
+    })),
+    useUpdateProfessionalStateId: vi.fn(() => ({
+      mutateAsync: vi.fn(),
+      isPending: false
+    }))
+  }
+})
+
+vi.mock('react-router-dom', async () => {
+  const actual = await vi.importActual('react-router-dom')
+  return {
+    ...actual,
+    useNavigate: vi.fn()
+  }
+})
 
 const mockProfessionals = [
   { id: 1, name: 'John', surname: 'Doe', email: 'john.doe@example.com', stateId: 4, image: 'image.jpg' },
@@ -14,36 +36,47 @@ const mockProfessionals = [
 ]
 
 describe('HomeAdminPage', () => {
+  it('should navigate to /login when logout button is clicked', () => {
+    const mockNavigate = vi.fn()
+    vi.mocked(useNavigate).mockReturnValue(mockNavigate)
+
+    renderHomeAdminPage()
+
+    fireEvent.click(screen.getByTestId('logout-button'))
+    expect(mockNavigate).toHaveBeenCalledWith('/login')
+  })
+
   it('should render professionals data correctly when the hook returns data', async () => {
-    WhenGetPorffesionalsHookReturnsProfessionals()
+    mockGetProfessionalsHookReturnsProfessionals()
 
-    AndRendersHomeAdminPage()
+    renderHomeAdminPage()
 
-    await PorfessionalsShowInPage()
+    await professionalsDisplayCorrectlyOnPage()
   })
 
   it('should display loading state when data is loading', () => {
-    WhenProfessionalsHookIsLoading()
+    mockGetProfessionalsHookIsLoading()
 
-    AndRendersHomeAdminPage()
+    renderHomeAdminPage()
 
-    ShowsSpinnerLoader()
+    displaysLoadingSpinner()
   })
 
   it('should display error message when there is an error', () => {
-    const mockError = WhenProfessionalsHookRetusnError()
+    const mockError = mockGetProfessionalsHookReturnsError()
 
-    AndRendersHomeAdminPage()
+    renderHomeAdminPage()
 
-    ShowsErrorOnScreen(mockError)
+    displaysErrorOnScreen(mockError)
   })
 })
 
-function ShowsErrorOnScreen(mockError: Error) {
+// Helper Functions
+function displaysErrorOnScreen(mockError: Error) {
   expect(screen.getByText(`Error: ${mockError.message}`)).toBeInTheDocument()
 }
 
-function WhenProfessionalsHookRetusnError() {
+function mockGetProfessionalsHookReturnsError() {
   const mockError = new Error('Something went wrong')
   vi.mocked(useGetProfessionals).mockReturnValue({
     data: [],
@@ -53,11 +86,11 @@ function WhenProfessionalsHookRetusnError() {
   return mockError
 }
 
-function ShowsSpinnerLoader() {
+function displaysLoadingSpinner() {
   expect(screen.getByTestId('spinner-loader')).toBeInTheDocument()
 }
 
-function WhenProfessionalsHookIsLoading() {
+function mockGetProfessionalsHookIsLoading() {
   vi.mocked(useGetProfessionals).mockReturnValue({
     data: [],
     isLoading: true,
@@ -65,18 +98,28 @@ function WhenProfessionalsHookIsLoading() {
   })
 }
 
-async function PorfessionalsShowInPage() {
+async function professionalsDisplayCorrectlyOnPage() {
   await waitFor(() => {
     expect(screen.getByText('John')).toBeInTheDocument()
     expect(screen.getByText('Jane')).toBeInTheDocument()
   })
 }
 
-function AndRendersHomeAdminPage() {
-  render(<HomeAdminPage />)
+function renderHomeAdminPage() {
+  const queryClient = new QueryClient()
+
+  render(
+    <QueryClientProvider client={queryClient}>
+      <HomeAdminPage />
+    </QueryClientProvider>
+  )
+
+  afterEach(() => {
+    queryClient.clear()
+  })
 }
 
-function WhenGetPorffesionalsHookReturnsProfessionals() {
+function mockGetProfessionalsHookReturnsProfessionals() {
   vi.mocked(useGetProfessionals).mockReturnValue({
     data: mockProfessionals,
     isLoading: false,

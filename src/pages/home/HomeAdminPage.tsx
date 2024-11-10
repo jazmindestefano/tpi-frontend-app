@@ -39,13 +39,14 @@ const HomeAdminPage = () => {
     await updateProfessionalState({ professionalId, stateId: 3, comment: 'Rechazado' })
   }
 
-  const filteredProfessionals = professionals?.filter((prof) =>
-    prof.email.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredProfessionals = professionals?.filter(
+    (prof) => prof.email && prof.email.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
   return (
     <div className="p-6 w-full flex justify-center items-center flex-col">
       <Button
+        dataTestId="logout-button"
         size={'square'}
         variant={'primary'}
         className="logout-button self-end"
@@ -72,7 +73,7 @@ const HomeAdminPage = () => {
         <div className="relative">
           <input
             type="text"
-            placeholder="Buscar por nombre..."
+            placeholder="Buscar por email..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             className="w-full p-2 pl-10 border rounded-lg"
