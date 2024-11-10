@@ -1,5 +1,5 @@
 import Joyride from 'react-joyride'
-import useProductTour from '../hooks/useProductTour'
+import useProductTour from '../hooks/common/useProductTour'
 import { steps } from '../helpers/productTourSteps'
 
 const ProductTour = () => {

@@ -44,7 +44,7 @@ const Home = () => {
           dispatch(setModalFeedback(false))
         }}
       />
-      <div className="flex flex-col justify-center items-center w-full gap-6 layout">
+      <div className="flex flex-col justify-center items-center w-full gap-6 pt-20">
         <div className="flex justify-center items-center w-full gap-4">
           <h1 className="text-h1">Juegos</h1>
           <HearableButton variant={'secondary'} text={'Elegí un juego'} className="volume-icon" />

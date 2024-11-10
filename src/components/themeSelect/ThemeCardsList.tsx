@@ -3,9 +3,8 @@ import { ThemeCard } from '../common/cards/themeCard/ThemeCard'
 import { Theme } from '../../interfaces/interfaces'
 import Button from '../common/buttons/Button'
 import { ArrowLeftIcon, ArrowRightIcon } from '../common/icons/Icons'
-import { useScroll } from '../../hooks/useScroll'
-import { useImageSkeleton } from '../../hooks/useImageSkeleton'
 import SpinnerLoader from '@components/common/SpinnerLoader'
+import { useImagesLoading, useScroll } from '@hooks'
 
 // todo: change this
 const bgColors = [
@@ -26,7 +25,7 @@ interface ThemeCardsListProps {
 export default function ThemeCardsList({ themes, onCardClick }: ThemeCardsListProps) {
   const { scrollRef, scroll, checkScrollButtons, showScrollButtons } = useScroll()
   const [assignedColors, setAssignedColors] = useState<string[]>([])
-  const { loadedImages, handleImageLoad } = useImageSkeleton({
+  const { loadedImages, handleImageLoad } = useImagesLoading({
     totalImages: themes.length,
     onAllImagesLoaded: checkScrollButtons
   })

@@ -8,9 +8,9 @@ import { RecordButton } from '@/components/common/buttons/RecordButton'
 import { ContinueIcon } from '@/components/common/icons/Icons'
 import { usePostUserRecording } from '@/hooks/queries'
 import { useUser, useSelectedGame } from '@/hooks/selectors'
-import { useAudioRecording } from '@/hooks/useAudioRecording'
 import { useSelector } from 'react-redux'
-import { useTextToSpeech } from '@/hooks/useTextToSpeech'
+import useAudioRecording from '@/hooks/common/useAudioRecording'
+import useTextToSpeech from '../../hooks/speakText/useTextToSpeech'
 
 interface SnakeGameProps {
   items: string[]

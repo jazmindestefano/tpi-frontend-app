@@ -6,6 +6,14 @@ import SpinnerLoader from '@components/common/SpinnerLoader'
 import { PlayCircle } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { parse, isWithinInterval, isSameDay } from 'date-fns'
+import DateFilter from '@components/common/filter/DateFilter'
+import Filter from '@components/common/filter/Filter' // Importa el componente Filter
+
+interface SelectOption {
+  value: string
+  label: string
+}
 
 function playAudio(userAnswer: string) {
   const audio = new Audio(userAnswer)
@@ -17,7 +25,9 @@ const ActivityResponsesPage = () => {
   const [readyToFetch, setReadyToFetch] = useState(false)
   const { data, error, isLoading } = useGetPatientActivityAnswers(readyToFetch ? Number(patientId) : 0)
   const [filteredData, setFilteredData] = useState<PatientActivityAnswers[]>([])
-  const [selectedDate, setSelectedDate] = useState<string>('')
+  const [startDate, setStartDate] = useState<Date | null>(date ? parse(date, 'yyyy-MM-dd', new Date()) : null)
+  const [endDate, setEndDate] = useState<Date | null>(date ? parse(date, 'yyyy-MM-dd', new Date()) : null)
+  const [selectedOptionValues, setSelectedOptionValues] = useState<string[]>([])
 
   useEffect(() => {
     if (patientId) {
@@ -26,40 +36,50 @@ const ActivityResponsesPage = () => {
   }, [patientId])
 
   useEffect(() => {
-    if (date) {
-      setSelectedDate(date)
-    }
-  }, [date])
-
-  useEffect(() => {
     if (data) {
       const filteredByActivity = data.filter((item) => item.gameid === parseInt(activityId!))
-      const finalFilteredData = selectedDate
-        ? filteredByActivity.filter((item) =>
-            item.answersDto.some((answer) => answer.answerDate.startsWith(selectedDate))
-          )
-        : filteredByActivity
+      const finalFilteredData = filteredByActivity.filter((item) =>
+        item.answersDto.some((answer) => {
+          const answerDate = parse(answer.answerDate.substring(0, 10), 'yyyy-MM-dd', new Date())
+          const isDateInRange = date
+            ? isSameDay(answerDate, parse(date, 'yyyy-MM-dd', new Date()))
+            : !startDate || !endDate || isWithinInterval(answerDate, { start: startDate, end: endDate })
 
+          const isOptionSelected =
+            selectedOptionValues.length === 0 || selectedOptionValues.includes(answer.optionValue)
+
+          return isDateInRange && isOptionSelected
+        })
+      )
       setFilteredData(finalFilteredData)
     }
-  }, [data, error, isLoading, activityId, selectedDate])
+  }, [data, error, isLoading, activityId, date, startDate, endDate, selectedOptionValues])
+
+  const optionValueOptions: SelectOption[] = Array.from(
+    new Set(data?.flatMap((item) => item.answersDto.map((answer) => answer.optionValue)) || [])
+  ).map((value) => ({ value, label: value }))
 
   return (
-    <div className="flex flex-col items-start justify-start gap-5 lg:pt-0 w-full">
+    <div className="flex flex-col items-start justify-start gap-5 pt-10 px-10 w-full">
       <div className="w-full flex justify-between items-center">
         <BackButton text="Volver atrás" route={`/profesional/paciente/${patientId}/actividades`} />
       </div>
-      <div className="w-full flex justify-end items-center">
+
+      <div className="w-full flex justify-end items-center space-x-4">
         <div className="mb-4 self-end">
           <label htmlFor="dateFilter" className="mr-4 font-bold">
-            Filtrar por fecha:
+            Filtrar por rango de fechas:
           </label>
-          <input
-            type="date"
-            id="dateFilter"
-            value={selectedDate}
-            onChange={(e) => setSelectedDate(e.target.value)}
-            className="p-2 border rounded-lg"
+          <DateFilter startDate={startDate} endDate={endDate} setStartDate={setStartDate} setEndDate={setEndDate} />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="optionFilter" className="mr-4 font-bold">
+            Filtrar por respuesta:
+          </label>
+          <Filter
+            options={optionValueOptions}
+            selectedValues={selectedOptionValues}
+            onChange={setSelectedOptionValues}
           />
         </div>
       </div>
@@ -78,7 +98,17 @@ const ActivityResponsesPage = () => {
                   <ul className="space-y-4 w-full">
                     {activity.answersDto.length > 0 ? (
                       activity.answersDto
-                        .filter((response) => (selectedDate ? response.answerDate.startsWith(selectedDate) : true))
+                        .filter((response) => {
+                          const answerDate = parse(response.answerDate.substring(0, 10), 'yyyy-MM-dd', new Date())
+                          const isDateInRange = date
+                            ? isSameDay(answerDate, parse(date, 'yyyy-MM-dd', new Date()))
+                            : !startDate || !endDate || isWithinInterval(answerDate, { start: startDate, end: endDate })
+
+                          const isOptionSelected =
+                            selectedOptionValues.length === 0 || selectedOptionValues.includes(response.optionValue)
+
+                          return isDateInRange && isOptionSelected
+                        })
                         .map((response) => (
                           <li
                             key={response.id}

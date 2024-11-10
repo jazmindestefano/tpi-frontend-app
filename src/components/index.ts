@@ -1,4 +1,11 @@
-export * from './layout'
 export * from './dashboard'
 export * from './games'
 export * from './timeline'
+
+export { default as PageLayout } from './layout/LayoutPatient'
+export { default as LayoutProfesional } from './layout/LayoutProfesional'
+export { default as LayoutPatient } from './layout/LayoutPatient'
+export { default as PatientHeader } from './layout/PatientHeader'
+export { default as ProfesionalHeader } from './layout/ProfesionalHeader'
+export { default as AsideProfesional } from './layout/AsideProfesional'
+export { default as PublicRouteLayout } from './layout/PublicRouteLayout'

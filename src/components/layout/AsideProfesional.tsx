@@ -15,7 +15,11 @@ function SidebarItem({ icon: Icon, href }: SidebarItemProps) {
   }
 
   return (
-    <button onClick={handleClick} className="p-4 hover:bg-blue-600 rounded-lg transition-colors">
+    <button
+      onClick={handleClick}
+      className="p-4 hover:bg-blue-600 rounded-lg transition-colors"
+      data-testid="sidebar-item"
+    >
       <Icon className="text-white" size={24} />
     </button>
   )
@@ -34,6 +38,7 @@ const AsideProfesional = () => {
         <SidebarItem icon={Users} href="/profesional" />
       </nav>
       <Button
+        dataTestId="avatar-button"
         variant={'tertiary'}
         className="mt-auto p-4 hover:bg-blue-500 rounded-lg transition-colors"
         onClick={() => navigate('/profesional/perfil')}

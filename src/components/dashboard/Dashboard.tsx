@@ -1,10 +1,10 @@
 import { useDashboard } from '@/hooks'
-import { AuditoryDiscriminationChart, Feedback, PronunciationChart, RankingChart, Today } from './charts'
 import SpinnerLoader from '@components/common/SpinnerLoader'
 import { useState } from 'react'
 import { useGetPatientNameById } from '@hooks/queries'
 import { useParams } from 'react-router-dom'
 import BackButton from '@components/common/buttons/BackButton'
+import { AuditoryDiscriminationChart, Feedback, PronunciationChart, RankingChart, Today } from '.'
 
 const Dashboard = () => {
   const {
@@ -62,7 +62,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="w-full p-4">
+    <div className="w-full pt-10 px-10">
       <div>
         <BackButton route="/profesional" text={'Volver al Inicio'} />
         <h1 className="text-2xl">Progreso del Paciente {!isLoading && !error ? data : ''}</h1>

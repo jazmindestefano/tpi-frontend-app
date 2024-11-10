@@ -5,10 +5,10 @@ import { LevelOption } from '@/interfaces'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useSelectedTheme, useUser } from '@hooks/selectors.ts'
-import { useSpeakText } from '@hooks/useSpeakText.ts'
 import { shuffleArray } from '@/helpers'
 import ProgressBar from '@components/ProgressBar.tsx'
 import { GameOptionsListPage } from '@/pages'
+import { useSpeakText } from '@hooks'
 
 // todo: move this to helper
 const prepareData = ({

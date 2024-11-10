@@ -1,4 +1,4 @@
-import * as ApiService from '../http/queries.ts'
+import * as ApiService from './http/queries.ts'
 import { useMutation, useQuery } from '@tanstack/react-query'
 
 import {

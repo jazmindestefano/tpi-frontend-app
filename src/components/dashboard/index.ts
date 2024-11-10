@@ -1,3 +1,8 @@
 export { default as Dashboard } from './Dashboard'
+export { default as Feedback } from './charts/Feedback'
+export { default as PronunciationChart } from './charts/PronunciationChart'
+export { default as RankingChart } from './charts/RankingChart'
+export { default as Today } from './charts/Today'
+export { default as AuditoryDiscriminationChart } from './charts/AuditoryDiscriminationChart'
 export * from './interfaces'
 export * from './chartOptions'

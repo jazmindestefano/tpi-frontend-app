@@ -1,5 +1,0 @@
-export { default as RankingChart } from './RankingChart'
-export { default as PronunciationChart } from './PronunciationChart'
-export { default as AuditoryDiscriminationChart } from './AuditoryDiscriminationChart'
-export { default as Today } from './Today'
-export { default as Feedback } from './Feedback'

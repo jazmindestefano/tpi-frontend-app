@@ -5,7 +5,9 @@ import Button from '@components/common/buttons/Button.tsx'
 import { useLogin } from '@hooks/queries.ts'
 import { useDispatch } from 'react-redux'
 import { setToken } from '@redux/slices'
-import { getMe } from '../../http/queries.ts'
+import { usePasswordVisbility } from '@hooks'
+import { getMe } from '../../hooks/http/queries'
+import { PublicRouteLayout } from '@components'
 
 interface LoginFormData {
   username: string
@@ -17,6 +19,7 @@ const LoginPage: FC = () => {
   const { mutateAsync } = useLogin()
   const navigate = useNavigate()
   const dispatch = useDispatch()
+  const { showPassword, togglePasswordVisibility } = usePasswordVisbility()
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -46,42 +49,40 @@ const LoginPage: FC = () => {
   }
 
   return (
-    <div className="min-h-screen flex flex-col justify-center items-center font-comfortaa bg-orange-100">
-      <div className={'mb-16'}>
-        <img src={'/clara-logo.svg'} alt="Logo" className="h-32 cursor-pointer" />
-      </div>
-      <div className="w-full flex flex-col justify-center items-center">
-        <h1 className={'text-center font-bold text-2xl mb-4'}>Iniciar sesión</h1>
-        <div className={'flex flex-col justify-center items-center gap-8'}>
-          <div className="flex flex-col justify-center items-center gap-4">
-            <Input
-              name={'username'}
-              className="w-80"
-              label={'Nombre de usuario'}
-              onChange={handleChange}
-              value={formData.username}
-            />
-            <Input
-              name={'password'}
-              label={'Contraseña'}
-              type={'password'}
-              onChange={handleChange}
-              value={formData.password}
-              className="w-80"
-            />
-          </div>
-          <Button onClick={handleLogin} className="h-10 w-52">
-            Iniciar sesión
-          </Button>
-          <p className="text-sm">
-            ¿Todavia no tenes una cuenta?{' '}
-            <a href="/register" className="font-semibold underline">
-              Registrate acá!
-            </a>
-          </p>
+    <PublicRouteLayout>
+      <h1 className={'text-center font-bold text-2xl mb-4'}>Iniciar sesión</h1>
+      <div className={'flex flex-col justify-center items-center gap-8'}>
+        <div className="flex flex-col justify-center items-center gap-4">
+          <Input
+            name={'username'}
+            className="w-80"
+            label={'Nombre de usuario'}
+            onChange={handleChange}
+            value={formData.username}
+          />
+          <Input
+            name={'password'}
+            label={'Nueva Contraseña'}
+            type={showPassword ? 'text' : 'password'}
+            onChange={handleChange}
+            value={formData.password}
+            className="w-80"
+            showToggle
+            onToggleClick={togglePasswordVisibility}
+            toggleState={showPassword}
+          />
         </div>
+        <Button onClick={handleLogin} className="h-10 w-52">
+          Iniciar sesión
+        </Button>
+        <p className="text-sm">
+          ¿Todavia no tenes una cuenta?{' '}
+          <a href="/register" className="font-semibold underline">
+            Registrate acá!
+          </a>
+        </p>
       </div>
-    </div>
+    </PublicRouteLayout>
   )
 }
 
