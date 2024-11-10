@@ -38,6 +38,8 @@ const LoginPage: FC = () => {
         if (user) {
           if (user.role === 'PROFESSIONAL') {
             navigate('/profesional')
+          } else if (user.role === 'ADMIN') {
+            navigate('/admin')
           } else {
             navigate('/')
           }
