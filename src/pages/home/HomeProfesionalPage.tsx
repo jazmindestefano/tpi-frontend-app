@@ -8,7 +8,7 @@ const HomeProfesionalPage = () => {
   const { patients, error, isLoading } = useGetProfessionalPatients(user.id)
 
   return !error && !isLoading && patients ? (
-    <div className="flex flex-col items-start justify-start gap-4">
+    <div className="flex flex-col items-start justify-start gap-4 pt-20 px-10">
       <div className="flex justify-between items-center">
         <div>
           <h1 className="text-2xl font-bold">Hola, {user.username.substring(0, user.username.indexOf('@'))}!</h1>

@@ -62,7 +62,7 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="w-full p-4">
+    <div className="w-full pt-10 px-10">
       <div>
         <BackButton route="/profesional" text={'Volver al Inicio'} />
         <h1 className="text-2xl">Progreso del Paciente {!isLoading && !error ? data : ''}</h1>
