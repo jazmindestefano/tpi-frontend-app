@@ -336,3 +336,22 @@ export const createPatient = async (
   }
   return null
 }
+
+export const getProfessionals = async (stateId: number | null) => {
+  const res = await unauthenticatedClient.get(`admin/getProfessionals/${stateId == null ? '' : `?idState=${stateId}`}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
+
+// todo: be does not work
+export const updateProfessionalState = async (professionalId: number, stateId: number) => {
+  const res = await unauthenticatedClient.patch(`/professional/${professionalId}/state/${stateId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}

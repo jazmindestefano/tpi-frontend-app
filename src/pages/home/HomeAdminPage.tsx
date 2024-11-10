@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { Search, X } from 'lucide-react'
+import { useGetProfessionals } from '@hooks/queries'
+import SpinnerLoader from '@components/common/SpinnerLoader'
 
 type Statuses = {
   [key: number]: { text: string; color: string }
@@ -18,33 +20,30 @@ const getVerificationStatus = (id: number) => {
 const HomeAdminPage = () => {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
+  const [stateIdFilter, setStateIdFilter] = useState<number | null>(null)
+  const { data: professionals, isLoading, error } = useGetProfessionals(stateIdFilter)
 
-  const professionals = [
-    {
-      id: 1,
-      email: 'juliana@gmail.com',
-      name: 'Juliana',
-      surname: 'Fernandez',
-      image: 'julianaPerfil',
-      statusId: 1
-    },
-    {
-      id: 2,
-      email: 'maria@gmail.com',
-      name: 'Maria',
-      surname: 'Perez',
-      image: 'mariaPerfil',
-      statusId: 1
-    }
-  ]
+  const handleStateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setStateIdFilter(Number(e.target.value) || null)
+  }
 
-  const filteredProfessionals = professionals.filter((prof) =>
+  const filteredProfessionals = professionals?.filter((prof) =>
     prof.name.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
   return (
     <div className="p-6 w-full flex justify-center items-center flex-col">
       <h1 className="text-2xl font-bold mb-6">Clara Admin</h1>
+
+      <div className="mb-4 w-[50%]">
+        <select className="w-full p-2 border rounded-lg" value={stateIdFilter || ''} onChange={handleStateChange}>
+          <option value="">Selecciona un estado</option>
+          <option value={1}>Sin verificar</option>
+          <option value={2}>Pendiente</option>
+          <option value={3}>Rechazado</option>
+          <option value={4}>Verificado</option>
+        </select>
+      </div>
 
       <div className="mb-4 relative w-[50%]">
         <div className="relative">
@@ -59,47 +58,61 @@ const HomeAdminPage = () => {
         </div>
       </div>
 
-      <div className="overflow-x-auto w-[80%]">
-        <table className="min-w-full bg-white rounded-lg overflow-hidden">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nombre</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Apellido
-              </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Estado</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Imagen</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-gray-200">
-            {filteredProfessionals.map((professional) => (
-              <tr key={professional.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap">{professional.id}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{professional.name}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{professional.surname}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{professional.email}</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <span
-                    className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getVerificationStatus(professional.statusId).color}`}
-                  >
-                    {getVerificationStatus(professional.statusId).text}
-                  </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <img
-                    src={`/api/placeholder/50/50`}
-                    alt={`Perfil de ${professional.name}`}
-                    className="h-10 w-10 rounded-full cursor-pointer"
-                    onClick={() => setSelectedImage(professional.image)}
-                  />
-                </td>
+      {error && <div className="w-full bg-red-200 text-red-800 p-2 mb-4 rounded-md">Error: {error.message}</div>}
+
+      {isLoading && <SpinnerLoader />}
+
+      {!isLoading && !error && filteredProfessionals && (
+        <div className="overflow-x-auto w-[80%]">
+          <table className="min-w-full bg-white rounded-lg overflow-hidden">
+            <thead className="bg-gray-100">
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Nombre
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Apellido
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Email
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Estado
+                </th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Imagen
+                </th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody className="divide-y divide-gray-200">
+              {filteredProfessionals.map((professional) => (
+                <tr key={professional.id} className="hover:bg-gray-50">
+                  <td className="px-6 py-4 whitespace-nowrap">{professional.id}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{professional.name}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{professional.surname}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">{professional.email}</td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <span
+                      className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getVerificationStatus(professional.stateId).color}`}
+                    >
+                      {getVerificationStatus(professional.stateId).text}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap">
+                    <img
+                      src={`/api/placeholder/50/50`}
+                      alt={`Perfil de ${professional.name}`}
+                      className="h-10 w-10 rounded-full cursor-pointer"
+                      onClick={() => setSelectedImage(professional.image)}
+                    />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
       {selectedImage && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">

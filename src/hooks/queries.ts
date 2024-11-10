@@ -23,7 +23,8 @@ import {
   ProfesionalPatient,
   PatientActivityAnswers,
   ProfileData,
-  User
+  User,
+  Professional
 } from '@/interfaces/interfaces.ts'
 
 export const useGetThemesByGameId = (
@@ -459,4 +460,28 @@ export const usePostPatient = (): {
   })
 
   return { mutate, reset, error, isPending, isSuccess }
+}
+
+export const getProfessionals = async (stateId: number) => {
+  const res = await ApiService.getProfessionals(stateId)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
+
+export const useGetProfessionals = (
+  stateId: number | null
+): {
+  data: Professional[]
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['professionalsAdmin', stateId],
+    queryFn: async () => await ApiService.getProfessionals(stateId)
+  })
+
+  return { data, error, isLoading }
 }
