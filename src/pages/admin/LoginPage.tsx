@@ -5,7 +5,7 @@ import Button from '@components/common/buttons/Button.tsx'
 import { useLogin } from '@hooks/queries.ts'
 import { useDispatch } from 'react-redux'
 import { setToken } from '@redux/slices'
-import { usePasswordVisbility } from '@hooks'
+import { usePasswordVisibility } from '@hooks'
 import { getMe } from '../../hooks/http/queries'
 import { PublicRouteLayout } from '@components'
 
@@ -19,7 +19,7 @@ const LoginPage: FC = () => {
   const { mutateAsync } = useLogin()
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const { showPassword, togglePasswordVisibility } = usePasswordVisbility()
+  const { showPassword, togglePasswordVisibility } = usePasswordVisibility()
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target

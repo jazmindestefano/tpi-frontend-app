@@ -16,6 +16,7 @@ interface InputProps {
   showToggle?: boolean
   onToggleClick?: () => void
   toggleState?: boolean
+  dataTestId?: string
 }
 
 export const Input: React.FC<InputProps> = ({
@@ -31,12 +32,14 @@ export const Input: React.FC<InputProps> = ({
   multiple = false,
   showToggle = false,
   onToggleClick,
-  toggleState = false
+  toggleState = false,
+  dataTestId = ''
 }) => {
   return (
     <div className="relative w-full space-y-4">
       {label ? <Label text={label} htmlFor={name} className="flex justify-center items-center w-full" /> : null}
       <input
+        data-testid={dataTestId}
         multiple={multiple}
         className={classNames('border border-gray-50 rounded-3xl p-2 pr-10 bg-gray-50 outline-0 w-full', className)}
         name={name}

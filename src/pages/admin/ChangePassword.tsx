@@ -1,13 +1,13 @@
 import Button from '@components/common/buttons/Button'
 import { Input } from '@components/common/inputs/Input'
-import { usePasswordVisbility } from '@hooks'
+import { usePasswordVisibility } from '@hooks'
 import { useState, ChangeEvent } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 const ChangePassword = () => {
   const [formData, setFormData] = useState<{ password: string }>({ password: '' })
   const navigate = useNavigate()
-  const { showPassword, togglePasswordVisibility } = usePasswordVisbility()
+  const { showPassword, togglePasswordVisibility } = usePasswordVisibility()
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -36,9 +36,10 @@ const ChangePassword = () => {
               showToggle
               onToggleClick={togglePasswordVisibility}
               toggleState={showPassword}
+              dataTestId="password-input"
             />
           </div>
-          <Button onClick={() => navigate('/login')} className="h-10 px-4">
+          <Button onClick={() => navigate('/login')} className="h-10 px-4" dataTestId="logout-button">
             Cambiar contraseña e Iniciar Sesión
           </Button>
         </div>
