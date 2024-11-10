@@ -127,3 +127,14 @@ export interface Professional {
   image: string
   stateId: number
 }
+
+export interface UpdateProfessionalStateIdProps {
+  professionalId: number
+  stateId: number
+  comment: string | null
+}
+
+export interface LoginProps {
+  username: string
+  password: string
+}

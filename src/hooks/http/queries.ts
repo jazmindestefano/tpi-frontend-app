@@ -344,9 +344,10 @@ export const getProfessionals = async (stateId: number | null) => {
   return null
 }
 
-// todo: be does not work
-export const updateProfessionalState = async (professionalId: number, stateId: number) => {
-  const res = await unauthenticatedClient.patch(`/professional/${professionalId}/state/${stateId}`)
+export const updateProfessionalState = async (professionalId: number, stateId: number, comment: string | null) => {
+  const res = await unauthenticatedClient.patch(
+    `admin/${professionalId}?idState=${stateId}${comment != null ? `&comment=${comment}` : ''}`
+  )
 
   if (res.status === 200) {
     return res.data

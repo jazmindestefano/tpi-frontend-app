@@ -24,7 +24,9 @@ import {
   PatientActivityAnswers,
   ProfileData,
   User,
-  Professional
+  Professional,
+  UpdateProfessionalStateIdProps,
+  LoginProps
 } from '@/interfaces/interfaces.ts'
 
 export const useGetThemesByGameId = (
@@ -389,11 +391,6 @@ export const useGetProfessionalPatients = (
   return { patients: data, error, isLoading }
 }
 
-interface LoginProps {
-  username: string
-  password: string
-}
-
 export const useLogin = (): {
   mutateAsync: (args: LoginProps) => Promise<string | null>
   error: Error | null
@@ -484,4 +481,17 @@ export const useGetProfessionals = (
   })
 
   return { data, error, isLoading }
+}
+
+export const useUpdateProfessioanlStateId = (): {
+  mutateAsync: (args: UpdateProfessionalStateIdProps) => Promise<string | null>
+  error: Error | null
+  isPending: boolean
+} => {
+  const { error, isPending, mutateAsync } = useMutation({
+    mutationFn: async ({ professionalId, stateId, comment }: UpdateProfessionalStateIdProps) =>
+      await ApiService.updateProfessionalState(professionalId, stateId, comment)
+  })
+
+  return { error, isPending, mutateAsync }
 }
