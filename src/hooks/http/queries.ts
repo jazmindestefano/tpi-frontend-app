@@ -334,3 +334,23 @@ export const createPatient = async (
   }
   return null
 }
+
+export const getProfessionals = async (stateId: number | null) => {
+  const res = await authenticatedClient.get(`admin/getProfessionals/${stateId == null ? '' : `?idState=${stateId}`}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
+
+export const updateProfessionalState = async (professionalId: number, stateId: number, comment: string | null) => {
+  const res = await authenticatedClient.patch(
+    `admin/${professionalId}?idState=${stateId}${comment != null ? `&comment=${comment}` : ''}`
+  )
+  console.log({ res })
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}

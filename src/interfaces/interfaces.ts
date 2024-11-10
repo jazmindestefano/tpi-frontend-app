@@ -118,3 +118,23 @@ export interface PatientActivityAnswers {
   gameid: number
   answersDto: Answer[]
 }
+
+export interface Professional {
+  id: number
+  email: string
+  name: string
+  surname: string
+  image: string
+  stateId: number
+}
+
+export interface UpdateProfessionalStateIdProps {
+  professionalId: number
+  stateId: number
+  comment: string | null
+}
+
+export interface LoginProps {
+  username: string
+  password: string
+}

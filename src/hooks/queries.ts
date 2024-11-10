@@ -23,7 +23,10 @@ import {
   ProfesionalPatient,
   PatientActivityAnswers,
   ProfileData,
-  User
+  User,
+  Professional,
+  UpdateProfessionalStateIdProps,
+  LoginProps
 } from '@/interfaces/interfaces.ts'
 
 export const useGetThemesByGameId = (
@@ -388,11 +391,6 @@ export const useGetProfessionalPatients = (
   return { patients: data, error, isLoading }
 }
 
-interface LoginProps {
-  username: string
-  password: string
-}
-
 export const useLogin = (): {
   mutateAsync: (args: LoginProps) => Promise<string | null>
   error: Error | null
@@ -459,4 +457,44 @@ export const usePostPatient = (): {
   })
 
   return { mutate, reset, error, isPending, isSuccess }
+}
+
+export const getProfessionals = async (stateId: number) => {
+  const res = await ApiService.getProfessionals(stateId)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
+
+export const useGetProfessionals = (
+  stateId: number | null
+): {
+  data: Professional[]
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['professionalsAdmin', stateId],
+    queryFn: async () => await ApiService.getProfessionals(stateId)
+  })
+
+  return { data, error, isLoading }
+}
+
+export const useUpdateProfessioanlStateId = (): {
+  mutateAsync: (args: UpdateProfessionalStateIdProps) => Promise<string | null>
+  error: Error | null
+  isPending: boolean
+} => {
+  const { error, isPending, mutateAsync } = useMutation({
+    mutationFn: async ({ professionalId, stateId, comment }: UpdateProfessionalStateIdProps) =>
+      await ApiService.updateProfessionalState(professionalId, stateId, comment),
+    onSuccess: () => {
+      window.location.reload()
+    }
+  })
+
+  return { error, isPending, mutateAsync }
 }

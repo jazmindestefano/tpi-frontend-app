@@ -21,13 +21,14 @@ import {
   RegisterPage,
   EmailVerification,
   ProfesionalCredentialVerification,
-  ChangePassword
+  ChangePassword,
+  HomeAdminPage
 } from '@/pages'
 import { ValidGameWrapper } from '@/router/ValidGameWrapper.tsx'
 import { SnakeGameWrapper } from '../../wrappers'
 import ValidateRoleProfessional from './ValidateRoleProfessional.tsx'
 import ValidateRolePatient from './ValidateRolePatient.tsx'
-import { LayoutPatient, LayoutProfesional } from '@components/index.ts'
+import { LayoutAdmin, LayoutPatient, LayoutProfesional } from '@components'
 
 export const router = createBrowserRouter([
   {
@@ -54,6 +55,16 @@ export const router = createBrowserRouter([
     element: <PrivateRoute />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        element: <LayoutAdmin />,
+        path: '/admin',
+        children: [
+          {
+            path: '',
+            element: <HomeAdminPage />
+          }
+        ]
+      },
       {
         element: <LayoutPatient />,
         children: [
