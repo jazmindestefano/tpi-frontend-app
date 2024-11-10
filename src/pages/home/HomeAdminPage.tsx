@@ -44,7 +44,7 @@ const HomeAdminPage = () => {
   )
 
   return (
-    <div className="p-6 w-full flex justify-center items-center flex-col">
+    <div className="p-6 w-full flex justify-start items-center flex-col h-screen bg-orange-50">
       <Button
         dataTestId="logout-button"
         size={'square'}
