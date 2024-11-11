@@ -16,6 +16,7 @@ interface LoginFormData {
 
 const LoginPage: FC = () => {
   const [formData, setFormData] = useState<LoginFormData>({ password: '', username: '' })
+  const [error, setError] = useState<string | null>(null)
   const { mutateAsync } = useLogin()
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -27,6 +28,7 @@ const LoginPage: FC = () => {
   }
 
   const handleLogin = () => {
+    setError(null)
     mutateAsync(formData)
       .then((token) => {
         if (token) {
@@ -35,7 +37,6 @@ const LoginPage: FC = () => {
       })
       .then(async () => {
         const user = await getMe()
-        console.log({ user })
         if (user) {
           if (user.role === 'PROFESSIONAL') {
             navigate('/profesional')
@@ -47,6 +48,7 @@ const LoginPage: FC = () => {
         }
       })
       .catch((e) => {
+        setError('Credenciales inválidas. Por favor, intenta nuevamente.')
         console.error(e)
       })
   }
@@ -75,6 +77,7 @@ const LoginPage: FC = () => {
             toggleState={showPassword}
           />
         </div>
+        {error && <p className="text-red-500 text-sm">{error}</p>}
         <Button onClick={handleLogin} className="h-10 w-52">
           Iniciar sesión
         </Button>
