@@ -1,6 +1,7 @@
 import { HearableButton } from '@/components/common/buttons/HearableButton'
 import { getJustifyClass } from '@/helpers'
 import { LevelOption } from '@/interfaces'
+import { useState } from 'react'
 
 interface GameOptionsListProps {
   options: LevelOption[]
@@ -8,24 +9,31 @@ interface GameOptionsListProps {
 }
 
 const GameOptionsListPage = ({ options, onOptionSelection }: GameOptionsListProps) => {
+  const [selectedOption, setSelectedOption] = useState<number | null>(null)
+
+  const handleOptionClick = (option: LevelOption) => {
+    setSelectedOption(option.id)
+    onOptionSelection(option)
+  }
+
   return (
-    <div className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 my-16 w-full`}>
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 my-16 w-full">
       {options.map((option, index) => (
         <div
           key={option.id}
-          className={`flex flex-col justify-center items-center w-full cursor-pointer rounded-3xl shadow-lg p-4 h-auto gap-6 bg-orange-100 ${getJustifyClass(index)}`}
+          className={`flex flex-col justify-center items-center w-full cursor-pointer rounded-3xl shadow-lg p-4 h-auto gap-6 ${
+            option.correct && selectedOption === option.id ? 'bg-green-200' : 'bg-orange-100'
+          } ${getJustifyClass(index)}`}
+          onClick={() => handleOptionClick(option)}
         >
-          <div
-            className="p-4 w-full rounded-3xl h-80 flex flex-col justify-center items-center bg-white"
-            onClick={() => onOptionSelection(option)}
-          >
+          <div className="p-4 w-full rounded-3xl h-80 flex flex-col justify-center items-center bg-white">
             <img
               src={`/gameOptions/${option.name.toLowerCase()}.png`}
               alt={option.name.toUpperCase()}
               className="w-auto h-80 rounded-3xl"
             />
           </div>
-          <HearableButton variant={'fourth'} text={option.name} />
+          <HearableButton variant="fourth" text={option.name} />
         </div>
       ))}
     </div>
