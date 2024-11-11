@@ -10,7 +10,6 @@ import ProgressBar from '@components/ProgressBar.tsx'
 import { GameOptionsListPage } from '@/pages'
 import { useSpeakText } from '@hooks'
 
-// todo: move this to helper
 const prepareData = ({
   patiendId,
   activityId,
@@ -32,7 +31,6 @@ const prepareData = ({
 }
 
 const AuditoryDiscriminationGamePage = () => {
-  // todo: possible to lift up state to parent (HOC)
   const navigate = useNavigate()
   const selectedTheme = useSelectedTheme()
   const user = useUser()
@@ -65,7 +63,10 @@ const AuditoryDiscriminationGamePage = () => {
         selectedOption: selectedOption.id
       })
     )
-    setCurrentLevel((prevState) => prevState + 1)
+
+    setTimeout(() => {
+      setCurrentLevel((prevState) => prevState + 1)
+    }, 3000)
   }
 
   useEffect(() => {
