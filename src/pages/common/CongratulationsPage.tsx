@@ -20,6 +20,10 @@ const CongratulationsPage = () => {
     dispatch(setModalFeedback(true))
   }, [dispatch])
 
+  const handleReplayClick = () => {
+    navigate(`/tematicas`)
+  }
+
   return (
     <>
       <style>
@@ -70,7 +74,6 @@ const CongratulationsPage = () => {
       </style>
 
       <div className="flex flex-col w-full items-center justify-center h-full relative container-animation">
-        {/* Contenedor del pin con la animación */}
         <ConfettiAnimation isActive={true} />
         <div className="h-96 pin-container">
           <img src={achievement?.image} className="pin-animation" alt="Pin" />
@@ -88,6 +91,15 @@ const CongratulationsPage = () => {
           className="px-6 py-3 text-white font-bold rounded-full shadow-lg hover:bg-gray-100 hover:text-black transition duration-300"
         >
           <p className="text-2xl font-extrabold text-center">Volver al Inicio</p>
+        </Button>
+
+        <Button
+          onMouseEnter={() => speakText('Volver a jugar')}
+          onClick={handleReplayClick}
+          variant={'secondary'}
+          className="px-6 py-3 mt-4 text-white font-bold rounded-full shadow-lg hover:bg-gray-100 hover:text-black transition duration-300"
+        >
+          <p className="text-2xl font-extrabold text-center">Volver a jugar</p>
         </Button>
       </div>
     </>

@@ -52,11 +52,11 @@ const RecordGamePage = () => {
   }
 
   return !isLoading ? (
-    <div className="flex flex-col justify-center items-center w-full lg:gap-20 px-32 gap-10 lg:pt-0 pt-16">
+    <div className="flex flex-col justify-center items-center w-full h-screen lg:gap-20 px-32 gap-10 lg:pt-0 pt-16">
       <ProgressBar currentActivity={currentLevel + 1} totalActivities={levels?.length} />
 
       <div className="flex justify-between items-center w-full">
-        <div className={'lg:w-9/10 lg:flex flex justify-center items-center w-full gap-10'}>
+        <div className="lg:w-9/10 lg:flex flex justify-center items-center w-full gap-10">
           <div className="lg:w-2/5">
             <GameHeader level={levels![currentLevel]} headerTitle="¿Cómo dirías la palabra?" />
           </div>
