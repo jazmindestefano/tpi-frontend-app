@@ -1,3 +1,4 @@
+import React, { useEffect } from 'react'
 import Button from './Button.tsx'
 import { AudioLinesIcon, MicIcon } from '../icons/Icons.tsx'
 
@@ -12,6 +13,22 @@ interface RecordButtonProps extends Omit<VariantProps<typeof buttonVariants>, 's
 }
 
 export const RecordButton: React.FC<RecordButtonProps> = ({ isRecording, stopRecording, startRecording, variant }) => {
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout | null = null
+
+    if (isRecording) {
+      timeoutId = setTimeout(() => {
+        stopRecording()
+      }, 5000)
+    }
+
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+      }
+    }
+  }, [isRecording, stopRecording])
+
   return (
     <Button
       size={'circle'}
