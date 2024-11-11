@@ -66,7 +66,7 @@ const AuditoryDiscriminationGamePage = () => {
 
     setTimeout(() => {
       setCurrentLevel((prevState) => prevState + 1)
-    }, 1000)
+    }, 500)
   }
 
   useEffect(() => {

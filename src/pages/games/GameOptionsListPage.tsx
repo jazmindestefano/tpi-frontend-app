@@ -22,7 +22,7 @@ const GameOptionsListPage = ({ options, onOptionSelection }: GameOptionsListProp
         <div
           key={option.id}
           className={`flex flex-col justify-center items-center w-full cursor-pointer rounded-3xl shadow-lg p-4 h-auto gap-6 ${
-            option.correct && selectedOption === option.id ? 'bg-green-300' : 'bg-orange-100'
+            option.correct && selectedOption === option.id ? 'bg-green-400' : 'bg-orange-100'
           } ${getJustifyClass(index)}`}
           onClick={() => handleOptionClick(option)}
         >
