@@ -10,7 +10,8 @@ import {
   Word,
   TimelineData,
   ProfesionalPatient,
-  ProfileData
+  ProfileData,
+  RegisterFormData
 } from '@/interfaces/interfaces.ts'
 
 export const getThemesByGameId = async (gameId: number): Promise<Theme[] | null> => {
@@ -352,5 +353,28 @@ export const updateProfessionalState = async (professionalId: number, stateId: n
   if (res.status === 200) {
     return res.data
   }
+  return null
+}
+
+export const RegisterProfessional = async (data: RegisterFormData) => {
+  const file = new FormData()
+  file.append('file', data.professionalCredential!)
+
+  const res = await unauthenticatedClient.post(
+    `/professional/registerProfessional?email=${data.email}&name=${data.name}&surname=${data.surname}`,
+    file,
+    {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    }
+  )
+
+  console.log({ res })
+
+  if (res.status === 200) {
+    return res.data
+  }
+
   return null
 }

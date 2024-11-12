@@ -1,28 +1,29 @@
 import { PublicRouteLayout } from '@components'
 import Button from '@components/common/buttons/Button'
 import { Input } from '@components/common/inputs/Input'
+import { useRegister } from '@hooks/queries'
+import { RegisterFormData } from '@interfaces'
 import { ChangeEvent, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-interface RegisterFormData {
-  name: string
-  surname: string
-  email: string
-  professionalCredential: File | null
-}
-
 const RegisterPage = () => {
   const navigate = useNavigate()
+  const { mutateAsync } = useRegister()
   const [formData, setFormData] = useState<RegisterFormData>({
     name: '',
     surname: '',
     email: '',
-    professionalCredential: null
+    professionalCredential: new File([], '')
   })
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleRegister = () => {
+    mutateAsync({ formData })
+    navigate(`/email-verification/${formData.email}`)
   }
 
   return (
@@ -73,10 +74,7 @@ const RegisterPage = () => {
             </div>
           )}
         </div>
-        <Button
-          onClick={() => formData.email && navigate(`/email-verification/${formData.email}`)}
-          className="h-10 w-52"
-        >
+        <Button onClick={handleRegister} className="h-10 w-52">
           Registrarse
         </Button>
       </div>

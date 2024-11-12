@@ -138,3 +138,10 @@ export interface LoginProps {
   username: string
   password: string
 }
+
+export interface RegisterFormData {
+  name: string
+  surname: string
+  email: string
+  professionalCredential: File | null
+}

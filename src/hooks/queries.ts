@@ -26,7 +26,8 @@ import {
   User,
   Professional,
   UpdateProfessionalStateIdProps,
-  LoginProps
+  LoginProps,
+  RegisterFormData
 } from '@/interfaces/interfaces.ts'
 
 export const useGetThemesByGameId = (
@@ -497,4 +498,18 @@ export const useUpdateProfessioanlStateId = (): {
   })
 
   return { error, isPending, mutateAsync }
+}
+
+export const useRegister = (): {
+  mutateAsync: (args: { formData: RegisterFormData }) => void
+  reset: () => void
+  error: Error | null
+  isPending: boolean
+  isSuccess: boolean
+} => {
+  const { mutateAsync, reset, error, isPending, isSuccess } = useMutation({
+    mutationFn: async ({ formData }: { formData: RegisterFormData }) => await ApiService.RegisterProfessional(formData)
+  })
+
+  return { mutateAsync, reset, error, isPending, isSuccess }
 }
