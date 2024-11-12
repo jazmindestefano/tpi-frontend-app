@@ -1,5 +1,5 @@
 import { authenticatedClient, unauthenticatedClient } from './clients.ts'
-import { convertBlobToAudioFile } from '@/helpers'
+import { convertBlobToAudioFile, convertToImgFile } from '@/helpers'
 import {
   Theme,
   Game,
@@ -357,12 +357,12 @@ export const updateProfessionalState = async (professionalId: number, stateId: n
 }
 
 export const RegisterProfessional = async (data: RegisterFormData) => {
-  const file = new FormData()
-  file.append('file', data.professionalCredential!)
+  const formData = new FormData()
+  formData.append('file', convertToImgFile(data.professionalCredential!, data.professionalCredential!.name))
 
   const res = await unauthenticatedClient.post(
     `/professional/registerProfessional?email=${data.email}&name=${data.name}&surname=${data.surname}`,
-    file,
+    formData,
     {
       headers: {
         'Content-Type': 'multipart/form-data'
