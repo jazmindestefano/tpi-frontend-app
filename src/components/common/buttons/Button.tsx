@@ -1,17 +1,19 @@
 import { type VariantProps } from 'class-variance-authority'
 import classNames from 'classnames'
 import { buttonVariants } from './buttonVariants.ts'
+import { FC, ReactNode } from 'react'
 
 export interface ButtonProps extends VariantProps<typeof buttonVariants> {
   onClick?: () => void
   onMouseEnter?: () => void
-  children?: React.ReactNode
+  children?: ReactNode
   className?: string
   ariaLabel?: string
   dataTestId?: string
+  type?: 'submit' | 'reset' | 'button'
 }
 
-const Button: React.FC<ButtonProps> = ({
+const Button: FC<ButtonProps> = ({
   size,
   variant,
   shape,
@@ -20,7 +22,8 @@ const Button: React.FC<ButtonProps> = ({
   children,
   className = '',
   ariaLabel = 'button',
-  dataTestId = ''
+  dataTestId = '',
+  type = 'button'
 }) => {
   const basicClass = buttonVariants({ size, variant, shape })
   return (
@@ -30,6 +33,7 @@ const Button: React.FC<ButtonProps> = ({
       onClick={onClick}
       onMouseEnter={onMouseEnter}
       aria-label={ariaLabel}
+      type={type}
     >
       {children}
     </button>

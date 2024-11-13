@@ -10,7 +10,9 @@ import {
   Word,
   TimelineData,
   ProfesionalPatient,
-  ProfileData
+  ProfileData,
+  RoleEnum,
+  Role
 } from '@/interfaces/interfaces.ts'
 
 export const getThemesByGameId = async (gameId: number): Promise<Theme[] | null> => {
@@ -237,16 +239,11 @@ export const getActivityLetterProgressDashboard = async (patientId: number) => {
   return null
 }
 
-export const getProfileData = async (id: number, role: string): Promise<ProfileData | null> => {
-  const endpoint = role === 'patient' ? `/patients/${id}` : `/professional/${id}`
-  try {
-    const res = await authenticatedClient.get<ProfileData>(endpoint)
-
-    if (res.status === 200) {
-      return res.data
-    }
-  } catch (error) {
-    console.error('Error fetching profile data:', error)
+export const getProfileData = async (id: number, role: Role): Promise<ProfileData | null> => {
+  const endpoint = role === RoleEnum.PATIENT ? `/patients/${id}` : `/professional/${id}`
+  const res = await authenticatedClient.get<ProfileData>(endpoint)
+  if (res.status === 200) {
+    return res.data
   }
 
   return null
@@ -262,16 +259,13 @@ export const getPatientNameById = async (id: number): Promise<string | null> => 
   return null
 }
 
-export const updateProfileData = async (id: number, role: string, data: ProfileData) => {
-  const endpoint = role === 'Patient' ? `/patients/${id}` : `/professional/${id}`
-  try {
-    const res = await authenticatedClient.patch(endpoint, data)
-    if (res.status === 200) {
-      return res.data
-    }
-  } catch (error) {
-    console.error('Error updating profile data:', error)
+export const updateProfileData = async (id: number, role: Role, data: ProfileData) => {
+  const endpoint = role === RoleEnum.PATIENT ? `/patients/${id}` : `/professional/${id}`
+  const res = await authenticatedClient.patch(endpoint, data)
+  if (res.status === 200) {
+    return res.data
   }
+
   return null
 }
 
