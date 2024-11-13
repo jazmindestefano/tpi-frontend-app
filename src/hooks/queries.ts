@@ -415,19 +415,19 @@ export const useGetPatientActivityAnswers = (
   return { data, error, isLoading }
 }
 
-export const useExportPdf = (
-  patientId: number
+export const useGetPacientReportPdf = (
+  patientId: number | undefined
 ): {
-  pdf: Blob | null | undefined
+  reportPdf: Blob | null | undefined
   error: Error | null
   isLoading: boolean
 } => {
   const { data, error, isLoading } = useQuery({
-    queryKey: ['exportPdf', patientId],
-    queryFn: async () => await ApiService.exportPdf(patientId)
+    queryKey: ['reportPdf', patientId],
+    queryFn: async () => await ApiService.getPacientReportPdf(patientId)
   })
 
-  return { pdf: data, error, isLoading }
+  return { reportPdf: data, error, isLoading }
 }
 
 export const usePostPatient = (): {
