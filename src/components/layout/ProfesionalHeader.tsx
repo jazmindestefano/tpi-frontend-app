@@ -3,7 +3,7 @@ import Header from './Header'
 
 const ProfesionalHeader = () => {
   const { patientId } = useParams()
-  return <Header isProfessional={true} patientId={patientId} />
+  return <Header isProfessional={true} patientId={patientId ? Number(patientId) : undefined} />
 }
 
 export default ProfesionalHeader
