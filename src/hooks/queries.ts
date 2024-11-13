@@ -26,7 +26,8 @@ import {
   User,
   Professional,
   UpdateProfessionalStateIdProps,
-  LoginProps
+  LoginProps,
+  Role
 } from '@/interfaces/interfaces.ts'
 
 export const useGetThemesByGameId = (
@@ -343,7 +344,7 @@ export const useGetActivityLetterProgressDashboard = (
 
 export const useGetProfileData = (
   id: number,
-  role: string
+  role: Role
 ): {
   data: ProfileData | null | undefined
   error: Error | null
@@ -358,19 +359,15 @@ export const useGetProfileData = (
 }
 
 export const useUpdateProfileData = (): {
-  mutate: (args: { id: number; role: string; data: ProfileData }) => void
+  mutate: (args: { id: number; role: Role; data: ProfileData }) => void
   reset: () => void
   error: Error | null
   isPending: boolean
   isSuccess: boolean
 } => {
   const { mutate, reset, error, isPending, isSuccess } = useMutation({
-    mutationFn: async ({ id, role, data }: { id: number; role: string; data: ProfileData }) =>
-      await ApiService.updateProfileData(id, role, data),
-    onSuccess: () => {
-      window.history.pushState({}, '', '/perfil')
-      window.location.reload()
-    }
+    mutationFn: async ({ id, role, data }: { id: number; role: Role; data: ProfileData }) =>
+      await ApiService.updateProfileData(id, role, data)
   })
 
   return { mutate, reset, error, isPending, isSuccess }
