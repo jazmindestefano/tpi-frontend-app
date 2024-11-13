@@ -1,4 +1,4 @@
-import { useDashboard } from '@/hooks'
+import { useDashboard } from '@hooks'
 import SpinnerLoader from '@components/common/SpinnerLoader'
 import { useState } from 'react'
 import { useGetPatientNameById } from '@hooks/queries'
