@@ -356,7 +356,7 @@ export const updateProfessionalState = async (professionalId: number, stateId: n
   return null
 }
 
-export const RegisterProfessional = async (data: RegisterFormData) => {
+export const registerProfessional = async (data: RegisterFormData) => {
   const formData = new FormData()
   formData.append('file', convertToImgFile(data.professionalCredential!, data.professionalCredential!.name))
 
@@ -370,7 +370,15 @@ export const RegisterProfessional = async (data: RegisterFormData) => {
     }
   )
 
-  console.log({ res })
+  if (res.status === 200) {
+    return res.data
+  }
+
+  return null
+}
+
+export const validateVerificationCode = async (email: string, code: string) => {
+  const res = await unauthenticatedClient.get(`/professional/verifyEmailCode?email=${email}&code=${code}`)
 
   if (res.status === 200) {
     return res.data

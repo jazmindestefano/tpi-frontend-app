@@ -508,7 +508,22 @@ export const useRegister = (): {
   isSuccess: boolean
 } => {
   const { mutateAsync, reset, error, isPending, isSuccess } = useMutation({
-    mutationFn: async ({ formData }: { formData: RegisterFormData }) => await ApiService.RegisterProfessional(formData)
+    mutationFn: async ({ formData }: { formData: RegisterFormData }) => await ApiService.registerProfessional(formData)
+  })
+
+  return { mutateAsync, reset, error, isPending, isSuccess }
+}
+
+export const useValidateVerificationCode = (): {
+  mutateAsync: (args: { email: string; code: string }) => void
+  reset: () => void
+  error: Error | null
+  isPending: boolean
+  isSuccess: boolean
+} => {
+  const { mutateAsync, reset, error, isPending, isSuccess } = useMutation({
+    mutationFn: async ({ email, code }: { email: string; code: string }) =>
+      await ApiService.validateVerificationCode(email, code)
   })
 
   return { mutateAsync, reset, error, isPending, isSuccess }
