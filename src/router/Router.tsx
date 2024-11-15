@@ -30,7 +30,7 @@ import {
   ValidateRoleProfessional,
   ValidGameWrapper,
   PrivateRoute
-} from '@router'
+} from '@wrappers'
 
 const Router = createBrowserRouter([
   {
