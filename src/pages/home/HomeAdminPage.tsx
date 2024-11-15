@@ -127,10 +127,10 @@ const HomeAdminPage: FC = () => {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <img
-                      src={`/api/placeholder/50/50`}
+                      src={professional.imageCertificate ?? ''}
                       alt={`Perfil de ${professional.name}`}
                       className="h-10 w-10 rounded-full cursor-pointer"
-                      onClick={() => setSelectedImage(professional.image)}
+                      onClick={() => setSelectedImage(professional.imageCertificate)}
                     />
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
@@ -170,7 +170,7 @@ const HomeAdminPage: FC = () => {
               </button>
             </div>
             <div className="p-4">
-              <img src={`/api/placeholder/400/400`} alt="Perfil ampliado" className="w-full h-auto rounded-lg" />
+              <img src={selectedImage} alt="Perfil ampliado" className="w-full h-auto rounded-lg" />
             </div>
           </div>
         </div>

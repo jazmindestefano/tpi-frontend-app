@@ -24,11 +24,11 @@ import {
   PatientActivityAnswers,
   ProfileData,
   User,
-  Professional,
   UpdateProfessionalStateIdProps,
   Role,
   LoginProps,
-  RegisterFormData
+  RegisterFormData,
+  ProfessionalInAdmin
 } from '@interfaces'
 
 export const useGetThemesByGameId = (
@@ -444,7 +444,7 @@ export const usePostPatient = (): {
 export const useGetProfessionals = (
   stateId: number | null
 ): {
-  data: Professional[]
+  data?: ProfessionalInAdmin[] | null
   error: Error | null
   isLoading: boolean
 } => {
@@ -463,10 +463,7 @@ export const useUpdateProfessioanlStateId = (): {
 } => {
   const { error, isPending, mutateAsync } = useMutation({
     mutationFn: async ({ professionalId, stateId, comment }: UpdateProfessionalStateIdProps) =>
-      await ApiService.updateProfessionalState(professionalId, stateId, comment),
-    onSuccess: () => {
-      window.location.reload()
-    }
+      await ApiService.updateProfessionalState(professionalId, stateId, comment)
   })
 
   return { error, isPending, mutateAsync }

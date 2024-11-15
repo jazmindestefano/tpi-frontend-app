@@ -13,7 +13,8 @@ import {
   ProfileData,
   RoleEnum,
   Role,
-  RegisterFormData
+  RegisterFormData,
+  ProfessionalInAdmin
 } from '@interfaces'
 
 export const getThemesByGameId = async (gameId: number): Promise<Theme[] | null> => {
@@ -336,7 +337,11 @@ export const createPatient = async (
 }
 
 export const getProfessionals = async (stateId: number | null) => {
-  const res = await authenticatedClient.get(`admin/getProfessionals/${stateId == null ? '' : `?idState=${stateId}`}`)
+  const res = await authenticatedClient.get<ProfessionalInAdmin[]>(
+    `admin/getProfessionals/${stateId == null ? '' : `?idState=${stateId}`}`
+  )
+
+  console.log(res)
 
   if (res.status === 200) {
     return res.data
@@ -389,7 +394,7 @@ export const registerProfessional = async (data: RegisterFormData) => {
 }
 
 export const validateVerificationCode = async (email: string, code: string) => {
-  const res = await unauthenticatedClient.get(`/professional/verifyEmailCode?email=${email}&code=${code}`)
+  const res = await unauthenticatedClient.post(`/professional/verifyEmailCode?email=${email}&code=${code}`)
 
   if (res.status === 200) {
     return res.data
