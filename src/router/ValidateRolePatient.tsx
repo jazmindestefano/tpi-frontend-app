@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { useUser } from '@hooks/selectors.ts'
+import { useUser } from '@hooks'
 import { Outlet, useNavigate } from 'react-router-dom'
 
 const ValidateRolePatient: FC = () => {

@@ -1,8 +1,8 @@
-import { PublicRouteLayout } from '@components'
-import Button from '@components/common/buttons/Button'
+import { PublicRouteLayout, Button } from '@components'
 import { useNavigate } from 'react-router-dom'
+import { FC } from 'react'
 
-const ProfesionalCredentialVerification = () => {
+const ProfesionalCredentialVerification: FC = () => {
   const navigate = useNavigate()
   return (
     <PublicRouteLayout>

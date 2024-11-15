@@ -1,8 +1,8 @@
-import SpinnerLoader from '@/components/common/SpinnerLoader'
-import { useGetWordsByUserId } from '@/hooks/queries'
-import { useSelectedTheme, useUser } from '@/hooks/selectors'
-import { SnakeGamePage } from '@/pages'
+import { Loader } from '@components'
+import { useGetWordsByUserId, useSelectedTheme, useUser } from '@hooks'
+import { SnakeGamePage } from '@pages'
 import { Navigate } from 'react-router-dom'
+import { FC } from 'react'
 
 function getRandomNumber(min: number, max: number): number {
   return Math.floor(Math.random() * (max - min + 1)) + min
@@ -10,13 +10,13 @@ function getRandomNumber(min: number, max: number): number {
 
 const vowels = ['A', 'E', 'I', 'O', 'U']
 
-const SnakeGameWrapper = () => {
+const SnakeGameWrapper: FC = () => {
   const selectedTheme = useSelectedTheme()
   const user = useUser()
   const { words, isLoading, error } = useGetWordsByUserId(user.id)
 
   return isLoading ? (
-    <SpinnerLoader />
+    <Loader />
   ) : error ? (
     <Navigate to={'/'} />
   ) : words && words.length != 0 ? (

@@ -1,6 +1,6 @@
 import { renderHook } from '@testing-library/react'
 import { describe, it, expect, vi, MockedFunction } from 'vitest'
-import useTimeline from '@hooks/timeline/useTimeline'
+import { useTimeline } from '@hooks/timeline'
 import { useGetPatientActivityAnswers, useTimelineData } from '@hooks/queries'
 import { PatientActivityAnswers, TimelineData } from '@interfaces'
 
@@ -33,10 +33,6 @@ const mockTimelineData: TimelineData[] = [
 ]
 
 describe('useTimeline', () => {
-  beforeEach(() => {
-    vi.clearAllMocks()
-  })
-
   it('should set readyToFetch to true when patientId is provided', async () => {
     WhenCallDataForTimeline()
 

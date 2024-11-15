@@ -1,4 +1,4 @@
-import { AuditoryDiscriminationChartProps } from '@components/dashboard/interfaces'
+import { AuditoryDiscriminationChartProps } from '@components'
 import { useAuditoryDiscriminationChart } from '@hooks'
 import { renderHook } from '@testing-library/react'
 import { expect, vi } from 'vitest'

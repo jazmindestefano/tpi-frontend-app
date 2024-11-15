@@ -1,13 +1,10 @@
 import { ChangeEvent, FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Input } from '@components/common/inputs/Input.tsx'
-import Button from '@components/common/buttons/Button.tsx'
-import { useLogin } from '@hooks/queries.ts'
 import { useDispatch } from 'react-redux'
 import { setToken } from '@redux/slices'
-import { usePasswordVisibility } from '@hooks'
-import { getMe } from '../../hooks/http/queries'
-import { PublicRouteLayout } from '@components'
+import { usePasswordVisibility, useLogin } from '@hooks'
+import { getMe } from '@http'
+import { PublicRouteLayout, Button, Input } from '@components'
 
 interface LoginFormData {
   username: string

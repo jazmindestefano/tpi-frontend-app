@@ -1,7 +1,8 @@
 import { useParams } from 'react-router-dom'
-import Header from './Header'
+import { FC } from 'react'
+import { Header } from '@components'
 
-const ProfesionalHeader = () => {
+const ProfesionalHeader: FC = () => {
   const { patientId } = useParams()
   return <Header isProfessional={true} patientId={patientId ? Number(patientId) : undefined} />
 }

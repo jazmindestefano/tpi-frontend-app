@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
 import { MemoryRouter } from 'react-router-dom'
-import { ActivityCard } from '../../components/common/cards/ActivityCard'
+import { ActivityCard } from '@components'
 
 describe('ActivityCard component', () => {
   const actividad = {

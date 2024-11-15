@@ -1,16 +1,11 @@
-import { useState, useEffect } from 'react'
+import { FC, useEffect, useState } from 'react'
 
-export default function ProgressBar({
-  currentActivity = 0,
-  totalActivities = 1,
-  width = 400,
-  height = 20
-}: {
+const ProgressBar: FC<{
   currentActivity?: number
   totalActivities?: number
   width?: number
   height?: number
-}) {
+}> = ({ currentActivity = 0, totalActivities = 1, width = 400, height = 20 }) => {
   const [progress, setProgress] = useState(0)
 
   useEffect(() => {
@@ -57,3 +52,5 @@ export default function ProgressBar({
     </div>
   )
 }
+
+export default ProgressBar

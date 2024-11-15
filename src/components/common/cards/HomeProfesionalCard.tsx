@@ -1,10 +1,9 @@
-import { useState } from 'react'
+import { FC, useState } from 'react'
 import { PlusIcon } from 'lucide-react'
-import Button from '../buttons/Button'
 import { useNavigate } from 'react-router-dom'
-import AddPatientModal from '../modals/EmailInviteModal'
-import { ProfesionalPatient } from '@/interfaces'
+import { ProfesionalPatient } from '@interfaces'
 import { getCurrentAge } from '@helpers'
+import { Button, AddPatientModal } from '@components'
 
 interface HomeProfesionalCardProps {
   patient?: ProfesionalPatient
@@ -18,7 +17,7 @@ const getRandomImage = () => {
   return images[randomIndex]
 }
 
-const HomeProfesionalCard = ({ patient, isAddPatient = false, className = '' }: HomeProfesionalCardProps) => {
+const HomeProfesionalCard: FC<HomeProfesionalCardProps> = ({ patient, isAddPatient = false, className = '' }) => {
   const navigate = useNavigate()
   const [isModalOpen, setIsModalOpen] = useState(false)
 

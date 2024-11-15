@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Game, Theme } from '@/interfaces'
-import { NOT_YET_ASSIGNED_NUM, NOT_YET_ASSIGNED_STR } from '@/config/constants.ts'
+import { Game, Theme } from '@interfaces'
+import { NOT_YET_ASSIGNED_NUM, NOT_YET_ASSIGNED_STR } from '@config'
 
 interface GameState {
   selectedGame: Game

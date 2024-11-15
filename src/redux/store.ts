@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import { loadState, saveState } from '@/redux/local.ts'
+import { loadState, saveState } from './local'
 import { gameReducer, professionalReducer, recordGameReducer, uiReducer, userReducer } from './slices'
 
 const store = configureStore({

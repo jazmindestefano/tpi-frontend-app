@@ -1,14 +1,12 @@
-import Filter from '@components/common/filter/Filter'
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js'
+import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js'
 import { Bar } from 'react-chartjs-2'
-import { AuditoryDiscriminationChartProps } from '../interfaces/AuditoryChartInterfaces'
-import { barOptions } from '../chartOptions'
-import { SelectOption } from '../interfaces/Common'
+import { AuditoryDiscriminationChartProps, barOptions, SelectOption, Filter } from '@components'
 import { useAuditoryDiscriminationChart } from '@hooks'
+import { FC } from 'react'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
 
-const AuditoryDiscriminationChart = ({ chartData }: { chartData: AuditoryDiscriminationChartProps[] }) => {
+const AuditoryDiscriminationChart: FC<{ chartData: AuditoryDiscriminationChartProps[] }> = ({ chartData }) => {
   const { data, setSelectedValues, selectedValues } = useAuditoryDiscriminationChart({ chartData })
 
   const handleSelectChange = (newValue: string[]) => {

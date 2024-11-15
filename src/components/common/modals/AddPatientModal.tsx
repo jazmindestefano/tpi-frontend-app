@@ -1,9 +1,6 @@
-import { useState } from 'react'
-import { BaseModal } from './BaseModal' // Asegúrate de que la ruta sea la correcta
-import { Overlay } from '../overlay/Overlay'
-import { Input } from '../inputs/Input'
-import { usePostPatient } from '@hooks/queries.ts'
-import { useUser } from '@hooks/selectors.ts'
+import { ChangeEvent, FC, FormEvent, useState } from 'react'
+import { usePostPatient, useUser } from '@hooks'
+import { BaseModal, Input, Overlay } from '@components'
 
 interface AddPatientModalProps {
   isOpen: boolean
@@ -18,7 +15,7 @@ interface PatientData {
   childSurname: string
 }
 
-export default function AddPatientModal({ isOpen, onClose, onSubmit }: AddPatientModalProps) {
+const AddPatientModal: FC<AddPatientModalProps> = ({ isOpen, onClose, onSubmit }) => {
   const [patientData, setPatientData] = useState<PatientData>({
     childName: '',
     guardianEmail: '',
@@ -28,12 +25,12 @@ export default function AddPatientModal({ isOpen, onClose, onSubmit }: AddPatien
   const { mutate } = usePostPatient()
   const user = useUser()
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setPatientData((prev) => ({ ...prev, [name]: value }))
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault()
     onSubmit(patientData)
     mutate({
@@ -117,3 +114,5 @@ export default function AddPatientModal({ isOpen, onClose, onSubmit }: AddPatien
     </Overlay>
   )
 }
+
+export default AddPatientModal

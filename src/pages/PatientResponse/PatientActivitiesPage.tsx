@@ -1,10 +1,9 @@
-import BackButton from '@/components/common/buttons/BackButton'
-import { ActivityCard } from '@/components/common/cards/ActivityCard'
-import { useGetPatientActivityAnswers } from '@/hooks/queries'
-import { useEffect, useState } from 'react'
+import { ActivityCard, BackButton } from '@components'
+import { useGetPatientActivityAnswers } from '@hooks'
+import { FC, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-const PatientActivitiesPage = () => {
+const PatientActivitiesPage: FC = () => {
   const { patientId } = useParams()
   const [readyToFetch, setReadyToFetch] = useState(false)
   const { data, error, isLoading } = useGetPatientActivityAnswers(readyToFetch ? Number(patientId) : 0)

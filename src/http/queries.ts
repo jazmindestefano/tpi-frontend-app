@@ -1,5 +1,5 @@
-import { authenticatedClient, unauthenticatedClient } from './clients.ts'
-import { convertBlobToAudioFile } from '@/helpers'
+import { authenticatedClient, unauthenticatedClient } from '@http'
+import { convertBlobToAudioFile } from '@helpers'
 import {
   Theme,
   Game,
@@ -13,7 +13,7 @@ import {
   ProfileData,
   RoleEnum,
   Role
-} from '@/interfaces/interfaces.ts'
+} from '@interfaces'
 
 export const getThemesByGameId = async (gameId: number): Promise<Theme[] | null> => {
   // will change to an authenticated client probably
@@ -347,9 +347,21 @@ export const updateProfessionalState = async (professionalId: number, stateId: n
   const res = await authenticatedClient.patch(
     `admin/${professionalId}?idState=${stateId}${comment != null ? `&comment=${comment}` : ''}`
   )
-  console.log({ res })
   if (res.status === 200) {
     return res.data
   }
   return null
+}
+
+export const postPatientTime = async (sessionStart: Date, sessionTime: number) => {
+  // const res = await authenticatedClient.patch(
+  //   `admin/${professionalId}?idState=${stateId}${comment != null ? `&comment=${comment}` : ''}`
+  // )
+
+  // if (res.status === 200) {
+  //   return res.data
+  // }
+  // return null
+  console.log({ sessionStart, sessionTime })
+  return
 }

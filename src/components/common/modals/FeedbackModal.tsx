@@ -1,17 +1,15 @@
-import { Overlay } from '../overlay/Overlay.tsx'
-import { FeedbackModalContent } from './FeedbackModalContent.tsx'
-import { usePostFeedback } from '@hooks/queries.ts'
-import { useSelectedGame, useUser } from '@hooks/selectors.ts'
-import { useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { resetGame } from '@redux/slices'
+import { usePostFeedback, useSelectedGame, useUser } from '@hooks'
+import { FeedbackModalContent, Overlay } from '@components'
 
 interface FeedbackModalProps {
   show: boolean
   onClose: () => void
 }
 
-export const FeedbackModal: React.FC<FeedbackModalProps> = ({ show, onClose }) => {
+const FeedbackModal: FC<FeedbackModalProps> = ({ show, onClose }) => {
   const { mutate, isPending, isSuccess, error } = usePostFeedback()
   const dispatch = useDispatch()
   const selectedGame = useSelectedGame()
@@ -43,3 +41,5 @@ export const FeedbackModal: React.FC<FeedbackModalProps> = ({ show, onClose }) =
     </Overlay>
   )
 }
+
+export default FeedbackModal

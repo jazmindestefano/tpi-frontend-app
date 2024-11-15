@@ -1,13 +1,13 @@
-import React, { useEffect } from 'react'
+import { FC, useEffect } from 'react'
 import Confetti from 'react-confetti'
 import { useWindowSize } from 'react-use'
 import useSound from 'use-sound'
 
-type ConfettiAnimationProps = {
+interface ConfettiAnimationProps {
   isActive: boolean
 }
 
-const ConfettiAnimation: React.FC<ConfettiAnimationProps> = ({ isActive }) => {
+const ConfettiAnimation: FC<ConfettiAnimationProps> = ({ isActive }) => {
   const { width, height } = useWindowSize()
   const [playApplause] = useSound('https://cdn.pixabay.com/audio/2022/11/04/audio_7b2d96a98f.mp3', { volume: 0.03 })
 

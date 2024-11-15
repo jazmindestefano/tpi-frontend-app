@@ -1,10 +1,9 @@
-import Button from '@components/common/buttons/Button'
-import { Input } from '@components/common/inputs/Input'
+import { Input, Button } from '@components'
 import { usePasswordVisibility } from '@hooks'
-import { useState, ChangeEvent } from 'react'
+import { useState, ChangeEvent, FC } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const ChangePassword = () => {
+const ChangePassword: FC = () => {
   const [formData, setFormData] = useState<{ password: string }>({ password: '' })
   const navigate = useNavigate()
   const { showPassword, togglePasswordVisibility } = usePasswordVisibility()

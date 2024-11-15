@@ -1,12 +1,10 @@
-import Button from '@/components/common/buttons/Button'
-import { HearableButton } from '@/components/common/buttons/HearableButton'
+import { HearableButton, Button } from '@components'
 import { Pencil, Save } from 'lucide-react'
-import { useState, useEffect, ChangeEvent } from 'react'
-import { useGetProfileData, useUpdateProfileData } from '@/hooks/queries'
-import { useUser } from '@/hooks/selectors'
-import { ProfileData, RoleEnum } from '@/interfaces/interfaces'
+import { useState, useEffect, ChangeEvent, FC } from 'react'
+import { useGetProfileData, useUpdateProfileData, useUser } from '@hooks'
+import { ProfileData, RoleEnum } from '@interfaces'
 
-const ProfilePage = () => {
+const ProfilePage: FC = () => {
   const user = useUser()
   const { data, error, isLoading } = useGetProfileData(user.id, user.role)
   const { mutate: updateProfile } = useUpdateProfileData()

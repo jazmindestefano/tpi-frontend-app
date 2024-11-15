@@ -5,7 +5,7 @@ import {
   useSyllableDashboard,
   useWorstPhonemeRankingDashboard,
   useWorstSyllableRankingDashboard
-} from '../queries'
+} from '@hooks'
 import { useEffect, useState } from 'react'
 import {
   AuditoryDiscriminationChartProps,
@@ -14,7 +14,7 @@ import {
   RankingProps,
   SyllableDashboard,
   SyllableRankingDashboard
-} from '@/components'
+} from '@components'
 
 const useDashboard = () => {
   const { patientId } = useParams()

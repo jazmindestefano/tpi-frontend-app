@@ -1,8 +1,6 @@
-import { BaseModal } from './BaseModal.tsx'
-import { BadFeedbackIcon, GoodFeedbackIcon, MehFeedbackIcon } from '../icons/Icons.tsx'
-import Button from '../buttons/Button.tsx'
+import { BadFeedbackIcon, BaseModal, Button, GoodFeedbackIcon, MehFeedbackIcon, Loader } from '@components'
 import classNames from 'classnames'
-import SpinnerLoader from '../SpinnerLoader.tsx'
+import { FC } from 'react'
 
 interface FeedbackModalProps {
   className?: string
@@ -13,7 +11,7 @@ interface FeedbackModalProps {
   error: Error | null
 }
 
-export const FeedbackModalContent: React.FC<FeedbackModalProps> = ({
+const FeedbackModalContent: FC<FeedbackModalProps> = ({
   className,
   onModalClose,
   onRatingClick,
@@ -29,7 +27,7 @@ export const FeedbackModalContent: React.FC<FeedbackModalProps> = ({
       onClose={onModalClose}
       title={modalTitle}
     >
-      {isPending && <SpinnerLoader />}
+      {isPending && <Loader />}
       {error && <div>Error: {error.message}</div>}
       {!isPending && !isSuccess && (
         <div className={'flex justify-evenly items-start w-full'}>
@@ -47,3 +45,5 @@ export const FeedbackModalContent: React.FC<FeedbackModalProps> = ({
     </BaseModal>
   )
 }
+
+export default FeedbackModalContent

@@ -1,10 +1,9 @@
 import { FC, useEffect } from 'react'
 import { Navigate, Outlet } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { useGetMe } from '@hooks/queries.ts'
+import { useGetMe, useToken } from '@hooks'
 import { setUser } from '@redux/slices'
-import SpinnerLoader from '@components/common/SpinnerLoader.tsx'
-import { useToken } from '@hooks/selectors.ts'
+import { Loader } from '@components'
 
 const PrivateRoute: FC = () => {
   const dispatch = useDispatch()
@@ -20,7 +19,7 @@ const PrivateRoute: FC = () => {
     }
   }, [isAuthorized, error, dispatch, data])
 
-  return isLoading ? <SpinnerLoader /> : isAuthorized ? <Outlet /> : <Navigate to="/login" replace />
+  return isLoading ? <Loader /> : isAuthorized ? <Outlet /> : <Navigate to="/login" replace />
 }
 
 export default PrivateRoute
