@@ -1,4 +1,4 @@
-import { usePostPatientTime, useSelectedGame, useSelectedTheme, useTimer } from '@hooks'
+import { usePostPatientTime, useSelectedGame, useSelectedTheme, useGlobalTimer } from '@hooks'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { NOT_YET_ASSIGNED_NUM } from '@config'
 import { FC, useEffect } from 'react'
@@ -7,7 +7,7 @@ const ValidGameWrapper: FC = () => {
   const game = useSelectedGame()
   const theme = useSelectedTheme()
   const navigate = useNavigate()
-  const { startTimer, stopTimer, getStartTime, getElapsedTime } = useTimer()
+  const { startTimer, stopTimer, getStartTime, getElapsedTime } = useGlobalTimer()
   const { mutate } = usePostPatientTime()
 
   useEffect(() => {

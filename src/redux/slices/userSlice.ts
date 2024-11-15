@@ -11,7 +11,7 @@ const initialState: UserState = {
   user: {
     id: NOT_YET_ASSIGNED_NUM,
     username: NOT_YET_ASSIGNED_STR,
-    role: NOT_YET_ASSIGNED_STR
+    role: 'NO_ROLE'
   },
   token: NOT_YET_ASSIGNED_STR
 }

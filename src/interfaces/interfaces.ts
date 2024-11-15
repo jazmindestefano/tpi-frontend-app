@@ -1,11 +1,10 @@
-import { NOT_YET_ASSIGNED_STR } from '@config'
-
 export const RoleEnum = {
   PATIENT: 'PATIENT',
-  PROFESSIONAL: 'PROFESSIONAL'
+  PROFESSIONAL: 'PROFESSIONAL',
+  NO_ROLE: 'NO_ROLE'
 }
 
-export type Role = 'PATIENT' | 'PROFESSIONAL'
+export type Role = 'PATIENT' | 'PROFESSIONAL' | 'NO_ROLE'
 
 export interface Theme {
   id: number
@@ -22,7 +21,7 @@ export interface Game {
 export interface User {
   id: number
   username: string
-  role: Role | typeof NOT_YET_ASSIGNED_STR
+  role: Role
 }
 
 export interface GameLevel {
