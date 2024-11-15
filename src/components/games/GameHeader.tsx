@@ -1,12 +1,13 @@
-import { GameLevel } from '@/interfaces'
-import { HearableButton } from '../common/buttons/HearableButton'
+import { GameLevel } from '@interfaces'
+import { HearableButton } from '@components'
+import { FC } from 'react'
 
 interface GameHeaderProps {
   level: GameLevel
   headerTitle: string
 }
 
-export const GameHeader = ({ level, headerTitle }: GameHeaderProps) => {
+const GameHeader: FC<GameHeaderProps> = ({ level, headerTitle }) => {
   return (
     <div className="w-full flex flex-col justify-center items-center gap-4">
       <h2 className="text-h2 text-center">{headerTitle}</h2>

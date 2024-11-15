@@ -1,14 +1,13 @@
 import { Line } from 'react-chartjs-2'
 import { CategoryScale, Chart, LinearScale, LineElement, PointElement } from 'chart.js'
 import Select, { MultiValue } from 'react-select'
-import { lineOptions } from '../chartOptions'
-import { SelectOption, PronunciationChartProps } from '../interfaces'
-import DateFilter from '@components/common/filter/DateFilter'
+import { lineOptions, DateFilter, PronunciationChartProps, SelectOption } from '@components'
 import { usePronunciationChart } from '@hooks'
+import { FC } from 'react'
 
 Chart.register(CategoryScale, LinearScale, PointElement, LineElement)
 
-const PronunciationChart = ({ chartData }: { chartData: PronunciationChartProps[] }) => {
+const PronunciationChart: FC<{ chartData: PronunciationChartProps[] }> = ({ chartData }) => {
   const {
     data,
     setSelectedOptions,

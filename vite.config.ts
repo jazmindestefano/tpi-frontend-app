@@ -15,10 +15,6 @@ export default defineConfig({
   resolve: {
     alias: [
       {
-        find: '@',
-        replacement: path.resolve(path.join(__dirname, '/src'))
-      },
-      {
         find: '@redux',
         replacement: path.resolve(path.join(__dirname, '/src/redux'))
       },
@@ -27,12 +23,40 @@ export default defineConfig({
         replacement: path.resolve(path.join(__dirname, '/src/hooks'))
       },
       {
+        find: '@config',
+        replacement: path.resolve(path.join(__dirname, '/src/config'))
+      },
+      {
+        find: '@router',
+        replacement: path.resolve(path.join(__dirname, '/src/router'))
+      },
+      {
+        find: '@pages',
+        replacement: path.resolve(path.join(__dirname, '/src/pages'))
+      },
+      {
         find: '@components',
         replacement: path.resolve(path.join(__dirname, '/src/components'))
       },
       {
         find: '@helpers',
         replacement: path.resolve(path.join(__dirname, '/src/helpers'))
+      },
+      {
+        find: '@context',
+        replacement: path.resolve(path.join(__dirname, '/src/context'))
+      },
+      {
+        find: '@http',
+        replacement: path.resolve(path.join(__dirname, '/src/http'))
+      },
+      {
+        find: '@interfaces',
+        replacement: path.resolve(path.join(__dirname, '/src/interfaces'))
+      },
+      {
+        find: '@wrappers',
+        replacement: path.resolve(path.join(__dirname, '/src/wrappers'))
       }
     ]
   }

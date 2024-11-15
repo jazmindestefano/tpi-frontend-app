@@ -1,7 +1,7 @@
-import { PatientHeader } from '@components'
-import Layout from './Layout'
+import { PatientHeader, Layout } from '@components'
+import { FC } from 'react'
 
-const LayoutPaciente = () => {
+const LayoutPatient: FC = () => {
   return (
     <Layout
       className="font-comfortaa bg-[url('/fondo_clara.png')] bg-cover bg-center"
@@ -11,4 +11,4 @@ const LayoutPaciente = () => {
   )
 }
 
-export default LayoutPaciente
+export default LayoutPatient

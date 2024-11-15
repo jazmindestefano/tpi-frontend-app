@@ -1,14 +1,14 @@
-import { HearableButton } from '@/components/common/buttons/HearableButton'
-import { getJustifyClass } from '@/helpers'
-import { LevelOption } from '@/interfaces'
-import { useState } from 'react'
+import { HearableButton } from '@components'
+import { getJustifyClass } from '@helpers'
+import { LevelOption } from '@interfaces'
+import { FC, useState } from 'react'
 
 interface GameOptionsListProps {
   options: LevelOption[]
   onOptionSelection: (option: LevelOption) => void
 }
 
-const GameOptionsListPage = ({ options, onOptionSelection }: GameOptionsListProps) => {
+const GameOptionsListPage: FC<GameOptionsListProps> = ({ options, onOptionSelection }) => {
   const [selectedOption, setSelectedOption] = useState<number | null>(null)
 
   const handleOptionClick = (option: LevelOption) => {

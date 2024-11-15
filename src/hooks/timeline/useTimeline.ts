@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import { useGetPatientActivityAnswers, useTimelineData } from '@hooks/queries'
+import { useGetPatientActivityAnswers, useTimelineData } from '@hooks'
 import { PatientActivityAnswers } from '@interfaces'
-import { Game } from '@components/timeline/interfaces'
+import { Game } from '@components'
 
 const createActivitiesDto = (data: PatientActivityAnswers[]) => {
   return data.map((activity) => ({

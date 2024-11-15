@@ -1,8 +1,10 @@
+import { FC, ReactNode } from 'react'
+
 interface PublicRouteLayoutProps {
-  children: React.ReactNode
+  children: ReactNode
 }
 
-const PublicRouteLayout = ({ children }: PublicRouteLayoutProps) => {
+const PublicRouteLayout: FC<PublicRouteLayoutProps> = ({ children }) => {
   return (
     <div className="min-h-screen flex flex-col justify-start pt-20 space-y-28 items-center font-comfortaa bg-orange-100">
       <div>

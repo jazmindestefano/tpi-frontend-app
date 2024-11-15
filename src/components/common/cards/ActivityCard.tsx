@@ -1,13 +1,14 @@
-import { PatientActivityAnswers } from '@/interfaces'
-import Button from '../buttons/Button'
+import { PatientActivityAnswers } from '@interfaces'
+import { Button } from '@components'
 import { useNavigate, useParams } from 'react-router-dom'
+import { FC } from 'react'
 
 interface ActivityCardProps {
   activity: PatientActivityAnswers
   className?: string
 }
 
-export const ActivityCard: React.FC<ActivityCardProps> = ({ activity, className = '' }) => {
+const ActivityCard: FC<ActivityCardProps> = ({ activity, className = '' }) => {
   const navigate = useNavigate()
   const { patientId } = useParams()
 
@@ -30,3 +31,5 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({ activity, className 
     </div>
   )
 }
+
+export default ActivityCard

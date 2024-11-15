@@ -1,13 +1,12 @@
 import { Bar } from 'react-chartjs-2'
-import { Chart as ChartJS, CategoryScale, LinearScale, BarElement } from 'chart.js'
-import Filter from '@components/common/filter/Filter'
-import { barOptions } from '../chartOptions'
-import { RankingProps } from '../interfaces'
+import { BarElement, CategoryScale, Chart as ChartJS, LinearScale } from 'chart.js'
 import { useRankingChart } from '@hooks'
+import { FC } from 'react'
+import { barOptions, Filter, RankingProps } from '@components'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement)
 
-export default function RankingChart({ chartData }: { chartData: RankingProps[] }) {
+const RankingChart: FC<{ chartData: RankingProps[] }> = ({ chartData }) => {
   const { data, title, setSelectedValues, groupedData, selectedValues } = useRankingChart({ chartData })
 
   const handleSelectChange = (newValue: string[]) => {
@@ -35,3 +34,5 @@ export default function RankingChart({ chartData }: { chartData: RankingProps[] 
     </div>
   )
 }
+
+export default RankingChart

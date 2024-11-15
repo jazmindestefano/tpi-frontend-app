@@ -1,14 +1,10 @@
-import BackButton from '@/components/common/buttons/BackButton'
-import Button from '@/components/common/buttons/Button'
-import { useGetPatientActivityAnswers } from '@/hooks/queries'
-import { PatientActivityAnswers } from '@/interfaces'
-import SpinnerLoader from '@components/common/SpinnerLoader'
+import { BackButton, Button, Loader, DateFilter, Filter } from '@components'
+import { useGetPatientActivityAnswers } from '@hooks'
+import { PatientActivityAnswers } from '@interfaces'
 import { PlayCircle } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { parse, isWithinInterval, isSameDay } from 'date-fns'
-import DateFilter from '@components/common/filter/DateFilter'
-import Filter from '@components/common/filter/Filter' // Importa el componente Filter
 
 interface SelectOption {
   value: string
@@ -20,7 +16,7 @@ function playAudio(userAnswer: string) {
   audio.play()
 }
 
-const ActivityResponsesPage = () => {
+const ActivityResponsesPage: FC = () => {
   const { patientId, activityId, date } = useParams()
   const [readyToFetch, setReadyToFetch] = useState(false)
   const { data, error, isLoading } = useGetPatientActivityAnswers(readyToFetch ? Number(patientId) : 0)
@@ -85,7 +81,7 @@ const ActivityResponsesPage = () => {
       </div>
 
       {isLoading ? (
-        <SpinnerLoader />
+        <Loader />
       ) : (
         <div className="w-full">
           {filteredData &&

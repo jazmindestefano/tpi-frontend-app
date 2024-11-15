@@ -1,17 +1,13 @@
-import { useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { getCardBgColor } from '@/helpers'
-import { Game } from '@/interfaces'
+import { getCardBgColor } from '@helpers'
+import { Game } from '@interfaces'
 import { selectGame, setModalFeedback, setShowProductTour } from '@redux/slices'
-import { HearableButton } from '@components/common/buttons/HearableButton'
-import HomeCard from '@components/common/cards/HomeCard'
-import { FeedbackModal } from '@components/common/modals/FeedbackModal'
-import SpinnerLoader from '@components/common/SpinnerLoader'
-import { useGetGames } from '@hooks/queries'
-import { useShowModalFeedback } from '@hooks/selectors'
+import { Loader, FeedbackModal, HearableButton, HomeCard } from '@components'
+import { useGetGames, useShowModalFeedback } from '@hooks'
 
-const Home = () => {
+const Home: FC = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { games, isLoading: gamesLoading, error } = useGetGames()
@@ -32,7 +28,7 @@ const Home = () => {
   }
 
   if (gamesLoading) {
-    return <SpinnerLoader />
+    return <Loader />
   }
 
   return games && games.length !== 0 && !error ? (

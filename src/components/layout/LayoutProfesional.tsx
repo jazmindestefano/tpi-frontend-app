@@ -1,6 +1,8 @@
-import { AsideProfesional, ProfesionalHeader } from '@components'
-import Layout from './Layout'
+import { AsideProfesional, ProfesionalHeader, Layout } from '@components'
+import { FC } from 'react'
 
-export default function LayoutProfesional() {
+const LayoutProfesional: FC = () => {
   return <Layout className="font-poppins" aside={<AsideProfesional />} header={<ProfesionalHeader />} />
 }
+
+export default LayoutProfesional

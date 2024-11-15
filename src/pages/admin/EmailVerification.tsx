@@ -1,8 +1,6 @@
-import { PublicRouteLayout } from '@components'
-import Button from '@components/common/buttons/Button'
-import { Input } from '@components/common/inputs/Input'
-import { useValidateVerificationCode } from '@hooks/queries'
-import { ChangeEvent, useState } from 'react'
+import { PublicRouteLayout, Button, Input } from '@components'
+import { useValidateVerificationCode } from '@hooks'
+import { ChangeEvent, FC, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 interface EmailVerificationFormData {
@@ -10,7 +8,7 @@ interface EmailVerificationFormData {
   verificationCode: string
 }
 
-const EmailVerification = () => {
+const EmailVerification: FC = () => {
   const { email } = useParams()
   const navigate = useNavigate()
   const [formData, setFormData] = useState<EmailVerificationFormData>({ userEmail: email!, verificationCode: '' })

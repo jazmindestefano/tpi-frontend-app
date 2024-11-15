@@ -1,9 +1,9 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import { describe, it, expect, vi } from 'vitest'
-import { ThemeCard } from '../../components/common/cards/themeCard/ThemeCard'
-import { Theme } from '../../interfaces/interfaces'
+import { ThemeCard } from '@components'
+import { Theme } from '@interfaces'
 
-vi.mock('../../../../hooks/useSpeakText', () => ({
+vi.mock('@hooks', () => ({
   useSpeakText: vi.fn(() => vi.fn())
 }))
 

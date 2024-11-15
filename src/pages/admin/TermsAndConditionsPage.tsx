@@ -1,11 +1,11 @@
-import { useTermsAndConditions } from '@/hooks/queries'
-import { useUser } from '@/hooks/selectors'
+import { useUser, useTermsAndConditions } from '@hooks'
+import { ChangeEvent } from 'react'
 
 const TermsAndConditionsPage = () => {
   const { mutateAsync } = useTermsAndConditions()
   const { id } = useUser()
 
-  const handleUpdateTerms = async (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUpdateTerms = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
       try {
         const result = await mutateAsync(id)
@@ -51,7 +51,7 @@ const TermsAndConditionsPage = () => {
             type="checkbox"
             className="mr-2 w-5 h-5"
             required
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => handleUpdateTerms(e)}
+            onChange={(e: ChangeEvent<HTMLInputElement>) => handleUpdateTerms(e)}
           />
           <span>
             He leído y acepto los términos y condiciones <span className="text-red-500">*</span>

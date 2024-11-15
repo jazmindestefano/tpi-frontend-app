@@ -1,6 +1,7 @@
 import classNames from 'classnames'
-import { Label } from '../labels/Label'
 import { Eye, EyeOff } from 'lucide-react'
+import { ChangeEvent, FC } from 'react'
+import { Label } from '@components'
 
 interface InputProps {
   name: string
@@ -9,7 +10,7 @@ interface InputProps {
   label?: string
   type?: string
   className?: string
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+  onChange?: (e: ChangeEvent<HTMLInputElement>) => void
   value?: string
   required?: boolean
   multiple?: boolean
@@ -19,7 +20,7 @@ interface InputProps {
   dataTestId?: string
 }
 
-export const Input: React.FC<InputProps> = ({
+const Input: FC<InputProps> = ({
   name,
   id,
   placeholder,
@@ -60,3 +61,5 @@ export const Input: React.FC<InputProps> = ({
     </div>
   )
 }
+
+export default Input

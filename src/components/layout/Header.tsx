@@ -1,36 +1,25 @@
-import { House, LogOut, Download, FolderDot } from 'lucide-react'
+import { Download, FolderDot, House, LogOut } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-import Button from '../common/buttons/Button'
 import { Tooltip } from 'react-tooltip'
-import { useExportPdf } from '@/hooks/queries'
-import { useEffect, useState } from 'react'
+import { useGetPacientReportPdf } from '@hooks'
+import { FC, useEffect, useState } from 'react'
+import { Button } from '@components'
 
-const Header = ({ isProfessional = false, patientId }: { isProfessional: boolean; patientId?: string }) => {
-  const [readyToFetch, setReadyToFetch] = useState(false)
+interface HeaderProps {
+  isProfessional: boolean
+  patientId?: number
+}
+
+const Header: FC<HeaderProps> = ({ isProfessional, patientId }) => {
   const navigate = useNavigate()
-  const { pdf, error, isLoading } = useExportPdf(readyToFetch ? Number(patientId) : 0)
+  const { reportPdf, error, isLoading } = useGetPacientReportPdf(patientId)
+  const [reportUrl, setReportUrl] = useState<string>('')
 
   useEffect(() => {
-    if (patientId) {
-      setReadyToFetch(true)
+    if (reportPdf && !error && !isLoading) {
+      setReportUrl(URL.createObjectURL(reportPdf))
     }
-  }, [patientId])
-
-  const handleDownload = () => {
-    if (pdf && !error && !isLoading) {
-      const blob = pdf instanceof Blob ? pdf : new Blob([pdf], { type: 'application/pdf' })
-      const url = URL.createObjectURL(blob)
-
-      const a = document.createElement('a')
-      a.href = url
-      a.download = 'reporte.pdf'
-      document.body.appendChild(a)
-      a.click()
-      document.body.removeChild(a)
-
-      setTimeout(() => URL.revokeObjectURL(url), 100)
-    }
-  }
+  }, [error, isLoading, reportPdf])
 
   if (location.pathname === '/felicitaciones') {
     return null
@@ -115,9 +104,11 @@ const Header = ({ isProfessional = false, patientId }: { isProfessional: boolean
       {isProfessional && (
         <div className="top-4 right-4 flex gap-4 fixed z-50">
           <div data-tooltip-id="pdf">
-            <Button size={'square'} variant={'fourth'} onClick={handleDownload} dataTestId="download-button">
-              <Download className="text-white" />
-            </Button>
+            <a href={reportUrl} download={`reporte-paciente-${patientId}.pdf`}>
+              <Button size={'square'} variant={'fourth'} dataTestId="download-button">
+                <Download className="text-white" />
+              </Button>
+            </a>
             <Tooltip id="pdf" content="Generar reporte de gráficos" variant="dark" place="bottom" />
           </div>
           <div data-tooltip-id="actividades">

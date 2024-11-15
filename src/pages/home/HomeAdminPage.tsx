@@ -1,8 +1,7 @@
-import { useState } from 'react'
+import { ChangeEvent, FC, useState } from 'react'
 import { CircleCheck, CircleX, LogOut, Search, X } from 'lucide-react'
-import { useGetProfessionals, useUpdateProfessioanlStateId } from '@hooks/queries'
-import SpinnerLoader from '@components/common/SpinnerLoader'
-import Button from '@components/common/buttons/Button'
+import { useGetProfessionals, useUpdateProfessioanlStateId } from '@hooks'
+import { Loader, Button } from '@components'
 import { useNavigate } from 'react-router-dom'
 
 type Statuses = {
@@ -19,7 +18,7 @@ const getVerificationStatus = (id: number) => {
   return statuses[id] || statuses[1]
 }
 
-const HomeAdminPage = () => {
+const HomeAdminPage: FC = () => {
   const navigate = useNavigate()
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
@@ -27,7 +26,7 @@ const HomeAdminPage = () => {
   const { data: professionals, isLoading, error } = useGetProfessionals(stateIdFilter)
   const { mutateAsync: updateProfessionalState, isPending } = useUpdateProfessioanlStateId()
 
-  const handleStateChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleStateChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setStateIdFilter(Number(e.target.value) || null)
   }
 
@@ -84,7 +83,7 @@ const HomeAdminPage = () => {
 
       {error && <div className="w-full bg-red-200 text-red-800 p-2 mb-4 rounded-md">Error: {error.message}</div>}
 
-      {isLoading && <SpinnerLoader />}
+      {isLoading && <Loader />}
 
       {!isLoading && !error && filteredProfessionals && (
         <div className="overflow-x-auto w-[80%]">

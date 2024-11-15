@@ -1,49 +1,50 @@
-import Button from '@/components/common/buttons/Button'
-import { HearableButton } from '@/components/common/buttons/HearableButton'
+import { HearableButton, Button } from '@components'
 import { Pencil, Save } from 'lucide-react'
-import { useState, useEffect } from 'react'
-import { useGetProfileData, useUpdateProfileData } from '@/hooks/queries'
-import { useUser } from '@/hooks/selectors'
-import { ProfileData } from '@/interfaces/interfaces'
+import { useState, useEffect, ChangeEvent, FC } from 'react'
+import { useGetProfileData, useUpdateProfileData, useUser } from '@hooks'
+import { ProfileData, RoleEnum } from '@interfaces'
 
-const ProfilePage = () => {
+const ProfilePage: FC = () => {
   const user = useUser()
-  const { data, error, isLoading } = useGetProfileData(user.id, user.role.toLowerCase())
+  const { data, error, isLoading } = useGetProfileData(user.id, user.role)
   const { mutate: updateProfile } = useUpdateProfileData()
-
+  const [formData, setFormData] = useState<ProfileData>({
+    name: '',
+    surname: '',
+    email: '',
+    image: ''
+  })
   const [isEditing, setIsEditing] = useState(false)
-  const [name, setName] = useState('')
-  const [surname, setSurname] = useState('')
-  const [email, setEmail] = useState('')
-  const [image, setImage] = useState('')
 
   useEffect(() => {
     if (data) {
-      setName(data.name || '')
-      setSurname(data.surname || '')
-      setEmail(data.email || '')
-      setImage(data.image || '')
+      setFormData({
+        name: data.name,
+        surname: data.surname,
+        email: data.email,
+        image: data.image
+      })
     }
   }, [data])
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({ ...prev, [name]: value }))
+  }
 
   if (isLoading) return <p>Loading...</p>
   if (error) return <p>Error loading profile data.</p>
 
   const handleSave = () => {
-    const profileData: ProfileData = {
-      email,
-      name,
-      surname,
-      image
-    }
-    updateProfile({ id: user.id, role: user.role, data: profileData })
+    updateProfile({ id: user.id, role: user.role, data: formData })
+    setIsEditing(false)
   }
 
   return (
     <div className="flex flex-col justify-center items-center w-full h-full lg:mt-0 mt-16">
       <div className="flex justify-center items-center w-full gap-4 mb-6">
         <h1 className="text-h1">Perfil</h1>
-        {user.role == 'PATIENT' && <HearableButton variant={'secondary'} text={'Este es tu perfil'} />}
+        {user.role === RoleEnum.PATIENT && <HearableButton variant={'secondary'} text={'Este es tu perfil'} />}
       </div>
       <div className="flex flex-col justify-center items-center w-[75%] rounded-xl border shadow-lg py-8 bg-slate-50">
         <div className="flex flex-row justify-end items-end sm:mx-auto sm:w-full sm:max-w-lg">
@@ -54,45 +55,29 @@ const ProfilePage = () => {
           {isEditing ? (
             <form className="space-y-6">
               <div>
-                <label htmlFor="nombre" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
                   Nombre
                 </label>
                 <input
-                  id="nombre"
-                  name="nombre"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
                   className="mt-2 block w-full py-2 text-gray-900 sm:text-sm sm:leading-6 rounded-full border shadow-md px-6"
                 />
               </div>
-
               <div>
-                <label htmlFor="apellido" className="block text-sm font-medium leading-6 text-gray-900">
+                <label htmlFor="surname" className="block text-sm font-medium leading-6 text-gray-900">
                   Apellido
                 </label>
                 <input
-                  id="apellido"
-                  name="apellido"
-                  value={surname}
-                  onChange={(e) => setSurname(e.target.value)}
+                  id="surname"
+                  name="surname"
+                  value={formData.surname}
+                  onChange={handleChange}
                   className="mt-2 block w-full py-2 text-gray-900 sm:text-sm sm:leading-6 rounded-full border shadow-md px-6"
                 />
               </div>
-
-              <div>
-                <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                  Email
-                </label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  value={email}
-                  disabled
-                  className="mt-2 block w-full py-2 text-gray-900 sm:text-sm sm:leading-6 rounded-full border shadow-md px-6"
-                />
-              </div>
-
               <div className="flex items-end justify-end">
                 <Button size={'circle'} shape={'circle'} variant={'secondary'} onClick={handleSave}>
                   <Save className="text-white" />
@@ -104,21 +89,21 @@ const ProfilePage = () => {
               <div>
                 <label className="block text-sm font-medium leading-6 text-gray-900">Nombre</label>
                 <div className="mt-2 rounded-full border shadow-md px-6">
-                  <p className="block w-full py-2 text-gray-900 sm:text-sm sm:leading-6">{data?.name || 'N/A'}</p>
+                  <p className="block w-full py-2 text-gray-900 sm:text-sm sm:leading-6">{formData.name}</p>
                 </div>
               </div>
 
               <div>
                 <label className="block text-sm font-medium leading-6 text-gray-900">Apellido</label>
                 <div className="mt-2 rounded-full border shadow-md px-6">
-                  <p className="block w-full py-2 text-gray-900 sm:text-sm sm:leading-6">{data?.surname || 'N/A'}</p>
+                  <p className="block w-full py-2 text-gray-900 sm:text-sm sm:leading-6">{formData.surname}</p>
                 </div>
               </div>
 
               <div>
                 <label className="block text-sm font-medium leading-6 text-gray-900">Email</label>
                 <div className="mt-2 rounded-full border shadow-md px-6">
-                  <p className="block w-full py-2 text-gray-900 sm:text-sm sm:leading-6">{data?.email || 'N/A'}</p>
+                  <p className="block w-full py-2 text-gray-900 sm:text-sm sm:leading-6">{formData.email}</p>
                 </div>
               </div>
 

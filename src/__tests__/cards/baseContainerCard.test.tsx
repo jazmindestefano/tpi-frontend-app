@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
-import { BaseContainer } from '../../components/common/cards/BaseContainer'
+import { BaseContainer } from '@components'
 
 describe('BaseContainer component', () => {
   it('renders children correctly', () => {

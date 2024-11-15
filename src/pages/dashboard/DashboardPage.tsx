@@ -1,6 +1,7 @@
-import { Dashboard } from '@/components'
+import { Dashboard } from '@components'
+import { FC } from 'react'
 
-const DashboardPage = () => {
+const DashboardPage: FC = () => {
   return <Dashboard />
 }
 

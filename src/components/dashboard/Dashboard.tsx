@@ -1,12 +1,17 @@
-import { useDashboard } from '@/hooks'
-import SpinnerLoader from '@components/common/SpinnerLoader'
-import { useState } from 'react'
-import { useGetPatientNameById } from '@hooks/queries'
+import { useDashboard, useGetPatientNameById } from '@hooks'
+import {
+  Loader,
+  BackButton,
+  AuditoryDiscriminationChart,
+  Feedback,
+  PronunciationChart,
+  RankingChart,
+  Today
+} from '@components'
+import { FC, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import BackButton from '@components/common/buttons/BackButton'
-import { AuditoryDiscriminationChart, Feedback, PronunciationChart, RankingChart, Today } from '.'
 
-const Dashboard = () => {
+const Dashboard: FC = () => {
   const {
     phonemePronunciationChart,
     syllablePronunciationChart,
@@ -24,7 +29,7 @@ const Dashboard = () => {
   const [activeTab, setActiveTab] = useState<string>('today')
 
   if (auditoryLoading || phonemeLoading || phonemeRankingLoading || syllableLoading || syllableRankingLoading) {
-    return <SpinnerLoader />
+    return <Loader />
   }
 
   const renderTabContent = () => {

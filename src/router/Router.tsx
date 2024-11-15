@@ -1,5 +1,4 @@
 import { createBrowserRouter } from 'react-router-dom'
-import PrivateRoute from '@/router/PrivateRoute.tsx'
 import {
   AchievementsPage,
   ActivityResponsesPage,
@@ -23,14 +22,17 @@ import {
   ProfesionalCredentialVerification,
   ChangePassword,
   HomeAdminPage
-} from '@/pages'
-import { ValidGameWrapper } from '@/router/ValidGameWrapper.tsx'
-import { SnakeGameWrapper } from '../../wrappers'
-import ValidateRoleProfessional from './ValidateRoleProfessional.tsx'
-import ValidateRolePatient from './ValidateRolePatient.tsx'
+} from '@pages'
 import { LayoutAdmin, LayoutPatient, LayoutProfesional } from '@components'
+import {
+  SnakeGameWrapper,
+  ValidateRolePatient,
+  ValidateRoleProfessional,
+  ValidGameWrapper,
+  PrivateRoute
+} from '@wrappers'
 
-export const router = createBrowserRouter([
+const Router = createBrowserRouter([
   {
     path: '/login',
     element: <LoginPage />
@@ -167,3 +169,5 @@ export const router = createBrowserRouter([
     element: <NotFoundPage />
   }
 ])
+
+export default Router

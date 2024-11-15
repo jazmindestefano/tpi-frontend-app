@@ -1,3 +1,11 @@
+export const RoleEnum = {
+  PATIENT: 'PATIENT',
+  PROFESSIONAL: 'PROFESSIONAL',
+  NO_ROLE: 'NO_ROLE'
+}
+
+export type Role = 'PATIENT' | 'PROFESSIONAL' | 'NO_ROLE'
+
 export interface Theme {
   id: number
   name: string
@@ -13,7 +21,7 @@ export interface Game {
 export interface User {
   id: number
   username: string
-  role: string
+  role: Role
 }
 
 export interface GameLevel {

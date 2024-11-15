@@ -1,9 +1,9 @@
-import { useTextToSpeech } from '@hooks/queries'
+import { useGetSynthesizedAudio } from '@hooks'
 import { useCallback, useRef } from 'react'
 
 // todo: we need to somehow merge these two useTextToSpeech - useSpeakText
 const useSpeakText = () => {
-  const { mutateAsync: tts } = useTextToSpeech()
+  const { mutateAsync: tts } = useGetSynthesizedAudio()
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const isSpeakingRef = useRef(false)
 
