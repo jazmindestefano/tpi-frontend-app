@@ -1,5 +1,5 @@
 import { useSurveyFeedbackForDashboard } from '@hooks'
-import { SpinnerLoader } from '@components'
+import { Loader } from '@components'
 import { Star, ThumbsDown, ThumbsUp } from 'lucide-react'
 import { FC, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -17,7 +17,7 @@ const Feedback: FC = () => {
   }, [patientId])
 
   if (isLoading) {
-    return <SpinnerLoader />
+    return <Loader />
   }
 
   if (data.leastLikedActivity == null || data.mostLikedActivity == null) {

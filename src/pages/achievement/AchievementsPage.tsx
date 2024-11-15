@@ -1,6 +1,6 @@
 import { useUser, useGetAchievements } from '@hooks'
 import { FC, useEffect, useState } from 'react'
-import { HearableButton, SpinnerLoader } from '@components'
+import { HearableButton, Loader } from '@components'
 import { getUniqueAchievements, UniqueAchievements } from '@helpers'
 
 const AchievementsPage: FC = () => {
@@ -14,7 +14,7 @@ const AchievementsPage: FC = () => {
     }
   }, [achievements])
 
-  if (isLoading) return <SpinnerLoader />
+  if (isLoading) return <Loader />
   if (error) return <div>Error al cargar los logros</div>
 
   return (

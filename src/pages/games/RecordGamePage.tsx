@@ -12,7 +12,7 @@ import { FC, useEffect, useState } from 'react'
 import { shuffleArray } from '@helpers'
 import { ArrowRightIcon } from 'lucide-react'
 import { LevelOption } from '@interfaces'
-import { Button, GameHeader, ProgressBar, RecordButton, SpinnerLoader } from '@components'
+import { Button, GameHeader, ProgressBar, RecordButton, Loader } from '@components'
 
 const RecordGamePage: FC = () => {
   const selectedTheme = useSelectedTheme()
@@ -103,7 +103,7 @@ const RecordGamePage: FC = () => {
       </div>
     </div>
   ) : (
-    <SpinnerLoader />
+    <Loader />
   )
 }
 

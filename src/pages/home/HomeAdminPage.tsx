@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, useState } from 'react'
 import { CircleCheck, CircleX, LogOut, Search, X } from 'lucide-react'
 import { useGetProfessionals, useUpdateProfessioanlStateId } from '@hooks'
-import { SpinnerLoader, Button } from '@components'
+import { Loader, Button } from '@components'
 import { useNavigate } from 'react-router-dom'
 
 type Statuses = {
@@ -83,7 +83,7 @@ const HomeAdminPage: FC = () => {
 
       {error && <div className="w-full bg-red-200 text-red-800 p-2 mb-4 rounded-md">Error: {error.message}</div>}
 
-      {isLoading && <SpinnerLoader />}
+      {isLoading && <Loader />}
 
       {!isLoading && !error && filteredProfessionals && (
         <div className="overflow-x-auto w-[80%]">

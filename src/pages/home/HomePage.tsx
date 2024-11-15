@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux'
 import { getCardBgColor } from '@helpers'
 import { Game } from '@interfaces'
 import { selectGame, setModalFeedback, setShowProductTour } from '@redux/slices'
-import { SpinnerLoader, FeedbackModal, HearableButton, HomeCard } from '@components'
+import { Loader, FeedbackModal, HearableButton, HomeCard } from '@components'
 import { useGetGames, useShowModalFeedback } from '@hooks'
 
 const Home: FC = () => {
@@ -28,7 +28,7 @@ const Home: FC = () => {
   }
 
   if (gamesLoading) {
-    return <SpinnerLoader />
+    return <Loader />
   }
 
   return games && games.length !== 0 && !error ? (

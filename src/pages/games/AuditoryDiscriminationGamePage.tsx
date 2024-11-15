@@ -1,4 +1,4 @@
-import { GameHeader, SpinnerLoader, ProgressBar } from '@components'
+import { GameHeader, Loader, ProgressBar } from '@components'
 import { useSpeakText, useSelectedTheme, useUser, useGetGameLevels, usePostAuditoryDiscriminationAnswer } from '@hooks'
 import { LevelOption } from '@interfaces'
 import { useState, useEffect, FC } from 'react'
@@ -87,7 +87,7 @@ const AuditoryDiscriminationGamePage: FC = () => {
       <GameOptionsListPage options={options} onOptionSelection={onOptionSelection} />
     </div>
   ) : (
-    <SpinnerLoader />
+    <Loader />
   )
 }
 

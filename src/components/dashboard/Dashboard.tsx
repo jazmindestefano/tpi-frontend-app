@@ -1,6 +1,6 @@
 import { useDashboard, useGetPatientNameById } from '@hooks'
 import {
-  SpinnerLoader,
+  Loader,
   BackButton,
   AuditoryDiscriminationChart,
   Feedback,
@@ -29,7 +29,7 @@ const Dashboard: FC = () => {
   const [activeTab, setActiveTab] = useState<string>('today')
 
   if (auditoryLoading || phonemeLoading || phonemeRankingLoading || syllableLoading || syllableRankingLoading) {
-    return <SpinnerLoader />
+    return <Loader />
   }
 
   const renderTabContent = () => {

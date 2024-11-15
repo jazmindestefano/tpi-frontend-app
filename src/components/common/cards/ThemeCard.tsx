@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react'
 import { Theme } from '@interfaces'
 import { useImagesLoading } from '@hooks'
-import { BaseCard, BaseContainer, HearableButton, SpinnerLoader } from '@components'
+import { BaseCard, BaseContainer, HearableButton, Loader } from '@components'
 
 interface ThemeCardProps {
   theme: Theme
@@ -21,7 +21,7 @@ const ThemeCard: FC<ThemeCardProps> = ({ theme, onClick, bgColor, onImageLoad })
 
   return (
     <BaseCard className={`${imageLoaded && bgColor} p-4 flex flex-col justify-center items-center w-full`}>
-      {!imageLoaded && <SpinnerLoader />}
+      {!imageLoaded && <Loader />}
       <BaseContainer className={`gap-6 ${!imageLoaded ? 'opacity-0' : 'opacity-100'}`}>
         <div onClick={onClick} className="w-full">
           <div className="relative w-full h-80">

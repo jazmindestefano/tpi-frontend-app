@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux'
 import { Theme } from '@interfaces'
 import { selectTheme } from '@redux/slices'
 import { useSelectedGame, useGetThemesByGameId } from '@hooks'
-import { HearableButton, SpinnerLoader, ThemeCardsList } from '@components'
+import { HearableButton, Loader, ThemeCardsList } from '@components'
 import { FC } from 'react'
 
 const ThemeSelectorPage: FC = () => {
@@ -23,7 +23,7 @@ const ThemeSelectorPage: FC = () => {
   }
 
   if (isLoading) {
-    return <SpinnerLoader />
+    return <Loader />
   }
 
   return (

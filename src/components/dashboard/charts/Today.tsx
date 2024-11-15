@@ -1,6 +1,6 @@
 import { getCurrentDate } from '@helpers'
 import { useWhatHappenedTodayDashboard } from '@hooks'
-import { SpinnerLoader } from '@components'
+import { Loader } from '@components'
 import { ArrowRight } from 'lucide-react'
 import { useEffect, useState, DragEvent } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -23,7 +23,7 @@ const Today = () => {
   }
 
   if (isLoading) {
-    return <SpinnerLoader />
+    return <Loader />
   }
 
   return (

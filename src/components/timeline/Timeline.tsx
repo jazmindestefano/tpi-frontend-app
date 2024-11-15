@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom'
-import { SpinnerLoader, BackButton } from '@components'
+import { Loader, BackButton } from '@components'
 import { formatDate } from '@helpers'
 import { useTimeline } from '@hooks'
 import { FC } from 'react'
@@ -10,7 +10,7 @@ const Timeline: FC = () => {
   const { gameId, data, error, isLoading, readyToFetch } = useTimeline({ patientId })
 
   if (!readyToFetch || isLoading) {
-    return <SpinnerLoader />
+    return <Loader />
   }
 
   if (error || !data) {

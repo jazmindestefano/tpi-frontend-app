@@ -1,4 +1,4 @@
-import { SpinnerLoader } from '@components'
+import { Loader } from '@components'
 import { useGetWordsByUserId, useSelectedTheme, useUser } from '@hooks'
 import { SnakeGamePage } from '@pages'
 import { Navigate } from 'react-router-dom'
@@ -16,7 +16,7 @@ const SnakeGameWrapper: FC = () => {
   const { words, isLoading, error } = useGetWordsByUserId(user.id)
 
   return isLoading ? (
-    <SpinnerLoader />
+    <Loader />
   ) : error ? (
     <Navigate to={'/'} />
   ) : words && words.length != 0 ? (

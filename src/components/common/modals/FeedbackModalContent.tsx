@@ -1,4 +1,4 @@
-import { BadFeedbackIcon, BaseModal, Button, GoodFeedbackIcon, MehFeedbackIcon, SpinnerLoader } from '@components'
+import { BadFeedbackIcon, BaseModal, Button, GoodFeedbackIcon, MehFeedbackIcon, Loader } from '@components'
 import classNames from 'classnames'
 import { FC } from 'react'
 
@@ -27,7 +27,7 @@ const FeedbackModalContent: FC<FeedbackModalProps> = ({
       onClose={onModalClose}
       title={modalTitle}
     >
-      {isPending && <SpinnerLoader />}
+      {isPending && <Loader />}
       {error && <div>Error: {error.message}</div>}
       {!isPending && !isSuccess && (
         <div className={'flex justify-evenly items-start w-full'}>

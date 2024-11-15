@@ -1,4 +1,4 @@
-import { BackButton, Button, SpinnerLoader, DateFilter, Filter } from '@components'
+import { BackButton, Button, Loader, DateFilter, Filter } from '@components'
 import { useGetPatientActivityAnswers } from '@hooks'
 import { PatientActivityAnswers } from '@interfaces'
 import { PlayCircle } from 'lucide-react'
@@ -81,7 +81,7 @@ const ActivityResponsesPage: FC = () => {
       </div>
 
       {isLoading ? (
-        <SpinnerLoader />
+        <Loader />
       ) : (
         <div className="w-full">
           {filteredData &&

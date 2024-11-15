@@ -1,6 +1,6 @@
 import { FC, useEffect, useLayoutEffect, useState } from 'react'
 import { Theme } from '@interfaces'
-import { ArrowLeftIcon, ArrowRightIcon, SpinnerLoader, ThemeCard, Button } from '@components'
+import { ArrowLeftIcon, ArrowRightIcon, Loader, ThemeCard, Button } from '@components'
 import { useImagesLoading, useScroll } from '@hooks'
 
 // todo: change this
@@ -39,7 +39,7 @@ const ThemeCardsList: FC<ThemeCardsListProps> = ({ themes, onCardClick }) => {
   }, [checkScrollButtons, loadedImages, themes.length])
 
   if (!themes) {
-    return <SpinnerLoader />
+    return <Loader />
   }
 
   return (

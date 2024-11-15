@@ -1,1 +1,1 @@
-export { default as SpinnerLoader } from './SpinnerLoader.tsx'
+export { default as Loader } from './Loader.tsx'
