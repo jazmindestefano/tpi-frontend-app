@@ -1,9 +1,6 @@
-import { useState, useEffect, useLayoutEffect } from 'react'
-import { ThemeCard } from '../common/cards/themeCard/ThemeCard'
-import { Theme } from '../../interfaces/interfaces'
-import Button from '../common/buttons/Button'
-import { ArrowLeftIcon, ArrowRightIcon } from '../common/icons/Icons'
-import SpinnerLoader from '@components/common/SpinnerLoader'
+import { FC, useEffect, useLayoutEffect, useState } from 'react'
+import { Theme } from '@interfaces'
+import { ArrowLeftIcon, ArrowRightIcon, SpinnerLoader, ThemeCard, Button } from '@components'
 import { useImagesLoading, useScroll } from '@hooks'
 
 // todo: change this
@@ -22,7 +19,7 @@ interface ThemeCardsListProps {
   onCardClick: (theme: Theme) => void
 }
 
-export default function ThemeCardsList({ themes, onCardClick }: ThemeCardsListProps) {
+const ThemeCardsList: FC<ThemeCardsListProps> = ({ themes, onCardClick }) => {
   const { scrollRef, scroll, checkScrollButtons, showScrollButtons } = useScroll()
   const [assignedColors, setAssignedColors] = useState<string[]>([])
   const { loadedImages, handleImageLoad } = useImagesLoading({
@@ -84,3 +81,5 @@ export default function ThemeCardsList({ themes, onCardClick }: ThemeCardsListPr
     </div>
   )
 }
+
+export default ThemeCardsList

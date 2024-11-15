@@ -1,3 +1,5 @@
+import { NOT_YET_ASSIGNED_STR } from '@config'
+
 export const RoleEnum = {
   PATIENT: 'PATIENT',
   PROFESSIONAL: 'PROFESSIONAL'
@@ -20,7 +22,7 @@ export interface Game {
 export interface User {
   id: number
   username: string
-  role: Role
+  role: Role | typeof NOT_YET_ASSIGNED_STR
 }
 
 export interface GameLevel {

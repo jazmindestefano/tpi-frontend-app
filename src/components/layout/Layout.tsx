@@ -1,12 +1,13 @@
 import { Outlet } from 'react-router-dom'
+import { FC, ReactNode } from 'react'
 
 interface LayoutProps {
-  header: React.ReactNode
-  aside: React.ReactNode
+  header: ReactNode
+  aside: ReactNode
   className: string
 }
 
-const Layout: React.FC<LayoutProps> = ({ header, aside, className }) => {
+const Layout: FC<LayoutProps> = ({ header, aside, className }) => {
   return (
     <div className={`flex h-screen bg-gray-100 ${className}`}>
       {aside}

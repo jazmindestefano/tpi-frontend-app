@@ -1,14 +1,15 @@
-import { parse, format } from 'date-fns'
+import { format, parse } from 'date-fns'
+import { Dispatch, FC, SetStateAction } from 'react'
 
 interface DateFilterProps {
   startDate: Date | null
   endDate: Date | null
-  setStartDate: React.Dispatch<React.SetStateAction<Date | null>>
-  setEndDate: React.Dispatch<React.SetStateAction<Date | null>>
+  setStartDate: Dispatch<SetStateAction<Date | null>>
+  setEndDate: Dispatch<SetStateAction<Date | null>>
 }
 
-const DateFilter: React.FC<DateFilterProps> = ({ startDate, endDate, setStartDate, setEndDate }) => {
-  const handleDateChange = (dateString: string, setDate: React.Dispatch<React.SetStateAction<Date | null>>) => {
+const DateFilter: FC<DateFilterProps> = ({ startDate, endDate, setStartDate, setEndDate }) => {
+  const handleDateChange = (dateString: string, setDate: Dispatch<SetStateAction<Date | null>>) => {
     const date = dateString ? parse(dateString, 'yyyy-MM-dd', new Date()) : null
     setDate(date)
   }

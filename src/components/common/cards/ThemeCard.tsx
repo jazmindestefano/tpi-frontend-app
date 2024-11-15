@@ -1,10 +1,7 @@
-import { useEffect } from 'react'
-import { Theme } from '../../../../interfaces/interfaces'
-import { BaseCard } from '../BaseCard'
-import { BaseContainer } from '../BaseContainer'
-import { HearableButton } from '../../buttons/HearableButton.tsx'
-import SpinnerLoader from '@components/common/SpinnerLoader.tsx'
+import { FC, useEffect } from 'react'
+import { Theme } from '@interfaces'
 import { useImagesLoading } from '@hooks'
+import { BaseCard, BaseContainer, HearableButton, SpinnerLoader } from '@components'
 
 interface ThemeCardProps {
   theme: Theme
@@ -13,7 +10,7 @@ interface ThemeCardProps {
   onImageLoad: () => void
 }
 
-export const ThemeCard: React.FC<ThemeCardProps> = ({ theme, onClick, bgColor, onImageLoad }) => {
+const ThemeCard: FC<ThemeCardProps> = ({ theme, onClick, bgColor, onImageLoad }) => {
   const { imageLoaded, handleImageLoad } = useImagesLoading({ totalImages: 1 })
 
   useEffect(() => {
@@ -44,3 +41,5 @@ export const ThemeCard: React.FC<ThemeCardProps> = ({ theme, onClick, bgColor, o
     </BaseCard>
   )
 }
+
+export default ThemeCard

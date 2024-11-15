@@ -1,19 +1,20 @@
-import { useSelectedGame, useSelectedTheme, useUser } from '@hooks/selectors.ts'
 import { useNavigate } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
-import { useGetGameLevels, usePostUserRecording } from '@hooks/queries.ts'
-import { useEffect, useState } from 'react'
-import { shuffleArray } from '@/helpers'
-import { GameHeader } from '@/components'
-import { RecordButton } from '@components/common/buttons/RecordButton.tsx'
-import Button from '@components/common/buttons/Button.tsx'
+import {
+  useSelectedGame,
+  useSelectedTheme,
+  useUser,
+  useAudioRecording,
+  useGetGameLevels,
+  usePostUserRecording
+} from '@hooks'
+import { FC, useEffect, useState } from 'react'
+import { shuffleArray } from '@helpers'
 import { ArrowRightIcon } from 'lucide-react'
-import SpinnerLoader from '@components/common/SpinnerLoader.tsx'
-import ProgressBar from '@components/ProgressBar.tsx'
-import { useAudioRecording } from '@hooks'
 import { LevelOption } from '@interfaces'
+import { Button, GameHeader, ProgressBar, RecordButton, SpinnerLoader } from '@components'
 
-const RecordGamePage = () => {
+const RecordGamePage: FC = () => {
   const selectedTheme = useSelectedTheme()
   const navigate = useNavigate()
   const isDesktop = useMediaQuery({ minWidth: 768 })

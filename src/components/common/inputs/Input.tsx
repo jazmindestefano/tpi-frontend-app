@@ -1,7 +1,7 @@
 import classNames from 'classnames'
-import { Label } from '../labels/Label'
 import { Eye, EyeOff } from 'lucide-react'
 import { ChangeEvent, FC } from 'react'
+import { Label } from '@components'
 
 interface InputProps {
   name: string
@@ -20,7 +20,7 @@ interface InputProps {
   dataTestId?: string
 }
 
-export const Input: FC<InputProps> = ({
+const Input: FC<InputProps> = ({
   name,
   id,
   placeholder,
@@ -61,3 +61,5 @@ export const Input: FC<InputProps> = ({
     </div>
   )
 }
+
+export default Input

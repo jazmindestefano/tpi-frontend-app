@@ -1,9 +1,9 @@
-import { House, LogOut, Download, FolderDot } from 'lucide-react'
+import { Download, FolderDot, House, LogOut } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-import Button from '../common/buttons/Button'
 import { Tooltip } from 'react-tooltip'
-import { useGetPacientReportPdf } from '@/hooks/queries'
+import { useGetPacientReportPdf } from '@hooks'
 import { FC, useEffect, useState } from 'react'
+import { Button } from '@components'
 
 interface HeaderProps {
   isProfessional: boolean

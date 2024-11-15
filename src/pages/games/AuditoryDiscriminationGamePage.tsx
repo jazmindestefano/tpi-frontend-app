@@ -1,14 +1,10 @@
-import { GameHeader } from '@/components'
-import SpinnerLoader from '@/components/common/SpinnerLoader'
-import { useGetGameLevels, usePostAuditoryDiscriminationAnswer } from '@/hooks/queries'
-import { LevelOption } from '@/interfaces'
-import { useState, useEffect } from 'react'
+import { GameHeader, SpinnerLoader, ProgressBar } from '@components'
+import { useSpeakText, useSelectedTheme, useUser, useGetGameLevels, usePostAuditoryDiscriminationAnswer } from '@hooks'
+import { LevelOption } from '@interfaces'
+import { useState, useEffect, FC } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useSelectedTheme, useUser } from '@hooks/selectors.ts'
-import { shuffleArray } from '@/helpers'
-import ProgressBar from '@components/ProgressBar.tsx'
-import { GameOptionsListPage } from '@/pages'
-import { useSpeakText } from '@hooks'
+import { shuffleArray } from '@helpers'
+import { GameOptionsListPage } from '@pages'
 
 const prepareData = ({
   patiendId,
@@ -30,7 +26,7 @@ const prepareData = ({
   }
 }
 
-const AuditoryDiscriminationGamePage = () => {
+const AuditoryDiscriminationGamePage: FC = () => {
   const navigate = useNavigate()
   const selectedTheme = useSelectedTheme()
   const user = useUser()

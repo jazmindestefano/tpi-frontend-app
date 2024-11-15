@@ -1,0 +1,6 @@
+export { default as PrivateRoute } from './PrivateRoute'
+export { default as Router } from './Router'
+export { default as SnakeGameWrapper } from './SnakeGameWrapper'
+export { default as ValidateRolePatient } from './ValidateRolePatient'
+export { default as ValidateRoleProfessional } from './ValidateRoleProfessional'
+export { default as ValidGameWrapper } from './ValidGameWrapper'

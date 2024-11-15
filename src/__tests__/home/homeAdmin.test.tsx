@@ -2,12 +2,12 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import { vi } from 'vitest'
 import '@testing-library/jest-dom'
 import { useNavigate } from 'react-router-dom'
-import { useGetProfessionals } from '../../hooks/queries.ts'
-import { HomeAdminPage } from '../../pages'
+import { useGetProfessionals } from '@hooks'
+import { HomeAdminPage } from '@pages'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-vi.mock('../../hooks/queries.ts', async () => {
-  const actual = await vi.importActual('../../hooks/queries.ts')
+vi.mock('@hooks', async () => {
+  const actual = await vi.importActual('@hooks')
   return {
     ...actual,
     useGetProfessionals: vi.fn(() => ({

@@ -2,13 +2,11 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Theme } from '@interfaces'
 import { selectTheme } from '@redux/slices'
-import { useSelectedGame } from '@hooks/selectors'
-import { HearableButton } from '@components/common/buttons/HearableButton'
-import SpinnerLoader from '@components/common/SpinnerLoader'
-import ThemeCardsList from '@components/themeSelect/ThemeCardsList'
-import { useGetThemesByGameId } from '@hooks/queries'
+import { useSelectedGame, useGetThemesByGameId } from '@hooks'
+import { HearableButton, SpinnerLoader, ThemeCardsList } from '@components'
+import { FC } from 'react'
 
-const ThemeSelectorPage = () => {
+const ThemeSelectorPage: FC = () => {
   const selectedGame = useSelectedGame()
   const { themes, isLoading } = useGetThemesByGameId(selectedGame.id)
   const dispatch = useDispatch()

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { FC, useEffect, useState } from 'react'
 
 interface TimerProps {
   duration: number
@@ -6,7 +6,7 @@ interface TimerProps {
   onTimeout: () => void
 }
 
-const Timer: React.FC<TimerProps> = ({ duration, onTimeout, text }) => {
+const Timer: FC<TimerProps> = ({ duration, onTimeout, text }) => {
   const [timeLeft, setTimeLeft] = useState(duration)
 
   useEffect(() => {

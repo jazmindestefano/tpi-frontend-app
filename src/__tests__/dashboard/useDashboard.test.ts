@@ -1,13 +1,13 @@
-import { renderHook, waitFor } from '@testing-library/react'
+import { renderHook } from '@testing-library/react'
 import { describe, it, expect, vi, MockedFunction } from 'vitest'
-import useDashboard from '@hooks/dashboard/useDashboard'
 import {
   useSyllableDashboard,
   usePhonemeDashboard,
   useActivityLetterResponsesForDashboard,
   useWorstPhonemeRankingDashboard,
   useWorstSyllableRankingDashboard
-} from '@/hooks/queries'
+} from '@hooks/queries' // this seems wrong, but tests break otherwise
+import { useDashboard } from '@hooks/dashboard'
 import {
   syllableMockedData,
   phonemeMockedData,
@@ -15,13 +15,17 @@ import {
   syllableRankingMockedData
 } from './mockedData'
 
-vi.mock('@/hooks/queries', () => ({
-  useSyllableDashboard: vi.fn(),
-  usePhonemeDashboard: vi.fn(),
-  useActivityLetterResponsesForDashboard: vi.fn(),
-  useWorstPhonemeRankingDashboard: vi.fn(),
-  useWorstSyllableRankingDashboard: vi.fn()
-}))
+vi.mock('@hooks/queries', async () => {
+  const actual = await vi.importActual('@hooks/queries')
+  return {
+    ...actual,
+    useSyllableDashboard: vi.fn(),
+    usePhonemeDashboard: vi.fn(),
+    useActivityLetterResponsesForDashboard: vi.fn(),
+    useWorstPhonemeRankingDashboard: vi.fn(),
+    useWorstSyllableRankingDashboard: vi.fn()
+  }
+})
 
 describe('useDashboard', () => {
   it('expect dashboard information to be returned from Api', async () => {
@@ -29,13 +33,11 @@ describe('useDashboard', () => {
 
     const { result } = renderHook(() => useDashboard())
 
-    await waitFor(() => {
-      expect(result.current.syllablePronunciationChart).not.toBeNull()
-      expect(result.current.phonemePronunciationChart).not.toBeNull()
-      expect(result.current.auditoryDiscriminationChart).not.toBeNull()
-      expect(result.current.phonemeRankingChart).not.toBeNull()
-      expect(result.current.syllableRankingChart).not.toBeNull()
-    })
+    expect(result.current.syllablePronunciationChart).not.toBeNull()
+    expect(result.current.phonemePronunciationChart).not.toBeNull()
+    expect(result.current.auditoryDiscriminationChart).not.toBeNull()
+    expect(result.current.phonemeRankingChart).not.toBeNull()
+    expect(result.current.syllableRankingChart).not.toBeNull()
   })
 })
 

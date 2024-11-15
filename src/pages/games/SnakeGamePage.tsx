@@ -1,23 +1,17 @@
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, FC } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
-import Button from '@/components/common/buttons/Button'
-import { HearableButton } from '@/components/common/buttons/HearableButton'
-import { RecordButton } from '@/components/common/buttons/RecordButton'
-import { ContinueIcon } from '@/components/common/icons/Icons'
-import { usePostUserRecording } from '@/hooks/queries'
-import { useUser, useSelectedGame } from '@/hooks/selectors'
+import { Button, HearableButton, RecordButton, ContinueIcon } from '@components'
+import { useAudioRecording, useTextToSpeech, usePostUserRecording, useUser, useSelectedGame } from '@hooks'
 import { useSelector } from 'react-redux'
-import useAudioRecording from '@/hooks/common/useAudioRecording'
-import useTextToSpeech from '../../hooks/speakText/useTextToSpeech'
 
 interface SnakeGameProps {
   items: string[]
   cellSize?: number
 }
 
-const SnakeGamePage = ({ items, cellSize = 65 }: SnakeGameProps) => {
+const SnakeGamePage: FC<SnakeGameProps> = ({ items, cellSize = 65 }) => {
   const [snake, setSnake] = useState([{ x: 7, y: 5 }])
   const [direction, setDirection] = useState({ x: 1, y: 0 })
   const [item, setItem] = useState({ char: items[0], x: 10, y: 4 })

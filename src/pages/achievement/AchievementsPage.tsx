@@ -1,11 +1,9 @@
-import { useUser } from '@hooks/selectors.ts'
-import { useGetAchievements } from '@hooks/queries.ts'
-import { useEffect, useState } from 'react'
-import SpinnerLoader from '@components/common/SpinnerLoader.tsx'
-import { HearableButton } from '@components/common/buttons/HearableButton.tsx'
-import { getUniqueAchievements, UniqueAchievements } from './helper'
+import { useUser, useGetAchievements } from '@hooks'
+import { FC, useEffect, useState } from 'react'
+import { HearableButton, SpinnerLoader } from '@components'
+import { getUniqueAchievements, UniqueAchievements } from '@helpers'
 
-const AchievementsPage = () => {
+const AchievementsPage: FC = () => {
   const user = useUser()
   const { achievements, error, isLoading } = useGetAchievements(user.id)
   const [uniqueAchievements, setUniqueAchievements] = useState<UniqueAchievements[]>([])

@@ -1,10 +1,10 @@
-import BackButton from '../../components/common/buttons/BackButton'
 import { useNavigate, useParams } from 'react-router-dom'
-import SpinnerLoader from '@components/common/SpinnerLoader'
-import { formatDate } from '@helpers/date'
+import { SpinnerLoader, BackButton } from '@components'
+import { formatDate } from '@helpers'
 import { useTimeline } from '@hooks'
+import { FC } from 'react'
 
-export default function Timeline() {
+const Timeline: FC = () => {
   const { patientId } = useParams()
   const navigate = useNavigate()
   const { gameId, data, error, isLoading, readyToFetch } = useTimeline({ patientId })
@@ -67,3 +67,5 @@ export default function Timeline() {
     </div>
   )
 }
+
+export default Timeline

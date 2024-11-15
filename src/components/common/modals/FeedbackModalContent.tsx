@@ -1,8 +1,6 @@
-import { BaseModal } from './BaseModal.tsx'
-import { BadFeedbackIcon, GoodFeedbackIcon, MehFeedbackIcon } from '../icons/Icons.tsx'
-import Button from '../buttons/Button.tsx'
+import { BadFeedbackIcon, BaseModal, Button, GoodFeedbackIcon, MehFeedbackIcon, SpinnerLoader } from '@components'
 import classNames from 'classnames'
-import SpinnerLoader from '../SpinnerLoader.tsx'
+import { FC } from 'react'
 
 interface FeedbackModalProps {
   className?: string
@@ -13,7 +11,7 @@ interface FeedbackModalProps {
   error: Error | null
 }
 
-export const FeedbackModalContent: React.FC<FeedbackModalProps> = ({
+const FeedbackModalContent: FC<FeedbackModalProps> = ({
   className,
   onModalClose,
   onRatingClick,
@@ -47,3 +45,5 @@ export const FeedbackModalContent: React.FC<FeedbackModalProps> = ({
     </BaseModal>
   )
 }
+
+export default FeedbackModalContent

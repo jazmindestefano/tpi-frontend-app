@@ -1,8 +1,8 @@
-import { getCurrentDate } from '@/helpers'
-import { useWhatHappenedTodayDashboard } from '@/hooks/queries'
-import SpinnerLoader from '@components/common/SpinnerLoader'
+import { getCurrentDate } from '@helpers'
+import { useWhatHappenedTodayDashboard } from '@hooks'
+import { SpinnerLoader } from '@components'
 import { ArrowRight } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, DragEvent } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
 const Today = () => {
@@ -17,7 +17,7 @@ const Today = () => {
     }
   }, [patientId])
 
-  const handleClick = (event: React.DragEvent<HTMLButtonElement>) => {
+  const handleClick = (event: DragEvent<HTMLButtonElement>) => {
     event.preventDefault()
     navigate(`/profesional/paciente/${patientId}/timeline`)
   }

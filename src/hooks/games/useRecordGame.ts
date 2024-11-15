@@ -1,7 +1,5 @@
 import { shuffleArray } from '@helpers'
-import { useAudioRecording } from '@hooks'
-import { useGetGameLevels, usePostUserRecording } from '@hooks/queries'
-import { useUser, useSelectedGame } from '@hooks/selectors'
+import { useAudioRecording, useGetGameLevels, usePostUserRecording, useUser, useSelectedGame } from '@hooks'
 import { LevelOption } from '@interfaces'
 import { useState, useEffect } from 'react'
 

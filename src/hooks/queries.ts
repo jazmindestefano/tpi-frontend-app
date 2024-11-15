@@ -1,4 +1,4 @@
-import * as ApiService from './http/queries.ts'
+import * as ApiService from '@http'
 import { useMutation, useQuery } from '@tanstack/react-query'
 
 import {
@@ -8,7 +8,7 @@ import {
   SyllableDashboard,
   SyllableRankingDashboard,
   WhatHappenedTodayDashboard
-} from '@/components/index.ts'
+} from '@components'
 
 import {
   Theme,
@@ -28,7 +28,7 @@ import {
   UpdateProfessionalStateIdProps,
   LoginProps,
   Role
-} from '@/interfaces/interfaces.ts'
+} from '@interfaces'
 
 export const useGetThemesByGameId = (
   gameId: number
@@ -162,7 +162,7 @@ export const useGetAchievements = (
   return { achievements: data, error, isLoading }
 }
 
-export const useTextToSpeech = (): {
+export const useGetSynthesizedAudio = (): {
   mutateAsync: (text: string) => Promise<Blob>
   error: Error | null
   isPending: boolean
@@ -326,22 +326,6 @@ export const useWorstPhonemeRankingDashboard = (
 
   return { data, error, isLoading }
 }
-
-export const useGetActivityLetterProgressDashboard = (
-  patientId: number
-): {
-  data: LetterActityResponseDashboard[]
-  error: Error | null
-  isLoading: boolean
-} => {
-  const { data, error, isLoading } = useQuery({
-    queryKey: ['activityLetterProgress', patientId],
-    queryFn: async () => await ApiService.getActivityLetterProgressDashboard(patientId)
-  })
-
-  return { data, error, isLoading }
-}
-
 export const useGetProfileData = (
   id: number,
   role: Role
@@ -456,15 +440,6 @@ export const usePostPatient = (): {
   return { mutate, reset, error, isPending, isSuccess }
 }
 
-export const getProfessionals = async (stateId: number) => {
-  const res = await ApiService.getProfessionals(stateId)
-
-  if (res.status === 200) {
-    return res.data
-  }
-  return null
-}
-
 export const useGetProfessionals = (
   stateId: number | null
 ): {
@@ -494,4 +469,17 @@ export const useUpdateProfessioanlStateId = (): {
   })
 
   return { error, isPending, mutateAsync }
+}
+
+export const usePostPatientTime = (): {
+  mutate: (args: { sessionStart: Date; sessionTime: number }) => void
+  error: Error | null
+  isPending: boolean
+} => {
+  const { error, isPending, mutate } = useMutation({
+    mutationFn: async ({ sessionStart, sessionTime }: { sessionStart: Date; sessionTime: number }) =>
+      await ApiService.postPatientTime(sessionStart, sessionTime)
+  })
+
+  return { error, isPending, mutate }
 }

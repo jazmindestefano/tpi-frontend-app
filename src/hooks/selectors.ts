@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
-import { RootState } from '@/redux/store'
-import { Game, Theme, User } from '@/interfaces'
+import { RootState } from '@redux/store'
+import { Game, Theme, User } from '@interfaces'
 
 export const useSelectedTheme = (): Theme => useSelector((state: RootState) => state.game.selectedTheme)
 

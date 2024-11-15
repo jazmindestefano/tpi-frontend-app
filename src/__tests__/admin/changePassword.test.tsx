@@ -1,14 +1,15 @@
 import { render, fireEvent, screen } from '@testing-library/react'
 import { vi } from 'vitest'
 import { BrowserRouter, useNavigate } from 'react-router-dom'
-import ChangePassword from '../../pages/admin/ChangePassword'
+import { ChangePassword } from '@pages'
+import { ReactNode } from 'react'
 
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom')
   return {
     ...actual,
     useNavigate: vi.fn(),
-    BrowserRouter: ({ children }: { children: React.ReactNode }) => <div>{children}</div>
+    BrowserRouter: ({ children }: { children: ReactNode }) => <div>{children}</div>
   }
 })
 

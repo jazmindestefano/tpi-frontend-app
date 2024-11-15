@@ -1,9 +1,9 @@
-import HomeProfesionalCard from '@/components/common/cards/ProfesionalHomeCard'
-import { useGetProfessionalPatients } from '@/hooks/queries'
+import { HomeProfesionalCard } from '@components'
 import { getCurrentDate } from '@helpers'
-import { useUser } from '@hooks/selectors.ts'
+import { useUser, useGetProfessionalPatients } from '@hooks'
+import { FC } from 'react'
 
-const HomeProfesionalPage = () => {
+const HomeProfesionalPage: FC = () => {
   const user = useUser()
   const { patients, error, isLoading } = useGetProfessionalPatients(user.id)
 

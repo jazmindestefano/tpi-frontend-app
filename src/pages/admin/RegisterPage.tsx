@@ -1,7 +1,5 @@
-import { PublicRouteLayout } from '@components'
-import Button from '@components/common/buttons/Button'
-import { Input } from '@components/common/inputs/Input'
-import { ChangeEvent, useState } from 'react'
+import { PublicRouteLayout, Button, Input } from '@components'
+import { ChangeEvent, FC, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 interface RegisterFormData {
@@ -11,7 +9,7 @@ interface RegisterFormData {
   professionalCredential: File | null
 }
 
-const RegisterPage = () => {
+const RegisterPage: FC = () => {
   const navigate = useNavigate()
   const [formData, setFormData] = useState<RegisterFormData>({
     name: '',

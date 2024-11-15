@@ -1,6 +1,6 @@
 import { useCallback, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
-import * as ApiService from '../http/queries'
+import { getSynthesizedAudio } from '@http'
 
 interface UseAudioPlayerHookProps {
   text: string
@@ -16,7 +16,7 @@ const useTextToSpeech = ({ text }: UseAudioPlayerHookProps) => {
   } = useQuery({
     queryKey: ['audio', text],
     queryFn: async () => {
-      const audioBlob = await ApiService.getSynthesizedAudio(text)
+      const audioBlob = await getSynthesizedAudio(text)
       const url = URL.createObjectURL(audioBlob)
       return new Audio(url)
     },

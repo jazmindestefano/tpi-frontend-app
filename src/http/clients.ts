@@ -4,7 +4,7 @@ import axios, {
   type AxiosResponse,
   type InternalAxiosRequestConfig
 } from 'axios'
-import env from '../../config/env'
+import { env } from '@config'
 import { loadState } from '@redux/local.ts'
 
 const authenticatedClient = axios.create({
@@ -23,7 +23,7 @@ authenticatedClient.interceptors.request.use(
     } as AxiosRequestHeaders
 
     if (env.profile === 'dev') {
-      console.log(`Request: ${req.method?.toUpperCase()} / ${req.url}`, {
+      console.log(`Request: ${req.method?.toUpperCase()} - ${req.url}`, {
         body: req.data,
         params: req.params,
         headers: req.headers

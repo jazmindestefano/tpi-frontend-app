@@ -1,10 +1,10 @@
-import { useSurveyFeedbackForDashboard } from '@/hooks/queries'
-import SpinnerLoader from '@components/common/SpinnerLoader'
-import { ThumbsUp, Star, ThumbsDown } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useSurveyFeedbackForDashboard } from '@hooks'
+import { SpinnerLoader } from '@components'
+import { Star, ThumbsDown, ThumbsUp } from 'lucide-react'
+import { FC, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
-const Feedback = () => {
+const Feedback: FC = () => {
   const { patientId } = useParams()
   const [readyToFetch, setReadyToFetch] = useState(false)
 

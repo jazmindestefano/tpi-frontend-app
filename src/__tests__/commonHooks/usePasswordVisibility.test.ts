@@ -1,6 +1,6 @@
 import { renderHook, act } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
-import usePasswordVisibility from '../../hooks/common/usePasswordVisibility'
+import { usePasswordVisibility } from '@hooks'
 
 describe('usePasswordVisibility', () => {
   it('should initialize with showPassword as false', () => {
