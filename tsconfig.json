@@ -28,7 +28,7 @@
     "noFallthroughCasesInSwitch": true
   },
   "include": ["src", "vite.config.ts",
-    "src/router/SnakeGameWrapper.tsx"
+    "src/wrappers/SnakeGameWrapper.tsx"
   ],
   "exclude": ["node_modules"]
 }

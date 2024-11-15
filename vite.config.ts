@@ -53,6 +53,10 @@ export default defineConfig({
       {
         find: '@interfaces',
         replacement: path.resolve(path.join(__dirname, '/src/interfaces'))
+      },
+      {
+        find: '@wrappers',
+        replacement: path.resolve(path.join(__dirname, '/src/wrappers'))
       }
     ]
   }
