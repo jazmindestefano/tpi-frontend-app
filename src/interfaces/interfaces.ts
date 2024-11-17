@@ -101,7 +101,7 @@ export interface Answer {
 
 export interface PatientActivityAnswers {
   gameName: string
-  gameid: number
+  gameId: number
   answersDto: Answer[]
 }
 export interface ProfessionalInAdmin {

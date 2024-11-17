@@ -41,7 +41,7 @@ const ProfilePage: FC = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center w-full h-full lg:mt-0 mt-16">
+    <div className="flex flex-col justify-center items-center w-full h-screen">
       <div className="flex justify-center items-center w-full gap-4 mb-6">
         <h1 className="text-h1">Perfil</h1>
         {user.role === RoleEnum.PATIENT && <HearableButton variant={'secondary'} text={'Este es tu perfil'} />}

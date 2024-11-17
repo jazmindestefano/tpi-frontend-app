@@ -27,7 +27,7 @@ const PatientActivitiesPage: FC = () => {
             <h2 className="text-2xl font-extrabold mb-4">Actividades</h2>
             <div className="flex w-full gap-10 pt-5">
               {data.length > 0 ? (
-                data.map((actividad) => <ActivityCard key={actividad.gameid} activity={actividad} />)
+                data.map((actividad) => <ActivityCard key={actividad.gameId} activity={actividad} />)
               ) : (
                 <p className="text-blue-500 font-bold">No hay actividades disponibles</p>
               )}

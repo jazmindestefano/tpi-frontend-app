@@ -8,12 +8,12 @@ vi.mock('@hooks/queries')
 
 const mockPatientActivityAnswers: PatientActivityAnswers[] = [
   {
-    gameid: 1,
+    gameId: 1,
     gameName: 'La Viborita',
     answersDto: []
   },
   {
-    gameid: 2,
+    gameId: 2,
     gameName: 'Palabras',
     answersDto: []
   }

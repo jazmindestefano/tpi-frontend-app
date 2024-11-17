@@ -33,7 +33,7 @@ const ActivityResponsesPage: FC = () => {
 
   useEffect(() => {
     if (data) {
-      const filteredByActivity = data.filter((item) => item.gameid === parseInt(activityId!))
+      const filteredByActivity = data.filter((item) => item.gameId === parseInt(activityId!))
       const finalFilteredData = filteredByActivity.filter((item) =>
         item.answersDto.some((answer) => {
           const answerDate = parse(answer.answerDate.substring(0, 10), 'yyyy-MM-dd', new Date())
@@ -86,7 +86,7 @@ const ActivityResponsesPage: FC = () => {
         <div className="w-full">
           {filteredData &&
             filteredData.map((activity) => (
-              <div key={activity.gameid} className="w-full">
+              <div key={activity.gameId} className="w-full">
                 <div className="w-full">
                   <h1 className="text-2xl font-bold">Respuestas {activity.gameName}</h1>
                 </div>
