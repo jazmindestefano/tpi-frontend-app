@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useGetProfessionals } from '@hooks'
 import { HomeAdminPage } from '@pages'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ProfessionalInAdmin } from '@interfaces'
 
 vi.mock('@hooks', async () => {
   const actual = await vi.importActual('@hooks')
@@ -30,9 +31,27 @@ vi.mock('react-router-dom', async () => {
   }
 })
 
-const mockProfessionals = [
-  { id: 1, name: 'John', surname: 'Doe', email: 'john.doe@example.com', stateId: 4, image: 'image.jpg' },
-  { id: 2, name: 'Jane', surname: 'Smith', email: 'jane.smith@example.com', stateId: 3, image: 'image2.jpg' }
+const mockProfessionals: ProfessionalInAdmin[] = [
+  {
+    id: 1,
+    name: 'John',
+    surname: 'Doe',
+    email: 'john.doe@example.com',
+    stateId: 4,
+    image: 'image.jpg',
+    imageCertificate: 'image.jpg',
+    oneTimePassword: false
+  },
+  {
+    id: 2,
+    name: 'Jane',
+    surname: 'Smith',
+    email: 'jane.smith@example.com',
+    stateId: 3,
+    image: 'image2.jpg',
+    imageCertificate: 'image.jpg',
+    oneTimePassword: false
+  }
 ]
 
 describe('HomeAdminPage', () => {
