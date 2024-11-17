@@ -24,10 +24,11 @@ import {
   PatientActivityAnswers,
   ProfileData,
   User,
-  Professional,
   UpdateProfessionalStateIdProps,
+  Role,
   LoginProps,
-  Role
+  RegisterFormData,
+  ProfessionalInAdmin
 } from '@interfaces'
 
 export const useGetThemesByGameId = (
@@ -443,7 +444,7 @@ export const usePostPatient = (): {
 export const useGetProfessionals = (
   stateId: number | null
 ): {
-  data: Professional[]
+  data?: ProfessionalInAdmin[] | null
   error: Error | null
   isLoading: boolean
 } => {
@@ -462,13 +463,39 @@ export const useUpdateProfessioanlStateId = (): {
 } => {
   const { error, isPending, mutateAsync } = useMutation({
     mutationFn: async ({ professionalId, stateId, comment }: UpdateProfessionalStateIdProps) =>
-      await ApiService.updateProfessionalState(professionalId, stateId, comment),
-    onSuccess: () => {
-      window.location.reload()
-    }
+      await ApiService.updateProfessionalState(professionalId, stateId, comment)
   })
 
   return { error, isPending, mutateAsync }
+}
+
+export const useRegister = (): {
+  mutateAsync: (args: { formData: RegisterFormData }) => void
+  reset: () => void
+  error: Error | null
+  isPending: boolean
+  isSuccess: boolean
+} => {
+  const { mutateAsync, reset, error, isPending, isSuccess } = useMutation({
+    mutationFn: async ({ formData }: { formData: RegisterFormData }) => await ApiService.registerProfessional(formData)
+  })
+
+  return { mutateAsync, reset, error, isPending, isSuccess }
+}
+
+export const useValidateVerificationCode = (): {
+  mutateAsync: (args: { email: string; code: string }) => void
+  reset: () => void
+  error: Error | null
+  isPending: boolean
+  isSuccess: boolean
+} => {
+  const { mutateAsync, reset, error, isPending, isSuccess } = useMutation({
+    mutationFn: async ({ email, code }: { email: string; code: string }) =>
+      await ApiService.validateVerificationCode(email, code)
+  })
+
+  return { mutateAsync, reset, error, isPending, isSuccess }
 }
 
 export const usePostPatientTime = (): {

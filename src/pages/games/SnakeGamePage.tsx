@@ -164,7 +164,7 @@ const SnakeGamePage: FC<SnakeGameProps> = ({ items, cellSize = 65 }) => {
   }, [showBigItem])
 
   return (
-    <div className="flex flex-col items-center justify-center h-full mt-6">
+    <div className="flex flex-col items-center justify-center h-full mt-6 w-full">
       <div className="mt-4 text-2xl font-bold text-purple-800">
         {displayText}: {eatenItems.join(', ')}
       </div>

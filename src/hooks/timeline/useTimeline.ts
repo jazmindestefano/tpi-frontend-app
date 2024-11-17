@@ -5,7 +5,7 @@ import { Game } from '@components'
 
 const createActivitiesDto = (data: PatientActivityAnswers[]) => {
   return data.map((activity) => ({
-    gameId: activity.gameid,
+    gameId: activity.gameId,
     gameName: activity.gameName
   }))
 }

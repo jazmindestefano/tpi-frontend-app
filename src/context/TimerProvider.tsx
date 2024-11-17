@@ -1,23 +1,7 @@
-import { createContext, FC, ReactNode, useRef } from 'react'
+import { FC, ReactNode, useRef } from 'react'
+import { TimerContext } from './TimerContext'
 
-interface TimerContextType {
-  getElapsedTime: () => number
-  getStartTime: () => number
-  startTimer: () => void
-  stopTimer: () => void
-}
-
-// Create the context
-export const TimerContext = createContext<TimerContextType>({
-  getElapsedTime: () => 0,
-  getStartTime: () => 0,
-  startTimer: () => {},
-  stopTimer: () => {}
-})
-
-// Provider component
 const TimerProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  // Start timer function
   const elapsedTimeRef = useRef<number>(0) // Stores the elapsed time in seconds
   const startTimeRef = useRef<number>(0) // Stores the timestamp when the timer started
   const timerRef = useRef<NodeJS.Timeout | null>(null) // Interval ID for controlling the timer
@@ -41,10 +25,8 @@ const TimerProvider: FC<{ children: ReactNode }> = ({ children }) => {
   }
 
   const getElapsedTime = () => elapsedTimeRef.current // Retrieve elapsed time for backend
-
   const getStartTime = () => startTimeRef.current // Retrieve start time if needed
 
-  // Provide timer context value
   const value = {
     getElapsedTime,
     getStartTime,

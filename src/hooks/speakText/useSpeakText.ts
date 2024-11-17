@@ -1,4 +1,4 @@
-import { useGetSynthesizedAudio } from '@hooks/queries'
+import { useGetSynthesizedAudio } from '@hooks'
 import { useCallback, useRef } from 'react'
 
 // todo: we need to somehow merge these two useTextToSpeech - useSpeakText

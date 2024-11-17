@@ -1,4 +1,5 @@
 import { PublicRouteLayout, Button, Input } from '@components'
+import { useValidateVerificationCode } from '@hooks'
 import { ChangeEvent, FC, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 
@@ -11,10 +12,16 @@ const EmailVerification: FC = () => {
   const { email } = useParams()
   const navigate = useNavigate()
   const [formData, setFormData] = useState<EmailVerificationFormData>({ userEmail: email!, verificationCode: '' })
+  const { mutateAsync } = useValidateVerificationCode()
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
+  }
+
+  const handleValidate = () => {
+    mutateAsync({ email: formData.userEmail, code: formData.verificationCode })
+    navigate(`/professional-credential-verification`)
   }
 
   return (
@@ -31,7 +38,7 @@ const EmailVerification: FC = () => {
             value={formData.verificationCode}
           />
         </div>
-        <Button onClick={() => navigate(`/professional-credential-verification`)} className="h-10 w-52">
+        <Button onClick={handleValidate} className="h-10 w-52">
           Verificar código
         </Button>
       </div>

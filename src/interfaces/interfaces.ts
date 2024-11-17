@@ -51,11 +51,6 @@ export interface PostFeedbackData {
   gameId: number
   patientId: number
 }
-
-export interface GameProps {
-  selectedThemeId: number
-}
-
 export interface LevelOptionRequest {
   activityId: number
   selectedOption: number
@@ -75,23 +70,6 @@ export interface Achievement {
   id: number
   image: string
 }
-
-export interface Data {
-  labels: string[]
-  datasets: {
-    label: string
-    data: number[]
-    borderColor: string
-    backgroundColor: string
-  }[]
-}
-
-export interface ChartData {
-  id: string
-  title: string
-  data: Data
-}
-
 export interface TimelineData {
   date: string
   gameDescription: string
@@ -123,16 +101,17 @@ export interface Answer {
 
 export interface PatientActivityAnswers {
   gameName: string
-  gameid: number
+  gameId: number
   answersDto: Answer[]
 }
-
-export interface Professional {
+export interface ProfessionalInAdmin {
   id: number
   email: string
   name: string
   surname: string
   image: string
+  imageCertificate: string | null
+  oneTimePassword: boolean
   stateId: number
 }
 
@@ -145,4 +124,11 @@ export interface UpdateProfessionalStateIdProps {
 export interface LoginProps {
   username: string
   password: string
+}
+
+export interface RegisterFormData {
+  name: string
+  surname: string
+  email: string
+  professionalCredential: File | null
 }
