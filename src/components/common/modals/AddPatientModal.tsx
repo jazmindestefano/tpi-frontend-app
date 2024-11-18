@@ -41,6 +41,12 @@ const AddPatientModal: FC<AddPatientModalProps> = ({ isOpen, onClose, onSubmit }
       professionalId: user.id
     })
     onClose()
+    setPatientData({
+      childName: '',
+      guardianEmail: '',
+      childBirthDate: '',
+      childSurname: ''
+    })
   }
 
   if (!isOpen) return null
