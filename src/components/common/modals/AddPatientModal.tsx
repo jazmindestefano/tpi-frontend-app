@@ -22,7 +22,7 @@ const AddPatientModal: FC<AddPatientModalProps> = ({ isOpen, onClose, onSubmit }
     childBirthDate: '',
     childSurname: ''
   })
-  const { mutate } = usePostPatient()
+  const { mutate, isSuccess } = usePostPatient()
   const user = useUser()
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -41,12 +41,14 @@ const AddPatientModal: FC<AddPatientModalProps> = ({ isOpen, onClose, onSubmit }
       professionalId: user.id
     })
     onClose()
-    setPatientData({
-      childName: '',
-      guardianEmail: '',
-      childBirthDate: '',
-      childSurname: ''
-    })
+    if (isSuccess) {
+      setPatientData({
+        childName: '',
+        guardianEmail: '',
+        childBirthDate: '',
+        childSurname: ''
+      })
+    }
   }
 
   if (!isOpen) return null
