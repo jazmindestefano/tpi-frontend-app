@@ -402,3 +402,14 @@ export const validateVerificationCode = async (email: string, code: string) => {
 
   return null
 }
+
+export const changeOneTimePassword = async (role: string, id: string, newPassword: string) => {
+  const url = `${role === 'PROFESSIONAL' ? '/professional' : '/patients'}/updateOneTimePw/${id}?newPassword=${newPassword}`
+  const res = await unauthenticatedClient.patch(url)
+
+  if (res.status === 200) {
+    return res.data
+  }
+
+  return null
+}

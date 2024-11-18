@@ -34,13 +34,22 @@ const LoginPage: FC = () => {
       })
       .then(async () => {
         const user = await getMe()
+        console.log({ user })
         if (user) {
           if (user.role === 'PROFESSIONAL') {
-            navigate('/profesional')
+            if (user.hasOneTimePassword) {
+              navigate('/change-one-time-password')
+            } else {
+              navigate('/profesional')
+            }
           } else if (user.role === 'ADMIN') {
             navigate('/admin')
           } else {
-            navigate('/')
+            if (user.hasOneTimePassword) {
+              navigate('/change-one-time-password')
+            } else {
+              navigate('/')
+            }
           }
         }
       })
@@ -64,7 +73,7 @@ const LoginPage: FC = () => {
           />
           <Input
             name={'password'}
-            label={'Nueva Contraseña'}
+            label={'Contraseña'}
             type={showPassword ? 'text' : 'password'}
             onChange={handleChange}
             value={formData.password}
