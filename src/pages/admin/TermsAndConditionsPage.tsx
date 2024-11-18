@@ -1,14 +1,21 @@
-import { useUser, useTermsAndConditions } from '@hooks'
+import { useTermsAndConditions } from '@hooks'
+import { getMe } from '@http'
 import { ChangeEvent } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 const TermsAndConditionsPage = () => {
-  const { mutateAsync } = useTermsAndConditions()
-  const { id } = useUser()
+  const { mutateAsync, isSuccess } = useTermsAndConditions()
+  const navigate = useNavigate()
 
   const handleUpdateTerms = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
       try {
-        const result = await mutateAsync(id)
+        const user = await getMe()
+        console.log({ user })
+        const result = await mutateAsync(user.id)
+        if (isSuccess) {
+          navigate('/')
+        }
         console.log('Updated successfully:', result ? 'Yes' : 'No')
       } catch (error) {
         console.error('Error updating terms:', error)

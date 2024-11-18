@@ -510,3 +510,17 @@ export const usePostPatientTime = (): {
 
   return { error, isPending, mutate }
 }
+
+export const useChangeOneTimePassword = (): {
+  mutateAsync: (args: { role: string; id: string; newPassword: string }) => void
+  error: Error | null
+  isPending: boolean
+  isSuccess: boolean
+} => {
+  const { mutateAsync, error, isPending, isSuccess } = useMutation({
+    mutationFn: async ({ role, id, newPassword }: { role: string; id: string; newPassword: string }) =>
+      await ApiService.changeOneTimePassword(role, id, newPassword)
+  })
+
+  return { mutateAsync, error, isPending, isSuccess }
+}
