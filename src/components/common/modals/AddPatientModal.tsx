@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, FormEvent, useState } from 'react'
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react'
 import { usePostPatient, useUser } from '@hooks'
 import { BaseModal, Input, Overlay } from '@components'
 
@@ -22,7 +22,7 @@ const AddPatientModal: FC<AddPatientModalProps> = ({ isOpen, onClose, onSubmit }
     childBirthDate: '',
     childSurname: ''
   })
-  const { mutate } = usePostPatient()
+  const { mutate, isSuccess } = usePostPatient()
   const user = useUser()
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -42,6 +42,17 @@ const AddPatientModal: FC<AddPatientModalProps> = ({ isOpen, onClose, onSubmit }
     })
     onClose()
   }
+
+  useEffect(() => {
+    if (isSuccess) {
+      setPatientData({
+        childName: '',
+        guardianEmail: '',
+        childBirthDate: '',
+        childSurname: ''
+      })
+    }
+  }, [isSuccess])
 
   if (!isOpen) return null
 
