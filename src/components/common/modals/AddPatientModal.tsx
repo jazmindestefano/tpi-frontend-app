@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, FormEvent, useState } from 'react'
+import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react'
 import { usePostPatient, useUser } from '@hooks'
 import { BaseModal, Input, Overlay } from '@components'
 
@@ -41,6 +41,9 @@ const AddPatientModal: FC<AddPatientModalProps> = ({ isOpen, onClose, onSubmit }
       professionalId: user.id
     })
     onClose()
+  }
+
+  useEffect(() => {
     if (isSuccess) {
       setPatientData({
         childName: '',
@@ -49,7 +52,7 @@ const AddPatientModal: FC<AddPatientModalProps> = ({ isOpen, onClose, onSubmit }
         childSurname: ''
       })
     }
-  }
+  }, [isSuccess])
 
   if (!isOpen) return null
 
