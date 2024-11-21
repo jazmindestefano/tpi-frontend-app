@@ -14,7 +14,7 @@ const ThemeSelectorPage: FC = () => {
 
   const onCardClick = (theme: Theme) => {
     dispatch(selectTheme(theme))
-    // to-do: fix this shit
+    // todo: fix this shit
     if (selectedGame.name === 'La Viborita') {
       navigate('/actividad/la-viborita')
     } else {

@@ -1,7 +1,8 @@
 import { useUser, useGetAchievements } from '@hooks'
 import { FC, useEffect, useState } from 'react'
 import { HearableButton, Loader } from '@components'
-import { getUniqueAchievements, UniqueAchievements } from '@helpers'
+import { getUniqueAchievements } from '@helpers'
+import { UniqueAchievements } from '@interfaces'
 
 const AchievementsPage: FC = () => {
   const user = useUser()

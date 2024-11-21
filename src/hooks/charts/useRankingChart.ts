@@ -1,4 +1,4 @@
-import { RankingChartProps, RankingProps } from '@components'
+import { RankingChartProps, RankingProps } from '@interfaces'
 import { getRandomColorDashboard } from '@helpers'
 import { ChartData } from 'chart.js'
 import { useState, useEffect } from 'react'

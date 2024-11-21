@@ -1,6 +1,8 @@
 import { BarElement, CategoryScale, Chart as ChartJS, Legend, LinearScale, Title, Tooltip } from 'chart.js'
 import { Bar } from 'react-chartjs-2'
-import { AuditoryDiscriminationChartProps, barOptions, SelectOption, Filter } from '@components'
+import { barOptions } from './options'
+import { Filter } from '@components'
+import { AuditoryDiscriminationChartProps, SelectOption } from '@interfaces'
 import { useAuditoryDiscriminationChart } from '@hooks'
 import { FC } from 'react'
 
