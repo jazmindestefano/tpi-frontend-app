@@ -2,9 +2,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { Loader, BackButton } from '@components'
 import { formatDate } from '@helpers'
 import { useTimeline } from '@hooks'
-import { FC } from 'react'
 
-const Timeline: FC = () => {
+const Timeline = () => {
   const { patientId } = useParams()
   const navigate = useNavigate()
   const { gameId, data, error, isLoading, readyToFetch } = useTimeline({ patientId })
