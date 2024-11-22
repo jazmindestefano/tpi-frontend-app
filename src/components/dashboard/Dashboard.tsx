@@ -72,7 +72,7 @@ const Dashboard: FC = () => {
         <BackButton route="/profesional" text={'Volver al Inicio'} />
         <h1 className="text-2xl">Progreso del Paciente {!isLoading && !error ? data : ''}</h1>
       </div>
-      <div className="mb-4 flex space-x-4">
+      <div className="mb-4 flex space-x-4 mt-10">
         <button
           className={`px-4 py-2 rounded-lg ${activeTab === 'today' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
           onClick={() => setActiveTab('today')}

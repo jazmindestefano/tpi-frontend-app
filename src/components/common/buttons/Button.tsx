@@ -11,6 +11,7 @@ export interface ButtonProps extends VariantProps<typeof buttonVariants> {
   ariaLabel?: string
   dataTestId?: string
   type?: 'submit' | 'reset' | 'button'
+  disabled?: boolean
 }
 
 const Button: FC<ButtonProps> = ({
@@ -23,11 +24,13 @@ const Button: FC<ButtonProps> = ({
   className = '',
   ariaLabel = 'button',
   dataTestId = '',
-  type = 'button'
+  type = 'button',
+  disabled = false
 }) => {
   const basicClass = buttonVariants({ size, variant, shape })
   return (
     <button
+      disabled={disabled}
       data-testid={dataTestId}
       className={classNames(basicClass, className)}
       onClick={onClick}

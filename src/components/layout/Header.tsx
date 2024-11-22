@@ -26,7 +26,7 @@ const Header: FC<HeaderProps> = ({ isProfessional, patientId }) => {
   }
 
   return (
-    <header className="flex justify-between items-start p-4 bg-gradient-to-b from-orange-100 to-transparent fixed w-full">
+    <header className="flex justify-between items-start p-4 bg-gradient-to-b from-orange-100 to-transparent fixed w-full z-50">
       {!location.pathname.includes('actividad') && !isProfessional && (
         <div className="flex flex-col justify-center items-start gap-4" onClick={() => navigate('/')}>
           <img src={'/clara-logo.svg'} alt="Logo" className="h-16 cursor-pointer" />
@@ -103,25 +103,29 @@ const Header: FC<HeaderProps> = ({ isProfessional, patientId }) => {
 
       {isProfessional && (
         <div className="top-4 right-4 flex gap-4 fixed z-50">
-          <div data-tooltip-id="pdf">
-            <a href={reportUrl} download={`reporte-paciente-${patientId}.pdf`}>
-              <Button size={'square'} variant={'fourth'} dataTestId="download-button">
-                <Download className="text-white" />
+          {location.pathname.match(/\/profesional\/paciente\/(\d+)$/)?.[1] && (
+            <div data-tooltip-id="pdf">
+              <a href={reportUrl} download={`reporte-paciente-${patientId}.pdf`}>
+                <Button size={'square'} variant={'fourth'} dataTestId="download-button">
+                  <Download className="text-white" />
+                </Button>
+              </a>
+              <Tooltip id="pdf" content="Generar reporte de gráficos" variant="dark" place="bottom" />
+            </div>
+          )}
+          {location.pathname !== '/profesional' && (
+            <div data-tooltip-id="actividades">
+              <Button
+                dataTestId="folder-button"
+                size={'square'}
+                variant={'secondary'}
+                onClick={() => navigate(`/profesional/paciente/${patientId}/actividades`)}
+              >
+                <FolderDot className="text-white" />
               </Button>
-            </a>
-            <Tooltip id="pdf" content="Generar reporte de gráficos" variant="dark" place="bottom" />
-          </div>
-          <div data-tooltip-id="actividades">
-            <Button
-              dataTestId="folder-button"
-              size={'square'}
-              variant={'secondary'}
-              onClick={() => navigate(`/profesional/paciente/${patientId}/actividades`)}
-            >
-              <FolderDot className="text-white" />
-            </Button>
-            <Tooltip id="actividades" content="Ir a respuestas de actividades" variant="dark" place="bottom" />
-          </div>
+              <Tooltip id="actividades" content="Ir a respuestas de actividades" variant="dark" place="bottom" />
+            </div>
+          )}
           <div data-tooltip-id="logout">
             <Button
               dataTestId="professional-logout-button"
