@@ -2,12 +2,12 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { Theme } from '@interfaces'
 import { selectTheme } from '@redux/slices'
-import { useSelectedGame, useGetThemesByGameId } from '@hooks'
+import { useGetThemesByGameId, useCurrentGame } from '@hooks'
 import { HearableButton, Loader, ThemeCardsList } from '@components'
 import { FC } from 'react'
 
 const ThemeSelectorPage: FC = () => {
-  const selectedGame = useSelectedGame()
+  const { selectedGame } = useCurrentGame()
   const { themes, isLoading } = useGetThemesByGameId(selectedGame.id)
   const dispatch = useDispatch()
   const navigate = useNavigate()

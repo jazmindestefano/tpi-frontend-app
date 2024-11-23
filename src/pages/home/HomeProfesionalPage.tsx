@@ -1,10 +1,10 @@
 import { HomeProfesionalCard } from '@components'
 import { getCurrentDate } from '@helpers'
-import { useUser, useGetProfessionalPatients } from '@hooks'
+import { useCurrentUser, useGetProfessionalPatients } from '@hooks'
 import { FC } from 'react'
 
 const HomeProfesionalPage: FC = () => {
-  const user = useUser()
+  const user = useCurrentUser()
   const { patients, error, isLoading } = useGetProfessionalPatients(user.id)
 
   return !error && !isLoading && patients ? (

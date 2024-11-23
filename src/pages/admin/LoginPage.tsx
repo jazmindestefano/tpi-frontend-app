@@ -87,12 +87,15 @@ const LoginPage: FC = () => {
         <Button onClick={handleLogin} className="h-10 w-52">
           Iniciar sesión
         </Button>
-        <p className="text-sm">
-          ¿Todavia no tenes una cuenta?{' '}
-          <a href="/register" className="font-semibold underline">
+        <div className={'flex flex-col justify-center items-center'}>
+          <p className="text-sm">¿Todavia no tenes una cuenta?</p>
+          <Button
+            className={'font-semibold underline bg-transparent hover:bg-transparent self-center'}
+            onClick={() => navigate('/register')}
+          >
             Registrate acá!
-          </a>
-        </p>
+          </Button>
+        </div>
       </div>
     </PublicRouteLayout>
   )
