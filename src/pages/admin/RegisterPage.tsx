@@ -54,7 +54,7 @@ const RegisterPage: FC = () => {
               setFormData((prev) => ({ ...prev, professionalCredential: e.target.files ? e.target.files[0] : null }))
             }
           />
-          {formData.professionalCredential && (
+          {formData.professionalCredential && formData.professionalCredential.name && (
             <div className="flex flex-col items-center">
               <span>{formData.professionalCredential.name}</span>
               <Button
