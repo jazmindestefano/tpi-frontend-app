@@ -1,11 +1,9 @@
-import { useState, useEffect, useLayoutEffect } from 'react'
-import { ThemeCard } from '../common/cards/themeCard/ThemeCard'
-import { Theme } from '../../interfaces/interfaces'
-import Button from '../common/buttons/Button'
-import { ArrowLeftIcon, ArrowRightIcon } from '../common/icons/Icons'
-import { useScroll } from '../../hooks/useScroll'
-import { useImageSkeleton } from '../../hooks/useImageSkeleton'
+import { FC, useEffect, useLayoutEffect, useState } from 'react'
+import { Theme } from '@interfaces'
+import { ArrowLeftIcon, ArrowRightIcon, Loader, ThemeCard, Button } from '@components'
+import { useImagesLoading, useScroll } from '@hooks'
 
+// todo: change this
 const bgColors = [
   'bg-orange-300',
   'bg-blue-300',
@@ -21,10 +19,10 @@ interface ThemeCardsListProps {
   onCardClick: (theme: Theme) => void
 }
 
-export default function ThemeCardsList({ themes, onCardClick }: ThemeCardsListProps) {
+const ThemeCardsList: FC<ThemeCardsListProps> = ({ themes, onCardClick }) => {
   const { scrollRef, scroll, checkScrollButtons, showScrollButtons } = useScroll()
   const [assignedColors, setAssignedColors] = useState<string[]>([])
-  const { loadedImages, handleImageLoad } = useImageSkeleton({
+  const { loadedImages, handleImageLoad } = useImagesLoading({
     totalImages: themes.length,
     onAllImagesLoaded: checkScrollButtons
   })
@@ -39,6 +37,10 @@ export default function ThemeCardsList({ themes, onCardClick }: ThemeCardsListPr
       checkScrollButtons()
     }
   }, [checkScrollButtons, loadedImages, themes.length])
+
+  if (!themes) {
+    return <Loader />
+  }
 
   return (
     <div className="relative pb-10 px-5 lg:px-32">
@@ -79,3 +81,5 @@ export default function ThemeCardsList({ themes, onCardClick }: ThemeCardsListPr
     </div>
   )
 }
+
+export default ThemeCardsList

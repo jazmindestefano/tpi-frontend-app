@@ -1,5 +1,5 @@
-import gameReducer, { selectTheme } from '../../redux/store/gameSlice'
-import { Theme } from '../../interfaces/interfaces'
+import { Theme } from '@interfaces'
+import { gameReducer, selectTheme } from '@redux/slices'
 
 describe('gameSlice', () => {
   const initialState = {
@@ -12,8 +12,7 @@ describe('gameSlice', () => {
       id: -1,
       name: '',
       image: ''
-    },
-    showModalFeedback: false
+    }
   }
 
   it('should handle initial state', () => {

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
-import { BaseContainer } from '../../components/common/cards/BaseContainer'
+import { BaseContainer } from '@components'
 
 describe('BaseContainer component', () => {
   it('renders children correctly', () => {
@@ -22,7 +22,7 @@ describe('BaseContainer component', () => {
     )
 
     const containerElement = screen.getByText(/test content/i).parentElement
-    expect(containerElement).toHaveClass('flex-col-center gap-4')
+    expect(containerElement).toHaveClass('flex flex-col justify-center items-center w-full gap-4')
   })
 
   it('applies additional className when provided', () => {
@@ -34,6 +34,6 @@ describe('BaseContainer component', () => {
 
     const containerElement = screen.getByText(/test content/i).parentElement
     expect(containerElement).toHaveClass('bg-blue-500')
-    expect(containerElement).toHaveClass('flex-col-center gap-4') // Verifica que las clases predeterminadas aún se apliquen
+    expect(containerElement).toHaveClass('flex flex-col justify-center items-center w-full gap-4') // Verifica que las clases predeterminadas aún se apliquen
   })
 })

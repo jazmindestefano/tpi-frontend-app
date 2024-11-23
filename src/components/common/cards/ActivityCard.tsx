@@ -1,30 +1,28 @@
-import React from 'react'
-import Button from '../buttons/Button'
-import { useNavigate } from 'react-router-dom'
-
-export interface Activity {
-  id: number
-  name: string
-}
+import { PatientActivityAnswers } from '@interfaces'
+import { Button } from '@components'
+import { useNavigate, useParams } from 'react-router-dom'
+import { FC } from 'react'
 
 interface ActivityCardProps {
-  actividad: Activity
+  activity: PatientActivityAnswers
   className?: string
 }
 
-export const ActivityCard: React.FC<ActivityCardProps> = ({ actividad, className = '' }) => {
+const ActivityCard: FC<ActivityCardProps> = ({ activity, className = '' }) => {
   const navigate = useNavigate()
+  const { patientId } = useParams()
 
   return (
     <div
-      className={`max-w-96 flex-col-center rounded-3xl h-80 w-72 shadow-lg cursor-pointer transition-transform duration-300 bg-blue-100 ${className}`}
+      key={activity.gameId}
+      className={`max-w-96 flex flex-col justify-center items-center rounded-3xl h-80 w-72 shadow-lg cursor-pointer transition-transform duration-300 bg-blue-100 ${className}`}
     >
       <div className="flex flex-col items-center justify-around h-full p-4">
-        <h3 className="text-3xl font-extrabold text-blue-800">{actividad.name}</h3>
+        <h3 className="text-3xl font-extrabold text-blue-800">{activity.gameName}</h3>
         <Button
           variant="secondary"
           className="mt-2 p-3 rounded-3xl"
-          onClick={() => navigate(`/profesional/paciente/1/actividades/${actividad.id}`)}
+          onClick={() => navigate(`/profesional/paciente/${patientId}/actividades/${activity.gameId}`)}
           ariaLabel="Ver respuestas"
         >
           <p className="text-center font-bold">Ver respuestas</p>
@@ -33,3 +31,5 @@ export const ActivityCard: React.FC<ActivityCardProps> = ({ actividad, className
     </div>
   )
 }
+
+export default ActivityCard

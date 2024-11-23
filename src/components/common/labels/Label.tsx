@@ -1,5 +1,5 @@
-import * as React from 'react'
 import classNames from 'classnames'
+import { FC } from 'react'
 
 interface LabelProps {
   text: string
@@ -7,10 +7,12 @@ interface LabelProps {
   className?: string
 }
 
-export const Label: React.FC<LabelProps> = ({ text, htmlFor, className = '' }) => {
+const Label: FC<LabelProps> = ({ text, htmlFor, className = '' }) => {
   return (
     <label className={classNames('block ps-2', className)} htmlFor={htmlFor}>
       {text}
     </label>
   )
 }
+
+export default Label

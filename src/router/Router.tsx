@@ -1,76 +1,173 @@
 import { createBrowserRouter } from 'react-router-dom'
-import Home from '../pages/Home'
-import Profile from '../pages/Profile'
-import PageLayout from '../components/layout/pageLayout/PageLayout.tsx'
-import ThemeSelectorPage from '../pages/ThemeSelector.tsx'
-import ErrorPage from '../pages/Error.tsx'
-import GameSelectorPage from '../pages/GameSelector.tsx'
-import NotFoundPage from '../pages/NotFound.tsx'
-import CongratulationsPage from '../pages/Congratulations.tsx'
-import AchievementsPage from '../pages/Achievements.tsx'
-import HomeProfesional from '../pages/profesional/HomeProfesional.tsx'
-import ProfesionalPageLayout from '../components/layout/profesionalPageLayout/ProfesionalPageLayout.tsx'
-import Dashboard from '../pages/profesional/Dashboard.tsx'
-import PatientActivities from '../pages/profesional/PatientActivities.tsx'
-import ActivityResponses from '../pages/profesional/ActivityResponses.tsx'
+import {
+  AchievementsPage,
+  ActivityResponsesPage,
+  AuditoryDiscriminationGamePage,
+  CongratulationsPage,
+  DashboardPage,
+  ErrorPage,
+  HomeProfesionalPage,
+  NotFoundPage,
+  PrivacyPolicyPage,
+  ProfilePage,
+  RecordGamePage,
+  TermsAndConditionsPage,
+  ThemeSelectorPage,
+  TimelinePage,
+  LoginPage,
+  HomePage,
+  PatientActivitiesPage,
+  RegisterPage,
+  EmailVerification,
+  ProfesionalCredentialVerification,
+  ChangePassword,
+  HomeAdminPage
+} from '@pages'
+import { LayoutAdmin, LayoutPatient, LayoutProfesional } from '@components'
+import {
+  SnakeGameWrapper,
+  ValidateRolePatient,
+  ValidateRoleProfessional,
+  ValidGameWrapper,
+  PrivateRoute
+} from '@wrappers'
 
-export const router = createBrowserRouter([
+const Router = createBrowserRouter([
   {
-    element: <PageLayout />,
+    path: '/login',
+    element: <LoginPage />
+  },
+  {
+    path: '/register',
+    element: <RegisterPage />
+  },
+  {
+    path: '/email-verification/:email',
+    element: <EmailVerification />
+  },
+  {
+    path: '/professional-credential-verification',
+    element: <ProfesionalCredentialVerification />
+  },
+  {
+    path: '/change-one-time-password',
+    element: <ChangePassword />
+  },
+  {
+    path: '/terminos-y-condiciones',
+    element: <TermsAndConditionsPage />
+  },
+  {
+    path: '/politica-de-privacidad',
+    element: <PrivacyPolicyPage />
+  },
+  {
+    element: <PrivateRoute />,
+    errorElement: <ErrorPage />,
     children: [
       {
-        path: '/',
-        element: <Home />
+        element: <LayoutAdmin />,
+        path: '/admin',
+        children: [
+          {
+            path: '',
+            element: <HomeAdminPage />
+          }
+        ]
       },
       {
-        path: '/perfil',
-        element: <Profile />
+        element: <LayoutPatient />,
+        children: [
+          {
+            element: <ValidateRoleProfessional />,
+            children: [
+              {
+                path: '/',
+                element: <HomePage />
+              },
+              {
+                path: '/tematicas',
+                element: <ThemeSelectorPage />
+              },
+              {
+                element: <ValidGameWrapper />,
+                path: '/actividad',
+                children: [
+                  {
+                    path: 'letras',
+                    element: <AuditoryDiscriminationGamePage />
+                  },
+                  {
+                    path: 'palabras',
+                    element: <RecordGamePage />
+                  },
+                  {
+                    path: 'la-viborita',
+                    element: <SnakeGameWrapper />
+                  }
+                ]
+              },
+              {
+                path: '/felicitaciones',
+                element: <CongratulationsPage />
+              },
+              {
+                path: '/logros',
+                element: <AchievementsPage />
+              },
+              {
+                path: '/perfil',
+                element: <ProfilePage />
+              }
+            ]
+          }
+        ]
       },
       {
-        path: '/tematicas',
-        element: <ThemeSelectorPage />
-      },
-      {
-        path: '/actividad/:gameId',
-        element: <GameSelectorPage />
-      },
-      {
-        path: '/felicitaciones',
-        element: <CongratulationsPage />
-      },
-      {
-        path: '/error',
-        element: <ErrorPage />
-      },
-      {
-        path: '*',
-        element: <NotFoundPage />
-      },
-      {
-        path: '/logros',
-        element: <AchievementsPage />
+        element: <LayoutProfesional />,
+        path: '/profesional',
+        children: [
+          {
+            element: <ValidateRolePatient />,
+            children: [
+              {
+                path: '',
+                element: <HomeProfesionalPage />
+              },
+              {
+                path: 'paciente/:patientId',
+                element: <DashboardPage />
+              },
+              {
+                path: 'paciente/:patientId/timeline',
+                element: <TimelinePage />
+              },
+              {
+                path: 'paciente/:patientId/actividades',
+                element: <PatientActivitiesPage />
+              },
+              {
+                path: 'paciente/:patientId/actividades/:activityId',
+                element: <ActivityResponsesPage />
+              },
+              {
+                path: 'paciente/:patientId/actividades/:activityId/:date',
+                element: <ActivityResponsesPage />
+              },
+              {
+                path: 'perfil',
+                element: <ProfilePage />
+              }
+            ]
+          }
+        ]
       }
     ]
   },
   {
-    element: <ProfesionalPageLayout />,
-    children: [
-      {
-        path: '/profesional',
-        element: <HomeProfesional />
-      },
-      {
-        path: '/profesional/paciente/:patientId',
-        element: <Dashboard />
-      },
-      {
-        path: '/profesional/paciente/:patientId/actividades',
-        element: <PatientActivities />
-      },
-      {
-        path: '/profesional/paciente/:patientId/actividades/:activityId',
-        element: <ActivityResponses />
-      }
-    ]
+    path: '*',
+    element: <NotFoundPage />
   }
 ])
+
+export default Router

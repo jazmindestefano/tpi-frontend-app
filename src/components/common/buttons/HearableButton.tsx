@@ -1,18 +1,16 @@
-import React from 'react'
-import { useTextToSpeech } from '../../../hooks/useTextToSpeech.ts'
-import Button from './Button.tsx'
-import { VolumeIcon } from '../icons/Icons.tsx'
+import { Button, buttonVariants, VolumeIcon } from '@components'
 import type { VariantProps } from 'class-variance-authority'
-import { buttonVariants } from './buttonVariants.ts'
 import { LoaderCircle } from 'lucide-react'
 import classNames from 'classnames'
+import { FC } from 'react'
+import { useTextToSpeech } from '@hooks'
 
 interface HearableButtonProps extends Omit<VariantProps<typeof buttonVariants>, 'size' | 'shape'> {
   text: string
   className?: string
 }
 
-export const HearableButton: React.FC<HearableButtonProps> = ({ text, variant, className }) => {
+const HearableButton: FC<HearableButtonProps> = ({ text, variant, className }) => {
   const { isLoading, playAudio } = useTextToSpeech({ text })
 
   const handleClick = () => {
@@ -32,3 +30,5 @@ export const HearableButton: React.FC<HearableButtonProps> = ({ text, variant, c
     </Button>
   )
 }
+
+export default HearableButton

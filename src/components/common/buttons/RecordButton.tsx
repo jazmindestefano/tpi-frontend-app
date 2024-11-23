@@ -1,8 +1,6 @@
-import Button from './Button.tsx'
-import { AudioLinesIcon, MicIcon } from '../icons/Icons.tsx'
-
+import { FC, useEffect } from 'react'
+import { AudioLinesIcon, MicIcon, Button, buttonVariants } from '@components'
 import type { VariantProps } from 'class-variance-authority'
-import { buttonVariants } from './buttonVariants.ts'
 
 interface RecordButtonProps extends Omit<VariantProps<typeof buttonVariants>, 'size' | 'shape'> {
   isRecording: boolean
@@ -11,7 +9,23 @@ interface RecordButtonProps extends Omit<VariantProps<typeof buttonVariants>, 's
   className?: string
 }
 
-export const RecordButton: React.FC<RecordButtonProps> = ({ isRecording, stopRecording, startRecording, variant }) => {
+const RecordButton: FC<RecordButtonProps> = ({ isRecording, stopRecording, startRecording, variant }) => {
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout | null = null
+
+    if (isRecording) {
+      timeoutId = setTimeout(() => {
+        stopRecording()
+      }, 5000)
+    }
+
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+      }
+    }
+  }, [isRecording, stopRecording])
+
   return (
     <Button
       size={'circle'}
@@ -23,3 +37,5 @@ export const RecordButton: React.FC<RecordButtonProps> = ({ isRecording, stopRec
     </Button>
   )
 }
+
+export default RecordButton

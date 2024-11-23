@@ -1,14 +1,18 @@
-import { Layout } from './components/layout/Layout'
 import { QueryClientProvider } from '@tanstack/react-query'
-import { queryClient } from './config/reactQuery.ts'
+import { queryClient } from '@config'
 import { Provider } from 'react-redux'
-import store from './redux/store'
+import { TimerProvider } from '@context'
+import store from '@redux/store'
+import { Router } from '@router'
+import { RouterProvider } from 'react-router-dom'
 
 function App(): JSX.Element {
   return (
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
-        <Layout />
+        <TimerProvider>
+          <RouterProvider router={Router} />
+        </TimerProvider>
       </QueryClientProvider>
     </Provider>
   )

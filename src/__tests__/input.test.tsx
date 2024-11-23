@@ -1,6 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import { describe, it, expect } from 'vitest'
-import { Input } from '../components/common/inputs/Input'
+import { Input } from '@components'
 
 describe('Input component', () => {
   const handleChange = vi.fn()

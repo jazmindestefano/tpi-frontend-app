@@ -1,0 +1,5 @@
+export * from './gameSlice'
+export * from './profesionalSlice'
+export * from './recordGameSlice'
+export * from './uiSlice'
+export * from './userSlice'
