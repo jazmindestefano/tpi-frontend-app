@@ -409,7 +409,7 @@ export const useGetPacientReportPdf = (
 } => {
   const { data, error, isLoading } = useQuery({
     queryKey: ['reportPdf', patientId],
-    queryFn: async () => await ApiService.getPacientReportPdf(patientId)
+    queryFn: async () => await ApiService.getPatientReportPdf(patientId)
   })
 
   return { reportPdf: data, error, isLoading }
