@@ -415,6 +415,21 @@ export const useGetPacientReportPdf = (
   return { reportPdf: data, error, isLoading }
 }
 
+export const useGetPacientReportTimeline = (
+  patientId: number | undefined
+): {
+  reportPdf: Blob | null | undefined
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['reportTimeline', patientId],
+    queryFn: async () => await ApiService.getPatientReportTimeline(patientId)
+  })
+
+  return { reportPdf: data, error, isLoading }
+}
+
 export const usePostPatient = (): {
   mutate: (args: { name: string; surname: string; email: string; birthDate: string; professionalId: number }) => void
   reset: () => void
