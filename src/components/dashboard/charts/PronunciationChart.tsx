@@ -33,7 +33,7 @@ const PronunciationChart: FC<{ chartData: PronunciationChartProps[] }> = ({ char
   }))
 
   return (
-    <div className="bg-slate-50 p-10 rounded-xl bg-opacity-65">
+    <div className="bg-slate-50 p-10 rounded-xl bg-opacity-65 w-full">
       <div className="mb-4 flex flex-wrap items-center gap-6">
         <h1 className="text-2xl w-full text-center">{title}</h1>
         <h3 className="mb-2">Filtros de fecha:</h3>
