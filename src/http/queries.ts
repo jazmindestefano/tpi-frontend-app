@@ -195,7 +195,7 @@ export const getTimelineData = async (patientId: number): Promise<TimelineData |
 }
 
 export const UpdatePatientTermsAndConditions = async (patientId: number) => {
-  const res = await authenticatedClient.patch(`/${patientId}/accept-terms`)
+  const res = await unauthenticatedClient.patch(`/${patientId}/accept-terms`)
 
   if (res.status === 200) {
     return res.data

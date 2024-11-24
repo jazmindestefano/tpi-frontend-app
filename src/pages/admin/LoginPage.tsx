@@ -34,7 +34,6 @@ const LoginPage: FC = () => {
       })
       .then(async () => {
         const user = await getMe()
-        console.log({ user })
         if (user) {
           if (user.role === 'PROFESSIONAL') {
             if (user.hasOneTimePassword) {
@@ -53,27 +52,30 @@ const LoginPage: FC = () => {
           }
         }
       })
-      .catch((e) => {
+      .catch(() => {
         setError('Credenciales inválidas. Por favor, intenta nuevamente.')
-        console.error(e)
       })
   }
 
   return (
     <PublicRouteLayout>
-      <h1 className={'text-center font-bold text-2xl mb-4'}>Iniciar sesión</h1>
-      <div className={'flex flex-col justify-center items-center gap-8'}>
+      <h1 data-testid="login-title" className="text-center font-bold text-2xl mb-4">
+        Iniciar sesión
+      </h1>
+      <div className="flex flex-col justify-center items-center gap-8">
         <div className="flex flex-col justify-center items-center gap-4">
           <Input
-            name={'username'}
+            name="username"
+            dataTestId="username-input"
             className="w-80"
-            label={'Nombre de usuario'}
+            label="Nombre de usuario"
             onChange={handleChange}
             value={formData.username}
           />
           <Input
-            name={'password'}
-            label={'Contraseña'}
+            name="password"
+            dataTestId="password-input"
+            label="Contraseña"
             type={showPassword ? 'text' : 'password'}
             onChange={handleChange}
             value={formData.password}
@@ -83,15 +85,20 @@ const LoginPage: FC = () => {
             toggleState={showPassword}
           />
         </div>
-        {error && <p className="text-red-500 text-sm">{error}</p>}
-        <Button onClick={handleLogin} className="h-10 w-52">
+        {error && (
+          <p data-testid="error-message" className="text-red-500 text-sm">
+            {error}
+          </p>
+        )}
+        <Button dataTestId="login-button" onClick={handleLogin} className="h-10 w-52">
           Iniciar sesión
         </Button>
-        <div className={'flex flex-col justify-center items-center'}>
-          <p className="text-sm">¿Todavia no tenes una cuenta?</p>
+        <div className="flex flex-col justify-center items-center space-y-2">
+          <p className="text-sm">¿Todavía no tenés una cuenta?</p>
           <Button
-            className={'font-semibold underline bg-transparent hover:bg-transparent self-center'}
+            dataTestId="register-button"
             onClick={() => navigate('/register')}
+            className="font-semibold underline bg-transparent hover:bg-transparent"
           >
             Registrate acá!
           </Button>
