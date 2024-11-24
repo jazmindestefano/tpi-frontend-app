@@ -418,7 +418,7 @@ export const useGetPacientReportPdf = (
 export const useGetPacientReportTimeline = (
   patientId: number | undefined
 ): {
-  reportPdf: Blob | null | undefined
+  reportTimeline: Blob | null | undefined
   error: Error | null
   isLoading: boolean
 } => {
@@ -427,7 +427,7 @@ export const useGetPacientReportTimeline = (
     queryFn: async () => await ApiService.getPatientReportTimeline(patientId)
   })
 
-  return { reportPdf: data, error, isLoading }
+  return { reportTimeline: data, error, isLoading }
 }
 
 export const usePostPatient = (): {
