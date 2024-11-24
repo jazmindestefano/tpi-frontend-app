@@ -12,7 +12,7 @@ vi.mock('../../hooks/queries', () => ({
 }))
 
 describe('TermsAndConditionsPage', () => {
-  it('button becomes enabled after success', async () => {
+  it('button becomes enabled after success mutation', async () => {
     await renderTermsAndConditionsWithSuccess()
 
     expectButtonToBeEnabled()
