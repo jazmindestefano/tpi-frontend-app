@@ -3,14 +3,15 @@ import { FC, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Button, HearableButton, ConfettiAnimation } from '@components'
 import { setModalFeedback } from '@redux/slices'
-import { useCurrentUser, useRandomAchievement, useSpeakText } from '@hooks'
+import { useCurrentGame, useCurrentUser, useRandomAchievement, useSpeakText } from '@hooks'
 
 const CongratulationsPage: FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const speakText = useSpeakText()
   const user = useCurrentUser()
-  const { achievement } = useRandomAchievement(user.id)
+  const { selectedTheme } = useCurrentGame()
+  const { achievement } = useRandomAchievement(user.id, selectedTheme.id)
 
   useEffect(() => {
     dispatch(setModalFeedback(true))

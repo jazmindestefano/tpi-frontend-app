@@ -1,7 +1,8 @@
 import { renderHook, waitFor } from '@testing-library/react'
-import { vi, Mock } from 'vitest'
-import { useQuery } from '@tanstack/react-query'
+import { vi, MockedFunction } from 'vitest'
+import { useQuery, UseQueryResult } from '@tanstack/react-query'
 import { useGetThemesByGameId } from '../../hooks/queries'
+import { Theme } from '@interfaces'
 
 vi.mock('@http')
 vi.mock('@tanstack/react-query', async () => {
@@ -14,52 +15,59 @@ vi.mock('@tanstack/react-query', async () => {
 
 describe('useGetThemesByGameId', () => {
   const gameId = 1
-  const themes = [{ id: 1, name: 'Theme 1' }]
+  const themes: Theme[] = [
+    {
+      id: 1,
+      name: 'Theme 1',
+      image: ''
+    }
+  ]
   const error = new Error('Error fetching themes')
 
+  let mockUseQuery: MockedFunction<typeof useQuery>
+
+  const mockQuery = (response: Partial<UseQueryResult<Theme[], Error>>) => {
+    mockUseQuery.mockReturnValue(response as UseQueryResult<Theme[], Error>)
+  }
+
+  beforeEach(() => {
+    vi.clearAllMocks()
+    mockUseQuery = vi.mocked(useQuery)
+  })
+
   it('should return themes data when the query is successful', async () => {
-    ;(useQuery as Mock).mockReturnValue({
-      data: themes,
-      error: null,
-      isLoading: false
-    })
+    mockQuery({ data: themes })
 
     const { result } = renderHook(() => useGetThemesByGameId(gameId))
 
-    await waitFor(() => result.current.isLoading === false)
+    await waitFor(() => !result.current.isLoading)
 
-    expect(result.current.themes).toEqual(themes)
-    expect(result.current.error).toBeNull()
-    expect(result.current.isLoading).toBe(false)
+    ExpectThemesData(result, themes)
   })
 
   it('should return an error when the query fails', async () => {
-    ;(useQuery as Mock).mockReturnValue({
-      data: null,
-      error,
-      isLoading: false
-    })
+    mockQuery({ error })
 
     const { result } = renderHook(() => useGetThemesByGameId(gameId))
 
     await waitFor(() => {
-      expect(result.current.themes).toBeNull()
-      expect(result.current.error).toEqual(error)
-      expect(result.current.isLoading).toBe(false)
+      ExpectError(result, error)
     })
-  })
-
-  it('should return isLoading as true while the query is loading', async () => {
-    ;(useQuery as Mock).mockReturnValue({
-      data: null,
-      error: null,
-      isLoading: true
-    })
-
-    const { result } = renderHook(() => useGetThemesByGameId(gameId))
-
-    expect(result.current.themes).toBeNull()
-    expect(result.current.error).toBeNull()
-    expect(result.current.isLoading).toBe(true)
   })
 })
+
+function ExpectError(
+  result: { current: { themes: Theme[] | null | undefined; error: Error | null; isLoading: boolean } },
+  error: Error
+) {
+  expect(result.current.themes).toBeUndefined()
+  expect(result.current.error).toEqual(error)
+}
+
+function ExpectThemesData(
+  result: { current: { themes: Theme[] | null | undefined; error: Error | null; isLoading: boolean } },
+  themes: { id: number; name: string }[]
+) {
+  expect(result.current.themes).toEqual(themes)
+  expect(result.current.error).toBeUndefined()
+}

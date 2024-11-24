@@ -133,7 +133,8 @@ export const useGetWordsByUserId = (
 }
 
 export const useRandomAchievement = (
-  patientId: number
+  patientId: number,
+  themeId: number
 ): {
   achievement: Achievement | null | undefined
   error: Error | null
@@ -141,7 +142,7 @@ export const useRandomAchievement = (
 } => {
   const { data, error, isLoading } = useQuery({
     queryKey: ['patientId', patientId],
-    queryFn: async () => await ApiService.getRandomAchievement(patientId)
+    queryFn: async () => await ApiService.getRandomAchievement(patientId, themeId)
   })
   return { achievement: data, error, isLoading }
 }
@@ -332,6 +333,7 @@ export const useWorstPhonemeRankingDashboard = (
 
   return { data, error, isLoading }
 }
+
 export const useGetProfileData = (
   id: number,
   role: Role
