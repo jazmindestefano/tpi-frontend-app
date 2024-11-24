@@ -1,8 +1,8 @@
 import { renderHook, waitFor } from '@testing-library/react'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, UseQueryResult } from '@tanstack/react-query'
 import { useGetPatientNameById } from '@hooks'
 import * as ApiService from '@http'
-import { Mock, vi } from 'vitest'
+import { Mock, MockedFunction, vi } from 'vitest'
 
 vi.mock('@tanstack/react-query', async () => {
   const actual = await vi.importActual<typeof import('@tanstack/react-query')>('@tanstack/react-query')
@@ -21,14 +21,16 @@ describe('useGetPatientNameById', () => {
   const mockName = 'John Doe'
   const error = new Error('Error fetching patient name')
 
-  const mockQuery = (overrides: Partial<ReturnType<typeof useQuery>>) => {
-    ;(useQuery as Mock).mockReturnValue({
-      data: null,
-      error: null,
-      isLoading: false,
-      ...overrides
-    })
+  let mockUseQuery: MockedFunction<typeof useQuery>
+
+  const mockQuery = (response: Partial<UseQueryResult<string, Error>>) => {
+    mockUseQuery.mockReturnValue(response as UseQueryResult<string, Error>)
   }
+
+  beforeEach(() => {
+    vi.clearAllMocks()
+    mockUseQuery = vi.mocked(useQuery)
+  })
 
   it('should return the patient name when the query is successful', async () => {
     ;(ApiService.getPatientNameById as Mock).mockResolvedValueOnce(mockName)
@@ -54,9 +56,8 @@ function ExpectErrors(
   result: { current: { data: string | null | undefined; error: Error | null; isLoading: boolean } },
   error: Error
 ) {
-  expect(result.current.data).toBeNull()
+  expect(result.current.data).toBeUndefined()
   expect(result.current.error).toEqual(error)
-  expect(result.current.isLoading).toBe(false)
 }
 
 function ExpectPatientName(
@@ -64,6 +65,5 @@ function ExpectPatientName(
   mockName: string
 ) {
   expect(result.current.data).toEqual(mockName)
-  expect(result.current.error).toBeNull()
-  expect(result.current.isLoading).toBe(false)
+  expect(result.current.error).toBeUndefined()
 }

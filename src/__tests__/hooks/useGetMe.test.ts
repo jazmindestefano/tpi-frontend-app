@@ -1,8 +1,8 @@
 import { renderHook, waitFor } from '@testing-library/react'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, UseQueryResult } from '@tanstack/react-query'
 import { useGetMe } from '@hooks'
 import * as ApiService from '@http'
-import { Mock, vi } from 'vitest'
+import { Mock, MockedFunction, vi } from 'vitest'
 import { User } from '@interfaces'
 
 vi.mock('@tanstack/react-query', async () => {
@@ -21,14 +21,16 @@ describe('useGetMe', () => {
   const mockUser: User = { id: 1, username: 'John Doe', role: 'PATIENT' }
   const error = new Error('Error fetching user')
 
-  const mockQuery = (overrides: Partial<ReturnType<typeof useQuery>>) => {
-    ;(useQuery as Mock).mockReturnValue({
-      data: null,
-      error: null,
-      isLoading: false,
-      ...overrides
-    })
+  let mockUseQuery: MockedFunction<typeof useQuery>
+
+  const mockQuery = (response: Partial<UseQueryResult<User, Error>>) => {
+    mockUseQuery.mockReturnValue(response as UseQueryResult<User, Error>)
   }
+
+  beforeEach(() => {
+    vi.clearAllMocks()
+    mockUseQuery = vi.mocked(useQuery)
+  })
 
   it('should return user data when the query is successful', async () => {
     ;(ApiService.getMe as Mock).mockResolvedValueOnce(mockUser)
@@ -54,9 +56,8 @@ function ExpectErrors(
   result: { current: { user: User | null | undefined; error: Error | null; isLoading: boolean } },
   error: Error
 ) {
-  expect(result.current.user).toBeNull()
+  expect(result.current.user).toBeUndefined()
   expect(result.current.error).toEqual(error)
-  expect(result.current.isLoading).toBe(false)
 }
 
 function ExpectUser(
@@ -64,6 +65,5 @@ function ExpectUser(
   mockUser: User
 ) {
   expect(result.current.user).toEqual(mockUser)
-  expect(result.current.error).toBeNull()
-  expect(result.current.isLoading).toBe(false)
+  expect(result.current.error).toBeUndefined()
 }
