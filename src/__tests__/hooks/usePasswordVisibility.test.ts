@@ -5,7 +5,31 @@ import { usePasswordVisibility } from '@hooks'
 describe('usePasswordVisibility', () => {
   it('should initialize with showPassword as false', () => {
     const { result } = renderHook(() => usePasswordVisibility())
-    expect(result.current.showPassword).toBe(false)
+    ExpectPasswordVisibilyToBeFalse(result)
+  })
+
+  it('should toggle showPassword state to true', () => {
+    const { result } = renderHook(() => usePasswordVisibility())
+
+    act(() => {
+      result.current.togglePasswordVisibility()
+    })
+
+    ExpectaPasswordVisibilityToBeTrue(result)
+  })
+
+  it('should toggle showPassword state to false', () => {
+    const { result } = renderHook(() => usePasswordVisibility())
+
+    act(() => {
+      result.current.togglePasswordVisibility()
+    })
+
+    act(() => {
+      result.current.togglePasswordVisibility()
+    })
+
+    ExpectPasswordVisibilyToBeFalse(result)
   })
 
   it('should toggle showPassword state', () => {
@@ -14,11 +38,25 @@ describe('usePasswordVisibility', () => {
     act(() => {
       result.current.togglePasswordVisibility()
     })
+
     expect(result.current.showPassword).toBe(true)
 
     act(() => {
       result.current.togglePasswordVisibility()
     })
-    expect(result.current.showPassword).toBe(false)
+
+    ExpectPasswordVisibilyToBeFalse(result)
   })
 })
+
+function ExpectaPasswordVisibilityToBeTrue(result: {
+  current: { showPassword: boolean; togglePasswordVisibility: () => void }
+}) {
+  expect(result.current.showPassword).toBe(true)
+}
+
+function ExpectPasswordVisibilyToBeFalse(result: {
+  current: { showPassword: boolean; togglePasswordVisibility: () => void }
+}) {
+  expect(result.current.showPassword).toBe(false)
+}

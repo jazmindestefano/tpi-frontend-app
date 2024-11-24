@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useGetGames } from '../../hooks/queries'
 import * as ApiService from '@http'
 import { Mock, vi } from 'vitest'
+import { Game } from '@interfaces'
 
 vi.mock('@tanstack/react-query', async () => {
   const actual = await vi.importActual<typeof import('@tanstack/react-query')>('@tanstack/react-query')
@@ -23,7 +24,7 @@ describe('useGetGames', () => {
     { id: 2, name: 'Game 2' }
   ]
 
-  const mockQuery = (overrides: Partial<ReturnType<typeof useQuery>>) => {
+  const getGamesSetUp = (overrides: Partial<ReturnType<typeof useQuery>>) => {
     ;(useQuery as Mock).mockReturnValue({
       data: null,
       error: null,
@@ -34,34 +35,54 @@ describe('useGetGames', () => {
 
   it('should return games data when the query is successful', async () => {
     ;(ApiService.getGames as Mock).mockResolvedValueOnce(mockGames)
-    mockQuery({ data: mockGames })
+    getGamesSetUp({ data: mockGames })
 
     const { result } = renderHook(() => useGetGames())
 
     await waitFor(() => !result.current.isLoading)
 
-    expect(result.current.games).toEqual(mockGames)
-    expect(result.current.error).toBeNull()
-    expect(result.current.isLoading).toBe(false)
+    ExpectLoadedGames(result, mockGames)
   })
 
   it('should return an error when the query fails', async () => {
-    mockQuery({ error })
+    getGamesSetUp({ error })
 
     const { result } = renderHook(() => useGetGames())
 
-    expect(result.current.games).toBeNull()
-    expect(result.current.error).toEqual(error)
-    expect(result.current.isLoading).toBe(false)
+    ExpectError(result, error)
   })
 
   it('should return isLoading as true while the query is loading', () => {
-    mockQuery({ isLoading: true })
+    getGamesSetUp({ isLoading: true })
 
     const { result } = renderHook(() => useGetGames())
 
-    expect(result.current.games).toBeNull()
-    expect(result.current.error).toBeNull()
-    expect(result.current.isLoading).toBe(true)
+    ExpectIsLoadingToBeTrue(result)
   })
 })
+
+function ExpectIsLoadingToBeTrue(result: {
+  current: { games: Game[] | null | undefined; error: Error | null; isLoading: boolean }
+}) {
+  expect(result.current.games).toBeNull()
+  expect(result.current.error).toBeNull()
+  expect(result.current.isLoading).toBe(true)
+}
+
+function ExpectError(
+  result: { current: { games: Game[] | null | undefined; error: Error | null; isLoading: boolean } },
+  error: Error
+) {
+  expect(result.current.games).toBeNull()
+  expect(result.current.error).toEqual(error)
+  expect(result.current.isLoading).toBe(false)
+}
+
+function ExpectLoadedGames(
+  result: { current: { games: Game[] | null | undefined; error: Error | null; isLoading: boolean } },
+  mockGames: { id: number; name: string }[]
+) {
+  expect(result.current.games).toEqual(mockGames)
+  expect(result.current.error).toBeNull()
+  expect(result.current.isLoading).toBe(false)
+}

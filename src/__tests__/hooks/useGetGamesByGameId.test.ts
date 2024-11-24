@@ -2,8 +2,8 @@ import { renderHook, waitFor } from '@testing-library/react'
 import { vi, Mock } from 'vitest'
 import { useQuery } from '@tanstack/react-query'
 import { useGetThemesByGameId } from '../../hooks/queries'
+import { Theme } from '@interfaces'
 
-// Mock external dependencies
 vi.mock('@http')
 vi.mock('@tanstack/react-query', async () => {
   const actual = await vi.importActual<typeof import('@tanstack/react-query')>('@tanstack/react-query')
@@ -34,9 +34,7 @@ describe('useGetThemesByGameId', () => {
 
     await waitFor(() => !result.current.isLoading)
 
-    expect(result.current.themes).toEqual(themes)
-    expect(result.current.error).toBeNull()
-    expect(result.current.isLoading).toBe(false)
+    ExpectThemesData(result, themes)
   })
 
   it('should return an error when the query fails', async () => {
@@ -45,9 +43,7 @@ describe('useGetThemesByGameId', () => {
     const { result } = renderHook(() => useGetThemesByGameId(gameId))
 
     await waitFor(() => {
-      expect(result.current.themes).toBeNull()
-      expect(result.current.error).toEqual(error)
-      expect(result.current.isLoading).toBe(false)
+      ExpectError(result, error)
     })
   })
 
@@ -56,8 +52,32 @@ describe('useGetThemesByGameId', () => {
 
     const { result } = renderHook(() => useGetThemesByGameId(gameId))
 
-    expect(result.current.themes).toBeNull()
-    expect(result.current.error).toBeNull()
-    expect(result.current.isLoading).toBe(true)
+    ExpectIsLoadingToBeTrue(result)
   })
 })
+
+function ExpectIsLoadingToBeTrue(result: {
+  current: { themes: Theme[] | null | undefined; error: Error | null; isLoading: boolean }
+}) {
+  expect(result.current.themes).toBeNull()
+  expect(result.current.error).toBeNull()
+  expect(result.current.isLoading).toBe(true)
+}
+
+function ExpectError(
+  result: { current: { themes: Theme[] | null | undefined; error: Error | null; isLoading: boolean } },
+  error: Error
+) {
+  expect(result.current.themes).toBeNull()
+  expect(result.current.error).toEqual(error)
+  expect(result.current.isLoading).toBe(false)
+}
+
+function ExpectThemesData(
+  result: { current: { themes: Theme[] | null | undefined; error: Error | null; isLoading: boolean } },
+  themes: { id: number; name: string }[]
+) {
+  expect(result.current.themes).toEqual(themes)
+  expect(result.current.error).toBeNull()
+  expect(result.current.isLoading).toBe(false)
+}
