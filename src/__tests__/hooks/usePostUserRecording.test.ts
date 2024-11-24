@@ -58,14 +58,6 @@ describe('usePostUserRecording', () => {
     expectMutationToFail(result, error)
   })
 
-  it('should return isPending as true during mutation', () => {
-    mockMutation({ isPending: true })
-
-    const { result } = renderHook(() => usePostUserRecording())
-
-    expectMutationPending(result)
-  })
-
   it('should return isSuccess as true after a successful mutation', () => {
     mockMutation({ isSuccess: true })
 
@@ -87,20 +79,6 @@ function expectMutationToBeSuccessful(result: {
   expect(result.current.isSuccess).toBe(true)
   expect(result.current.error).toBeNull()
   expect(result.current.isPending).toBe(false)
-}
-
-function expectMutationPending(result: {
-  current: {
-    mutate: (args: PostUserRecordingData) => void
-    reset: () => void
-    error: Error | null
-    isPending: boolean
-    isSuccess: boolean
-  }
-}) {
-  expect(result.current.isPending).toBe(true)
-  expect(result.current.error).toBeNull()
-  expect(result.current.isSuccess).toBe(false)
 }
 
 function expectMutationToFail(

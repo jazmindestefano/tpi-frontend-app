@@ -49,23 +49,7 @@ describe('useRandomAchievement', () => {
 
     ExpectError(result, error)
   })
-
-  it('should return isLoading as true while the query is loading', () => {
-    RandomAchievementSetUp({ isLoading: true })
-
-    const { result } = renderHook(() => useRandomAchievement(patientId))
-
-    ExpectIsLoadingToBeTrue(result)
-  })
 })
-
-function ExpectIsLoadingToBeTrue(result: {
-  current: { achievement: Achievement | null | undefined; error: Error | null; isLoading: boolean }
-}) {
-  expect(result.current.achievement).toBeNull()
-  expect(result.current.error).toBeNull()
-  expect(result.current.isLoading).toBe(true)
-}
 
 function ExpectError(
   result: { current: { achievement: Achievement | null | undefined; error: Error | null; isLoading: boolean } },

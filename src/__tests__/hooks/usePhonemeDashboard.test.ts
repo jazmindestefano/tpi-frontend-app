@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { usePhonemeDashboard } from '@hooks'
 import * as ApiService from '@http'
 import { Mock, vi } from 'vitest'
-import { PhonemeDashboard } from '@components'
+import { PhonemeDashboard } from '@interfaces'
 
 vi.mock('@tanstack/react-query', async () => {
   const actual = await vi.importActual<typeof import('@tanstack/react-query')>('@tanstack/react-query')

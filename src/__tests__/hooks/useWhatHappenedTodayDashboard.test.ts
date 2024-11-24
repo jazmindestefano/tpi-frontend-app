@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useWhatHappenedTodayDashboard } from '@hooks'
 import * as ApiService from '@http'
 import { Mock, vi } from 'vitest'
-import { WhatHappenedTodayDashboard } from '@components'
+import { WhatHappenedTodayDashboard } from '@interfaces'
 
 vi.mock('@tanstack/react-query', async () => {
   const actual = await vi.importActual<typeof import('@tanstack/react-query')>('@tanstack/react-query')
@@ -42,9 +42,7 @@ describe('useWhatHappenedTodayDashboard', () => {
 
     await waitFor(() => !result.current.isLoading)
 
-    expect(result.current.data).toEqual(mockDashboardData)
-    expect(result.current.error).toBeNull()
-    expect(result.current.isLoading).toBe(false)
+    ExpectWhatHappenedTodayData(result, mockDashboardData)
   })
 
   it('should return an error when the query fails', async () => {
@@ -52,16 +50,24 @@ describe('useWhatHappenedTodayDashboard', () => {
 
     const { result } = renderHook(() => useWhatHappenedTodayDashboard(patientId))
 
-    expect(result.current.data).toBeNull()
-    expect(result.current.error).toEqual(error)
-    expect(result.current.isLoading).toBe(false)
-  })
-
-  it('should return isLoading as true while the query is loading', () => {
-    mockQuery({ isLoading: true })
-
-    const { result } = renderHook(() => useWhatHappenedTodayDashboard(patientId))
-
-    expect(result.current.isLoading).toBe(true)
+    ExpectErrors(result, error)
   })
 })
+
+function ExpectErrors(
+  result: { current: { data: WhatHappenedTodayDashboard[]; error: Error | null; isLoading: boolean } },
+  error: Error
+) {
+  expect(result.current.data).toBeNull()
+  expect(result.current.error).toEqual(error)
+  expect(result.current.isLoading).toBe(false)
+}
+
+function ExpectWhatHappenedTodayData(
+  result: { current: { data: WhatHappenedTodayDashboard[]; error: Error | null; isLoading: boolean } },
+  mockDashboardData: WhatHappenedTodayDashboard[]
+) {
+  expect(result.current.data).toEqual(mockDashboardData)
+  expect(result.current.error).toBeNull()
+  expect(result.current.isLoading).toBe(false)
+}

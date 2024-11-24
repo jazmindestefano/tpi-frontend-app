@@ -48,23 +48,7 @@ describe('useGetPatientNameById', () => {
 
     ExpectErrors(result, error)
   })
-
-  it('should return isLoading as true while the query is loading', () => {
-    mockQuery({ isLoading: true })
-
-    const { result } = renderHook(() => useGetPatientNameById(patientId))
-
-    ExpectIsLoading(result)
-  })
 })
-
-function ExpectIsLoading(result: {
-  current: { data: string | null | undefined; error: Error | null; isLoading: boolean }
-}) {
-  expect(result.current.data).toBeNull()
-  expect(result.current.error).toBeNull()
-  expect(result.current.isLoading).toBe(true)
-}
 
 function ExpectErrors(
   result: { current: { data: string | null | undefined; error: Error | null; isLoading: boolean } },

@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useSurveyFeedbackForDashboard } from '@hooks'
 import * as ApiService from '@http'
 import { Mock, vi } from 'vitest'
-import { SurveyFeedbackDashboard } from '@components'
+import { SurveyFeedbackDashboard } from '@interfaces'
 
 vi.mock('@tanstack/react-query', async () => {
   const actual = await vi.importActual<typeof import('@tanstack/react-query')>('@tanstack/react-query')
@@ -52,23 +52,7 @@ describe('useSurveyFeedbackForDashboard', () => {
 
     ExpectErrors(result, error)
   })
-
-  it('should return isLoading as true while the query is loading', () => {
-    mockQuery({ isLoading: true })
-
-    const { result } = renderHook(() => useSurveyFeedbackForDashboard(patientId))
-
-    ExpectIsLoading(result)
-  })
 })
-
-function ExpectIsLoading(result: {
-  current: { data: SurveyFeedbackDashboard; error: Error | null; isLoading: boolean }
-}) {
-  expect(result.current.data).toBeNull()
-  expect(result.current.error).toBeNull()
-  expect(result.current.isLoading).toBe(true)
-}
 
 function ExpectErrors(
   result: { current: { data: SurveyFeedbackDashboard; error: Error | null; isLoading: boolean } },

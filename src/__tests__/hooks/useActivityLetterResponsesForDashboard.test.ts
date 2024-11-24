@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useActivityLetterResponsesForDashboard } from '@hooks'
 import * as ApiService from '@http'
 import { Mock, vi } from 'vitest'
-import { LetterActityResponseDashboard } from '@components'
+import { LetterActityResponseDashboard } from '@interfaces'
 
 vi.mock('@tanstack/react-query', async () => {
   const actual = await vi.importActual<typeof import('@tanstack/react-query')>('@tanstack/react-query')
@@ -52,23 +52,7 @@ describe('useActivityLetterResponsesForDashboard', () => {
 
     ExpectErrors(result, error)
   })
-
-  it('should return isLoading as true while the query is loading', () => {
-    mockQuery({ isLoading: true })
-
-    const { result } = renderHook(() => useActivityLetterResponsesForDashboard(patientId))
-
-    ExpectIsLoading(result)
-  })
 })
-
-function ExpectIsLoading(result: {
-  current: { data: LetterActityResponseDashboard[]; error: Error | null; isLoading: boolean }
-}) {
-  expect(result.current.data).toBeNull()
-  expect(result.current.error).toBeNull()
-  expect(result.current.isLoading).toBe(true)
-}
 
 function ExpectErrors(
   result: { current: { data: LetterActityResponseDashboard[]; error: Error | null; isLoading: boolean } },

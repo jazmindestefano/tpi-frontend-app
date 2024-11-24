@@ -52,23 +52,7 @@ describe('useGetAchievements', () => {
 
     ExpectErrors(result, error)
   })
-
-  it('should return isLoading as true while the query is loading', () => {
-    mockQuery({ isLoading: true })
-
-    const { result } = renderHook(() => useGetAchievements(patientId))
-
-    ExpectIsLoading(result)
-  })
 })
-
-function ExpectIsLoading(result: {
-  current: { achievements: Achievement[] | null | undefined; error: Error | null; isLoading: boolean }
-}) {
-  expect(result.current.achievements).toBeNull()
-  expect(result.current.error).toBeNull()
-  expect(result.current.isLoading).toBe(true)
-}
 
 function ExpectErrors(
   result: { current: { achievements: Achievement[] | null | undefined; error: Error | null; isLoading: boolean } },

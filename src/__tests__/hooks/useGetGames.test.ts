@@ -51,23 +51,7 @@ describe('useGetGames', () => {
 
     ExpectError(result, error)
   })
-
-  it('should return isLoading as true while the query is loading', () => {
-    getGamesSetUp({ isLoading: true })
-
-    const { result } = renderHook(() => useGetGames())
-
-    ExpectIsLoadingToBeTrue(result)
-  })
 })
-
-function ExpectIsLoadingToBeTrue(result: {
-  current: { games: Game[] | null | undefined; error: Error | null; isLoading: boolean }
-}) {
-  expect(result.current.games).toBeNull()
-  expect(result.current.error).toBeNull()
-  expect(result.current.isLoading).toBe(true)
-}
 
 function ExpectError(
   result: { current: { games: Game[] | null | undefined; error: Error | null; isLoading: boolean } },

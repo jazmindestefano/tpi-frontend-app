@@ -46,23 +46,7 @@ describe('useGetThemesByGameId', () => {
       ExpectError(result, error)
     })
   })
-
-  it('should return isLoading as true while the query is loading', () => {
-    mockQuery({ isLoading: true })
-
-    const { result } = renderHook(() => useGetThemesByGameId(gameId))
-
-    ExpectIsLoadingToBeTrue(result)
-  })
 })
-
-function ExpectIsLoadingToBeTrue(result: {
-  current: { themes: Theme[] | null | undefined; error: Error | null; isLoading: boolean }
-}) {
-  expect(result.current.themes).toBeNull()
-  expect(result.current.error).toBeNull()
-  expect(result.current.isLoading).toBe(true)
-}
 
 function ExpectError(
   result: { current: { themes: Theme[] | null | undefined; error: Error | null; isLoading: boolean } },

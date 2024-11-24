@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useWorstSyllableRankingDashboard } from '@hooks'
 import * as ApiService from '@http'
 import { Mock, vi } from 'vitest'
-import { SyllableRankingDashboard } from '@components'
+import { SyllableRankingDashboard } from '@interfaces'
 
 vi.mock('@tanstack/react-query', async () => {
   const actual = await vi.importActual<typeof import('@tanstack/react-query')>('@tanstack/react-query')

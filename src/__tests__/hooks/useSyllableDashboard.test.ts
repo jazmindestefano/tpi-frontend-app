@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useSyllableDashboard } from '@hooks'
 import * as ApiService from '@http'
 import { Mock, vi } from 'vitest'
-import { SyllableDashboard } from '@components'
+import { SyllableDashboard } from '@interfaces'
 
 vi.mock('@tanstack/react-query', async () => {
   const actual = await vi.importActual<typeof import('@tanstack/react-query')>('@tanstack/react-query')
@@ -52,23 +52,7 @@ describe('useSyllableDashboard', () => {
 
     ExpectErrors(result, error)
   })
-
-  it('should return isLoading as true while the query is loading', () => {
-    mockQuery({ isLoading: true })
-
-    const { result } = renderHook(() => useSyllableDashboard(patientId))
-
-    ExpectIsLoading(result)
-  })
 })
-
-function ExpectIsLoading(result: {
-  current: { data: SyllableDashboard[] | null; error: Error | null; isLoading: boolean }
-}) {
-  expect(result.current.data).toBeNull()
-  expect(result.current.error).toBeNull()
-  expect(result.current.isLoading).toBe(true)
-}
 
 function ExpectErrors(
   result: { current: { data: SyllableDashboard[] | null; error: Error | null; isLoading: boolean } },

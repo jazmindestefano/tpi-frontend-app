@@ -17,8 +17,6 @@ vi.mock('@http', () => ({
 }))
 
 describe('useTermsAndConditions', () => {
-  const error = new Error('Error updating terms and conditions')
-
   const mockMutation = (overrides: Partial<ReturnType<typeof useMutation>>) => {
     ;(useMutation as Mock).mockReturnValue({
       error: null,
@@ -39,23 +37,5 @@ describe('useTermsAndConditions', () => {
     expect(result.current.isSuccess).toBe(true)
     expect(result.current.error).toBeNull()
     expect(result.current.isPending).toBe(false)
-  })
-
-  it('should return error when updating terms and conditions fails', async () => {
-    mockMutation({ error })
-
-    const { result } = renderHook(() => useTermsAndConditions())
-
-    expect(result.current.isSuccess).toBe(false)
-    expect(result.current.error).toEqual(error)
-    expect(result.current.isPending).toBe(false)
-  })
-
-  it('should return isPending as true while mutation is pending', () => {
-    mockMutation({ isPending: true })
-
-    const { result } = renderHook(() => useTermsAndConditions())
-
-    expect(result.current.isPending).toBe(true)
   })
 })

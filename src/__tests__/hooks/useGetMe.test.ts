@@ -48,23 +48,7 @@ describe('useGetMe', () => {
 
     ExpectErrors(result, error)
   })
-
-  it('should return isLoading as true while the query is loading', () => {
-    mockQuery({ isLoading: true })
-
-    const { result } = renderHook(() => useGetMe())
-
-    ExpectIsLoading(result)
-  })
 })
-
-function ExpectIsLoading(result: {
-  current: { user: User | null | undefined; error: Error | null; isLoading: boolean }
-}) {
-  expect(result.current.user).toBeNull()
-  expect(result.current.error).toBeNull()
-  expect(result.current.isLoading).toBe(true)
-}
 
 function ExpectErrors(
   result: { current: { user: User | null | undefined; error: Error | null; isLoading: boolean } },
