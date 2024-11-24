@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'
 import { Timeline } from '@components'
 import { useTimeline } from '@hooks'
+import { TimelineData } from '@interfaces'
 
 vi.mock('@hooks', () => ({
   useTimeline: vi.fn()
@@ -46,7 +47,7 @@ function WhenUseTimelineReturnsData(
   useTimelineMock: MockedFunction<
     ({ patientId }: { patientId?: string }) => {
       gameId: number
-      data: import('c:/Users/jdestefano/Projects/TPI/frontend-tpi/src/interfaces/interfaces').TimelineData[] | undefined
+      data: TimelineData[] | undefined
       isLoading: boolean
       error: Error | null
       readyToFetch: boolean
@@ -86,7 +87,7 @@ function WhenUseTimelineReturnsError(
   useTimelineMock: MockedFunction<
     ({ patientId }: { patientId?: string }) => {
       gameId: number
-      data: import('c:/Users/jdestefano/Projects/TPI/frontend-tpi/src/interfaces/interfaces').TimelineData[] | undefined
+      data: TimelineData[] | undefined
       isLoading: boolean
       error: Error | null
       readyToFetch: boolean
