@@ -1,9 +1,9 @@
 import { renderHook, waitFor } from '@testing-library/react'
 import { useQuery } from '@tanstack/react-query'
-import { useGetMe } from '@hooks' // Asegúrate de que esta ruta sea correcta
-import * as ApiService from '@http' // Asegúrate de que esta ruta sea correcta
+import { useGetMe } from '@hooks'
+import * as ApiService from '@http'
 import { Mock, vi } from 'vitest'
-import { User } from '@interfaces' // Asegúrate de que esta ruta sea correcta
+import { User } from '@interfaces'
 
 vi.mock('@tanstack/react-query', async () => {
   const actual = await vi.importActual<typeof import('@tanstack/react-query')>('@tanstack/react-query')
