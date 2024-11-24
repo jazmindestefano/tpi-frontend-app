@@ -1,5 +1,5 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react'
-import { usePostPatient, useUser } from '@hooks'
+import { usePostPatient, useCurrentUser } from '@hooks'
 import { BaseModal, Input, Overlay } from '@components'
 import { useQueryClient } from '@tanstack/react-query'
 
@@ -25,7 +25,7 @@ const AddPatientModal: FC<AddPatientModalProps> = ({ isOpen, onClose, onSubmit }
     childSurname: ''
   })
   const { mutate, isSuccess } = usePostPatient()
-  const user = useUser()
+  const user = useCurrentUser()
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target

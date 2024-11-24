@@ -2,15 +2,6 @@ import * as ApiService from '@http'
 import { useMutation, useQuery } from '@tanstack/react-query'
 
 import {
-  LetterActityResponseDashboard,
-  PhonemeDashboard,
-  SurveyFeedbackDashboard,
-  SyllableDashboard,
-  SyllableRankingDashboard,
-  WhatHappenedTodayDashboard
-} from '@components'
-
-import {
   Theme,
   Game,
   GameLevel,
@@ -28,7 +19,13 @@ import {
   Role,
   LoginProps,
   RegisterFormData,
-  ProfessionalInAdmin
+  ProfessionalInAdmin,
+  LetterActityResponseDashboard,
+  PhonemeDashboard,
+  SurveyFeedbackDashboard,
+  SyllableDashboard,
+  SyllableRankingDashboard,
+  WhatHappenedTodayDashboard
 } from '@interfaces'
 
 export const useGetThemesByGameId = (
@@ -183,7 +180,8 @@ export const useGetMe = (): {
 } => {
   const { data, error, isLoading } = useQuery({
     queryKey: ['user', 'current'],
-    queryFn: async () => await ApiService.getMe()
+    queryFn: async () => await ApiService.getMe(),
+    retry: false
   })
   return { user: data, error, isLoading }
 }

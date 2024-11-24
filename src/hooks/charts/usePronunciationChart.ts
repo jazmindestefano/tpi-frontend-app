@@ -1,4 +1,4 @@
-import { GroupedData, PronunciationChartProps, SelectOption } from '@components'
+import { GroupedData, PronunciationChartProps, SelectOption } from '@interfaces'
 import { getRandomColorDashboard } from '@helpers'
 import { ChartData } from 'chart.js'
 import { isWithinInterval, parse } from 'date-fns'

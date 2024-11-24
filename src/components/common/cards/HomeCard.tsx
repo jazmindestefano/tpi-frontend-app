@@ -1,16 +1,13 @@
 import { Game } from '@interfaces'
 import { BaseCard, BaseContainer, HearableButton } from '@components'
 import { FC } from 'react'
+import { replaceHyphensWithSpaces } from '@helpers'
 
 interface HomeCardProps {
   buttonVariant: 'primary' | 'secondary' | 'tertiary' | 'fourth'
   backgroundColor: string
   onClick: () => void
   game: Game
-}
-
-function replaceHyphensWithSpaces(input: string): string {
-  return input.replace(/-/g, ' ')
 }
 
 const HomeCard: FC<HomeCardProps> = ({ buttonVariant, backgroundColor, onClick, game }) => {
