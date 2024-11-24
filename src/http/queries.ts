@@ -120,7 +120,7 @@ export const getRandomAchievement = async (patientId: number, themeId: number) =
 }
 
 export const getAchievements = async (patientId: number) => {
-  const res = await authenticatedClient.get(`/achivements/${patientId}`)
+  const res = await authenticatedClient.get(`/achievements/${patientId}`)
 
   if (res.status === 200) {
     return res.data
