@@ -18,7 +18,6 @@ import {
 } from '@interfaces'
 
 export const getThemesByGameId = async (gameId: number): Promise<Theme[] | null> => {
-  // will change to an authenticated client probably
   const res = await authenticatedClient.get(`/games/${gameId}/themes`)
   if (res.status === 200) {
     return res.data
@@ -111,8 +110,8 @@ export const getWordsByUserId = async (userId: number): Promise<Word[] | null> =
   return null
 }
 
-export const getRandomAchievement = async (patientId: number) => {
-  const res = await authenticatedClient.get(`/randomAchievement/${patientId}`)
+export const getRandomAchievement = async (patientId: number, themeId: number) => {
+  const res = await authenticatedClient.get(`/randomAchievement/${patientId}${themeId ? `?themeId=${themeId}` : ''}`)
 
   if (res.status === 200) {
     return res.data
@@ -121,7 +120,7 @@ export const getRandomAchievement = async (patientId: number) => {
 }
 
 export const getAchievements = async (patientId: number) => {
-  const res = await authenticatedClient.get(`/achivements/${patientId}`)
+  const res = await authenticatedClient.get(`/achievements/${patientId}`)
 
   if (res.status === 200) {
     return res.data
@@ -225,15 +224,6 @@ export const getWorstSyllableRankingDashboard = async (patientId: number) => {
 
 export const getWorstPhonemeRankingDashboard = async (patientId: number) => {
   const res = await authenticatedClient.get(`/phonemeRanking/${patientId}`)
-
-  if (res.status === 200) {
-    return res.data
-  }
-  return null
-}
-
-export const getActivityLetterProgressDashboard = async (patientId: number) => {
-  const res = await authenticatedClient.get(`/activityLetter/${patientId}`)
 
   if (res.status === 200) {
     return res.data

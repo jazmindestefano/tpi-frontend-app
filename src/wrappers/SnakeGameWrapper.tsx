@@ -1,5 +1,5 @@
 import { Loader } from '@components'
-import { useGetWordsByUserId, useSelectedTheme, useUser } from '@hooks'
+import { useGetWordsByUserId, useCurrentUser, useCurrentGame } from '@hooks'
 import { SnakeGamePage } from '@pages'
 import { Navigate } from 'react-router-dom'
 import { FC } from 'react'
@@ -11,8 +11,8 @@ function getRandomNumber(min: number, max: number): number {
 const vowels = ['A', 'E', 'I', 'O', 'U']
 
 const SnakeGameWrapper: FC = () => {
-  const selectedTheme = useSelectedTheme()
-  const user = useUser()
+  const { selectedTheme } = useCurrentGame()
+  const user = useCurrentUser()
   const { words, isLoading, error } = useGetWordsByUserId(user.id)
 
   return isLoading ? (

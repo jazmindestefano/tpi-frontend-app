@@ -1,5 +1,6 @@
 import { FC, useEffect } from 'react'
-import { AudioLinesIcon, MicIcon, Button, buttonVariants } from '@components'
+import { AudioLinesIcon, MicIcon, Button } from '@components'
+import { buttonVariants } from './buttonVariants'
 import type { VariantProps } from 'class-variance-authority'
 
 interface RecordButtonProps extends Omit<VariantProps<typeof buttonVariants>, 'size' | 'shape'> {

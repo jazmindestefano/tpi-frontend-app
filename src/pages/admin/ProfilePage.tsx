@@ -1,11 +1,11 @@
 import { HearableButton, Button } from '@components'
 import { Pencil, Save } from 'lucide-react'
 import { useState, useEffect, ChangeEvent, FC } from 'react'
-import { useGetProfileData, useUpdateProfileData, useUser } from '@hooks'
+import { useGetProfileData, useUpdateProfileData, useCurrentUser } from '@hooks'
 import { ProfileData, RoleEnum } from '@interfaces'
 
 const ProfilePage: FC = () => {
-  const user = useUser()
+  const user = useCurrentUser()
   const { data, error, isLoading } = useGetProfileData(user.id, user.role)
   const { mutate: updateProfile } = useUpdateProfileData()
   const [formData, setFormData] = useState<ProfileData>({

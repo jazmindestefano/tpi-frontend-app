@@ -1,6 +1,7 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react'
-import { usePostPatient, useUser } from '@hooks'
+import { usePostPatient, useCurrentUser } from '@hooks'
 import { BaseModal, Input, Overlay } from '@components'
+import { useQueryClient } from '@tanstack/react-query'
 
 interface AddPatientModalProps {
   isOpen: boolean
@@ -16,6 +17,7 @@ interface PatientData {
 }
 
 const AddPatientModal: FC<AddPatientModalProps> = ({ isOpen, onClose, onSubmit }) => {
+  const queryClient = useQueryClient()
   const [patientData, setPatientData] = useState<PatientData>({
     childName: '',
     guardianEmail: '',
@@ -23,7 +25,7 @@ const AddPatientModal: FC<AddPatientModalProps> = ({ isOpen, onClose, onSubmit }
     childSurname: ''
   })
   const { mutate, isSuccess } = usePostPatient()
-  const user = useUser()
+  const user = useCurrentUser()
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -41,6 +43,7 @@ const AddPatientModal: FC<AddPatientModalProps> = ({ isOpen, onClose, onSubmit }
       professionalId: user.id
     })
     onClose()
+    queryClient.invalidateQueries({ queryKey: ['professionalPatients'] })
   }
 
   useEffect(() => {

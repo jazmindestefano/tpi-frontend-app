@@ -3,7 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronUp, ChevronDown, ChevronLeft, ChevronRight, Pause, Play } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { Button, HearableButton, RecordButton, ContinueIcon } from '@components'
-import { useAudioRecording, useTextToSpeech, usePostUserRecording, useUser, useSelectedGame } from '@hooks'
+import { useAudioRecording, useTextToSpeech, usePostUserRecording, useCurrentUser, useCurrentGame } from '@hooks'
+
 import { useSelector } from 'react-redux'
 
 interface SnakeGameProps {
@@ -27,9 +28,9 @@ const SnakeGamePage: FC<SnakeGameProps> = ({ items, cellSize = 65 }) => {
     (state: { game: { selectedTheme: { id: number | string } } }) => state.game.selectedTheme
   )
   const displayText = selectedTheme.id === 10 || selectedTheme.id === 'Vocales' ? 'Vocales comidas' : 'Sílabas comidas'
-  const user = useUser()
+  const user = useCurrentUser()
   const navigate = useNavigate()
-  const selectedGame = useSelectedGame()
+  const { selectedGame } = useCurrentGame()
 
   useEffect(() => {
     if (audio && !isRecording) {

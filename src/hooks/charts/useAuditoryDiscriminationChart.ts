@@ -1,4 +1,4 @@
-import { AuditoryDiscriminationChartProps } from '@components'
+import { AuditoryDiscriminationChartProps } from '@interfaces'
 import { getRandomColorDashboard } from '@helpers'
 import { ChartData } from 'chart.js'
 import { useEffect, useState } from 'react'

@@ -51,6 +51,7 @@ export interface PostFeedbackData {
   gameId: number
   patientId: number
 }
+
 export interface LevelOptionRequest {
   activityId: number
   selectedOption: number
@@ -70,6 +71,7 @@ export interface Achievement {
   id: number
   image: string
 }
+
 export interface TimelineData {
   date: string
   gameDescription: string

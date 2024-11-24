@@ -1,8 +1,9 @@
-import { ChangeEvent, FC, useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { CircleCheck, CircleX, LogOut, Search, X } from 'lucide-react'
 import { useGetProfessionals, useUpdateProfessioanlStateId } from '@hooks'
 import { Loader, Button } from '@components'
 import { useNavigate } from 'react-router-dom'
+import { useQueryClient } from '@tanstack/react-query'
 
 type Statuses = {
   [key: number]: { text: string; color: string }
@@ -18,7 +19,8 @@ const getVerificationStatus = (id: number) => {
   return statuses[id] || statuses[1]
 }
 
-const HomeAdminPage: FC = () => {
+const HomeAdminPage = () => {
+  const queryClient = useQueryClient()
   const navigate = useNavigate()
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedImage, setSelectedImage] = useState<string | null>(null)
@@ -32,10 +34,12 @@ const HomeAdminPage: FC = () => {
 
   const handleApprove = async (professionalId: number) => {
     await updateProfessionalState({ professionalId, stateId: 4, comment: 'Aprobado' })
+    queryClient.invalidateQueries({ queryKey: ['professionalsAdmin'] })
   }
 
   const handleReject = async (professionalId: number) => {
     await updateProfessionalState({ professionalId, stateId: 3, comment: 'Rechazado' })
+    queryClient.invalidateQueries({ queryKey: ['professionalsAdmin'] })
   }
 
   const filteredProfessionals = professionals?.filter(

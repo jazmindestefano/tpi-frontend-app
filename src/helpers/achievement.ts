@@ -1,16 +1,5 @@
-import { Achievement } from '@interfaces'
+import { Achievement, AchievementCount, UniqueAchievements } from '@interfaces'
 import { getRandomColor } from '@helpers'
-
-export type AchievementCount = {
-  [key: string]: number
-}
-
-export interface UniqueAchievements {
-  id: number
-  image: string
-  count: number
-  bgColor: string
-}
 
 export const groupAchievements = (achievements: Achievement[]): AchievementCount => {
   return achievements.reduce((acc: AchievementCount, achievement: Achievement) => {
