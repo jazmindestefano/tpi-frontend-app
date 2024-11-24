@@ -19,7 +19,6 @@ import {
   PatientActivitiesPage,
   RegisterPage,
   EmailVerification,
-  ProfesionalCredentialVerification,
   ChangePassword,
   HomeAdminPage
 } from '@pages'
@@ -44,10 +43,6 @@ const Router = createBrowserRouter([
   {
     path: '/email-verification/:email',
     element: <EmailVerification />
-  },
-  {
-    path: '/professional-credential-verification',
-    element: <ProfesionalCredentialVerification />
   },
   {
     path: '/change-one-time-password',
