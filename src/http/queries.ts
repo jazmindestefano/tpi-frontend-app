@@ -279,10 +279,24 @@ export const getPatientActivityAnswers = async (patientId: number) => {
   return null
 }
 
-export const getPacientReportPdf = async (patientId?: number): Promise<Blob | null> => {
+export const getPatientReportPdf = async (patientId?: number): Promise<Blob | null> => {
   if (!patientId) return null
 
-  const res = await authenticatedClient.get<Blob>(`/export-today-games-and-timeline?patientId=${patientId}`, {
+  const res = await authenticatedClient.get<Blob>(`/generate-PDF-report?patientId=${patientId}`, {
+    responseType: 'blob'
+  })
+
+  if (res.status === 200) {
+    return res.data
+  }
+
+  return null
+}
+
+export const getPatientReportTimeline = async (patientId?: number): Promise<Blob | null> => {
+  if (!patientId) return null
+
+  const res = await authenticatedClient.get<Blob>(`/generate-timeline-report?patientId=${patientId}`, {
     responseType: 'blob'
   })
 
