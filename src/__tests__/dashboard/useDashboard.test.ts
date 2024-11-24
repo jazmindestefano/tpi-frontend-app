@@ -14,6 +14,7 @@ import {
   letterActivityMockedData,
   syllableRankingMockedData
 } from './mockedData'
+import { AuditoryDiscriminationChartProps, PronunciationChartProps, RankingProps } from '@interfaces/dashboard'
 
 vi.mock('@hooks/queries', async () => {
   const actual = await vi.importActual('@hooks/queries')
@@ -32,14 +33,37 @@ describe('useDashboard', () => {
     WhenApiReturnsDataForDashboard()
 
     const { result } = renderHook(() => useDashboard())
+    const {
+      phonemePronunciationChart,
+      syllablePronunciationChart,
+      auditoryDiscriminationChart,
+      syllableRankingChart,
+      phonemeRankingChart
+    } = result.current
 
-    expect(result.current.syllablePronunciationChart).not.toBeNull()
-    expect(result.current.phonemePronunciationChart).not.toBeNull()
-    expect(result.current.auditoryDiscriminationChart).not.toBeNull()
-    expect(result.current.phonemeRankingChart).not.toBeNull()
-    expect(result.current.syllableRankingChart).not.toBeNull()
+    ExpectToBeReturned(
+      phonemePronunciationChart,
+      syllablePronunciationChart,
+      auditoryDiscriminationChart,
+      syllableRankingChart,
+      phonemeRankingChart
+    )
   })
 })
+
+function ExpectToBeReturned(
+  phonemePronunciationChart: PronunciationChartProps[],
+  syllablePronunciationChart: PronunciationChartProps[],
+  auditoryDiscriminationChart: AuditoryDiscriminationChartProps[],
+  syllableRankingChart: RankingProps[],
+  phonemeRankingChart: RankingProps[]
+) {
+  expect(syllablePronunciationChart).not.toBeNull()
+  expect(phonemePronunciationChart).not.toBeNull()
+  expect(auditoryDiscriminationChart).not.toBeNull()
+  expect(phonemeRankingChart).not.toBeNull()
+  expect(syllableRankingChart).not.toBeNull()
+}
 
 function WhenApiReturnsDataForDashboard() {
   ;(useSyllableDashboard as MockedFunction<typeof useSyllableDashboard>).mockReturnValue({

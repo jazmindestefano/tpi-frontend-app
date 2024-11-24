@@ -51,6 +51,7 @@ export interface PostFeedbackData {
   gameId: number
   patientId: number
 }
+
 export interface LevelOptionRequest {
   activityId: number
   selectedOption: number
