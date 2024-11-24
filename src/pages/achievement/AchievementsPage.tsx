@@ -1,10 +1,11 @@
-import { useUser, useGetAchievements } from '@hooks'
+import { useCurrentUser, useGetAchievements } from '@hooks'
 import { FC, useEffect, useState } from 'react'
 import { HearableButton, Loader } from '@components'
-import { getUniqueAchievements, UniqueAchievements } from '@helpers'
+import { getUniqueAchievements } from '@helpers'
+import { UniqueAchievements } from '@interfaces'
 
 const AchievementsPage: FC = () => {
-  const user = useUser()
+  const user = useCurrentUser()
   const { achievements, error, isLoading } = useGetAchievements(user.id)
   const [uniqueAchievements, setUniqueAchievements] = useState<UniqueAchievements[]>([])
 

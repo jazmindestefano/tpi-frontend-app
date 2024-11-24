@@ -1,65 +1,22 @@
-import { useNavigate } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
-import {
-  useSelectedGame,
-  useSelectedTheme,
-  useUser,
-  useAudioRecording,
-  useGetGameLevels,
-  usePostUserRecording
-} from '@hooks'
-import { FC, useEffect, useState } from 'react'
-import { shuffleArray } from '@helpers'
+import { useAudioRecording, useRecordGame } from '@hooks'
+import { FC } from 'react'
 import { ArrowRightIcon } from 'lucide-react'
-import { LevelOption } from '@interfaces'
 import { Button, GameHeader, ProgressBar, RecordButton, Loader } from '@components'
 
 const RecordGamePage: FC = () => {
-  const selectedTheme = useSelectedTheme()
-  const navigate = useNavigate()
   const isDesktop = useMediaQuery({ minWidth: 768 })
-  const { levels, isLoading, error } = useGetGameLevels(selectedTheme.id)
   const { isRecording, audio, startRecording, stopRecording } = useAudioRecording()
-  const { mutate } = usePostUserRecording()
-  const [currentLevel, setCurrentLevel] = useState<number>(0)
-  const [levelOptions, setLevelOptions] = useState<LevelOption[]>([])
-  const user = useUser()
-  const selectedGame = useSelectedGame()
+  const { isLoading, levels, handleNextPage, levelOptions, currentLevel } = useRecordGame(audio)
 
-  useEffect(() => {
-    if (levels && !isLoading && !error) {
-      const levelOptions = [...levels[currentLevel].options]
-      shuffleArray(levelOptions)
-      setLevelOptions(levelOptions)
-    }
-  }, [levels, isLoading, error, currentLevel])
-
-  useEffect(() => {
-    if (audio) {
-      mutate({
-        userId: user.id,
-        gameId: selectedGame.id,
-        activityId: levels![currentLevel].id,
-        userAudio: audio
-      })
-    }
-  }, [audio, currentLevel, levels, mutate, selectedGame, user])
-
-  const handleNextPage = () => {
-    setCurrentLevel((prevState) => prevState + 1)
-    if (levels && currentLevel === levels.length - 1) {
-      navigate('/felicitaciones')
-    }
-  }
-
-  return !isLoading ? (
+  return !isLoading && levels ? (
     <div className="flex flex-col justify-center items-center w-full h-screen lg:gap-20 px-32 gap-10 lg:pt-0 pt-16">
-      <ProgressBar currentActivity={currentLevel + 1} totalActivities={levels?.length} />
+      <ProgressBar currentActivity={currentLevel + 1} totalActivities={levels.length} />
 
       <div className="flex justify-between items-center w-full">
         <div className="lg:w-9/10 lg:flex flex justify-center items-center w-full gap-10">
           <div className="lg:w-2/5">
-            <GameHeader level={levels![currentLevel]} headerTitle="¿Cómo dirías la palabra?" />
+            <GameHeader level={levels[currentLevel]} headerTitle="¿Cómo dirías la palabra?" />
           </div>
           <div className="w-2/5 flex flex-col justify-center items-center">
             {levelOptions.map((option) => (

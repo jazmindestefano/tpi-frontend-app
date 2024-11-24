@@ -1,4 +1,4 @@
-import { RankingProps } from '@components'
+import { RankingProps } from '@interfaces'
 import { useRankingChart } from '@hooks'
 import { renderHook } from '@testing-library/react'
 import { expect, vi } from 'vitest'

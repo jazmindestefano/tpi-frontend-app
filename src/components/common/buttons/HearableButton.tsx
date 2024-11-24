@@ -1,9 +1,10 @@
-import { Button, buttonVariants, VolumeIcon } from '@components'
+import { Button, VolumeIcon } from '@components'
 import type { VariantProps } from 'class-variance-authority'
 import { LoaderCircle } from 'lucide-react'
 import classNames from 'classnames'
 import { FC } from 'react'
 import { useTextToSpeech } from '@hooks'
+import { buttonVariants } from './buttonVariants'
 
 interface HearableButtonProps extends Omit<VariantProps<typeof buttonVariants>, 'size' | 'shape'> {
   text: string

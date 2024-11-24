@@ -1,7 +1,7 @@
 import { FC, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { resetGame } from '@redux/slices'
-import { usePostFeedback, useSelectedGame, useUser } from '@hooks'
+import { usePostFeedback, useCurrentUser, useCurrentGame } from '@hooks'
 import { FeedbackModalContent, Overlay } from '@components'
 
 interface FeedbackModalProps {
@@ -12,8 +12,8 @@ interface FeedbackModalProps {
 const FeedbackModal: FC<FeedbackModalProps> = ({ show, onClose }) => {
   const { mutate, isPending, isSuccess, error } = usePostFeedback()
   const dispatch = useDispatch()
-  const selectedGame = useSelectedGame()
-  const user = useUser()
+  const { selectedGame } = useCurrentGame()
+  const user = useCurrentUser()
 
   useEffect(() => {
     if (isSuccess) {

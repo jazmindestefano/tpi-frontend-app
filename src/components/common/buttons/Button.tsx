@@ -1,6 +1,6 @@
 import { type VariantProps } from 'class-variance-authority'
 import classNames from 'classnames'
-import { buttonVariants } from '@components'
+import { buttonVariants } from './buttonVariants'
 import { FC, ReactNode } from 'react'
 
 export interface ButtonProps extends VariantProps<typeof buttonVariants> {

@@ -14,7 +14,7 @@ import {
   RankingProps,
   SyllableDashboard,
   SyllableRankingDashboard
-} from '@components'
+} from '@interfaces'
 
 const useDashboard = () => {
   const { patientId } = useParams()

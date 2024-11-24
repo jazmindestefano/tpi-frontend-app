@@ -1,10 +1,10 @@
 import { PublicRouteLayout, Button, Input } from '@components'
 import { useRegister } from '@hooks'
 import { RegisterFormData } from '@interfaces'
-import { ChangeEvent, FC, useState } from 'react'
+import { ChangeEvent, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const RegisterPage: FC = () => {
+const RegisterPage = () => {
   const navigate = useNavigate()
   const { mutateAsync } = useRegister()
   const [formData, setFormData] = useState<RegisterFormData>({

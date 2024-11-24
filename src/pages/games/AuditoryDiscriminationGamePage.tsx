@@ -1,5 +1,5 @@
 import { GameHeader, Loader, ProgressBar } from '@components'
-import { useSelectedTheme, useUser, useGetGameLevels, usePostAuditoryDiscriminationAnswer } from '@hooks'
+import { useCurrentUser, useGetGameLevels, usePostAuditoryDiscriminationAnswer, useCurrentGame } from '@hooks'
 import { LevelOption } from '@interfaces'
 import { useState, useEffect, FC } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -28,8 +28,8 @@ const prepareData = ({
 
 const AuditoryDiscriminationGamePage: FC = () => {
   const navigate = useNavigate()
-  const selectedTheme = useSelectedTheme()
-  const user = useUser()
+  const { selectedTheme } = useCurrentGame()
+  const user = useCurrentUser()
   const { levels, isLoading, error: getLevelsError } = useGetGameLevels(selectedTheme.id)
   const [currentLevel, setCurrentLevel] = useState<number>(0)
   const [options, setOptions] = useState<LevelOption[]>([])

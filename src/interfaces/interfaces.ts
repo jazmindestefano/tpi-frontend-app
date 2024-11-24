@@ -70,6 +70,7 @@ export interface Achievement {
   id: number
   image: string
 }
+
 export interface TimelineData {
   date: string
   gameDescription: string

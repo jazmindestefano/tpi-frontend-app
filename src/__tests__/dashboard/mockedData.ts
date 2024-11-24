@@ -3,7 +3,7 @@ import {
   PhonemeDashboard,
   SyllableDashboard,
   SyllableRankingDashboard
-} from '@components'
+} from '@interfaces'
 
 export const syllableMockedData: SyllableDashboard[] = [
   {
