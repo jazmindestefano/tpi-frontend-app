@@ -1,11 +1,10 @@
-import { usePostPatientTime, useSelectedGame, useSelectedTheme, useGlobalTimer } from '@hooks'
+import { usePostPatientTime, useGlobalTimer, useCurrentGame } from '@hooks'
 import { Outlet, useNavigate } from 'react-router-dom'
 import { NOT_YET_ASSIGNED_NUM } from '@config'
 import { FC, useEffect } from 'react'
 
 const ValidGameWrapper: FC = () => {
-  const game = useSelectedGame()
-  const theme = useSelectedTheme()
+  const { selectedTheme, selectedGame } = useCurrentGame()
   const navigate = useNavigate()
   const { startTimer, stopTimer, getStartTime, getElapsedTime } = useGlobalTimer()
   const { mutate } = usePostPatientTime()
@@ -20,7 +19,7 @@ const ValidGameWrapper: FC = () => {
     }
   }, [getElapsedTime, getStartTime, mutate, startTimer, stopTimer])
 
-  if (game.id === NOT_YET_ASSIGNED_NUM || theme.id === NOT_YET_ASSIGNED_NUM) {
+  if (selectedTheme.id === NOT_YET_ASSIGNED_NUM || selectedGame.id === NOT_YET_ASSIGNED_NUM) {
     navigate('/')
     return
   }

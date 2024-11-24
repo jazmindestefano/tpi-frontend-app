@@ -2,19 +2,13 @@ import { FC, useState } from 'react'
 import { PlusIcon } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { ProfesionalPatient } from '@interfaces'
-import { getCurrentAge } from '@helpers'
-import { Button, AddPatientModal } from '@components'
+import { getCurrentAge, getRandomImage } from '@helpers'
+import { AddPatientModal, Button } from '@components'
 
 interface HomeProfesionalCardProps {
   patient?: ProfesionalPatient
   isAddPatient?: boolean
   className?: string
-}
-
-const getRandomImage = () => {
-  const images = ['avatar/horse-avatar.png', 'avatar/lion-avatar.png', 'avatar/rabbit-avatar.png']
-  const randomIndex = Math.floor(Math.random() * images.length)
-  return images[randomIndex]
 }
 
 const HomeProfesionalCard: FC<HomeProfesionalCardProps> = ({ patient, isAddPatient = false, className = '' }) => {
@@ -34,7 +28,7 @@ const HomeProfesionalCard: FC<HomeProfesionalCardProps> = ({ patient, isAddPatie
   }
 
   const handleClick = (id: number) => {
-    // to-do: create slicer in redux
+    // todo: create slicer in redux
     navigate(`paciente/${id}`)
   }
 

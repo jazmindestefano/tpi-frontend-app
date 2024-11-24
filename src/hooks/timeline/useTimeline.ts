@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useGetPatientActivityAnswers, useTimelineData } from '@hooks'
-import { PatientActivityAnswers } from '@interfaces'
-import { Game } from '@components'
+import { PatientActivityAnswers, TimelineGame } from '@interfaces'
 
 const createActivitiesDto = (data: PatientActivityAnswers[]) => {
   return data.map((activity) => ({
@@ -10,7 +9,7 @@ const createActivitiesDto = (data: PatientActivityAnswers[]) => {
   }))
 }
 
-const findByGameName = (name: string, activities: Game[]) => {
+const findByGameName = (name: string, activities: TimelineGame[]) => {
   return activities.find((activity) => activity.gameName === name)
 }
 
@@ -22,7 +21,7 @@ const useTimeline = ({ patientId }: { patientId?: string }) => {
     error: actsErr,
     isLoading: actsLoading
   } = useGetPatientActivityAnswers(readyToFetch ? Number(patientId) : 0)
-  const [activities, setActivities] = useState<Game[]>([])
+  const [activities, setActivities] = useState<TimelineGame[]>([])
   const [gameId, setGameId] = useState<number>(0)
 
   useEffect(() => {

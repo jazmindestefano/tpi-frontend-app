@@ -2,7 +2,9 @@ import { Bar } from 'react-chartjs-2'
 import { BarElement, CategoryScale, Chart as ChartJS, LinearScale } from 'chart.js'
 import { useRankingChart } from '@hooks'
 import { FC } from 'react'
-import { barOptions, Filter, RankingProps } from '@components'
+import { Filter } from '@components'
+import { barOptions } from './options'
+import { RankingProps } from '@interfaces'
 
 ChartJS.register(CategoryScale, LinearScale, BarElement)
 

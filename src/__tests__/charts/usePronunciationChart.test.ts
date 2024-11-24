@@ -1,7 +1,7 @@
 import { describe, it, expect, beforeEach } from 'vitest'
 import { renderHook, act } from '@testing-library/react'
 import { usePronunciationChart } from '@hooks'
-import { PronunciationChartProps } from '@components'
+import { PronunciationChartProps } from '@interfaces'
 
 describe('usePronunciationChart', () => {
   let chartData: PronunciationChartProps[]

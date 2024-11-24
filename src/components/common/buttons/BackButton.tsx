@@ -1,7 +1,13 @@
 import { ArrowLeft } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+import { FC } from 'react'
 
-const BackButton = ({ text, route }: { text: string; route: string }) => {
+interface BackButtonProps {
+  text: string
+  route: string
+}
+
+const BackButton: FC<BackButtonProps> = ({ text, route }) => {
   const navigate = useNavigate()
   return (
     <button

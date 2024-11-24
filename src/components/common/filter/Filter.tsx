@@ -1,4 +1,5 @@
 import Select, { MultiValue } from 'react-select'
+import { FC } from 'react'
 
 interface SelectOption {
   value: string
@@ -11,7 +12,7 @@ interface FilterProps {
   onChange: (values: string[]) => void
 }
 
-const Filter = ({ options, selectedValues, onChange }: FilterProps) => {
+const Filter: FC<FilterProps> = ({ options, selectedValues, onChange }) => {
   const handleSelectChange = (newValue: MultiValue<SelectOption>) => {
     const values = newValue ? newValue.map((option) => option.value) : []
     onChange(values)
