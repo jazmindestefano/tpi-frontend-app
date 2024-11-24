@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from 'react'
+import { ChangeEvent, FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setToken } from '@redux/slices'
@@ -37,7 +37,7 @@ const LoginPage: FC = () => {
         if (user) {
           if (user.role === 'PROFESSIONAL') {
             if (user.hasOneTimePassword) {
-              navigate('/change-one-time-password')
+              navigate('/reinicio-contraseña')
             } else {
               navigate('/profesional')
             }
@@ -45,7 +45,7 @@ const LoginPage: FC = () => {
             navigate('/admin')
           } else {
             if (user.hasOneTimePassword) {
-              navigate('/change-one-time-password')
+              navigate('/reinicio-contraseña')
             } else {
               navigate('/')
             }
@@ -56,6 +56,10 @@ const LoginPage: FC = () => {
         setError('Credenciales inválidas. Por favor, intenta nuevamente.')
       })
   }
+
+  useEffect(() => {
+    localStorage.clear()
+  }, [])
 
   return (
     <PublicRouteLayout>
@@ -97,7 +101,7 @@ const LoginPage: FC = () => {
           <p className="text-sm">¿Todavía no tenés una cuenta?</p>
           <Button
             dataTestId="register-button"
-            onClick={() => navigate('/register')}
+            onClick={() => navigate('/registro')}
             className="font-semibold underline bg-transparent hover:bg-transparent"
           >
             Registrate acá!

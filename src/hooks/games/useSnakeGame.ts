@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { useAudioRecording, usePostUserRecording, useSelectedGame, useTextToSpeech, useUser } from '@hooks'
-import { useSelector } from 'react-redux'
+import { useAudioRecording, useCurrentGame, useCurrentUser, usePostUserRecording, useTextToSpeech } from '@hooks'
 import { useNavigate } from 'react-router-dom'
 
 interface SnakeGameProps {
@@ -20,25 +19,22 @@ const useSnakeGame = ({ items }: SnakeGameProps) => {
   const { isLoading, playAudio } = useTextToSpeech({ text: item.char })
   const { isRecording, audio, startRecording, stopRecording } = useAudioRecording()
   const { mutate } = usePostUserRecording()
-  const selectedTheme = useSelector(
-    (state: { game: { selectedTheme: { id: number | string } } }) => state.game.selectedTheme
-  )
-  const displayText = selectedTheme.id === 10 || selectedTheme.id === 'Vocales' ? 'Vocales comidas' : 'Sílabas comidas'
-  const user = useUser()
+  const user = useCurrentUser()
   const navigate = useNavigate()
-  const selectedGame = useSelectedGame()
+  const { selectedGame } = useCurrentGame()
 
   useEffect(() => {
     if (audio && !isRecording) {
+      console.log(item.char)
       mutate({
         userId: user.id,
         gameId: selectedGame.id,
         activityId: 0,
         userAudio: audio,
-        text: items[eatenItems.length - 1] ?? ''
+        text: item.char ?? ''
       })
     }
-  }, [audio, selectedGame, isRecording, mutate, user, eatenItems.length, items])
+  }, [audio, selectedGame, isRecording, mutate, user, item.char])
 
   const togglePause = useCallback(() => {
     if (!showBigItem) {
@@ -160,6 +156,11 @@ const useSnakeGame = ({ items }: SnakeGameProps) => {
     }
   }, [showBigItem])
 
+  const handlePause = () => {
+    setShowBigItem(false)
+    setIsPaused(false)
+  }
+
   return {
     snake,
     direction,
@@ -173,7 +174,7 @@ const useSnakeGame = ({ items }: SnakeGameProps) => {
     stopRecording,
     isRecording,
     isGameFinished,
-    displayText
+    handlePause
   }
 }
 

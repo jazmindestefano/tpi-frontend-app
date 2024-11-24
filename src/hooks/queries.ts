@@ -273,12 +273,19 @@ export const useTimelineData = (patientId: number) => {
   return { data, error, isLoading }
 }
 
-export const useTermsAndConditions = () => {
-  const { error, isSuccess, isPending, mutateAsync } = useMutation({
-    mutationFn: async (patientId: number) => await ApiService.UpdatePatientTermsAndConditions(patientId)
+export const usePatchTermsAndConditions = (): {
+  mutate: ({ patientId }: { patientId: number }) => void
+  reset: () => void
+  error: Error | null
+  isPending: boolean
+  isSuccess: boolean
+} => {
+  const { error, isSuccess, isPending, mutate, reset } = useMutation({
+    mutationFn: async ({ patientId }: { patientId: number }) =>
+      await ApiService.patchPatientTermsAndConditions(patientId)
   })
 
-  return { error, isSuccess, isPending, mutateAsync }
+  return { error, isSuccess, isPending, mutate, reset }
 }
 
 export const useWhatHappenedTodayDashboard = (
@@ -510,15 +517,15 @@ export const usePostPatientTime = (): {
 }
 
 export const useChangeOneTimePassword = (): {
-  mutateAsync: (args: { role: string; id: string; newPassword: string }) => void
+  mutate: (args: { role: string; id: string; newPassword: string }) => void
   error: Error | null
   isPending: boolean
   isSuccess: boolean
 } => {
-  const { mutateAsync, error, isPending, isSuccess } = useMutation({
+  const { mutate, error, isPending, isSuccess } = useMutation({
     mutationFn: async ({ role, id, newPassword }: { role: string; id: string; newPassword: string }) =>
       await ApiService.changeOneTimePassword(role, id, newPassword)
   })
 
-  return { mutateAsync, error, isPending, isSuccess }
+  return { mutate, error, isPending, isSuccess }
 }

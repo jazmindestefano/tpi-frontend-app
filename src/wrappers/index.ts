@@ -1,5 +1,5 @@
 export { default as PrivateRoute } from './PrivateRoute.tsx'
 export { default as SnakeGameWrapper } from './SnakeGameWrapper.tsx'
 export { default as ValidateRolePatient } from './ValidateRolePatient.tsx'
-export { default as ValidateRoleProfessional } from './ValidateRoleProfessional.tsx'
+export { default as ValidatePatient } from './ValidatePatient.tsx'
 export { default as ValidGameWrapper } from './ValidGameWrapper.tsx'

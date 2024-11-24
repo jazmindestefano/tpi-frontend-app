@@ -87,7 +87,7 @@ const mockUseLoginWithInvalidCredentials = () => {
 }
 
 function expectNavigationToRegisterPage() {
-  expect(navigateMock).toHaveBeenCalledWith('/register')
+  expect(navigateMock).toHaveBeenCalledWith('/registro')
 }
 
 function ExpectInvalidCredentialsMessage() {

@@ -8,7 +8,7 @@ const ChangePassword: FC = () => {
   const [formData, setFormData] = useState<{ password: string }>({ password: '' })
   const navigate = useNavigate()
   const { showPassword, togglePasswordVisibility } = usePasswordVisibility()
-  const { mutateAsync, isSuccess, error } = useChangeOneTimePassword()
+  const { mutate, isSuccess, error } = useChangeOneTimePassword()
   const [userRole, setUserRole] = useState('')
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -20,7 +20,7 @@ const ChangePassword: FC = () => {
     const user = await getMe()
     console.log({ user })
     setUserRole(user.role)
-    await mutateAsync({ newPassword: formData.password, id: user.id, role: user.role })
+    mutate({ newPassword: formData.password, id: user.id, role: user.role })
   }
 
   useEffect(() => {
@@ -30,7 +30,7 @@ const ChangePassword: FC = () => {
       } else if (userRole === 'ADMIN') {
         navigate('/admin')
       } else {
-        navigate('/terminos-y-condiciones')
+        navigate('/terminos')
       }
       setFormData({ password: '' })
     }

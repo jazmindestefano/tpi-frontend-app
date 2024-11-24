@@ -1,7 +1,6 @@
 export { default as ChangePassword } from './ChangePassword'
 export { default as EmailVerification } from './EmailVerification'
 export { default as LoginPage } from './LoginPage'
-export { default as PrivacyPolicyPage } from './PrivacyPolicyPage'
 export { default as ProfilePage } from './ProfilePage'
 export { default as RegisterPage } from './RegisterPage'
 export { default as TermsAndConditionsPage } from './TermsAndConditionsPage'

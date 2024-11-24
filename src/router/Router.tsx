@@ -7,8 +7,6 @@ import {
   DashboardPage,
   ErrorPage,
   HomeProfesionalPage,
-  NotFoundPage,
-  PrivacyPolicyPage,
   ProfilePage,
   RecordGamePage,
   TermsAndConditionsPage,
@@ -23,13 +21,7 @@ import {
   HomeAdminPage
 } from '@pages'
 import { LayoutAdmin, LayoutPatient, LayoutProfesional } from '@components'
-import {
-  SnakeGameWrapper,
-  ValidateRolePatient,
-  ValidateRoleProfessional,
-  ValidGameWrapper,
-  PrivateRoute
-} from '@wrappers'
+import { SnakeGameWrapper, ValidateRolePatient, ValidatePatient, ValidGameWrapper, PrivateRoute } from '@wrappers'
 
 const Router = createBrowserRouter([
   {
@@ -37,21 +29,22 @@ const Router = createBrowserRouter([
     element: <LoginPage />
   },
   {
-    path: '/register',
+    path: '/registro',
     element: <RegisterPage />
   },
   {
-    path: '/email-verification/:email',
+    path: '/verificacion/:email',
     element: <EmailVerification />
   },
   {
-    path: '/change-one-time-password',
+    path: '/reinicio-contraseña',
     element: <ChangePassword />
   },
   {
     element: <PrivateRoute />,
     errorElement: <ErrorPage />,
     children: [
+      // inicio router admin
       {
         element: <LayoutAdmin />,
         path: '/admin',
@@ -62,11 +55,17 @@ const Router = createBrowserRouter([
           }
         ]
       },
+      // fin router admin
+      // inicio router paciente
+      {
+        path: '/terminos',
+        element: <TermsAndConditionsPage />
+      },
       {
         element: <LayoutPatient />,
         children: [
           {
-            element: <ValidateRoleProfessional />,
+            element: <ValidatePatient />,
             children: [
               {
                 path: '/',
@@ -105,19 +104,13 @@ const Router = createBrowserRouter([
               {
                 path: '/perfil',
                 element: <ProfilePage />
-              },
-              {
-                path: '/terminos-y-condiciones',
-                element: <TermsAndConditionsPage />
-              },
-              {
-                path: '/politica-de-privacidad',
-                element: <PrivacyPolicyPage />
               }
             ]
           }
         ]
       },
+      // fin router paciente
+      // inicio router profesional
       {
         element: <LayoutProfesional />,
         path: '/profesional',
@@ -157,11 +150,8 @@ const Router = createBrowserRouter([
           }
         ]
       }
+      // fin router profesional
     ]
-  },
-  {
-    path: '*',
-    element: <NotFoundPage />
   }
 ])
 

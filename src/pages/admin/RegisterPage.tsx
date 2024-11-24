@@ -21,7 +21,7 @@ const RegisterPage = () => {
 
   const handleRegister = () => {
     mutateAsync({ formData })
-    navigate(`/email-verification/${formData.email}`)
+    navigate(`/verificacion/${formData.email}`)
   }
 
   return (

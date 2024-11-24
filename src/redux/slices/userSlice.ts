@@ -11,7 +11,9 @@ const initialState: UserState = {
   user: {
     id: NOT_YET_ASSIGNED_NUM,
     username: NOT_YET_ASSIGNED_STR,
-    role: 'NO_ROLE'
+    role: 'NO_ROLE',
+    oneTimePassword: false,
+    hasAcceptTerms: false
   },
   token: NOT_YET_ASSIGNED_STR
 }
