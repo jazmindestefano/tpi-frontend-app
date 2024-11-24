@@ -49,14 +49,6 @@ const Router = createBrowserRouter([
     element: <ChangePassword />
   },
   {
-    path: '/terminos-y-condiciones',
-    element: <TermsAndConditionsPage />
-  },
-  {
-    path: '/politica-de-privacidad',
-    element: <PrivacyPolicyPage />
-  },
-  {
     element: <PrivateRoute />,
     errorElement: <ErrorPage />,
     children: [
@@ -113,6 +105,14 @@ const Router = createBrowserRouter([
               {
                 path: '/perfil',
                 element: <ProfilePage />
+              },
+              {
+                path: '/terminos-y-condiciones',
+                element: <TermsAndConditionsPage />
+              },
+              {
+                path: '/politica-de-privacidad',
+                element: <PrivacyPolicyPage />
               }
             ]
           }
