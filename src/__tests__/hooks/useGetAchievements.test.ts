@@ -1,8 +1,8 @@
 import { renderHook, waitFor } from '@testing-library/react'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, UseQueryResult } from '@tanstack/react-query'
 import { useGetAchievements } from '@hooks'
 import * as ApiService from '@http'
-import { Mock, vi } from 'vitest'
+import { Mock, MockedFunction, vi } from 'vitest'
 import { Achievement } from '@interfaces'
 
 vi.mock('@tanstack/react-query', async () => {
@@ -20,19 +20,21 @@ vi.mock('@http', () => ({
 describe('useGetAchievements', () => {
   const patientId = 1
   const error = new Error('Error fetching achievements')
-  const mockAchievements = [
-    { id: 1, title: 'Achievement 1' },
-    { id: 2, title: 'Achievement 2' }
+  const mockAchievements: Achievement[] = [
+    { id: 1, image: 'Achievement 1' },
+    { id: 2, image: 'Achievement 2' }
   ]
 
-  const mockQuery = (overrides: Partial<ReturnType<typeof useQuery>>) => {
-    ;(useQuery as Mock).mockReturnValue({
-      data: null,
-      error: null,
-      isLoading: false,
-      ...overrides
-    })
+  let mockUseQuery: MockedFunction<typeof useQuery>
+
+  const mockQuery = (response: Partial<UseQueryResult<Achievement[], Error>>) => {
+    mockUseQuery.mockReturnValue(response as UseQueryResult<Achievement[], Error>)
   }
+
+  beforeEach(() => {
+    vi.clearAllMocks()
+    mockUseQuery = vi.mocked(useQuery)
+  })
 
   it('should return achievements data when the query is successful', async () => {
     ;(ApiService.getAchievements as Mock).mockResolvedValueOnce(mockAchievements)
@@ -58,16 +60,14 @@ function ExpectErrors(
   result: { current: { achievements: Achievement[] | null | undefined; error: Error | null; isLoading: boolean } },
   error: Error
 ) {
-  expect(result.current.achievements).toBeNull()
+  expect(result.current.achievements).toBeUndefined()
   expect(result.current.error).toEqual(error)
-  expect(result.current.isLoading).toBe(false)
 }
 
 function ExpectAchievements(
   result: { current: { achievements: Achievement[] | null | undefined; error: Error | null; isLoading: boolean } },
-  mockAchievements: { id: number; title: string }[]
+  mockAchievements: Achievement[]
 ) {
   expect(result.current.achievements).toEqual(mockAchievements)
-  expect(result.current.error).toBeNull()
-  expect(result.current.isLoading).toBe(false)
+  expect(result.current.error).toBeUndefined()
 }

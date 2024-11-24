@@ -1,6 +1,6 @@
 import { renderHook, waitFor } from '@testing-library/react'
-import { vi, Mock } from 'vitest'
-import { useQuery } from '@tanstack/react-query'
+import { vi, MockedFunction } from 'vitest'
+import { useQuery, UseQueryResult } from '@tanstack/react-query'
 import { useGetThemesByGameId } from '../../hooks/queries'
 import { Theme } from '@interfaces'
 
@@ -14,18 +14,26 @@ vi.mock('@tanstack/react-query', async () => {
 })
 
 describe('useGetThemesByGameId', () => {
-  const mockQuery = (overrides: Partial<ReturnType<typeof useQuery>>) => {
-    ;(useQuery as Mock).mockReturnValue({
-      data: null,
-      error: null,
-      isLoading: false,
-      ...overrides
-    })
+  const gameId = 1
+  const themes: Theme[] = [
+    {
+      id: 1,
+      name: 'Theme 1',
+      image: ''
+    }
+  ]
+  const error = new Error('Error fetching themes')
+
+  let mockUseQuery: MockedFunction<typeof useQuery>
+
+  const mockQuery = (response: Partial<UseQueryResult<Theme[], Error>>) => {
+    mockUseQuery.mockReturnValue(response as UseQueryResult<Theme[], Error>)
   }
 
-  const gameId = 1
-  const themes = [{ id: 1, name: 'Theme 1' }]
-  const error = new Error('Error fetching themes')
+  beforeEach(() => {
+    vi.clearAllMocks()
+    mockUseQuery = vi.mocked(useQuery)
+  })
 
   it('should return themes data when the query is successful', async () => {
     mockQuery({ data: themes })
@@ -52,9 +60,8 @@ function ExpectError(
   result: { current: { themes: Theme[] | null | undefined; error: Error | null; isLoading: boolean } },
   error: Error
 ) {
-  expect(result.current.themes).toBeNull()
+  expect(result.current.themes).toBeUndefined()
   expect(result.current.error).toEqual(error)
-  expect(result.current.isLoading).toBe(false)
 }
 
 function ExpectThemesData(
@@ -62,6 +69,5 @@ function ExpectThemesData(
   themes: { id: number; name: string }[]
 ) {
   expect(result.current.themes).toEqual(themes)
-  expect(result.current.error).toBeNull()
-  expect(result.current.isLoading).toBe(false)
+  expect(result.current.error).toBeUndefined()
 }

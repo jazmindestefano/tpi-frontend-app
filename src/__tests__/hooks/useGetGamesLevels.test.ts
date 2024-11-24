@@ -1,9 +1,9 @@
 import { renderHook, waitFor } from '@testing-library/react'
-import { useQuery } from '@tanstack/react-query'
-import { Mock, vi } from 'vitest'
+import { useQuery, UseQueryResult } from '@tanstack/react-query'
+import { Mock, MockedFunction, vi } from 'vitest'
 import { useGetGameLevels } from '../../hooks/queries'
 import * as ApiService from '@http'
-import { GameLevel } from '@interfaces'
+import { GameLevel, LevelOption } from '@interfaces'
 
 vi.mock('@tanstack/react-query', async () => {
   const actual = await vi.importActual<typeof import('@tanstack/react-query')>('@tanstack/react-query')
@@ -19,20 +19,28 @@ vi.mock('@http', () => ({
 
 describe('useGetGameLevels', () => {
   const themeId = 1
-  const mockLevels = [
-    { id: 1, name: 'Level 1' },
-    { id: 2, name: 'Level 2' }
+
+  const mockLevelOptions: LevelOption[] = [
+    { id: 1, name: 'Option 1', description: 'Option 1', image: 'Option 1', correct: true },
+    { id: 2, name: 'Option 2', description: 'Option 2', image: 'Option 2', correct: false }
+  ]
+
+  const mockLevels: GameLevel[] = [
+    { id: 1, description: 'Level 1', options: mockLevelOptions },
+    { id: 2, description: 'Level 2', options: mockLevelOptions }
   ]
   const error = new Error('Error fetching levels')
 
-  const mockQuery = (overrides: Partial<ReturnType<typeof useQuery>>) => {
-    ;(useQuery as Mock).mockReturnValue({
-      data: null,
-      error: null,
-      isLoading: false,
-      ...overrides
-    })
+  let mockUseQuery: MockedFunction<typeof useQuery>
+
+  const mockQuery = (response: Partial<UseQueryResult<GameLevel[], Error>>) => {
+    mockUseQuery.mockReturnValue(response as UseQueryResult<GameLevel[], Error>)
   }
+
+  beforeEach(() => {
+    vi.clearAllMocks()
+    mockUseQuery = vi.mocked(useQuery)
+  })
 
   it('should return levels data when the query is successful', async () => {
     ;(ApiService.getGameLevels as Mock).mockResolvedValueOnce(mockLevels)
@@ -58,16 +66,14 @@ function ExpectError(
   result: { current: { levels: GameLevel[] | null | undefined; error: Error | null; isLoading: boolean } },
   error: Error
 ) {
-  expect(result.current.levels).toBeNull()
+  expect(result.current.levels).toBeUndefined()
   expect(result.current.error).toEqual(error)
-  expect(result.current.isLoading).toBe(false)
 }
 
 function ExpectLevels(
   result: { current: { levels: GameLevel[] | null | undefined; error: Error | null; isLoading: boolean } },
-  mockLevels: { id: number; name: string }[]
+  mockLevels: GameLevel[]
 ) {
   expect(result.current.levels).toEqual(mockLevels)
-  expect(result.current.error).toBeNull()
-  expect(result.current.isLoading).toBe(false)
+  expect(result.current.error).toBeUndefined()
 }

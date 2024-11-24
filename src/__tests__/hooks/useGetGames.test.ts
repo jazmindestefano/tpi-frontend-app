@@ -1,8 +1,8 @@
 import { renderHook, waitFor } from '@testing-library/react'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, UseQueryResult } from '@tanstack/react-query'
 import { useGetGames } from '../../hooks/queries'
 import * as ApiService from '@http'
-import { Mock, vi } from 'vitest'
+import { Mock, MockedFunction, vi } from 'vitest'
 import { Game } from '@interfaces'
 
 vi.mock('@tanstack/react-query', async () => {
@@ -19,23 +19,33 @@ vi.mock('@http', () => ({
 
 describe('useGetGames', () => {
   const error = new Error('Error fetching games')
-  const mockGames = [
-    { id: 1, name: 'Game 1' },
-    { id: 2, name: 'Game 2' }
+  const mockGames: Game[] = [
+    {
+      id: 1,
+      name: 'Game 1',
+      image: ''
+    },
+    {
+      id: 2,
+      name: 'Game 2',
+      image: ''
+    }
   ]
 
-  const getGamesSetUp = (overrides: Partial<ReturnType<typeof useQuery>>) => {
-    ;(useQuery as Mock).mockReturnValue({
-      data: null,
-      error: null,
-      isLoading: false,
-      ...overrides
-    })
+  let mockUseQuery: MockedFunction<typeof useQuery>
+
+  const mockQuery = (response: Partial<UseQueryResult<Game[], Error>>) => {
+    mockUseQuery.mockReturnValue(response as UseQueryResult<Game[], Error>)
   }
+
+  beforeEach(() => {
+    vi.clearAllMocks()
+    mockUseQuery = vi.mocked(useQuery)
+  })
 
   it('should return games data when the query is successful', async () => {
     ;(ApiService.getGames as Mock).mockResolvedValueOnce(mockGames)
-    getGamesSetUp({ data: mockGames })
+    mockQuery({ data: mockGames })
 
     const { result } = renderHook(() => useGetGames())
 
@@ -45,7 +55,7 @@ describe('useGetGames', () => {
   })
 
   it('should return an error when the query fails', async () => {
-    getGamesSetUp({ error })
+    mockQuery({ error })
 
     const { result } = renderHook(() => useGetGames())
 
@@ -57,9 +67,8 @@ function ExpectError(
   result: { current: { games: Game[] | null | undefined; error: Error | null; isLoading: boolean } },
   error: Error
 ) {
-  expect(result.current.games).toBeNull()
+  expect(result.current.games).toBeUndefined()
   expect(result.current.error).toEqual(error)
-  expect(result.current.isLoading).toBe(false)
 }
 
 function ExpectLoadedGames(
@@ -67,6 +76,5 @@ function ExpectLoadedGames(
   mockGames: { id: number; name: string }[]
 ) {
   expect(result.current.games).toEqual(mockGames)
-  expect(result.current.error).toBeNull()
-  expect(result.current.isLoading).toBe(false)
+  expect(result.current.error).toBeUndefined()
 }

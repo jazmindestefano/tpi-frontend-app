@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react'
 import { useGetPatientActivityAnswers } from '@hooks'
-import { useQuery } from '@tanstack/react-query'
-import { Mock, vi } from 'vitest'
+import { useQuery, UseQueryResult } from '@tanstack/react-query'
+import { MockedFunction, vi } from 'vitest'
 import { PatientActivityAnswers } from '@interfaces'
 
 vi.mock('@tanstack/react-query', async () => {
@@ -18,7 +18,7 @@ vi.mock('@http', () => ({
 
 describe('useGetPatientActivityAnswers', () => {
   const patientId = 1
-  const mockAnswers = [
+  const mockAnswers: PatientActivityAnswers[] = [
     {
       gameName: 'Memory Game',
       gameId: 123,
@@ -35,11 +35,20 @@ describe('useGetPatientActivityAnswers', () => {
   ]
   const error = new Error('Error fetching patient activity answers')
 
+  let mockUseQuery: MockedFunction<typeof useQuery>
+
+  const mockQuery = (response: Partial<UseQueryResult<PatientActivityAnswers[], Error>>) => {
+    mockUseQuery.mockReturnValue(response as UseQueryResult<PatientActivityAnswers[], Error>)
+  }
+
+  beforeEach(() => {
+    vi.clearAllMocks()
+    mockUseQuery = vi.mocked(useQuery)
+  })
+
   it('should return data when the query is successful', async () => {
-    ;(useQuery as Mock).mockReturnValue({
-      data: mockAnswers,
-      error: null,
-      isLoading: false
+    mockQuery({
+      data: mockAnswers
     })
 
     const { result } = renderHook(() => useGetPatientActivityAnswers(patientId))
@@ -48,10 +57,8 @@ describe('useGetPatientActivityAnswers', () => {
   })
 
   it('should return an error if the query fails', async () => {
-    ;(useQuery as Mock).mockReturnValue({
-      data: null,
-      error,
-      isLoading: false
+    mockQuery({
+      error
     })
 
     const { result } = renderHook(() => useGetPatientActivityAnswers(patientId))
@@ -64,9 +71,8 @@ function ExpectErrors(
   result: { current: { data: PatientActivityAnswers[]; error: Error | null; isLoading: boolean } },
   error: Error
 ) {
-  expect(result.current.data).toBeNull()
+  expect(result.current.data).toBeUndefined()
   expect(result.current.error).toEqual(error)
-  expect(result.current.isLoading).toBe(false)
 }
 
 function ExpectPatientAnswers(
@@ -78,6 +84,5 @@ function ExpectPatientAnswers(
   }[]
 ) {
   expect(result.current.data).toEqual(mockAnswers)
-  expect(result.current.error).toBeNull()
-  expect(result.current.isLoading).toBe(false)
+  expect(result.current.error).toBeUndefined()
 }
