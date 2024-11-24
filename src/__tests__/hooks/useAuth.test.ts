@@ -39,7 +39,13 @@ describe('useAuth', () => {
   })
 
   it('should return isAuthorized as true and dispatches setUser for an authorized user', () => {
-    const mockUser: User = { role: 'PATIENT', username: 'example', id: 1 }
+    const mockUser: User = {
+      role: 'PATIENT',
+      username: 'example',
+      id: 1,
+      hasAcceptTerms: false,
+      oneTimePassword: false
+    }
     useGetMeMock.mockReturnValue({ user: mockUser, isLoading: false, error: null })
     useTokenMock.mockReturnValue('valid-token')
 
