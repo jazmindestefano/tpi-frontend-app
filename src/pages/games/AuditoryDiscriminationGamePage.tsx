@@ -1,11 +1,5 @@
 import { GameHeader, Loader, ProgressBar } from '@components'
-import {
-  useSpeakText,
-  useCurrentUser,
-  useGetGameLevels,
-  usePostAuditoryDiscriminationAnswer,
-  useCurrentGame
-} from '@hooks'
+import { useCurrentUser, useGetGameLevels, usePostAuditoryDiscriminationAnswer, useCurrentGame } from '@hooks'
 import { LevelOption } from '@interfaces'
 import { useState, useEffect, FC } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -41,7 +35,6 @@ const AuditoryDiscriminationGamePage: FC = () => {
   const [options, setOptions] = useState<LevelOption[]>([])
 
   const { mutate, error } = usePostAuditoryDiscriminationAnswer()
-  const speakText = useSpeakText()
 
   useEffect(() => {
     if (levels && !isLoading && !getLevelsError) {
@@ -70,15 +63,6 @@ const AuditoryDiscriminationGamePage: FC = () => {
       setCurrentLevel((prevState) => prevState + 1)
     }, 500)
   }
-
-  useEffect(() => {
-    const timeoutId = setTimeout(() => {
-      if (levels) {
-        speakText(`Seleccioná la imágen que empiece con la letra ${levels[currentLevel].description}`)
-      }
-    }, 250)
-    return () => clearTimeout(timeoutId)
-  }, [currentLevel, levels, speakText])
 
   useEffect(() => {
     if (error) {

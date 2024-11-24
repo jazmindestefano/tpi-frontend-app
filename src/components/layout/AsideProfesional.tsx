@@ -1,4 +1,4 @@
-import { LucideIcon, Users } from 'lucide-react'
+import { LucideIcon, Home } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '@components'
 
@@ -31,11 +31,11 @@ const AsideProfesional = () => {
     <aside className="w-32 bg-blue-500 flex flex-col items-center pt-20 pb-10">
       <div className="flex flex-col items-center space-y-4">
         <div onClick={() => navigate('/profesional')} className="cursor-pointer">
-          <img src="/clara-logo-white.png" alt="Logo" className="h-8 transform rotate-[-90deg]" />
+          <img src="/clara-logo-w.png" alt="Logo" className="h-8 transform rotate-[-90deg]" />
         </div>
       </div>
       <nav className="flex-1 flex flex-col items-center justify-center space-y-4">
-        <SidebarItem icon={Users} href="/profesional" />
+        <SidebarItem icon={Home} href="/profesional" key={'home'} />
       </nav>
       <Button
         dataTestId="avatar-button"

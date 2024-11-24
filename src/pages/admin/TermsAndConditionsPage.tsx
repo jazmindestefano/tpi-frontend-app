@@ -9,8 +9,6 @@ const TermsAndConditionsPage = () => {
   const navigate = useNavigate()
   const [buttonEnabled, setButtonEnabled] = useState(false)
 
-  console.log({ isSuccess, buttonEnabled })
-
   const handleUpdateTerms = async (event: ChangeEvent<HTMLInputElement>) => {
     if (event.target.checked) {
       try {
@@ -61,6 +59,7 @@ const TermsAndConditionsPage = () => {
       <div className="mt-6">
         <label className="flex items-center">
           <input
+            data-testid="terms-and-conditions-checkbox"
             type="checkbox"
             className="mr-2 w-5 h-5"
             required
@@ -71,7 +70,12 @@ const TermsAndConditionsPage = () => {
           </span>
         </label>
       </div>
-      <Button onClick={() => navigate('/')} disabled={!buttonEnabled} className="p-4">
+      <Button
+        dataTestId="terms-and-condition-button"
+        onClick={() => navigate('/')}
+        disabled={!buttonEnabled}
+        className="p-4"
+      >
         Continuar
       </Button>
     </div>

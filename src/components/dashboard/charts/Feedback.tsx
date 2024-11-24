@@ -24,7 +24,7 @@ const Feedback: FC = () => {
     return (
       <div key="feedback" className="bg-slate-50 p-10 rounded-3xl bg-opacity-65 h-96 w-full">
         <div className="p-4 border-b border-gray-200 w-full">
-          <h2 className="text-xl">Feedback del Juego</h2>
+          <h2 className="text-2xl">Feedback del Juego</h2>
         </div>
         <div className="h-[calc(100%-3rem)] flex flex-col justify-center">
           <p className="text-xl text-center">No hay suficientes datos para mostrar el feedback del juego.</p>

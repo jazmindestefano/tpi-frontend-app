@@ -164,7 +164,7 @@ const HomeAdminPage: FC = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg max-w-2xl w-full">
             <div className="p-4 flex justify-between items-center border-b">
-              <h3 className="text-lg font-medium">Imagen de perfil</h3>
+              <h3 className="text-lg font-medium">Image Credencial</h3>
               <button onClick={() => setSelectedImage(null)} className="text-gray-400 hover:text-gray-500">
                 <X size={24} />
               </button>

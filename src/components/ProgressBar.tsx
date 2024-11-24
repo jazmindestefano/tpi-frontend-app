@@ -39,7 +39,7 @@ const ProgressBar: FC<{
 
       {/* Imagen que se mueve a lo largo de la barra */}
       <img
-        src="/c.svg"
+        src="/clarita1.svg"
         alt="clara"
         style={{
           position: 'absolute',
