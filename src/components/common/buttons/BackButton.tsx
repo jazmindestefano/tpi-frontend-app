@@ -10,7 +10,7 @@ const BackButton = ({ text, route }: { text: string; route: string }) => {
       aria-label={text}
     >
       <ArrowLeft className="mr-2 h-5 w-5" />
-      <span className="text-lg">{text}</span>
+      <span className="text-xl">{text}</span>
     </button>
   )
 }

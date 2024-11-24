@@ -29,7 +29,7 @@ const Today = () => {
   return (
     <div className="bg-slate-50 p-10 rounded-3xl bg-opacity-65 h-96 w-full">
       <h2 className="text-2xl mb-2">¿Qué pasó hoy?</h2>
-      <p className="text-gray-600 my-5">{getCurrentDate()}</p>
+      <p className="text-gray-600 my-5 text-xl">{getCurrentDate()}</p>
       <div className="flex justify-between mb-10 flex-grow">
         {!error &&
           !isLoading &&
@@ -44,7 +44,7 @@ const Today = () => {
       </div>
       <button
         onClick={handleClick}
-        className="bg-blue-500 text-white px-4 py-2 mb-6 rounded-full flex items-center justify-center w-full cursor-pointer"
+        className="bg-blue-500 text-white text-xl px-4 py-2 mb-6 rounded-full flex items-center justify-center w-full cursor-pointer"
       >
         <p>Ver más</p>
         <ArrowRight className="ml-2" size={20} />

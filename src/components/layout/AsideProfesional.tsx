@@ -1,4 +1,4 @@
-import { LucideIcon, Users } from 'lucide-react'
+import { LucideIcon, Home } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { Button } from '@components'
 
@@ -35,7 +35,7 @@ const AsideProfesional = () => {
         </div>
       </div>
       <nav className="flex-1 flex flex-col items-center justify-center space-y-4">
-        <SidebarItem icon={Users} href="/profesional" />
+        <SidebarItem icon={Home} href="/profesional" />
       </nav>
       <Button
         dataTestId="avatar-button"
