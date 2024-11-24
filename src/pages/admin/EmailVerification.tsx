@@ -39,11 +39,14 @@ const EmailVerification: FC = () => {
 
   return (
     <PublicRouteLayout>
-      <h1 className={'text-center font-bold text-2xl mb-4'}>Verificación de tu Email</h1>
-      <p>Hemos enviado al correo email un código de verificación</p>
+      <h1 data-testid={'email-ver-title'} className={'text-center font-bold text-2xl mb-4'}>
+        Verificación de tu Email
+      </h1>
+      <p data-testid={'email-ver-msg'}>Hemos enviado al correo email un código de verificación</p>
       <div className={'flex flex-col justify-center items-center gap-8'}>
         <div className="flex flex-col justify-center items-center gap-4">
           <Input
+            dataTestId="email-ver-verificationCode-input"
             name={'verificationCode'}
             className="w-80 text-center"
             label={'Código de verificación'}
@@ -51,7 +54,7 @@ const EmailVerification: FC = () => {
             value={formData.verificationCode}
           />
         </div>
-        <Button onClick={handleValidate} className="h-10 w-52">
+        <Button onClick={handleValidate} className="h-10 w-52" dataTestId="email-ver-verificationCode">
           Verificar código
         </Button>
 
@@ -67,7 +70,7 @@ const EmailVerification: FC = () => {
               hayamos terminado la evaluación.
             </p>
             <div className={'flex flex-col justify-center items-center gap-8'}>
-              <Button onClick={closeModal} className="h-10 px-5 text-lg">
+              <Button onClick={closeModal} className="h-10 px-5 text-lg" dataTestId="email-ver-back-button">
                 Volver a la página principal
               </Button>
             </div>
