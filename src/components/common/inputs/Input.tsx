@@ -52,7 +52,7 @@ const Input: FC<InputProps> = ({
         placeholder={placeholder}
       />
       {showToggle && onToggleClick && (
-        <div className="absolute inset-y-11 right-0 flex items-center pr-3 cursor-pointer place-content-center">
+        <div className="absolute inset-y-9 right-0 flex items-center pr-3 cursor-pointer place-content-center">
           <button onClick={onToggleClick} className="focus:outline-none">
             {toggleState ? <Eye /> : <EyeOff />}
           </button>

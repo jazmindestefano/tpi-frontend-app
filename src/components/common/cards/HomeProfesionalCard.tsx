@@ -54,9 +54,9 @@ const HomeProfesionalCard: FC<HomeProfesionalCardProps> = ({ patient, isAddPatie
         ) : (
           patient && (
             <div className="flex flex-col justify-center items-center w-full p-4 gap-2">
-              <img src={getRandomImage()} alt={patient.name} width={64} height={64} className="rounded-full mb-2" />
-              <h3 className="text-lg font-medium text-blue-800">{patient.name}</h3>
-              <p className="text-blue-600">{getCurrentAge(patient.birthDate)} años</p>
+              <img src={getRandomImage()} alt={patient.name} className="rounded-full h-20 w-20" />
+              <h3 className="text-2xl font-medium text-blue-800">{patient.name}</h3>
+              <p className="text-blue-600 text-lg">{getCurrentAge(patient.birthDate)} años</p>
               <Button variant="secondary" className="mt-2 p-3 rounded-3xl" onClick={() => handleClick(patient.id!)}>
                 <p className="text-center font-bold">Ver paciente</p>
               </Button>

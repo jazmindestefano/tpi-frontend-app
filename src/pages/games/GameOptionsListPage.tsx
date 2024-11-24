@@ -24,13 +24,13 @@ const GameOptionsListPage: FC<GameOptionsListProps> = ({ options, onOptionSelect
           className={`flex flex-col justify-center items-center w-full cursor-pointer rounded-3xl shadow-lg p-4 h-auto gap-6 ${
             option.correct && selectedOption === option.id ? 'bg-green-400' : 'bg-orange-100'
           } ${getJustifyClass(index)}`}
-          onClick={() => handleOptionClick(option)}
         >
           <div className="p-4 w-full rounded-3xl h-80 flex flex-col justify-center items-center bg-white">
             <img
               src={`/gameOptions/${option.name.toLowerCase()}.png`}
               alt={option.name.toUpperCase()}
               className="w-auto h-80 rounded-3xl"
+              onClick={() => handleOptionClick(option)}
             />
           </div>
           <HearableButton variant="fourth" text={option.name} />

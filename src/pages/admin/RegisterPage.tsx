@@ -26,11 +26,21 @@ const RegisterPage: FC = () => {
 
   return (
     <PublicRouteLayout>
-      <h1 className={'text-center font-bold text-2xl mb-4'}>Registrarse</h1>
+      <h1 data-testid="register-title" className={'text-center font-bold text-2xl mb-4'}>
+        Registrarse
+      </h1>
       <div className={'flex flex-col justify-center items-center gap-8'}>
         <div className="flex flex-col justify-center items-center gap-4">
-          <Input name={'name'} className="w-80" label={'Nombre'} onChange={handleChange} value={formData.name} />
           <Input
+            dataTestId="register-name-input"
+            name={'name'}
+            className="w-80"
+            label={'Nombre'}
+            onChange={handleChange}
+            value={formData.name}
+          />
+          <Input
+            dataTestId="register-surname-input"
             name={'surname'}
             className="w-80"
             label={'Apellido'}
@@ -38,6 +48,7 @@ const RegisterPage: FC = () => {
             value={formData.surname}
           />
           <Input
+            dataTestId="register-email-input"
             name={'email'}
             label={'Email'}
             type={'email'}
@@ -46,6 +57,7 @@ const RegisterPage: FC = () => {
             className="w-80"
           />
           <Input
+            dataTestId="register-credential-input"
             name={'professionalCredential'}
             label={'Credencial Profesional'}
             type={'file'}
@@ -58,6 +70,7 @@ const RegisterPage: FC = () => {
             <div className="flex flex-col items-center">
               <span>{formData.professionalCredential.name}</span>
               <Button
+                dataTestId="delete-credential-button"
                 onClick={() => {
                   setFormData((prev) => ({ ...prev, professionalCredential: null }))
                   const fileInput = document.querySelector('input[name="professionalCredential"]') as HTMLInputElement
@@ -72,7 +85,7 @@ const RegisterPage: FC = () => {
             </div>
           )}
         </div>
-        <Button onClick={handleRegister} className="h-10 w-52">
+        <Button onClick={handleRegister} className="h-10 w-52" dataTestId="register-button">
           Registrarse
         </Button>
       </div>
