@@ -79,7 +79,7 @@ describe('RegisterPage', () => {
 })
 
 function ExpectNavigationToEmailVerificationPage() {
-  expect(navigateMock).toHaveBeenCalledWith('/email-verification/john.doe@example.com')
+  expect(navigateMock).toHaveBeenCalledWith('/verificacion/john.doe@example.com')
 }
 
 function ExpectMutationToBeCalled() {

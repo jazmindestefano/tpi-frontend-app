@@ -22,11 +22,11 @@ const Timeline = () => {
     <div className="container p-10 w-full" data-testid="timeline-container">
       <BackButton
         dataTestId="timeline-back-button"
-        text="Volver al Dashboard"
+        text="Volver al tablero"
         route={`/profesional/paciente/${patientId}`}
       />
       <h1 className="text-3xl font-bold mb-8 text-gray-800" data-testid="timeline-title">
-        Línea de Tiempo de Actividades
+        Línea de tiempo de actividades
       </h1>
       <div className="relative space-y-6 pl-[9%]" data-testid="timeline-list">
         <div className="absolute left-[5%] top-[24px] bottom-0 w-0.5 bg-blue-300"></div>
