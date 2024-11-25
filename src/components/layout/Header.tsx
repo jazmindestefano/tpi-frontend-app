@@ -43,11 +43,11 @@ const Header: FC<HeaderProps> = ({ isProfessional, patientId }) => {
                 variant={'secondary'}
                 onClick={() => navigate('/logros')}
                 className="achievements-button"
-                data-tip="Ir a Mis Logros"
+                data-tip="Ir a mis logros"
               >
                 <img src="/pines/medalla.png" alt="Medalla" className="object-cover h-10" />
               </Button>
-              <Tooltip id="logros" content="Ir a mis Logros" variant="dark" place="bottom" />
+              <Tooltip id="logros" content="Ir a mis logros" variant="dark" place="bottom" />
             </div>
           )}
           {!isProfessional && location.pathname !== '/perfil' && (
@@ -58,11 +58,11 @@ const Header: FC<HeaderProps> = ({ isProfessional, patientId }) => {
                 variant={'tertiary'}
                 onClick={() => navigate(location.pathname !== '/perfil' ? '/perfil' : '/')}
                 className="profile-button"
-                data-tip="Ir a Mi Perfil"
+                data-tip="Ir a mi perfil"
               >
                 <img src="/avatar/lion-avatar.png" alt="Avatar" className="object-cover h-10" />
               </Button>
-              <Tooltip id="perfil" content="Ir a mi Perfil" variant="dark" place="bottom" />
+              <Tooltip id="perfil" content="Ir a mi perfil" variant="dark" place="bottom" />
             </div>
           )}
           {!isProfessional && location.pathname === '/' && (
@@ -90,11 +90,11 @@ const Header: FC<HeaderProps> = ({ isProfessional, patientId }) => {
                 size={'square'}
                 variant={'tertiary'}
                 onClick={() => navigate('/')}
-                data-tip="Ir a Mi Inicio"
+                data-tip="Ir al inicio"
               >
                 <House />
               </Button>
-              <Tooltip id="house" content="Ir a Mi Inicio" variant="dark" place="bottom" />
+              <Tooltip id="house" content="Ir al inicio" variant="dark" place="bottom" />
             </div>
           )}
         </div>

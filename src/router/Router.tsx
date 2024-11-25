@@ -18,10 +18,17 @@ import {
   RegisterPage,
   EmailVerification,
   ChangePassword,
-  HomeAdminPage
+  HomeAdminPage,
+  Hub
 } from '@pages'
 import { LayoutAdmin, LayoutPatient, LayoutProfesional } from '@components'
-import { SnakeGameWrapper, ValidateRolePatient, ValidatePatient, ValidGameWrapper, PrivateRoute } from '@wrappers'
+import {
+  SnakeGameWrapper,
+  ValidateRolePatient,
+  ValidPatientGuard,
+  ValidGameWrapper,
+  AuthenticatedRouteGuard
+} from '@wrappers'
 
 const Router = createBrowserRouter([
   {
@@ -37,13 +44,17 @@ const Router = createBrowserRouter([
     element: <EmailVerification />
   },
   {
-    path: '/reinicio-contraseña',
-    element: <ChangePassword />
-  },
-  {
-    element: <PrivateRoute />,
+    element: <AuthenticatedRouteGuard />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        path: '/hub',
+        element: <Hub />
+      },
+      {
+        path: '/reinicio-contraseña',
+        element: <ChangePassword />
+      },
       // inicio router admin
       {
         element: <LayoutAdmin />,
@@ -65,7 +76,7 @@ const Router = createBrowserRouter([
         element: <LayoutPatient />,
         children: [
           {
-            element: <ValidatePatient />,
+            element: <ValidPatientGuard />,
             children: [
               {
                 path: '/',

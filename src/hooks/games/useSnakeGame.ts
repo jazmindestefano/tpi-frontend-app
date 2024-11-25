@@ -24,17 +24,16 @@ const useSnakeGame = ({ items }: SnakeGameProps) => {
   const { selectedGame } = useCurrentGame()
 
   useEffect(() => {
-    if (audio && !isRecording) {
-      console.log(item.char)
+    if (audio && !isRecording && eatenItems.length != 0) {
       mutate({
         userId: user.id,
         gameId: selectedGame.id,
         activityId: 0,
         userAudio: audio,
-        text: item.char ?? ''
+        text: eatenItems[eatenItems.length - 1]
       })
     }
-  }, [audio, selectedGame, isRecording, mutate, user, item.char])
+  }, [audio, selectedGame, isRecording, mutate, user, item.char, eatenItems])
 
   const togglePause = useCallback(() => {
     if (!showBigItem) {

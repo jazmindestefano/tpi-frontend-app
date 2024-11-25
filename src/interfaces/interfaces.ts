@@ -23,7 +23,7 @@ export interface User {
   id: number
   username: string
   role: Role
-  oneTimePassword: boolean
+  hasOneTimePassword: boolean
   hasAcceptTerms: boolean
 }
 

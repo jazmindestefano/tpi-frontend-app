@@ -3,10 +3,11 @@ import { Navigate, Outlet } from 'react-router-dom'
 import { useAuth } from '@hooks'
 import { Loader } from '@components'
 
-const PrivateRoute: FC = () => {
+const AuthenticatedRouteGuard: FC = () => {
+  console.log('AuthenticatedRouteGuard')
   const { isLoading, isAuthorized } = useAuth()
 
   return isLoading ? <Loader /> : isAuthorized ? <Outlet /> : <Navigate to="/login" replace />
 }
 
-export default PrivateRoute
+export default AuthenticatedRouteGuard

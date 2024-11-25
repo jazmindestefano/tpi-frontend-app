@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { setToken } from '@redux/slices'
 import { usePasswordVisibility, useLogin } from '@hooks'
-import { getMe } from '@http'
 import { PublicRouteLayout, Button, Input } from '@components'
 
 interface LoginFormData {
@@ -13,8 +12,7 @@ interface LoginFormData {
 
 const LoginPage: FC = () => {
   const [formData, setFormData] = useState<LoginFormData>({ password: '', username: '' })
-  const [error, setError] = useState<string | null>(null)
-  const { mutateAsync } = useLogin()
+  const { mutate, error, token, isSuccess } = useLogin()
   const navigate = useNavigate()
   const dispatch = useDispatch()
   const { showPassword, togglePasswordVisibility } = usePasswordVisibility()
@@ -25,41 +23,17 @@ const LoginPage: FC = () => {
   }
 
   const handleLogin = () => {
-    setError(null)
-    mutateAsync(formData)
-      .then((token) => {
-        if (token) {
-          dispatch(setToken(token))
-        }
-      })
-      .then(async () => {
-        const user = await getMe()
-        if (user) {
-          if (user.role === 'PROFESSIONAL') {
-            if (user.hasOneTimePassword) {
-              navigate('/reinicio-contraseña')
-            } else {
-              navigate('/profesional')
-            }
-          } else if (user.role === 'ADMIN') {
-            navigate('/admin')
-          } else {
-            if (user.hasOneTimePassword) {
-              navigate('/reinicio-contraseña')
-            } else {
-              navigate('/')
-            }
-          }
-        }
-      })
-      .catch(() => {
-        setError('Credenciales inválidas. Por favor, intenta nuevamente.')
-      })
+    console.log('LoginPage', 'handleLogin', formData)
+    mutate(formData)
   }
 
   useEffect(() => {
-    localStorage.clear()
-  }, [])
+    if (isSuccess && token) {
+      console.log('LoginPage', 'useEffect', 'isSuccess && token', token)
+      dispatch(setToken(token))
+      navigate('/hub')
+    }
+  }, [dispatch, isSuccess, navigate, token])
 
   return (
     <PublicRouteLayout>
@@ -91,7 +65,7 @@ const LoginPage: FC = () => {
         </div>
         {error && (
           <p data-testid="error-message" className="text-red-500 text-sm">
-            {error}
+            {'Credenciales inválidas. Por favor, intenta nuevamente.'}
           </p>
         )}
         <Button dataTestId="login-button" onClick={handleLogin} className="h-10 w-52">

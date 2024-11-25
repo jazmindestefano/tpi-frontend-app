@@ -1,23 +1,36 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useGetMe, useToken } from '@hooks'
+import { useGetMe } from '@hooks'
 import { setUser } from '@redux/slices'
 
 const useAuth = () => {
+  console.log('useAuth')
   const dispatch = useDispatch()
-  const { user: data, isLoading, error } = useGetMe()
-  const token = useToken()
-  const isAuthorized = Boolean(data && token && !error)
+  const { mutate, isPending } = useGetMe()
+  const [authState, setAuthState] = useState<'loading' | 'authorized' | 'unauthorized'>('loading')
 
   useEffect(() => {
-    if (isAuthorized) {
-      dispatch(setUser(data!))
-    } else if (error) {
-      console.error('Authorization error:', error)
-    }
-  }, [isAuthorized, error, dispatch, data])
+    mutate(undefined, {
+      onSuccess: (user) => {
+        dispatch(setUser(user))
+        setAuthState('authorized')
+      },
+      onError: (e) => {
+        console.error('Authorization error', e)
+        setAuthState('unauthorized')
+      }
+    })
+  }, [dispatch, mutate])
 
-  return { isAuthorized, isLoading }
+  console.log('useAuth', {
+    isLoading: authState === 'loading' || isPending,
+    isAuthorized: authState === 'authorized'
+  })
+
+  return {
+    isLoading: authState === 'loading' || isPending,
+    isAuthorized: authState === 'authorized'
+  }
 }
 
 export default useAuth

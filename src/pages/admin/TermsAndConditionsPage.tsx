@@ -3,12 +3,15 @@ import { useCurrentUser, usePatchTermsAndConditions } from '@hooks'
 import { ChangeEvent, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { LoaderCircle } from 'lucide-react'
+import { useDispatch } from 'react-redux'
+import { setUser } from '@redux/slices'
 
 const TermsAndConditionsPage = () => {
   const navigate = useNavigate()
   const { mutate, isSuccess, isPending, error } = usePatchTermsAndConditions()
   const [buttonEnabled, setButtonEnabled] = useState(false)
-  const { id: patientId } = useCurrentUser()
+  const user = useCurrentUser()
+  const dispatch = useDispatch()
 
   const handleCheckboxClick = (event: ChangeEvent<HTMLInputElement>) => {
     setButtonEnabled(event.target.checked)
@@ -16,15 +19,17 @@ const TermsAndConditionsPage = () => {
 
   const handleButtonClick = () => {
     if (buttonEnabled) {
-      mutate({ patientId })
+      mutate({ patientId: user.id })
     }
   }
 
   useEffect(() => {
     if (isSuccess) {
-      navigate('/')
+      dispatch(setUser({ ...user, hasAcceptTerms: true }))
+      navigate('/hub')
     }
-  }, [isSuccess, navigate])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, isSuccess, navigate])
 
   return (
     <div className="font-poppins bg-gray-50 min-h-screen">
@@ -66,7 +71,6 @@ const TermsAndConditionsPage = () => {
           Si tienes preguntas o inquietudes, contáctanos a través de los canales de soporte de la aplicación.
         </p>
       </div>
-
       <div className="px-8 py-6 max-w-3xl mx-auto">
         <h1 className="text-4xl font-bold mb-6 text-center">Términos y Condiciones</h1>
         <p className="mb-4 text-justify">

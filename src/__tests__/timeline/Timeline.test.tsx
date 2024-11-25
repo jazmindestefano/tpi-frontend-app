@@ -37,7 +37,7 @@ describe('Timeline Component', () => {
 
 function ExpectFetchedDataToRender() {
   expect(screen.getByTestId('timeline-container')).toBeInTheDocument()
-  expect(screen.getByTestId('timeline-title')).toHaveTextContent('Línea de Tiempo de Actividades')
+  expect(screen.getByTestId('timeline-title')).toHaveTextContent('Línea de tiempo de actividades')
   expect(screen.getByTestId('activity-2024-01-01T00:00:00Z-Game 1')).toBeInTheDocument()
   expect(screen.getByTestId('activity-item-2024-01-01T00:00:00Z')).toHaveTextContent('Game 1')
   expect(screen.getByTestId('timeline-detail-button')).toBeInTheDocument()

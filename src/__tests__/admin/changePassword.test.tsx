@@ -1,8 +1,8 @@
 import { render, fireEvent, screen } from '@testing-library/react'
 import { vi } from 'vitest'
-import { BrowserRouter } from 'react-router-dom'
 import { ChangePassword } from '@pages'
 import { ReactNode } from 'react'
+import { Providers } from '../setup/providers.tsx'
 
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom')
@@ -31,11 +31,7 @@ vi.mock('../../hooks/queries.ts', () => ({
 
 describe('ChangePassword Component', () => {
   it('changes password input value when enter a new password value', () => {
-    render(
-      <BrowserRouter>
-        <ChangePassword />
-      </BrowserRouter>
-    )
+    render(<ChangePassword />, { wrapper: Providers })
     const passwordInput = WhenEnterANewPasswordValue()
     ExpectNewPasswordValueToBe(passwordInput)
   })

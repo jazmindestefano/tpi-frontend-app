@@ -12,7 +12,7 @@ const initialState: UserState = {
     id: NOT_YET_ASSIGNED_NUM,
     username: NOT_YET_ASSIGNED_STR,
     role: 'NO_ROLE',
-    oneTimePassword: false,
+    hasOneTimePassword: false,
     hasAcceptTerms: false
   },
   token: NOT_YET_ASSIGNED_STR

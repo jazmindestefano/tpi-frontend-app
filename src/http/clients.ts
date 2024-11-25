@@ -22,13 +22,12 @@ authenticatedClient.interceptors.request.use(
       Authorization: 'Bearer ' + state.user.token
     } as AxiosRequestHeaders
 
-    if (env.profile === 'dev') {
-      console.log(`Request: ${req.method?.toUpperCase()} - ${req.url}`, {
-        body: req.data,
-        params: req.params,
-        headers: req.headers
-      })
-    }
+    // uncomment when debugging
+    // console.log(`Request: ${req.method?.toUpperCase()} - ${req.url}`, {
+    //   body: req.data,
+    //   params: req.params,
+    //   headers: req.headers
+    // })
 
     return req
   },

@@ -293,17 +293,17 @@ export const getPacientReportPdf = async (patientId?: number): Promise<Blob | nu
   return null
 }
 
-export const login = async (username: string, password: string): Promise<string | null> => {
-  const res = await unauthenticatedClient.post('/api/login', {
+export const login = async (username: string, password: string): Promise<string> => {
+  const res = await unauthenticatedClient.post<{ token: string }>('/api/login', {
     username,
     password
   })
 
   if (res.status === 200) {
     return res.data.token
+  } else {
+    return 'invalid_token'
   }
-
-  return null
 }
 
 export const createPatient = async (
@@ -393,7 +393,7 @@ export const validateVerificationCode = async (email: string, code: string) => {
   return null
 }
 
-export const changeOneTimePassword = async (role: string, id: string, newPassword: string) => {
+export const changeOneTimePassword = async (role: string, id: number, newPassword: string) => {
   const url = `${role === 'PROFESSIONAL' ? '/professional' : '/patients'}/updateOneTimePw/${id}?newPassword=${newPassword}`
   const res = await unauthenticatedClient.patch(url)
 
