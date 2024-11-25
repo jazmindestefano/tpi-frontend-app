@@ -1,7 +1,7 @@
 import { Download, FolderDot, House, LogOut } from 'lucide-react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { Tooltip } from 'react-tooltip'
-import { useGetPacientReportPdf } from '@hooks'
+import { useGetPacientReportPdf, useGetPacientReportTimeline } from '@hooks'
 import { FC, useEffect, useState } from 'react'
 import { Button } from '@components'
 
@@ -12,14 +12,22 @@ interface HeaderProps {
 
 const Header: FC<HeaderProps> = ({ isProfessional, patientId }) => {
   const navigate = useNavigate()
-  const { reportPdf, error, isLoading } = useGetPacientReportPdf(patientId)
+  const location = useLocation()
+
+  const { reportPdf, error: pdfError, isLoading: pdfLoading } = useGetPacientReportPdf(patientId)
+  const { reportTimeline, error: timelineError, isLoading: timelineLoading } = useGetPacientReportTimeline(patientId)
+
   const [reportUrl, setReportUrl] = useState<string>('')
 
   useEffect(() => {
-    if (reportPdf && !error && !isLoading) {
+    const isTimeline = location.pathname.includes('/timeline')
+
+    if (isTimeline && reportTimeline && !timelineError && !timelineLoading) {
+      setReportUrl(URL.createObjectURL(reportTimeline))
+    } else if (!isTimeline && reportPdf && !pdfError && !pdfLoading) {
       setReportUrl(URL.createObjectURL(reportPdf))
     }
-  }, [error, isLoading, reportPdf])
+  }, [location.pathname, pdfError, pdfLoading, reportPdf, timelineError, timelineLoading, reportTimeline])
 
   if (location.pathname === '/felicitaciones') {
     return null
@@ -102,7 +110,7 @@ const Header: FC<HeaderProps> = ({ isProfessional, patientId }) => {
 
       {isProfessional && (
         <div className="top-4 right-4 flex gap-4 fixed z-50">
-          {location.pathname.match(/\/profesional\/paciente\/(\d+)$/)?.[1] && (
+          {location.pathname.match(/\/profesional\/paciente\/(\d+)(\/timeline)?$/)?.[1] && (
             <div data-tooltip-id="pdf">
               <a href={reportUrl} download={`reporte-paciente-${patientId}.pdf`}>
                 <Button size={'square'} variant={'fourth'} dataTestId="download-button">

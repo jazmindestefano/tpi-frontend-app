@@ -411,10 +411,25 @@ export const useGetPacientReportPdf = (
 } => {
   const { data, error, isLoading } = useQuery({
     queryKey: ['reportPdf', patientId],
-    queryFn: async () => await ApiService.getPacientReportPdf(patientId)
+    queryFn: async () => await ApiService.getPatientReportPdf(patientId)
   })
 
   return { reportPdf: data, error, isLoading }
+}
+
+export const useGetPacientReportTimeline = (
+  patientId: number | undefined
+): {
+  reportTimeline: Blob | null | undefined
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['reportTimeline', patientId],
+    queryFn: async () => await ApiService.getPatientReportTimeline(patientId)
+  })
+
+  return { reportTimeline: data, error, isLoading }
 }
 
 export const usePostPatient = (): {
