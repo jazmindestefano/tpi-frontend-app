@@ -1,12 +1,10 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { Loader, BackButton, Button } from '@components'
-import { formatDate } from '@helpers'
 import { useTimeline } from '@hooks'
 
 const Timeline = () => {
   const { patientId } = useParams()
-  const navigate = useNavigate()
-  const { gameId, data, error, isLoading, readyToFetch } = useTimeline({ patientId })
+  const { data, error, isLoading, readyToFetch, setSelectedDate, setSelectedGameName } = useTimeline({ patientId })
 
   if (!readyToFetch || isLoading) {
     return <Loader />
@@ -61,8 +59,8 @@ const Timeline = () => {
                     dataTestId="timeline-detail-button"
                     className="bg-blue-100 text-blue-800 px-3 py-2 rounded-full hover:bg-blue-100"
                     onClick={() => {
-                      const formattedDate = formatDate(activity.date)
-                      navigate(`/profesional/paciente/${patientId}/actividades/${gameId}/${formattedDate}`)
+                      setSelectedDate(activity.date)
+                      setSelectedGameName(activity.gameDescription)
                     }}
                   >
                     Ver detalle
