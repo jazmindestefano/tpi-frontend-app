@@ -39,7 +39,7 @@ const TermsAndConditionsPage = () => {
           Esta Política de Privacidad describe cómo recopilamos, usamos y protegemos tu información al utilizar nuestra
           aplicación.
         </p>
-        <h2 className="text-2xl font-semibold mt-6 mb-2">1. Información que Recopilamos</h2>
+        <h2 className="text-2xl font-semibold mt-6 mb-2">1. Información que recopilamos</h2>
         <p className="mb-4 text-justify">
           Recopilamos datos de identificación personal, datos de uso, y en algunos casos, grabaciones de audio para
           proporcionar funcionalidades específicas. Esto incluye, entre otros, nombre, correo electrónico, y datos de
@@ -55,7 +55,7 @@ const TermsAndConditionsPage = () => {
           Implementamos medidas de seguridad para proteger tus datos contra accesos no autorizados. Estas incluyen el
           uso de encriptación y revisiones de seguridad periódicas.
         </p>
-        <h2 className="text-2xl font-semibold mt-6 mb-2">4. Control de tus Datos</h2>
+        <h2 className="text-2xl font-semibold mt-6 mb-2">4. Control de tus datos</h2>
         <p className="mb-4 text-justify">
           Puedes acceder, modificar o eliminar tus datos en cualquier momento desde la configuración de la aplicación o
           contactando a nuestro soporte. También puedes revocar el acceso al micrófono y parlantes si decides dejar de
@@ -77,12 +77,12 @@ const TermsAndConditionsPage = () => {
           Al utilizar esta aplicación, aceptas los siguientes términos y condiciones. Asegúrate de leerlos detenidamente
           antes de continuar.
         </p>
-        <h2 className="text-2xl font-semibold mt-6 mb-2">1. Grabación de Audio y Uso de Parlantes</h2>
+        <h2 className="text-2xl font-semibold mt-6 mb-2">1. Grabación de audio y uso de parlantes</h2>
         <p className="mb-4 text-justify">
           Al aceptar estos términos, consientes que la aplicación acceda a tu micrófono y a tus parlantes para grabar y
           reproducir sonidos cuando sea necesario para la funcionalidad del servicio.
         </p>
-        <h2 className="text-2xl font-semibold mt-6 mb-2">2. Captura de Datos</h2>
+        <h2 className="text-2xl font-semibold mt-6 mb-2">2. Captura de datos</h2>
         <p className="mb-4 text-justify">
           La aplicación puede recopilar datos relacionados con tu interacción y uso de las funcionalidades, incluyendo
           información de actividad y respuestas. Estos datos se utilizan para mejorar tu experiencia y optimizar el
