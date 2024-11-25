@@ -6,6 +6,10 @@ import { PatientActivityAnswers, TimelineData } from '@interfaces'
 
 vi.mock('@hooks/queries')
 
+vi.mock('react-router-dom', () => ({
+  useNavigate: vi.fn()
+}))
+
 const mockPatientActivityAnswers: PatientActivityAnswers[] = [
   {
     gameId: 1,

@@ -58,7 +58,12 @@ const ActivityResponsesPage: FC = () => {
   return (
     <div className="flex flex-col items-start justify-start gap-5 pt-10 px-10 w-full">
       <div className="w-full flex justify-between items-center">
-        <BackButton text="Volver atrás" route={`/profesional/paciente/${patientId}/actividades`} />
+        <BackButton
+          text="Volver atrás"
+          route={
+            date ? `/profesional/paciente/${patientId}/timeline` : `/profesional/paciente/${patientId}/actividades`
+          }
+        />
       </div>
 
       <div className="w-full flex justify-end items-center space-x-4">

@@ -46,7 +46,6 @@ function ExpectFetchedDataToRender() {
 function WhenUseTimelineReturnsData(
   useTimelineMock: MockedFunction<
     ({ patientId }: { patientId?: string }) => {
-      gameId: number
       data: TimelineData[] | undefined
       isLoading: boolean
       error: Error | null
@@ -55,7 +54,6 @@ function WhenUseTimelineReturnsData(
   >
 ) {
   useTimelineMock.mockReturnValue({
-    gameId: 1,
     data: [
       {
         date: '2024-01-01T00:00:00Z',
@@ -86,7 +84,6 @@ function ExpectErrorMessage() {
 function WhenUseTimelineReturnsError(
   useTimelineMock: MockedFunction<
     ({ patientId }: { patientId?: string }) => {
-      gameId: number
       data: TimelineData[] | undefined
       isLoading: boolean
       error: Error | null
@@ -95,7 +92,6 @@ function WhenUseTimelineReturnsError(
   >
 ) {
   useTimelineMock.mockReturnValue({
-    gameId: 1,
     data: undefined,
     error: { name: 'Error', message: 'Something went wrong' },
     isLoading: false,
