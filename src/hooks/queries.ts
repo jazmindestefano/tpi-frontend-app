@@ -364,6 +364,7 @@ export const useGetProfessionalPatients = (
   patients: ProfesionalPatient[] | null | undefined
   error: Error | null
   isLoading: boolean
+  refetch: () => void
 } => {
   const { data, error, isLoading, refetch } = useQuery({
     queryKey: ['professionalPatients', professionalId],
