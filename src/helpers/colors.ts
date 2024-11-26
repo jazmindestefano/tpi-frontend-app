@@ -1,7 +1,6 @@
 export const getRandomColor = () => {
   const colors = [
     '#f2c160',
-    '#D1D1D1',
     '#cbe0fa',
     '#f472b9',
     '#f5b501',

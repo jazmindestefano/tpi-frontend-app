@@ -1,19 +1,11 @@
 import { useCurrentUser, useGetAchievements } from '@hooks'
-import { FC, useEffect, useState } from 'react'
+import { FC } from 'react'
 import { HearableButton, Loader } from '@components'
-import { getUniqueAchievements } from '@helpers'
-import { UniqueAchievements } from '@interfaces'
+import { getRandomColor } from '@helpers'
 
 const AchievementsPage: FC = () => {
   const user = useCurrentUser()
   const { achievements, error, isLoading } = useGetAchievements(user.id)
-  const [uniqueAchievements, setUniqueAchievements] = useState<UniqueAchievements[]>([])
-
-  useEffect(() => {
-    if (achievements) {
-      setUniqueAchievements(getUniqueAchievements([...achievements]))
-    }
-  }, [achievements])
 
   if (isLoading) return <Loader />
   if (error) return <div>Error al cargar los logros</div>
@@ -25,20 +17,31 @@ const AchievementsPage: FC = () => {
         <HearableButton text={'Estos son tus logros'} />
       </div>
       <div className="flex flex-wrap justify-center mt-4">
-        {uniqueAchievements.map((achievement) => (
-          <div
-            key={achievement.id}
-            className="relative m-2 rounded-3xl p-4"
-            style={{ backgroundColor: achievement.bgColor }}
-          >
-            <img src={achievement.image} alt={`Achievement ${achievement.id}`} className="w-36 h-40" />
-            {achievement.count > 1 && (
-              <div className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center transform translate-x-2 -translate-y-2">
-                {achievement.count}
+        {achievements && achievements?.length > 0 ? (
+          <>
+            {achievements.map((achievement) => (
+              <div
+                key={achievement.id}
+                className="relative m-2 rounded-3xl p-4"
+                style={{ backgroundColor: achievement.achieved ? getRandomColor() : 'gray' }}
+              >
+                <img
+                  src={achievement.image}
+                  alt={`Achievement ${achievement.id}`}
+                  className="w-36 h-40"
+                  style={{ filter: achievement.achieved ? 'none' : 'grayscale(100%)' }}
+                />
+                {achievement.achieved && achievement.quantity > 0 && (
+                  <div className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center transform translate-x-2 -translate-y-2">
+                    {achievement.quantity}
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        ))}
+            ))}
+          </>
+        ) : (
+          <div className="text-2xl font-bold">No tienes logros aún</div>
+        )}
       </div>
     </div>
   )
