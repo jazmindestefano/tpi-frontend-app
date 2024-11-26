@@ -3,12 +3,11 @@ import { FC, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { Button, HearableButton, ConfettiAnimation } from '@components'
 import { setModalFeedback } from '@redux/slices'
-import { useCurrentGame, useCurrentUser, useRandomAchievement, useSpeakText } from '@hooks'
+import { useCurrentGame, useCurrentUser, useRandomAchievement } from '@hooks'
 
 const CongratulationsPage: FC = () => {
   const dispatch = useDispatch()
   const navigate = useNavigate()
-  const speakText = useSpeakText()
   const user = useCurrentUser()
   const { selectedTheme } = useCurrentGame()
   const { achievement } = useRandomAchievement(user.id, selectedTheme.id)
@@ -82,16 +81,14 @@ const CongratulationsPage: FC = () => {
         </div>
 
         <Button
-          onMouseEnter={() => speakText('Volver al Inicio')}
           onClick={() => navigate('/')}
           variant={'primary'}
           className="px-6 py-3 text-white font-bold rounded-full shadow-lg hover:bg-gray-100 hover:text-black transition duration-300"
         >
-          <p className="text-2xl font-extrabold text-center">Volver al Inicio</p>
+          <p className="text-2xl font-extrabold text-center">Volver al inicio</p>
         </Button>
 
         <Button
-          onMouseEnter={() => speakText('Volver a jugar')}
           onClick={handleReplayClick}
           variant={'secondary'}
           className="px-6 py-3 mt-4 text-white font-bold rounded-full shadow-lg hover:bg-gray-100 hover:text-black transition duration-300"

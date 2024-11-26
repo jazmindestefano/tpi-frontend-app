@@ -23,7 +23,7 @@ const PatientActivitiesPage: FC = () => {
       {!error && !isLoading && data ? (
         <div className="flex flex-col items-start justify-start gap-4 pt-10 px-10">
           <div>
-            <BackButton text="Volver al Dashboard" route={`/profesional/paciente/${patientId}`} />
+            <BackButton text="Volver al tablero" route={`/profesional/paciente/${patientId}`} />
             <h2 className="text-2xl font-extrabold mb-4">Actividades</h2>
             <div className="flex w-full gap-10 pt-5">
               {data.length > 0 ? (

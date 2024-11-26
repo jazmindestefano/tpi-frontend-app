@@ -69,33 +69,33 @@ const Dashboard: FC = () => {
   return (
     <div className="w-full pt-10 px-10">
       <div>
-        <BackButton route="/profesional" text={'Volver al Inicio'} />
-        <h1 className="text-3xl">Progreso del Paciente {!isLoading && !error ? data : ''}</h1>
+        <BackButton route="/profesional" text={'Volver al inicio'} />
+        <h1 className="text-3xl">Progreso del paciente {!isLoading && !error ? data : ''}</h1>
       </div>
       <div className="mb-4 flex space-x-4 mt-10 text-xl">
         <button
           className={`px-4 py-2 rounded-lg ${activeTab === 'today' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
           onClick={() => setActiveTab('today')}
         >
-          ¿Que pasó hoy? + Feedback
+          ¿Que pasó hoy? + Retroalimentación
         </button>
         <button
           className={`px-4 py-2 rounded-lg ${activeTab === 'pronunciation' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
           onClick={() => setActiveTab('pronunciation')}
         >
-          Pronunciación de Sílabas y Fonemas
+          Pronunciación de fonemas
         </button>
         <button
           className={`px-4 py-2 rounded-lg ${activeTab === 'ranking' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
           onClick={() => setActiveTab('ranking')}
         >
-          Rankings más Difíciles
+          Ranking de fonemas más difíciles
         </button>
         <button
           className={`px-4 py-2 rounded-lg ${activeTab === 'auditory' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
           onClick={() => setActiveTab('auditory')}
         >
-          Discriminación Auditiva de Letras
+          Discriminación auditiva de fonemas
         </button>
       </div>
 

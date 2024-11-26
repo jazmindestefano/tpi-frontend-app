@@ -7,8 +7,6 @@ import {
   DashboardPage,
   ErrorPage,
   HomeProfesionalPage,
-  NotFoundPage,
-  PrivacyPolicyPage,
   ProfilePage,
   RecordGamePage,
   TermsAndConditionsPage,
@@ -20,15 +18,16 @@ import {
   RegisterPage,
   EmailVerification,
   ChangePassword,
-  HomeAdminPage
+  HomeAdminPage,
+  Hub
 } from '@pages'
 import { LayoutAdmin, LayoutPatient, LayoutProfesional } from '@components'
 import {
   SnakeGameWrapper,
   ValidateRolePatient,
-  ValidateRoleProfessional,
+  ValidPatientGuard,
   ValidGameWrapper,
-  PrivateRoute
+  AuthenticatedRouteGuard
 } from '@wrappers'
 
 const Router = createBrowserRouter([
@@ -37,29 +36,26 @@ const Router = createBrowserRouter([
     element: <LoginPage />
   },
   {
-    path: '/register',
+    path: '/registro',
     element: <RegisterPage />
   },
   {
-    path: '/email-verification/:email',
+    path: '/verificacion/:email',
     element: <EmailVerification />
   },
   {
-    path: '/change-one-time-password',
-    element: <ChangePassword />
-  },
-  {
-    path: '/terminos-y-condiciones',
-    element: <TermsAndConditionsPage />
-  },
-  {
-    path: '/politica-de-privacidad',
-    element: <PrivacyPolicyPage />
-  },
-  {
-    element: <PrivateRoute />,
+    element: <AuthenticatedRouteGuard />,
     errorElement: <ErrorPage />,
     children: [
+      {
+        path: '/hub',
+        element: <Hub />
+      },
+      {
+        path: '/reinicio-contraseña',
+        element: <ChangePassword />
+      },
+      // inicio router admin
       {
         element: <LayoutAdmin />,
         path: '/admin',
@@ -70,11 +66,17 @@ const Router = createBrowserRouter([
           }
         ]
       },
+      // fin router admin
+      // inicio router paciente
+      {
+        path: '/terminos',
+        element: <TermsAndConditionsPage />
+      },
       {
         element: <LayoutPatient />,
         children: [
           {
-            element: <ValidateRoleProfessional />,
+            element: <ValidPatientGuard />,
             children: [
               {
                 path: '/',
@@ -118,6 +120,8 @@ const Router = createBrowserRouter([
           }
         ]
       },
+      // fin router paciente
+      // inicio router profesional
       {
         element: <LayoutProfesional />,
         path: '/profesional',
@@ -157,11 +161,8 @@ const Router = createBrowserRouter([
           }
         ]
       }
+      // fin router profesional
     ]
-  },
-  {
-    path: '*',
-    element: <NotFoundPage />
   }
 ])
 
