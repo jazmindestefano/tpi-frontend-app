@@ -31,7 +31,7 @@ const AchievementsPage: FC = () => {
                   className="w-36 h-40"
                   style={{ filter: achievement.achieved ? 'none' : 'grayscale(100%)' }}
                 />
-                {achievement.achieved && achievement.quantity > 0 && (
+                {achievement.achieved && achievement.quantity > 1 && (
                   <div className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-8 h-8 flex items-center justify-center transform translate-x-2 -translate-y-2">
                     {achievement.quantity}
                   </div>
