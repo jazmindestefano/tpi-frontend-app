@@ -21,8 +21,18 @@ describe('useGetAchievements', () => {
   const patientId = 1
   const error = new Error('Error fetching achievements')
   const mockAchievements: Achievement[] = [
-    { id: 1, image: 'Achievement 1' },
-    { id: 2, image: 'Achievement 2' }
+    {
+      id: 1,
+      image: 'Achievement 1',
+      achieved: false,
+      quantity: 0
+    },
+    {
+      id: 2,
+      image: 'Achievement 2',
+      achieved: false,
+      quantity: 0
+    }
   ]
 
   let mockUseQuery: MockedFunction<typeof useQuery>

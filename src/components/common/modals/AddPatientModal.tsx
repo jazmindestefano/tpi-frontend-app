@@ -1,7 +1,6 @@
 import { ChangeEvent, FC, FormEvent, useEffect, useState } from 'react'
 import { usePostPatient, useCurrentUser } from '@hooks'
 import { BaseModal, Input, Overlay } from '@components'
-import { useQueryClient } from '@tanstack/react-query'
 
 interface AddPatientModalProps {
   isOpen: boolean
@@ -17,7 +16,6 @@ interface PatientData {
 }
 
 const AddPatientModal: FC<AddPatientModalProps> = ({ isOpen, onClose, onSubmit }) => {
-  const queryClient = useQueryClient()
   const [patientData, setPatientData] = useState<PatientData>({
     childName: '',
     guardianEmail: '',
@@ -43,7 +41,6 @@ const AddPatientModal: FC<AddPatientModalProps> = ({ isOpen, onClose, onSubmit }
       professionalId: user.id
     })
     onClose()
-    queryClient.invalidateQueries({ queryKey: ['professionalPatients'] })
   }
 
   useEffect(() => {
@@ -61,11 +58,11 @@ const AddPatientModal: FC<AddPatientModalProps> = ({ isOpen, onClose, onSubmit }
 
   return (
     <Overlay show={isOpen} onClose={onClose}>
-      <BaseModal title="Agregar Paciente" onClose={onClose} className="gap-10 rounded-3xl bg-white" hearable={false}>
+      <BaseModal title="Agregar paciente" onClose={onClose} className="gap-10 rounded-3xl bg-white" hearable={false}>
         <form onSubmit={handleSubmit} className="space-y-6 flex flex-col w-96">
           <div>
             <label htmlFor="childName" className="block text-sm font-medium text-gray-700">
-              Nombre del niño/a *
+              Nombre del paciente/a *
             </label>
             <Input
               name={'childName'}
@@ -78,7 +75,7 @@ const AddPatientModal: FC<AddPatientModalProps> = ({ isOpen, onClose, onSubmit }
           </div>
           <div>
             <label htmlFor="childSurname" className="block text-sm font-medium text-gray-700">
-              Apellido del niño/a *
+              Apellido del paciente/a *
             </label>
             <Input
               name={'childSurname'}
@@ -91,7 +88,7 @@ const AddPatientModal: FC<AddPatientModalProps> = ({ isOpen, onClose, onSubmit }
           </div>
           <div>
             <label htmlFor="guardianEmail" className="block text-sm font-medium text-gray-700">
-              Email del tutor *
+              Email del familiar/tutor *
             </label>
             <Input
               name={'guardianEmail'}
@@ -105,7 +102,7 @@ const AddPatientModal: FC<AddPatientModalProps> = ({ isOpen, onClose, onSubmit }
           </div>
           <div>
             <label htmlFor="childBirthDate" className="block text-sm font-medium text-gray-700">
-              Fecha de nacimiento del niño/a *
+              Fecha de nacimiento del paciente/a *
             </label>
             <Input
               name={'childBirthDate'}

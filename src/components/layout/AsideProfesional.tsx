@@ -20,7 +20,7 @@ function SidebarItem({ icon: Icon, href }: SidebarItemProps) {
       className="p-4 hover:bg-blue-600 rounded-lg transition-colors"
       data-testid="sidebar-item"
     >
-      <Icon className="text-white" size={24} />
+      <Icon className="text-white" size={38} />
     </button>
   )
 }

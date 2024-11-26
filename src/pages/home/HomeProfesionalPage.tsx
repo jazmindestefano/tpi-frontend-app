@@ -1,11 +1,12 @@
-import { HomeProfesionalCard } from '@components'
+import { Button, HomeProfesionalCard } from '@components'
 import { getCurrentDate } from '@helpers'
 import { useCurrentUser, useGetProfessionalPatients } from '@hooks'
+import { RefreshCcw } from 'lucide-react'
 import { FC } from 'react'
 
 const HomeProfesionalPage: FC = () => {
   const user = useCurrentUser()
-  const { patients, error, isLoading } = useGetProfessionalPatients(user.id)
+  const { patients, error, isLoading, refetch } = useGetProfessionalPatients(user.id)
 
   return !error && !isLoading && patients ? (
     <div className="flex flex-col items-start justify-start gap-4 p-10">
@@ -16,7 +17,12 @@ const HomeProfesionalPage: FC = () => {
         </div>
       </div>
       <div className="mt-5">
-        <h2 className="text-2xl font-semibold mb-4">Pacientes</h2>
+        <div className="flex justify-start items-center gap-4">
+          <h2 className="text-2xl font-semibold">Pacientes</h2>
+          <Button className="bg-transparent hover:bg-transparent" onClick={() => refetch()}>
+            <RefreshCcw size={'30'} />
+          </Button>
+        </div>
         <div className="flex flex-wrap gap-10 lg:px-10 lg:py-6">
           <HomeProfesionalCard isAddPatient={true} />
           {patients.map((patient) => (

@@ -21,7 +21,12 @@ describe('useRandomAchievement', () => {
   const patientId = 123
   const themeId = 1
   const error = new Error('Error fetching achievement')
-  const mockAchievement: Achievement = { id: 1, image: 'achievement1.png' }
+  const mockAchievement: Achievement = {
+    id: 1,
+    image: 'achievement1.png',
+    achieved: false,
+    quantity: 0
+  }
 
   let mockUseQuery: MockedFunction<typeof useQuery>
 

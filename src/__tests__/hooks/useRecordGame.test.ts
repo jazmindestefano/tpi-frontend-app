@@ -63,7 +63,9 @@ describe('useRecordGame', () => {
     vi.mocked(useCurrentUser).mockReturnValue({
       id: 1,
       username: 'patient1',
-      role: 'PATIENT'
+      role: 'PATIENT',
+      hasOneTimePassword: false,
+      hasAcceptTerms: false
     })
 
     vi.mocked(useCurrentGame).mockReturnValue({

@@ -1,10 +1,11 @@
 export const RoleEnum = {
   PATIENT: 'PATIENT',
   PROFESSIONAL: 'PROFESSIONAL',
+  ADMIN: 'ADMIN',
   NO_ROLE: 'NO_ROLE'
 }
 
-export type Role = 'PATIENT' | 'PROFESSIONAL' | 'NO_ROLE'
+export type Role = 'PATIENT' | 'PROFESSIONAL' | 'ADMIN' | 'NO_ROLE'
 
 export interface Theme {
   id: number
@@ -22,6 +23,8 @@ export interface User {
   id: number
   username: string
   role: Role
+  hasOneTimePassword: boolean
+  hasAcceptTerms: boolean
 }
 
 export interface GameLevel {
@@ -70,6 +73,8 @@ export interface Word {
 export interface Achievement {
   id: number
   image: string
+  achieved: boolean
+  quantity: number
 }
 
 export interface TimelineData {
