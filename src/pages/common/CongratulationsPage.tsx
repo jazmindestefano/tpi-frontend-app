@@ -63,7 +63,7 @@ const CongratulationsPage: FC = () => {
 
           /* Aplicamos la animación al pin */
           .pin-animation {
-            width: 250px; /* Ajusta el tamaño del pin según prefieras */
+            width: 400px; /* Ajusta el tamaño del pin según prefieras */
             animation: drop-in 1s ease-in-out, bounce 2s infinite ease-in-out;
           }
         `}

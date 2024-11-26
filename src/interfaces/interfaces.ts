@@ -73,6 +73,8 @@ export interface Word {
 export interface Achievement {
   id: number
   image: string
+  achieved: boolean
+  quantity: number
 }
 
 export interface TimelineData {
