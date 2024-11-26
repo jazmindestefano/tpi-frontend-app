@@ -365,12 +365,12 @@ export const useGetProfessionalPatients = (
   error: Error | null
   isLoading: boolean
 } => {
-  const { data, error, isLoading } = useQuery({
+  const { data, error, isLoading, refetch } = useQuery({
     queryKey: ['professionalPatients', professionalId],
     queryFn: async () => await ApiService.getProfessionalPatients(professionalId)
   })
 
-  return { patients: data, error, isLoading }
+  return { patients: data, error, isLoading, refetch }
 }
 
 export const useLogin = (): {
