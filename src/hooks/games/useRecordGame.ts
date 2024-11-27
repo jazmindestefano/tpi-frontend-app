@@ -6,9 +6,10 @@ import { useNavigate } from 'react-router-dom'
 
 const useRecordGame = (audio: Blob | null) => {
   const user = useCurrentUser()
+  console.log(user)
   const { selectedGame, selectedTheme } = useCurrentGame()
   const navigate = useNavigate()
-  const { levels, isLoading, error } = useGetGameLevels(selectedTheme.id)
+  const { levels, isLoading, error } = useGetGameLevels(selectedTheme.id, user.id)
   const { mutate } = usePostUserRecording()
   const [currentLevel, setCurrentLevel] = useState<number>(0)
   const [levelOptions, setLevelOptions] = useState<LevelOption[]>([])
