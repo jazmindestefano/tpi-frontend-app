@@ -1,7 +1,7 @@
 import { Download, FolderDot, House, LogOut } from 'lucide-react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Tooltip } from 'react-tooltip'
-import { useGetPacientReportPdf, useGetPacientReportTimeline } from '@hooks'
+import { useCurrentUser, useGetPacientReportPdf, useGetPacientReportTimeline, useGetProfileData } from '@hooks'
 import { FC, useEffect, useState } from 'react'
 import { Button } from '@components'
 
@@ -13,6 +13,8 @@ interface HeaderProps {
 const Header: FC<HeaderProps> = ({ isProfessional, patientId }) => {
   const navigate = useNavigate()
   const location = useLocation()
+  const user = useCurrentUser()
+  const { data, error } = useGetProfileData(user.id, user.role)
 
   const { reportPdf, error: pdfError, isLoading: pdfLoading } = useGetPacientReportPdf(patientId)
   const { reportTimeline, error: timelineError, isLoading: timelineLoading } = useGetPacientReportTimeline(patientId)
@@ -44,6 +46,20 @@ const Header: FC<HeaderProps> = ({ isProfessional, patientId }) => {
       {!location.pathname.includes('terminos') && !location.pathname.includes('politica-de-privacidad') && (
         <div className={`flex flex-row gap-4 ${location.pathname.includes('actividad') ? 'ml-auto' : ''}`}>
           {!isProfessional && (
+            <div data-tooltip-id="backgrounds">
+              <Button
+                dataTestId="backgrounds-button"
+                size={'square'}
+                onClick={() => navigate('/cambiar-fondo')}
+                className="achievements-button bg-gray-500 hover:bg-gray-600"
+                data-tip="Cambiar mi fondo"
+              >
+                <img src="c.svg" alt="Fondo" className="object-cover h-10" />
+              </Button>
+              <Tooltip id="logros" content="Ir a mis logros" variant="dark" place="bottom" />
+            </div>
+          )}
+          {!isProfessional && (
             <div data-tooltip-id="logros">
               <Button
                 dataTestId="logros-button"
@@ -68,7 +84,11 @@ const Header: FC<HeaderProps> = ({ isProfessional, patientId }) => {
                 className="profile-button"
                 data-tip="Ir a mi perfil"
               >
-                <img src="/avatar/lion-avatar.png" alt="Avatar" className="object-cover h-10" />
+                <img
+                  src={`${!error ? data?.image : '/avatar/lion-avatar.png'}`}
+                  alt={'avatar'}
+                  className="p-2 rounded-full"
+                />
               </Button>
               <Tooltip id="perfil" content="Ir a mi perfil" variant="dark" place="bottom" />
             </div>
@@ -78,7 +98,6 @@ const Header: FC<HeaderProps> = ({ isProfessional, patientId }) => {
               <Button
                 dataTestId="logout-button"
                 size={'square'}
-                variant={'primary'}
                 className="logout-button"
                 onClick={() => {
                   localStorage.clear()
@@ -86,21 +105,15 @@ const Header: FC<HeaderProps> = ({ isProfessional, patientId }) => {
                 }}
                 data-tip="Salir de la aplicación"
               >
-                <LogOut className="text-white" />
+                <LogOut color="white" size={30} />
               </Button>
               <Tooltip id="logout" content="Salir de la aplicación" variant="dark" place="bottom" />
             </div>
           )}
           {location.pathname !== '/' && !isProfessional && (
             <div data-tooltip-id="house">
-              <Button
-                dataTestId="home-button"
-                size={'square'}
-                variant={'tertiary'}
-                onClick={() => navigate('/')}
-                data-tip="Ir al inicio"
-              >
-                <House />
+              <Button dataTestId="home-button" size={'square'} onClick={() => navigate('/')} data-tip="Ir al inicio">
+                <House color="white" size={30} />
               </Button>
               <Tooltip id="house" content="Ir al inicio" variant="dark" place="bottom" />
             </div>

@@ -25,7 +25,7 @@ import {
   SyllableDashboard,
   SyllableRankingDashboard,
   WhatHappenedTodayDashboard,
-  Avatars
+  AchievementsWins
 } from '@interfaces'
 
 export const useGetThemesByGameId = (
@@ -364,7 +364,7 @@ export const useUpdateProfileData = (): {
 export const useGetAvatars = (
   patientId: number
 ): {
-  avatars: Avatars[] | null | undefined
+  avatars: AchievementsWins[] | null | undefined
   error: Error | null
   isLoading: boolean
   refetch: () => void
@@ -375,6 +375,22 @@ export const useGetAvatars = (
   })
 
   return { avatars: data, error, isLoading, refetch }
+}
+
+export const useGetBackgrounds = (
+  patientId: number
+): {
+  backgrounds: AchievementsWins[] | null | undefined
+  error: Error | null
+  isLoading: boolean
+  refetch: () => void
+} => {
+  const { data, error, isLoading, refetch } = useQuery({
+    queryKey: ['backgrounds', patientId],
+    queryFn: async () => await ApiService.getBackgrounds(patientId)
+  })
+
+  return { backgrounds: data, error, isLoading, refetch }
 }
 
 export const useSelectAvatar = (): {

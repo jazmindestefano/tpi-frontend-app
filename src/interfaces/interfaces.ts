@@ -90,7 +90,7 @@ export interface ProfileData {
   image: string
 }
 
-export interface Avatars {
+export interface AchievementsWins {
   id: number
   achievementName: string
   requiredQuantity: number

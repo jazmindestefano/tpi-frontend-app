@@ -13,8 +13,6 @@ interface ImageSelectionModalProps {
 const ImageSelectionModal: FC<ImageSelectionModalProps> = ({ isOpen, onClose, onSelectImage, patientId }) => {
   const { avatars, isLoading, error } = useGetAvatars(patientId)
 
-  console.log({ avatars })
-
   if (!isOpen) return null
 
   if (isLoading) return <Loader />
