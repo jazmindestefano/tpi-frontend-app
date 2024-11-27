@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { setToken } from '@redux/slices'
+import { setBackground, setToken } from '@redux/slices'
 import { usePasswordVisibility, useLogin } from '@hooks'
 import { PublicRouteLayout, Button, Input } from '@components'
 
@@ -31,6 +31,7 @@ const LoginPage: FC = () => {
     if (isSuccess && token) {
       console.log('LoginPage', 'useEffect', 'isSuccess && token', token)
       dispatch(setToken(token))
+      dispatch(setBackground('/fondo_clara.png'))
       navigate('/hub')
     }
   }, [dispatch, isSuccess, navigate, token])

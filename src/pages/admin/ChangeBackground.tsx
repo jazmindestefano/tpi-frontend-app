@@ -1,12 +1,21 @@
 import { HearableButton } from '@components'
 import { getRandomColor } from '@helpers'
-import { useCurrentUser, useGetBackgrounds } from '@hooks'
+import { useCurrentUser, useGetBackgrounds, useSelectBackground } from '@hooks'
+import { setBackground } from '@redux/slices'
 import { Loader } from 'lucide-react'
 import { FC } from 'react'
+import { useDispatch } from 'react-redux'
 
 const ChangeBackground: FC = () => {
   const user = useCurrentUser()
+  const dispatch = useDispatch()
   const { backgrounds, isLoading, error } = useGetBackgrounds(user.id)
+  const { mutate: updateBackground } = useSelectBackground()
+
+  const handleSelectBackground = (backgroundId: number, backgroundName: string) => {
+    updateBackground({ patientId: user.id, backgroundId })
+    dispatch(setBackground(backgroundName))
+  }
 
   if (isLoading) return <Loader className="m-auto" />
 
@@ -23,13 +32,18 @@ const ChangeBackground: FC = () => {
             {backgrounds.map((background) => (
               <div
                 key={background.id}
-                className="relative m-2 rounded-3xl p-4"
+                className="relative m-2 rounded-3xl p-6"
                 style={{ backgroundColor: background.unlocked ? getRandomColor() : 'gray' }}
+                onClick={
+                  background.unlocked
+                    ? () => handleSelectBackground(background.id, background.achievementName)
+                    : undefined
+                }
               >
                 <img
                   src={background.achievementName}
                   alt={`background ${background.id}`}
-                  className="w-36 h-40"
+                  className="w-36 h-40 cursor-pointer"
                   style={{ filter: background.unlocked ? 'none' : 'grayscale(100%)' }}
                 />
               </div>

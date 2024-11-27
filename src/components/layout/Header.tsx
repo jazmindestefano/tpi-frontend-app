@@ -1,7 +1,7 @@
 import { Download, FolderDot, House, LogOut } from 'lucide-react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { Tooltip } from 'react-tooltip'
-import { useCurrentUser, useGetPacientReportPdf, useGetPacientReportTimeline, useGetProfileData } from '@hooks'
+import { useCurrentUser, useGetPacientReportPdf, useGetPacientReportTimeline } from '@hooks'
 import { FC, useEffect, useState } from 'react'
 import { Button } from '@components'
 
@@ -14,7 +14,6 @@ const Header: FC<HeaderProps> = ({ isProfessional, patientId }) => {
   const navigate = useNavigate()
   const location = useLocation()
   const user = useCurrentUser()
-  const { data, error } = useGetProfileData(user.id, user.role)
 
   const { reportPdf, error: pdfError, isLoading: pdfLoading } = useGetPacientReportPdf(patientId)
   const { reportTimeline, error: timelineError, isLoading: timelineLoading } = useGetPacientReportTimeline(patientId)
@@ -51,12 +50,12 @@ const Header: FC<HeaderProps> = ({ isProfessional, patientId }) => {
                 dataTestId="backgrounds-button"
                 size={'square'}
                 onClick={() => navigate('/cambiar-fondo')}
-                className="achievements-button bg-gray-500 hover:bg-gray-600"
+                className="bg-gray-400 hover:bg-gray-600"
                 data-tip="Cambiar mi fondo"
               >
                 <img src="c.svg" alt="Fondo" className="object-cover h-10" />
               </Button>
-              <Tooltip id="logros" content="Ir a mis logros" variant="dark" place="bottom" />
+              <Tooltip id="background" content="Cambiar mi fondo" variant="dark" place="bottom" />
             </div>
           )}
           {!isProfessional && (
@@ -84,11 +83,7 @@ const Header: FC<HeaderProps> = ({ isProfessional, patientId }) => {
                 className="profile-button"
                 data-tip="Ir a mi perfil"
               >
-                <img
-                  src={`${!error ? data?.image : '/avatar/lion-avatar.png'}`}
-                  alt={'avatar'}
-                  className="p-2 rounded-full"
-                />
+                <img src={user.image ?? '/avatar/lion-avatar.png'} alt={'avatar'} className="p-2 rounded-full" />
               </Button>
               <Tooltip id="perfil" content="Ir a mi perfil" variant="dark" place="bottom" />
             </div>

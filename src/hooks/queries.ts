@@ -257,6 +257,21 @@ export const useGetPatientNameById = (
   return { data, error, isLoading }
 }
 
+export const useGetPatientBackgroundById = (
+  patientId: number
+): {
+  data: string | null | undefined
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['patientBackground', patientId],
+    queryFn: async () => await ApiService.getPatientBackgroundById(patientId)
+  })
+
+  return { data, error, isLoading }
+}
+
 export const useTimelineData = (patientId: number) => {
   const { data, error, isLoading } = useQuery<TimelineData[]>({
     queryKey: ['timeline', patientId],
@@ -403,6 +418,21 @@ export const useSelectAvatar = (): {
   const { mutate, reset, error, isPending, isSuccess } = useMutation({
     mutationFn: async ({ patientId, avatarId }: { patientId: number; avatarId: number }) =>
       await ApiService.selectAvatar(patientId, avatarId)
+  })
+
+  return { mutate, reset, error, isPending, isSuccess }
+}
+
+export const useSelectBackground = (): {
+  mutate: (args: { patientId: number; backgroundId: number }) => void
+  reset: () => void
+  error: Error | null
+  isPending: boolean
+  isSuccess: boolean
+} => {
+  const { mutate, reset, error, isPending, isSuccess } = useMutation({
+    mutationFn: async ({ patientId, backgroundId }: { patientId: number; backgroundId: number }) =>
+      await ApiService.selecBackground(patientId, backgroundId)
   })
 
   return { mutate, reset, error, isPending, isSuccess }

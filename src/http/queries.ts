@@ -251,6 +251,16 @@ export const getPatientNameById = async (id: number): Promise<string | null> => 
   return null
 }
 
+export const getPatientBackgroundById = async (id: number): Promise<string | null> => {
+  const res = await authenticatedClient.get(`/patients/${id}`)
+  const { background } = res.data
+
+  if (res.status === 200) {
+    return background
+  }
+  return null
+}
+
 export const updateProfileData = async (id: number, role: Role, data: ProfileData) => {
   const endpoint = role === RoleEnum.PATIENT ? `/patients/${id}` : `/professional/${id}`
   const res = await authenticatedClient.patch(endpoint, data)
@@ -288,8 +298,8 @@ export const getBackgrounds = async (patientId: number) => {
   return null
 }
 
-export const selecBackground = async (patientId: number, avatarId: number) => {
-  const res = await authenticatedClient.post(`/avatars/select?patientId=${patientId}&avatarId=${avatarId}`)
+export const selecBackground = async (patientId: number, backgroundId: number) => {
+  const res = await authenticatedClient.post(`/backgrounds/select?patientId=${patientId}&backgroundId=${backgroundId}`)
 
   if (res.status === 200) {
     return res.data
