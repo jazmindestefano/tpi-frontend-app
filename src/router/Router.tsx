@@ -19,7 +19,8 @@ import {
   EmailVerification,
   ChangePassword,
   HomeAdminPage,
-  Hub
+  Hub,
+  ChangeBackgroundPage
 } from '@pages'
 import { LayoutAdmin, LayoutPatient, LayoutProfesional } from '@components'
 import {
@@ -111,6 +112,10 @@ const Router = createBrowserRouter([
               {
                 path: '/logros',
                 element: <AchievementsPage />
+              },
+              {
+                path: '/cambiar-fondo',
+                element: <ChangeBackgroundPage />
               },
               {
                 path: '/perfil',

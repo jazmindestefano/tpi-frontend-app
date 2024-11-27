@@ -1,13 +1,15 @@
 import { HearableButton, Button } from '@components'
 import { Pencil, Save } from 'lucide-react'
 import { useState, useEffect, ChangeEvent, FC } from 'react'
-import { useGetProfileData, useUpdateProfileData, useCurrentUser } from '@hooks'
+import { useGetProfileData, useUpdateProfileData, useCurrentUser, useSelectAvatar } from '@hooks'
 import { ProfileData, RoleEnum } from '@interfaces'
+import ImageSelectionModal from './ImageSelectionModal'
 
 const ProfilePage: FC = () => {
   const user = useCurrentUser()
   const { data, error, isLoading } = useGetProfileData(user.id, user.role)
   const { mutate: updateProfile } = useUpdateProfileData()
+  const { mutate: updateAvatar } = useSelectAvatar()
   const [formData, setFormData] = useState<ProfileData>({
     name: '',
     surname: '',
@@ -15,6 +17,7 @@ const ProfilePage: FC = () => {
     image: ''
   })
   const [isEditing, setIsEditing] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
 
   useEffect(() => {
     if (data) {
@@ -40,15 +43,38 @@ const ProfilePage: FC = () => {
     setIsEditing(false)
   }
 
+  const handleSelectImage = (avatarId: number) => {
+    updateAvatar({ patientId: user.id, avatarId })
+    setIsModalOpen(false)
+  }
+
   return (
     <div className="flex flex-col justify-center items-center w-full h-screen">
       <div className="flex justify-center items-center w-full gap-4 mb-6">
         <h1 className="text-h1">Perfil</h1>
         {user.role === RoleEnum.PATIENT && <HearableButton variant={'secondary'} text={'Este es tu perfil'} />}
       </div>
-      <div className="flex flex-col justify-center items-center w-[75%] rounded-xl border shadow-lg py-8 bg-slate-50">
+      <div className="flex flex-col justify-center items-center w-[75%] h-[75%] rounded-xl border shadow-lg py-8 bg-slate-50">
         <div className="flex flex-row justify-end items-end sm:mx-auto sm:w-full sm:max-w-lg">
-          <img className="mx-auto h-40 w-auto" src={'/avatar/lion-avatar.png'} alt="Avatar" />
+          <div className="w-full flex justify-center items-center">
+            <div className="overflow-hidden flex justify-center items-center">
+              <img
+                src={user.image ?? '/avatar/lion-avatar.png'}
+                alt="Profile avatar"
+                width={200}
+                height={200}
+                className="object-cover rounded-full"
+              />
+            </div>
+            <Button
+              size={'mobile'}
+              shape={'circle'}
+              className="self-end bg-transparent hover:bg-transparent rounded-full border-4 border-white shadow-lg"
+              onClick={() => setIsModalOpen(true)}
+            >
+              <Pencil size={28} />
+            </Button>
+          </div>
         </div>
 
         <div className="mt-3 sm:mx-auto sm:w-full sm:max-w-lg p-3 rounded-md">
@@ -108,7 +134,7 @@ const ProfilePage: FC = () => {
               </div>
 
               <div className="flex items-end justify-end">
-                <Button size={'circle'} shape={'circle'} variant={'secondary'} onClick={() => setIsEditing(true)}>
+                <Button size={'mobile'} shape={'circle'} variant={'secondary'} onClick={() => setIsEditing(true)}>
                   <Pencil className="text-white" />
                 </Button>
               </div>
@@ -116,6 +142,12 @@ const ProfilePage: FC = () => {
           )}
         </div>
       </div>
+      <ImageSelectionModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        onSelectImage={handleSelectImage}
+        patientId={user.id}
+      />
     </div>
   )
 }

@@ -24,7 +24,8 @@ import {
   SurveyFeedbackDashboard,
   SyllableDashboard,
   SyllableRankingDashboard,
-  WhatHappenedTodayDashboard
+  WhatHappenedTodayDashboard,
+  AchievementsWins
 } from '@interfaces'
 
 export const useGetThemesByGameId = (
@@ -54,7 +55,8 @@ export const useGetGames = (): {
 }
 
 export const useGetGameLevels = (
-  themeId: number
+  themeId: number,
+  patientId: number
 ): {
   levels: GameLevel[] | null | undefined
   error: Error | null
@@ -62,7 +64,7 @@ export const useGetGameLevels = (
 } => {
   const { data, error, isLoading } = useQuery({
     queryKey: ['getGameLevels', themeId],
-    queryFn: async () => await ApiService.getGameLevels(themeId)
+    queryFn: async () => await ApiService.getGameLevels(themeId, patientId)
   })
 
   return { levels: data, error, isLoading }
@@ -255,6 +257,21 @@ export const useGetPatientNameById = (
   return { data, error, isLoading }
 }
 
+export const useGetPatientBackgroundById = (
+  patientId: number
+): {
+  data: string | null | undefined
+  error: Error | null
+  isLoading: boolean
+} => {
+  const { data, error, isLoading } = useQuery({
+    queryKey: ['patientBackground', patientId],
+    queryFn: async () => await ApiService.getPatientBackgroundById(patientId)
+  })
+
+  return { data, error, isLoading }
+}
+
 export const useTimelineData = (patientId: number) => {
   const { data, error, isLoading } = useQuery<TimelineData[]>({
     queryKey: ['timeline', patientId],
@@ -334,13 +351,14 @@ export const useGetProfileData = (
   data: ProfileData | null | undefined
   error: Error | null
   isLoading: boolean
+  refetch: () => void
 } => {
-  const { data, error, isLoading } = useQuery({
+  const { data, error, isLoading, refetch } = useQuery({
     queryKey: ['profileData', id, role],
     queryFn: async () => await ApiService.getProfileData(id, role)
   })
 
-  return { data, error, isLoading }
+  return { data, error, isLoading, refetch }
 }
 
 export const useUpdateProfileData = (): {
@@ -353,6 +371,68 @@ export const useUpdateProfileData = (): {
   const { mutate, reset, error, isPending, isSuccess } = useMutation({
     mutationFn: async ({ id, role, data }: { id: number; role: Role; data: ProfileData }) =>
       await ApiService.updateProfileData(id, role, data)
+  })
+
+  return { mutate, reset, error, isPending, isSuccess }
+}
+
+export const useGetAvatars = (
+  patientId: number
+): {
+  avatars: AchievementsWins[] | null | undefined
+  error: Error | null
+  isLoading: boolean
+  refetch: () => void
+} => {
+  const { data, error, isLoading, refetch } = useQuery({
+    queryKey: ['avatars', patientId],
+    queryFn: async () => await ApiService.getAvatars(patientId)
+  })
+
+  return { avatars: data, error, isLoading, refetch }
+}
+
+export const useGetBackgrounds = (
+  patientId: number
+): {
+  backgrounds: AchievementsWins[] | null | undefined
+  error: Error | null
+  isLoading: boolean
+  refetch: () => void
+} => {
+  const { data, error, isLoading, refetch } = useQuery({
+    queryKey: ['backgrounds', patientId],
+    queryFn: async () => await ApiService.getBackgrounds(patientId)
+  })
+
+  return { backgrounds: data, error, isLoading, refetch }
+}
+
+export const useSelectAvatar = (): {
+  mutate: (args: { patientId: number; avatarId: number }) => void
+  reset: () => void
+  error: Error | null
+  isPending: boolean
+  isSuccess: boolean
+} => {
+  const { mutate, reset, error, isPending, isSuccess } = useMutation({
+    mutationFn: async ({ patientId, avatarId }: { patientId: number; avatarId: number }) =>
+      await ApiService.selectAvatar(patientId, avatarId)
+  })
+
+  return { mutate, reset, error, isPending, isSuccess }
+}
+
+export const useSelectBackground = (): {
+  mutate: (args: { patientId: number; backgroundId: number }) => void
+  reset: () => void
+  error: Error | null
+  isPending: boolean
+  isSuccess: boolean
+} => {
+  const { mutate, reset, error, isPending, isSuccess } = useMutation({
+    mutationFn: async ({ patientId, backgroundId }: { patientId: number; backgroundId: number }) =>
+      await ApiService.selecBackground(patientId, backgroundId)
   })
 
   return { mutate, reset, error, isPending, isSuccess }

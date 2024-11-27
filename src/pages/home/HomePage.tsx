@@ -3,9 +3,9 @@ import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { getCardBgColor } from '@helpers'
 import { Game } from '@interfaces'
-import { selectGame, setModalFeedback, setShowProductTour } from '@redux/slices'
+import { selectGame, setBackground, setModalFeedback, setShowProductTour } from '@redux/slices'
 import { Loader, FeedbackModal, HearableButton, HomeCard } from '@components'
-import { useGetGames, useShowModalFeedback } from '@hooks'
+import { useCurrentUser, useGetGames, useGetPatientBackgroundById, useShowModalFeedback } from '@hooks'
 
 const Home: FC = () => {
   const navigate = useNavigate()
@@ -13,10 +13,18 @@ const Home: FC = () => {
   const { games, isLoading: gamesLoading, error } = useGetGames()
   const showModalFeedBack = useShowModalFeedback()
   const [showModal, setShowModal] = useState(showModalFeedBack)
+  const user = useCurrentUser()
+  const { data: background, error: backgroundError } = useGetPatientBackgroundById(user.id)
 
   useEffect(() => {
     dispatch(setShowProductTour(false))
   }, [dispatch])
+
+  useEffect(() => {
+    if (background && !backgroundError) {
+      dispatch(setBackground(background ?? '/fondo_clara.png'))
+    }
+  }, [background, backgroundError, dispatch])
 
   const handleOnClick = (game: Game) => {
     navigate('/tematicas')

@@ -33,8 +33,8 @@ export const getGames = async (): Promise<Game[] | null> => {
   return null
 }
 
-export const getGameLevels = async (themeId: number): Promise<GameLevel[] | null> => {
-  const res = await authenticatedClient.get(`/themes/${themeId}/activities`)
+export const getGameLevels = async (themeId: number, patientId: number): Promise<GameLevel[] | null> => {
+  const res = await authenticatedClient.get(`/themes/${themeId}/activities?patientId=${patientId}`)
   if (res.status === 200) {
     return res.data
   }
@@ -251,6 +251,16 @@ export const getPatientNameById = async (id: number): Promise<string | null> => 
   return null
 }
 
+export const getPatientBackgroundById = async (id: number): Promise<string | null> => {
+  const res = await authenticatedClient.get(`/patients/${id}`)
+  const { background } = res.data
+
+  if (res.status === 200) {
+    return background
+  }
+  return null
+}
+
 export const updateProfileData = async (id: number, role: Role, data: ProfileData) => {
   const endpoint = role === RoleEnum.PATIENT ? `/patients/${id}` : `/professional/${id}`
   const res = await authenticatedClient.patch(endpoint, data)
@@ -258,6 +268,42 @@ export const updateProfileData = async (id: number, role: Role, data: ProfileDat
     return res.data
   }
 
+  return null
+}
+
+export const getAvatars = async (patientId: number) => {
+  const res = await authenticatedClient.get(`/avatars/unlock-conditions?patientId=${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
+
+export const selectAvatar = async (patientId: number, avatarId: number) => {
+  const res = await authenticatedClient.post(`/avatars/select?patientId=${patientId}&avatarId=${avatarId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
+
+export const getBackgrounds = async (patientId: number) => {
+  const res = await authenticatedClient.get(`/background/unlock-conditions?patientId=${patientId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
+  return null
+}
+
+export const selecBackground = async (patientId: number, backgroundId: number) => {
+  const res = await authenticatedClient.post(`/backgrounds/select?patientId=${patientId}&backgroundId=${backgroundId}`)
+
+  if (res.status === 200) {
+    return res.data
+  }
   return null
 }
 

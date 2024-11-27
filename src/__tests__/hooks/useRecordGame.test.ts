@@ -65,7 +65,8 @@ describe('useRecordGame', () => {
       username: 'patient1',
       role: 'PATIENT',
       hasOneTimePassword: false,
-      hasAcceptTerms: false
+      hasAcceptTerms: false,
+      image: ''
     })
 
     vi.mocked(useCurrentGame).mockReturnValue({

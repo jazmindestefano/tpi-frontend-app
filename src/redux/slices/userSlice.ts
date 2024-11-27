@@ -5,6 +5,7 @@ import { NOT_YET_ASSIGNED_NUM, NOT_YET_ASSIGNED_STR } from '@config'
 interface UserState {
   user: User
   token: string
+  background: string
 }
 
 const initialState: UserState = {
@@ -13,9 +14,11 @@ const initialState: UserState = {
     username: NOT_YET_ASSIGNED_STR,
     role: 'NO_ROLE',
     hasOneTimePassword: false,
-    hasAcceptTerms: false
+    hasAcceptTerms: false,
+    image: '/avatar/lion-avatar.png'
   },
-  token: NOT_YET_ASSIGNED_STR
+  token: NOT_YET_ASSIGNED_STR,
+  background: '/fondo_clara.png'
 }
 
 const userSlice = createSlice({
@@ -27,11 +30,17 @@ const userSlice = createSlice({
     },
     setToken: (state, action: PayloadAction<string>) => {
       state.token = action.payload
+    },
+    setAvatar: (state, action: PayloadAction<string>) => {
+      state.user.image = action.payload
+    },
+    setBackground: (state, action: PayloadAction<string>) => {
+      state.background = action.payload
     }
   }
 })
 
-const { setUser, setToken } = userSlice.actions
+const { setUser, setToken, setAvatar, setBackground } = userSlice.actions
 const userReducer = userSlice.reducer
 
-export { setUser, setToken, userReducer }
+export { setUser, setToken, userReducer, setAvatar, setBackground }
