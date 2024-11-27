@@ -2,6 +2,8 @@ import { FC } from 'react'
 import { X } from 'lucide-react'
 import { useGetAvatars } from '@hooks'
 import { Loader } from '@components'
+import { useDispatch } from 'react-redux'
+import { setAvatar } from '@redux/slices'
 
 interface ImageSelectionModalProps {
   isOpen: boolean
@@ -12,8 +14,7 @@ interface ImageSelectionModalProps {
 
 const ImageSelectionModal: FC<ImageSelectionModalProps> = ({ isOpen, onClose, onSelectImage, patientId }) => {
   const { avatars, isLoading, error } = useGetAvatars(patientId)
-
-  console.log({ avatars })
+  const dispatch = useDispatch()
 
   if (!isOpen) return null
 
@@ -37,7 +38,10 @@ const ImageSelectionModal: FC<ImageSelectionModalProps> = ({ isOpen, onClose, on
             avatars.map((image, index) => (
               <button
                 key={index}
-                onClick={() => onSelectImage(image.id)}
+                onClick={() => {
+                  onSelectImage(image.id)
+                  dispatch(setAvatar(image.achievementName))
+                }}
                 className="p-2 border rounded-lg hover:bg-gray-100 transition-colors"
               >
                 <img

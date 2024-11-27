@@ -6,6 +6,8 @@ export const useCurrentUser = (): User => useSelector((state: RootState) => stat
 
 export const useToken = (): string => useSelector((state: RootState) => state.user.token)
 
+export const useUserBackground = (): string => useSelector((state: RootState) => state.user.background)
+
 export const useShowModalFeedback = (): boolean => useSelector((state: RootState) => state.ui.ui.showModalFeedback)
 
 export const useShowProductTour = (): boolean => useSelector((state: RootState) => state.ui.ui.showProductTour)

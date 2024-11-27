@@ -4,11 +4,9 @@ import { useState, useEffect, ChangeEvent, FC } from 'react'
 import { useGetProfileData, useUpdateProfileData, useCurrentUser, useSelectAvatar } from '@hooks'
 import { ProfileData, RoleEnum } from '@interfaces'
 import ImageSelectionModal from './ImageSelectionModal'
-import { useQueryClient } from '@tanstack/react-query'
 
 const ProfilePage: FC = () => {
   const user = useCurrentUser()
-  const queryClient = useQueryClient()
   const { data, error, isLoading } = useGetProfileData(user.id, user.role)
   const { mutate: updateProfile } = useUpdateProfileData()
   const { mutate: updateAvatar } = useSelectAvatar()
@@ -43,13 +41,11 @@ const ProfilePage: FC = () => {
   const handleSave = () => {
     updateProfile({ id: user.id, role: user.role, data: formData })
     setIsEditing(false)
-    queryClient.invalidateQueries({ queryKey: ['profileData'] })
   }
 
   const handleSelectImage = (avatarId: number) => {
     updateAvatar({ patientId: user.id, avatarId })
     setIsModalOpen(false)
-    queryClient.invalidateQueries({ queryKey: ['profileData'] })
   }
 
   return (
@@ -63,7 +59,7 @@ const ProfilePage: FC = () => {
           <div className="w-full flex justify-center items-center">
             <div className="overflow-hidden flex justify-center items-center">
               <img
-                src={data?.image ?? '/avatar/lion-avatar.png'}
+                src={user.image ?? '/avatar/lion-avatar.png'}
                 alt="Profile avatar"
                 width={200}
                 height={200}

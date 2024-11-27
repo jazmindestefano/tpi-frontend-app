@@ -19,12 +19,25 @@ export interface Game {
   image: string
 }
 
+export interface Patient {
+  id: number
+  name: string
+  surname: string
+  email: string
+  image: string
+  birthDate: string
+  watched_tutorial: string | null
+  oneTimePassword: boolean
+  background: string | null
+}
+
 export interface User {
   id: number
   username: string
   role: Role
   hasOneTimePassword: boolean
   hasAcceptTerms: boolean
+  image: string
 }
 
 export interface GameLevel {
@@ -90,7 +103,7 @@ export interface ProfileData {
   image: string
 }
 
-export interface Avatars {
+export interface AchievementsWins {
   id: number
   achievementName: string
   requiredQuantity: number
