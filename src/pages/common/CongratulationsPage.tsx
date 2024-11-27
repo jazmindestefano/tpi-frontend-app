@@ -63,16 +63,15 @@ const CongratulationsPage: FC = () => {
 
           /* Aplicamos la animación al pin */
           .pin-animation {
-            width: 400px; /* Ajusta el tamaño del pin según prefieras */
             animation: drop-in 1s ease-in-out, bounce 2s infinite ease-in-out;
           }
         `}
       </style>
 
-      <div className="flex flex-col w-full items-center justify-center h-full relative container-animation">
+      <div className="flex flex-col w-full items-center justify-center h-[100%] relative container-animation">
         <ConfettiAnimation isActive={true} />
-        <div className="h-96 pin-container">
-          <img src={achievement?.image} className="pin-animation" alt="Pin" />
+        <div className="flex justify-center items-center pin-container">
+          <img src={achievement?.image} className="pin-animation h-60 w-44" alt="Pin" />
         </div>
 
         <div className="flex justify-center items-center w-full gap-4">
