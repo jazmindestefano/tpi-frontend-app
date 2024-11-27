@@ -19,6 +19,7 @@ vi.mock('@http', () => ({
 
 describe('useGetGameLevels', () => {
   const themeId = 1
+  const patientId = 1
 
   const mockLevelOptions: LevelOption[] = [
     { id: 1, name: 'Option 1', description: 'Option 1', image: 'Option 1', correct: true },
@@ -46,7 +47,7 @@ describe('useGetGameLevels', () => {
     ;(ApiService.getGameLevels as Mock).mockResolvedValueOnce(mockLevels)
     mockQuery({ data: mockLevels })
 
-    const { result } = renderHook(() => useGetGameLevels(themeId))
+    const { result } = renderHook(() => useGetGameLevels(themeId, patientId))
 
     await waitFor(() => !result.current.isLoading)
 
@@ -56,7 +57,7 @@ describe('useGetGameLevels', () => {
   it('should return an error when the query fails', async () => {
     mockQuery({ error })
 
-    const { result } = renderHook(() => useGetGameLevels(themeId))
+    const { result } = renderHook(() => useGetGameLevels(themeId, patientId))
 
     ExpectError(result, error)
   })
