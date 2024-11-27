@@ -24,7 +24,8 @@ import {
   SurveyFeedbackDashboard,
   SyllableDashboard,
   SyllableRankingDashboard,
-  WhatHappenedTodayDashboard
+  WhatHappenedTodayDashboard,
+  Avatars
 } from '@interfaces'
 
 export const useGetThemesByGameId = (
@@ -54,7 +55,8 @@ export const useGetGames = (): {
 }
 
 export const useGetGameLevels = (
-  themeId: number
+  themeId: number,
+  patientId: number
 ): {
   levels: GameLevel[] | null | undefined
   error: Error | null
@@ -62,7 +64,7 @@ export const useGetGameLevels = (
 } => {
   const { data, error, isLoading } = useQuery({
     queryKey: ['getGameLevels', themeId],
-    queryFn: async () => await ApiService.getGameLevels(themeId)
+    queryFn: async () => await ApiService.getGameLevels(themeId, patientId)
   })
 
   return { levels: data, error, isLoading }
@@ -334,13 +336,14 @@ export const useGetProfileData = (
   data: ProfileData | null | undefined
   error: Error | null
   isLoading: boolean
+  refetch: () => void
 } => {
-  const { data, error, isLoading } = useQuery({
+  const { data, error, isLoading, refetch } = useQuery({
     queryKey: ['profileData', id, role],
     queryFn: async () => await ApiService.getProfileData(id, role)
   })
 
-  return { data, error, isLoading }
+  return { data, error, isLoading, refetch }
 }
 
 export const useUpdateProfileData = (): {
@@ -353,6 +356,37 @@ export const useUpdateProfileData = (): {
   const { mutate, reset, error, isPending, isSuccess } = useMutation({
     mutationFn: async ({ id, role, data }: { id: number; role: Role; data: ProfileData }) =>
       await ApiService.updateProfileData(id, role, data)
+  })
+
+  return { mutate, reset, error, isPending, isSuccess }
+}
+
+export const useGetAvatars = (
+  patientId: number
+): {
+  avatars: Avatars[] | null | undefined
+  error: Error | null
+  isLoading: boolean
+  refetch: () => void
+} => {
+  const { data, error, isLoading, refetch } = useQuery({
+    queryKey: ['avatars', patientId],
+    queryFn: async () => await ApiService.getAvatars(patientId)
+  })
+
+  return { avatars: data, error, isLoading, refetch }
+}
+
+export const useSelectAvatar = (): {
+  mutate: (args: { patientId: number; avatarId: number }) => void
+  reset: () => void
+  error: Error | null
+  isPending: boolean
+  isSuccess: boolean
+} => {
+  const { mutate, reset, error, isPending, isSuccess } = useMutation({
+    mutationFn: async ({ patientId, avatarId }: { patientId: number; avatarId: number }) =>
+      await ApiService.selectAvatar(patientId, avatarId)
   })
 
   return { mutate, reset, error, isPending, isSuccess }

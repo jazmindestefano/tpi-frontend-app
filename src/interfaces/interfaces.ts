@@ -90,6 +90,14 @@ export interface ProfileData {
   image: string
 }
 
+export interface Avatars {
+  id: number
+  achievementName: string
+  requiredQuantity: number
+  currentQuantity: number
+  unlocked: boolean
+}
+
 export interface ProfesionalPatient {
   id: number
   name: string

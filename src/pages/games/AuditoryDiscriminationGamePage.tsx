@@ -30,7 +30,7 @@ const AuditoryDiscriminationGamePage: FC = () => {
   const navigate = useNavigate()
   const { selectedTheme } = useCurrentGame()
   const user = useCurrentUser()
-  const { levels, isLoading, error: getLevelsError } = useGetGameLevels(selectedTheme.id)
+  const { levels, isLoading, error: getLevelsError } = useGetGameLevels(selectedTheme.id, user.id)
   const [currentLevel, setCurrentLevel] = useState<number>(0)
   const [options, setOptions] = useState<LevelOption[]>([])
 
